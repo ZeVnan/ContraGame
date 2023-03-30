@@ -20,6 +20,7 @@ class CSprites
 
 public:
 	void Add(int id, int left, int top, int right, int bottom, LPTEXTURE tex);
+	void Add(int id, LPSPRITE lpsprite);
 	LPSPRITE Get(int id);
 
 	static CSprites* GetInstance();

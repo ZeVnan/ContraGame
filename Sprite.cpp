@@ -12,11 +12,11 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 	// Set the sprite’s shader resource view
 	sprite.pTexture = tex->getShaderResourceView();
 
-	sprite.TexCoord.x = this->left / (float)tex->getWidth();
-	sprite.TexCoord.y = this->top / (float)tex->getHeight();
-
 	int spriteWidth = (this->right - this->left + 1);
 	int spriteHeight = (this->bottom - this->top + 1);
+
+	sprite.TexCoord.x = this->left / (float)tex->getWidth();
+	sprite.TexCoord.y = this->top / (float)tex->getHeight();
 
 	sprite.TexSize.x = spriteWidth / (float)tex->getWidth();
 	sprite.TexSize.y = spriteHeight / (float)tex->getHeight();
@@ -24,6 +24,30 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	sprite.TextureIndex = 0;
 
+	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+}
+
+CSprite::CSprite(int id, CSprite* psprite) {
+	this->id = id;
+	this->left = psprite->left;
+	this->right = psprite->right;
+	this->top = psprite->top;
+	this->bottom = psprite->bottom;
+	this->texture = psprite->texture;
+
+	int spriteWidth = (this->right - this->left + 1);
+	int spriteHeight = (this->bottom - this->top + 1);
+
+	this->sprite.pTexture = psprite->sprite.pTexture;
+
+	this->sprite.TexCoord.x = psprite->sprite.TexCoord.x + psprite->sprite.TexSize.x;
+	this->sprite.TexCoord.y = psprite->sprite.TexCoord.y;
+
+	this->sprite.TexSize.x = -psprite->sprite.TexSize.x;
+	this->sprite.TexSize.y = psprite->sprite.TexSize.y;
+
+	this->sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	this->sprite.TextureIndex = 0;
 	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 }
 
