@@ -15,6 +15,10 @@ void CSprites::Add(int id, int left, int top, int right, int bottom, LPTEXTURE t
 	LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
 	sprites[id] = s;
 }
+void CSprites::Add(int id, LPSPRITE lpsprite) {
+	LPSPRITE s = new CSprite(id, lpsprite);
+	sprites[id] = s;
+}
 
 LPSPRITE CSprites::Get(int id)
 {

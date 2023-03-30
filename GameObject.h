@@ -4,6 +4,8 @@
 #include <d3dx10.h>
 #include <vector>
 
+#include "Game.h"
+
 using namespace std;
 
 class CGameObject
@@ -30,6 +32,10 @@ public:
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
+
+	virtual void KeyDown(int KeyCode) = 0;
+	virtual void KeyUp(int KeyCode) = 0;
+	virtual void KeyState(CGame* game) = 0;
 	~CGameObject();
 };
 

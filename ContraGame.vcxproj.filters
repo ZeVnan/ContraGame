@@ -27,9 +27,6 @@
     <ClCompile Include="Bill.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -40,9 +37,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LoadResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -63,6 +57,9 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -75,9 +72,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bill.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="debug.h">
@@ -93,9 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LoadResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SampleKeyEventHandler.h">
@@ -116,6 +107,9 @@
     <ClInclude Include="Textures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico">
@@ -128,6 +122,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="textures\misc.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\bill_animation.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
