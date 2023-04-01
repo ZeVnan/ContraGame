@@ -125,47 +125,47 @@ void CreateBillAni(CTextures* &textures, CSprites* &sprites, CAnimations* &anima
 	ani->Add(10051);
 	ani->Add(10052);
 	ani->Add(10053);
-	animations->Add(BILL_ANI_SHOT_UPRIGHT, ani);
+	animations->Add(BILL_ANI_SHOOT_UPRIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10054);
 	ani->Add(10055);
 	ani->Add(10056);
-	animations->Add(BILL_ANI_SHOT_UPLEFT, ani);
+	animations->Add(BILL_ANI_SHOOT_UPLEFT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10061);
 	ani->Add(10062);
 	ani->Add(10063);
-	animations->Add(BILL_ANI_SHOT_DOWNRIGHT, ani);
+	animations->Add(BILL_ANI_SHOOT_DOWNRIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10064);
 	ani->Add(10065);
 	ani->Add(10066);
-	animations->Add(BILL_ANI_SHOT_DOWNLEFT, ani);
+	animations->Add(BILL_ANI_SHOOT_DOWNLEFT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10071);
 	ani->Add(10072);
-	animations->Add(BILL_ANI_SHOT_UP_RIGHT, ani);
+	animations->Add(BILL_ANI_SHOOT_UP_RIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10073);
 	ani->Add(10074);
-	animations->Add(BILL_ANI_SHOT_UP_LEFT, ani);
+	animations->Add(BILL_ANI_SHOOT_UP_LEFT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10081);
 	ani->Add(10082);
 	ani->Add(10083);
-	animations->Add(BILL_ANI_SHOT_RIGHT, ani);
+	animations->Add(BILL_ANI_SHOOT_RIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10084);
 	ani->Add(10085);
 	ani->Add(10086);
-	animations->Add(BILL_ANI_SHOT_LEFT, ani);
+	animations->Add(BILL_ANI_SHOOT_LEFT, ani);
 }
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_BULLET, TEXTURE_PATH_BULLET);
@@ -202,4 +202,95 @@ void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	ani = new CAnimation(100);
 	ani->Add(10104);
 	animations->Add(BULLET_ANI_MACHINE, ani);
+}
+void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
+	textures->Add(ID_TEX_SOLDIER, TEXTURE_PATH_SOLDIER);
+	LPTEXTURE texSoldier = textures->Get(ID_TEX_SOLDIER);
+	//sprite id 102xx
+	//run left
+	sprites->Add(10200, 90, 0, 106, 32, texSoldier);
+	sprites->Add(10201, 72, 0, 88, 32, texSoldier);
+	sprites->Add(10202, 54, 0, 70, 32, texSoldier);
+	sprites->Add(10203, 36, 0, 52, 32, texSoldier);
+	sprites->Add(10204, 18, 0, 34, 32, texSoldier);
+	sprites->Add(10205, 0, 0, 16, 32, texSoldier);
+	//run right
+	sprites->Add(10210, sprites->Get(10200));
+	sprites->Add(10211, sprites->Get(10201));
+	sprites->Add(10212, sprites->Get(10202));
+	sprites->Add(10213, sprites->Get(10203));
+	sprites->Add(10214, sprites->Get(10204));
+	sprites->Add(10215, sprites->Get(10205));
+	//jump left
+	sprites->Add(10220, 108, 0, 124, 32, texSoldier);
+	//jump right
+	sprites->Add(10221, sprites->Get(10220));
+	//shoot left
+	sprites->Add(10230, 126, 0, 150, 32, texSoldier);
+	sprites->Add(10231, 152, 0, 176, 32, texSoldier);
+	//shoot right
+	sprites->Add(10232, sprites->Get(10230));
+	sprites->Add(10233, sprites->Get(10231));
+	//lay down left
+	sprites->Add(10240, 178, 0, 210, 32, texSoldier);
+	//lay down right
+	sprites->Add(10241, sprites->Get(10240));
+	//die left
+	sprites->Add(10250, 212, 0, 227, 32, texSoldier);
+	//die right
+	sprites->Add(10251, sprites->Get(10250));
+
+	LPANIMATION ani;
+	//run left 
+	ani = new CAnimation(100);
+	ani->Add(10200);
+	ani->Add(10201);
+	ani->Add(10202);
+	ani->Add(10203);
+	ani->Add(10204);
+	ani->Add(10205);
+	animations->Add(SOLDIER_ANI_RUN_LEFT, ani);
+	//run right
+	ani = new CAnimation(100);
+	ani->Add(10210);
+	ani->Add(10211);
+	ani->Add(10212);
+	ani->Add(10213);
+	ani->Add(10214);
+	ani->Add(10215);
+	animations->Add(SOLDIER_ANI_RUN_RIGHT, ani);
+	//jump left
+	ani = new CAnimation(100);
+	ani->Add(10220);
+	animations->Add(SOLDIER_ANI_JUMP_LEFT, ani);
+	//jump right
+	ani = new CAnimation(100);
+	ani->Add(10221);
+	animations->Add(SOLDIER_ANI_JUMP_RIGHT, ani);
+	//shoot left
+	ani = new CAnimation(100);
+	ani->Add(10230);
+	ani->Add(10231);
+	animations->Add(SOLDIER_ANI_SHOOT_LEFT, ani);
+	//shoot right
+	ani = new CAnimation(100);
+	ani->Add(10232);
+	ani->Add(10233);
+	animations->Add(SOLDIER_ANI_SHOOT_RIGHT, ani);
+	//laydown left
+	ani = new CAnimation(100);
+	ani->Add(10240);
+	animations->Add(SOLDIER_ANI_LAYDOWN_LEFT, ani);
+	//laydown right
+	ani = new CAnimation(100);
+	ani->Add(10241);
+	animations->Add(SOLDIER_ANI_LAYDOWN_RIGHT, ani);
+	//die left
+	ani = new CAnimation(100);
+	ani->Add(10250);
+	animations->Add(SOLDIER_ANI_DIE_LEFT, ani);
+	//die right
+	ani = new CAnimation(100);
+	ani->Add(10251);
+	animations->Add(SOLDIER_ANI_DIE_RIGHT, ani);
 }

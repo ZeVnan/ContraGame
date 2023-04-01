@@ -21,9 +21,14 @@ void LoadResources() {
 
 	CreateBillAni(textures, sprites, animations);
 	CreateBulletAni(textures, sprites, animations);
+	CreateSoldierAni(textures, sprites, animations);
+
+	CSoldier* soldier = new CSoldier(SOLDIER_START_X, SOLDIER_START_Y);
+	objects.push_back(soldier);
 
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	objects.push_back(bill);
+
 }
 
 

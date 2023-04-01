@@ -1,5 +1,16 @@
 #include "Bill.h"
+CBill::CBill() :CGameObject() {
 
+}
+CBill::CBill(float x, float y) :CGameObject(x, y) {
+	isLaying = false;
+	isShooting = false;
+	ny = 0;
+	maxVx = 0.0f;
+	maxVy = 0.0f;
+	gunx = x;
+	guny = y;
+}
 void CBill::Update(DWORD dt) {
 	x += vx * dt;
 	y += vy * dt;
@@ -14,7 +25,7 @@ void CBill::Update(DWORD dt) {
 	}
 	
 
-	DebugOutTitle(L"bullets = %d", bullets.size());
+	//DebugOutTitle(L"bullets = %d", bullets.size());
 
 	
 	if (vx > 0 && x > 290) x = 290;
@@ -58,12 +69,12 @@ void CBill::Render() {
 			if (vx == 0) {
 				if (ny == 1) {
 					if (nx > 0) {
-						ani = BILL_ANI_SHOT_UP_RIGHT;
+						ani = BILL_ANI_SHOOT_UP_RIGHT;
 						gunx = x + 4.0f;
 						guny = y - 30.0f;
 					}
 					else {
-						ani = BILL_ANI_SHOT_UP_LEFT;
+						ani = BILL_ANI_SHOOT_UP_LEFT;
 						gunx = x - 4.0f;
 						guny = y - 30.0f;
 					}
@@ -86,7 +97,7 @@ void CBill::Render() {
 				if (vx > 0) {
 					if (ny == 0) {
 						if (isShooting == true) {
-							ani = BILL_ANI_SHOT_RIGHT;
+							ani = BILL_ANI_SHOOT_RIGHT;
 							gunx = x + 10.0f;
 							guny = y - 4.5f;
 						}
@@ -97,12 +108,12 @@ void CBill::Render() {
 						}
 					}
 					if (ny == 1) {
-						ani = BILL_ANI_SHOT_UPRIGHT;
+						ani = BILL_ANI_SHOOT_UPRIGHT;
 						gunx = x + 10.0f;
 						guny = y - 17.0f;
 					}
 					if (ny == -1) {
-						ani = BILL_ANI_SHOT_DOWNRIGHT;
+						ani = BILL_ANI_SHOOT_DOWNRIGHT;
 						gunx = x + 10.0f;
 						guny = y + 5.0f;
 					}
@@ -110,7 +121,7 @@ void CBill::Render() {
 				else {
 					if (ny == 0){
 						if (isShooting == true) {
-							ani = BILL_ANI_SHOT_LEFT;
+							ani = BILL_ANI_SHOOT_LEFT;
 							gunx = x - 10.0f;
 							guny = y - 4.5f;
 						}
@@ -121,12 +132,12 @@ void CBill::Render() {
 						}
 					}
 					if (ny == 1) {
-						ani = BILL_ANI_SHOT_UPLEFT;
+						ani = BILL_ANI_SHOOT_UPLEFT;
 						gunx = x - 10.0f;
 						guny = y - 17.0f;
 					}
 					if (ny == -1) {
-						ani = BILL_ANI_SHOT_DOWNLEFT;
+						ani = BILL_ANI_SHOOT_DOWNLEFT;
 						gunx = x - 10.0f;
 						guny = y + 5.0f;
 					}
@@ -163,7 +174,7 @@ void CBill::SetState(int state) {
 		}
 		break;
 	case BILL_STATE_JUMP:
-		if (y == GROUND_Y) {
+		if (vy == 0) {
 			vy = -BILL_JUMP_SPEED_Y;
 		}
 		break;
@@ -172,7 +183,7 @@ void CBill::SetState(int state) {
 			vy += BILL_JUMP_SPEED_Y / 2;
 		break;
 	case BILL_STATE_DOWN:
-		if (y == GROUND_Y) {
+		if (vy == 0) {
 			if (vx == 0) {
 				isLaying = true;
 			}
@@ -193,10 +204,10 @@ void CBill::SetState(int state) {
 	case BILL_STATE_UP_RELEASE:
 		ny = 0;
 		break;
-	case BILL_STATE_SHOT:
+	case BILL_STATE_SHOOT:
 		isShooting = true;
 		break;
-	case BILL_STATE_SHOT_RELEASE:
+	case BILL_STATE_SHOOT_RELEASE:
 		isShooting = false;
 		break;
 	case BILL_STATE_NORMAL:
@@ -211,7 +222,7 @@ void CBill::KeyDown(int KeyCode) {
 		this->SetState(BILL_STATE_JUMP);
 		break;
 	case DIK_Z:
-		this->SetState(BILL_STATE_SHOT);
+		this->SetState(BILL_STATE_SHOOT);
 		this->AddBullet();
 		break;
 	}
@@ -222,7 +233,7 @@ void CBill::KeyUp(int KeyCode) {
 		this->SetState(BILL_STATE_JUMP_RELEASE);
 		break;
 	case DIK_Z:
-		this->SetState(BILL_STATE_SHOT_RELEASE);
+		this->SetState(BILL_STATE_SHOOT_RELEASE);
 		break;
 	case DIK_DOWN:
 		this->SetState(BILL_STATE_DOWN_RELEASE);

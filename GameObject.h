@@ -8,6 +8,7 @@
 
 using namespace std;
 
+#define GROUND_Y 160.0f
 class CGameObject
 {
 protected:
