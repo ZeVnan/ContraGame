@@ -15,6 +15,7 @@
 #include "Bullet.h"
 #include "Aircraft.h"
 #include "Cannon.h"
+#include "Rifleman.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -28,8 +29,11 @@
 #define TEXTURE_PATH_BULLET L"Images\\Bullets.png"
 #define TEXTURE_PATH_AIRCRAFT L"Images\\aircraft.png"
 #define TEXTURE_PATH_CANNON L"Images\\Cannon_all"
+#define TEXTURE_PATH_RIFLEMAN L"Images\\rifleman.png"
 
 void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateAircraftAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
+void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
+

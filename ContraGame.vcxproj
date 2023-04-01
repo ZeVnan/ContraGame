@@ -143,6 +143,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LoadResource.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Rifleman.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="LoadResource.h" />
+    <ClInclude Include="Rifleman.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="Sprite.h" />
