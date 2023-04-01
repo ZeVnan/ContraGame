@@ -166,6 +166,7 @@
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="LoadResource.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
+    <ClInclude Include="ScubaSoldier.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />

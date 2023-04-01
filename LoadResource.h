@@ -16,6 +16,7 @@
 #include "Soldier.h"
 #include "Falcon.h"
 #include "WallTurret.h"
+#include "ScubaSoldier.h"
 
 #include "SampleKeyEventHandler.h"
 
