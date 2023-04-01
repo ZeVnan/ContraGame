@@ -1,0 +1,34 @@
+==========ID_TEXURE==========(define ở LoadResources.h)
+bill 0
+bullet 1
+soldier 2
+aircraft 3
+cannon 4
+riffleman 5
+falcon 6 
+wallturret 7
+scubasoldier 8
+grass 20
+==========ID_sprite==========
+bill 100xx
+bullet 101xx
+soldier 102xx
+aircraft 103xx
+cannon 104xx
+riffleman 105xx
+falcon 106xx
+wallturret 107xx
+scubasoldier 108xx
+
+grass 200xx
+==========ID_animation==========(define ở class từng nhân vật)
+bill 10-99
+bullet 0-9
+soldier 100-199
+aircraft 200-299
+cannon 300-399
+riffleman 400-499
+falcon 500-599
+wallturret 600-699
+scubasoldier 700-799
+others(grass, fire, etc...) 2000+

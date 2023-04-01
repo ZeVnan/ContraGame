@@ -6,6 +6,7 @@
 
 #include "Bullet.h"
 
+
 #define SOLDIER_RUN_SPEED 0.1f
 #define SOLDIER_JUMP_SPEED_Y 0.2f
 #define SOLDIER_GRAVITY 0.0004f
@@ -44,6 +45,8 @@
 
 #define SOLDIER_ANI_DIE_LEFT 140
 #define SOLDIER_ANI_DIE_RIGHT 141
+
+
 class CSoldier: public CGameObject
 {
 private:
@@ -62,11 +65,8 @@ public:
 	void Render();
 	void SetState(int State);
 
-	void KeyDown(int KeyCode) {}
-	void KeyUp(int KeyCode) {}
-	void KeyState(CGame* game) {}
-
 	void AddBullet();
 	void DelBullet();
 };
+
 

@@ -22,6 +22,7 @@ void LoadResources() {
 	CreateBillAni(textures, sprites, animations);
 	CreateBulletAni(textures, sprites, animations);
 	CreateSoldierAni(textures, sprites, animations);
+	CreateOtherAni(textures, sprites, animations);
 
 	CSoldier* soldier = new CSoldier(SOLDIER_START_X, SOLDIER_START_Y);
 	objects.push_back(soldier);
@@ -29,6 +30,14 @@ void LoadResources() {
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	objects.push_back(bill);
 
+	for (float i = 0; i < 10; i++) {
+		CGrass* grass = new CGrass(10 + i*32, 185);
+		objects.push_back(grass);
+	}
+	CFire* fire = new CFire(10, 170);
+	objects.push_back(fire);
+	fire = new CFire(290, 170);
+	objects.push_back(fire);
 }
 
 
