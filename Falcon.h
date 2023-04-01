@@ -6,9 +6,10 @@
 
 #include "debug.h"
 
-#define FALCON_ANI_NORMAL 1000
-#define FALCON_ANI_OPENING 1001
-#define FALCON_ANI_OPENED_IDLE 1002
+
+//define animation
+#define FALCON_ANI_NORMAL		500
+#define FALCON_ANI_OPENING		501
 
 class CFalcon : public CGameObject
 {

@@ -171,6 +171,7 @@
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="WallTurret.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\bill_animation.png" />

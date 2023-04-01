@@ -208,65 +208,206 @@ void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 {
 	textures->Add(ID_TEX_FALCON, TEXTURE_PATH_FALCON);
 	LPTEXTURE texFalcon = textures->Get(ID_TEX_FALCON);
-	//id sprite 110xx
+	//id sprite 106xx
 	//normal falcon
-	sprites->Add(11000, 0, 0, 31, 31, texFalcon);
+	sprites->Add(10600, 0, 0, 31, 31, texFalcon);
 	//opening falcon
-	sprites->Add(11001, 34, 0, 65, 31, texFalcon);
-	sprites->Add(11002, 68, 0, 99, 31, texFalcon);
-	sprites->Add(11003, 102, 0, 133, 31, texFalcon);
-	//opened falcon
-	sprites->Add(11004, 136, 0, 167, 31, texFalcon);
-	sprites->Add(11005, 170, 0, 201, 31, texFalcon);
-	sprites->Add(11006, 204, 0, 235, 31, texFalcon);
+	sprites->Add(10601, 34, 0, 65, 31, texFalcon);
+	sprites->Add(10602, 68, 0, 99, 31, texFalcon);
+	sprites->Add(10603, 102, 0, 133, 31, texFalcon);
+	sprites->Add(10604, 136, 0, 167, 31, texFalcon);
+	sprites->Add(10605, 170, 0, 201, 31, texFalcon);
+	sprites->Add(10606, 204, 0, 235, 31, texFalcon);
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);
-	ani->Add(11000);
+	ani->Add(10600);
 	animations->Add(FALCON_ANI_NORMAL, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11001);
-	ani->Add(11002);
-	ani->Add(11003);
-	animations->Add(FALCON_ANI_OPENING, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(11004);
-	ani->Add(11005);
-	ani->Add(11006);
-	animations->Add(FALCON_ANI_OPENED_IDLE, ani);
+	ani->Add(10601);
+	ani->Add(10602);
+	ani->Add(10604);
+	ani->Add(10605);
+	ani->Add(10606);
+	ani->Add(10603);
+	animations->Add(FALCON_ANI_OPENING, ani);	
 }
 
 void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations)
 {
 	textures->Add(ID_TEX_SCUBA, TEXTURE_PATH_SCUBA);
 	LPTEXTURE texScuba = textures->Get(ID_TEX_SCUBA);
-	//id sprite 111xx
+	//id sprite 108xx
 	//Scuba soldier hide right
-	sprites->Add(11100, 2, 0, 17, 30, texScuba);
+	sprites->Add(10800, 2, 0, 17, 30, texScuba);
 	//Scuba soldier hide left
-	sprites->Add(11101, sprites->Get(11100));
+	sprites->Add(10801, sprites->Get(10800));
 	//Scuba soldier shooting right
-	sprites->Add(11102, 20, 0, 35, 30, texScuba);
+	sprites->Add(10802, 20, 0, 35, 30, texScuba);
 	//Scuba soldier hide left
-	sprites->Add(11103, sprites->Get(11102));
+	sprites->Add(10803, sprites->Get(10802));
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);
-	ani->Add(11100);
+	ani->Add(10800);
 	animations->Add(SCUBA_ANI_HIDE_RIGHT, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11101);
+	ani->Add(10801);
 	animations->Add(SCUBA_ANI_HIDE_LEFT, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11102);
+	ani->Add(10802);
 	animations->Add(SCUBA_ANI_SHOOT_RIGHT, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11103);
+	ani->Add(10803);
 	animations->Add(SCUBA_ANI_SHOOT_LEFT, ani);
+}
+
+void CreateWTurretAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations)
+{
+	textures->Add(ID_TEX_WTURRET, TEXTURE_PATH_WTURRET);
+	LPTEXTURE texWTurret = textures->Get(ID_TEX_WTURRET);
+	//id tex 107xx
+	//turret appear
+	sprites->Add(10700, 96, 64, 128, 96, texWTurret);
+	sprites->Add(10701, 128, 64, 160, 96, texWTurret);
+	sprites->Add(10702, 160, 64, 192, 96, texWTurret);
+	sprites->Add(10703, 96, 64, 128, 64, texWTurret);
+	sprites->Add(10704, 128, 64, 160, 64, texWTurret);
+	sprites->Add(10705, 160, 64, 192, 64, texWTurret);
+	//turret up
+	sprites->Add(10706, 96, 0, 128, 32, texWTurret);
+	sprites->Add(10707, 128, 0, 160, 32, texWTurret);
+	sprites->Add(10708, 180, 0, 192, 32, texWTurret);
+	//turret down
+	sprites->Add(10709, 96, 96, 128, 128, texWTurret);
+	sprites->Add(10710, 128, 96, 160, 128, texWTurret);
+	sprites->Add(10711, 180, 96, 192, 128, texWTurret);
+	//turret left 30
+	sprites->Add(10712, 0, 0, 32, 32, texWTurret);
+	sprites->Add(10713, 32, 0, 64, 32, texWTurret);
+	sprites->Add(10714, 64, 0, 96, 32, texWTurret);
+	//turret left 60
+	sprites->Add(10715, 0, 32, 32, 64, texWTurret);
+	sprites->Add(10716, 32, 32, 64, 64, texWTurret);
+	sprites->Add(10717, 64, 32, 96, 64, texWTurret);
+	//turret left 90 or DEFAUT STATE WHEN TURRET APPEAR
+	sprites->Add(10718, 0, 64, 32, 96, texWTurret);
+	sprites->Add(10719, 32, 64, 64, 96, texWTurret);
+	sprites->Add(10720, 64, 64, 96, 96, texWTurret);
+	//turret left 120
+	sprites->Add(10721, 0, 96, 32, 128, texWTurret);
+	sprites->Add(10722, 32, 96, 64, 128, texWTurret);
+	sprites->Add(10723, 64, 96, 96, 128, texWTurret);
+	//turret left 150
+	sprites->Add(10724, 0, 128, 32, 160, texWTurret);
+	sprites->Add(10725, 32, 128, 64, 160, texWTurret);
+	sprites->Add(10726, 64, 128, 96, 160, texWTurret);
+	
+	//turret right 30
+	sprites->Add(10727, sprites->Get(10712));
+	sprites->Add(10728, sprites->Get(10713));
+	sprites->Add(10729, sprites->Get(10714));
+	//turret right 60
+	sprites->Add(10730, sprites->Get(10715));
+	sprites->Add(10731, sprites->Get(10716));
+	sprites->Add(10732, sprites->Get(10717));
+	//turret right 90
+	sprites->Add(10733, sprites->Get(10718));
+	sprites->Add(10734, sprites->Get(10719));
+	sprites->Add(10735, sprites->Get(10720));
+	//turret right 120
+	sprites->Add(10736, sprites->Get(10721));
+	sprites->Add(10737, sprites->Get(10722));
+	sprites->Add(10738, sprites->Get(10723));
+	//turret right 150
+	sprites->Add(10739, sprites->Get(10724));
+	sprites->Add(10740, sprites->Get(10725));
+	sprites->Add(10741, sprites->Get(10726));
+
+	LPANIMATION ani;
+	ani = new CAnimation(100);
+	ani->Add(10700);
+	ani->Add(10701);
+	ani->Add(10702);
+	ani->Add(10703);
+	ani->Add(10704);
+	ani->Add(10705);
+	animations->Add(WTURRET_ANI_APPEAR, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10706);
+	ani->Add(10707);
+	ani->Add(10708);
+	animations->Add(WTURRET_ANI_UP, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10709);
+	ani->Add(10710);
+	ani->Add(10711);
+	animations->Add(WTURRET_ANI_DOWN, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10712);
+	ani->Add(10713);
+	ani->Add(10714);
+	animations->Add(WTURRET_ANI_LEFT30, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10715);
+	ani->Add(10716);
+	ani->Add(10717);
+	animations->Add(WTURRET_ANI_LEFT60, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10718);
+	ani->Add(10719);
+	ani->Add(10720);
+	animations->Add(WTURRET_ANI_LEFT90, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10721);
+	ani->Add(10722);
+	ani->Add(10723);
+	animations->Add(WTURRET_ANI_LEFT120, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10724);
+	ani->Add(10725);
+	ani->Add(10726);
+	animations->Add(WTURRET_ANI_LEFT150, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10727);
+	ani->Add(10728);
+	ani->Add(10729);
+	animations->Add(WTURRET_ANI_RIGHT30, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10730);
+	ani->Add(10731);
+	ani->Add(10732);
+	animations->Add(WTURRET_ANI_RIGHT60, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10733);
+	ani->Add(10734);
+	ani->Add(10735);
+	animations->Add(WTURRET_ANI_RIGHT90, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10736);
+	ani->Add(10737);
+	ani->Add(10738);
+	animations->Add(WTURRET_ANI_RIGHT120, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10739);
+	ani->Add(10740);
+	ani->Add(10741);
+	animations->Add(WTURRET_ANI_RIGHT150, ani);
 }
 
