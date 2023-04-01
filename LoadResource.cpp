@@ -203,3 +203,38 @@ void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	ani->Add(10104);
 	animations->Add(BULLET_ANI_MACHINE, ani);
 }
+
+void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations)
+{
+	textures->Add(ID_TEX_FALCON, TEXTURE_PATH_FALCON);
+	LPTEXTURE texFalcon = textures->Get(ID_TEX_FALCON);
+	//id sprite 110xx
+	//normal falcon
+	sprites->Add(11000, 0, 0, 31, 31, texFalcon);
+	//opening falcon
+	sprites->Add(11001, 34, 0, 65, 31, texFalcon);
+	sprites->Add(11002, 68, 0, 99, 31, texFalcon);
+	sprites->Add(11003, 102, 0, 133, 31, texFalcon);
+	//opened falcon
+	sprites->Add(11004, 136, 0, 167, 31, texFalcon);
+	sprites->Add(11005, 170, 0, 201, 31, texFalcon);
+	sprites->Add(11006, 204, 0, 235, 31, texFalcon);
+
+	LPANIMATION ani;
+	ani = new CAnimation(100);
+	ani->Add(11000);
+	animations->Add(FALCON_ANI_NORMAL, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(11001);
+	ani->Add(11002);
+	ani->Add(11003);
+	animations->Add(FALCON_ANI_OPENING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(11004);
+	ani->Add(11005);
+	ani->Add(11006);
+	animations->Add(FALCON_ANI_OPENED_IDLE, ani);
+}
+
