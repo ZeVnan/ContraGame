@@ -6,9 +6,11 @@
 
 #define SOLDIER_RUN_SPEED 0.2f
 
-#
+
+
 class Soldier: public CGameObject
 {
 
 };
+
 

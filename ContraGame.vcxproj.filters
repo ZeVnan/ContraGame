@@ -60,6 +60,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+
+    <ClCompile Include="Falcon.cpp">
+=======
     <ClCompile Include="Aircraft.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,6 +73,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Rifleman.cpp">
+
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,6 +126,15 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+
+    <ClInclude Include="Falcon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WallTurret.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScubaSoldier.h">
+=======
     <ClInclude Include="Aircraft.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -129,6 +142,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rifleman.h">
+
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
