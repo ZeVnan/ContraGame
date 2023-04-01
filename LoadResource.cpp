@@ -238,3 +238,35 @@ void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	animations->Add(FALCON_ANI_OPENED_IDLE, ani);
 }
 
+void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations)
+{
+	textures->Add(ID_TEX_SCUBA, TEXTURE_PATH_SCUBA);
+	LPTEXTURE texScuba = textures->Get(ID_TEX_SCUBA);
+	//id sprite 111xx
+	//Scuba soldier hide right
+	sprites->Add(11100, 2, 0, 17, 30, texScuba);
+	//Scuba soldier hide left
+	sprites->Add(11101, sprites->Get(11100));
+	//Scuba soldier shooting right
+	sprites->Add(11102, 20, 0, 35, 30, texScuba);
+	//Scuba soldier hide left
+	sprites->Add(11103, sprites->Get(11102));
+
+	LPANIMATION ani;
+	ani = new CAnimation(100);
+	ani->Add(11100);
+	animations->Add(SCUBA_ANI_HIDE_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(11101);
+	animations->Add(SCUBA_ANI_HIDE_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(11102);
+	animations->Add(SCUBA_ANI_SHOOT_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(11103);
+	animations->Add(SCUBA_ANI_SHOOT_LEFT, ani);
+}
+
