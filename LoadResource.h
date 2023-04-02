@@ -35,7 +35,6 @@
 #define ID_TEX_FALCON 6
 #define ID_TEX_SCUBA 7
 #define ID_TEX_WTURRET 8
-
 #define ID_TEX_GRASS 20
 #define ID_TEX_FIRE 21
 

@@ -167,7 +167,7 @@ void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	ani->Add(10086);
 	animations->Add(BILL_ANI_SHOOT_LEFT, ani);
 }
-void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
+void CreateBulletAni(/**/CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_BULLET, TEXTURE_PATH_BULLET);
 	LPTEXTURE texBullet = textures->Get(ID_TEX_BULLET);
 	//id sprite 101xx
@@ -214,6 +214,7 @@ void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	sprites->Add(10601, 34, 0, 65, 31, texFalcon);
 	sprites->Add(10602, 68, 0, 99, 31, texFalcon);
 	sprites->Add(10603, 102, 0, 133, 31, texFalcon);
+	//opened falcon
 	sprites->Add(10604, 136, 0, 167, 31, texFalcon);
 	sprites->Add(10605, 170, 0, 201, 31, texFalcon);
 	sprites->Add(10606, 204, 0, 235, 31, texFalcon);
@@ -226,11 +227,20 @@ void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	ani = new CAnimation(100);
 	ani->Add(10601);
 	ani->Add(10602);
+	ani->Add(10603);
+	animations->Add(FALCON_ANI_OPENING, ani);
+
+	ani = new CAnimation(100);
 	ani->Add(10604);
 	ani->Add(10605);
 	ani->Add(10606);
+	animations->Add(FALCON_ANI_OPENED, ani);
+
+	ani = new CAnimation(100);
 	ani->Add(10603);
-	animations->Add(FALCON_ANI_OPENING, ani);	
+	ani->Add(10602);
+	ani->Add(10601);
+	animations->Add(FALCON_ANI_CLOSING, ani);
 }
 void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations)
 {
@@ -466,13 +476,15 @@ void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	LPTEXTURE cannonTex = textures->Get(ID_TEX_CANNON);
 	//cannon 104xx
 
-	//run
+	//left
 	sprites->Add(10400, 66, 66, 98, 98, cannonTex);
 	sprites->Add(10401, 66, 34, 98, 66, cannonTex);
 	sprites->Add(10402, 66, 2, 98, 34, cannonTex);
+	//left - 60
 	sprites->Add(10403, 98, 66, 130, 98, cannonTex);
 	sprites->Add(10404, 98, 34, 130, 66, cannonTex);
 	sprites->Add(10405, 98, 2, 130, 34, cannonTex);
+	//left - 30
 	sprites->Add(10406, 130, 66, 162, 98, cannonTex);
 	sprites->Add(10407, 130, 34, 162, 66, cannonTex);
 	sprites->Add(10408, 130, 2, 162, 34, cannonTex);
@@ -489,13 +501,19 @@ void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	ani->Add(10400);
 	ani->Add(10401);
 	ani->Add(10402);
+	animations->Add(CANNON_ANI_LEFT, ani);
+
+	ani = new CAnimation(100);
 	ani->Add(10403);
 	ani->Add(10404);
 	ani->Add(10405);
+	animations->Add(CANNON_ANI_LEFT_60, ani);
+
+	ani = new CAnimation(100);
 	ani->Add(10406);
 	ani->Add(10407);
 	ani->Add(10408);
-	animations->Add(CANNON_ANI_RUN, ani);
+	animations->Add(CANNON_ANI_LEFT_30, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10110);
@@ -510,51 +528,88 @@ void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& a
 	textures->Add(ID_TEX_RIFLEMAN, TEXTURE_PATH_RIFLEMAN);
 	LPTEXTURE riflemanTex = textures->Get(ID_TEX_RIFLEMAN);
 	//rifleman 105xx
-	//normal
+	//normal-left
 	sprites->Add(10400, 0, 0, 23, 38, riflemanTex);
-	//shoot
+	//normal-right
+	sprites->Add(10401, sprites->Get(10400));
+	//shoot-left
 	sprites->Add(10410, 26, 0, 49, 38, riflemanTex);
-	//aim_up
+	//shoot-right
+	sprites->Add(10411, sprites->Get(10410));
+	//aim_up-left
 	sprites->Add(10420, 52, 0, 69, 38, riflemanTex);
-	//shoot_up
+	//aim_up-right
+	sprites->Add(10421, sprites->Get(10420));
+	//shoot_up-left
 	sprites->Add(10430, 72, 0, 89, 38, riflemanTex);
-	//aim_down
+	//shoot_up-right
+	sprites->Add(10431, sprites->Get(10430));
+	//aim_down-left
 	sprites->Add(10440, 92, 0, 115, 38, riflemanTex);
-	//hide
+	//aim_down-right
+	sprites->Add(10441, sprites->Get(10440));
+	//hide-left
 	sprites->Add(10450, 118, 0, 125, 38, riflemanTex);
-	//expose
+	//hide-right
+	sprites->Add(10451, sprites->Get(10450));
+	//expose-left
 	sprites->Add(10460, 128, 0, 150, 38, riflemanTex);
 	sprites->Add(10461, 153, 0, 176, 38, riflemanTex);
+	//expose-right
+	sprites->Add(10462, sprites->Get(10460));
+	sprites->Add(10463, sprites->Get(10461));
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);
 	ani->Add(10400);
-	animations->Add(RIFLEMAN_ANI_NORMAL, ani);
+	animations->Add(RIFLEMAN_ANI_NORMAL_LEFT, ani);
+	ani = new CAnimation(100);
+	ani->Add(10401);
+	animations->Add(RIFLEMAN_ANI_NORMAL_RIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10410);
-	animations->Add(RIFLEMAN_ANI_SHOOT, ani);
+	animations->Add(RIFLEMAN_ANI_SHOOT_LEFT, ani);
+	ani = new CAnimation(100);
+	ani->Add(10411);
+	animations->Add(RIFLEMAN_ANI_SHOOT_RIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10420);
-	animations->Add(RIFLEMAN_ANI_AIM_UP, ani);
+	animations->Add(RIFLEMAN_ANI_AIM_UP_LEFT, ani);
+	ani = new CAnimation(100);
+	ani->Add(10421);
+	animations->Add(RIFLEMAN_ANI_AIM_UP_RIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10430);
-	animations->Add(RIFLEMAN_ANI_SHOOT_UP, ani);
+	animations->Add(RIFLEMAN_ANI_SHOOT_UP_LEFT, ani);
+	ani = new CAnimation(100);
+	ani->Add(10431);
+	animations->Add(RIFLEMAN_ANI_SHOOT_UP_RIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10440);
-	animations->Add(RIFLEMAN_ANI_AIM_DOWN, ani);
+	animations->Add(RIFLEMAN_ANI_AIM_DOWN_LEFT, ani);
+	ani = new CAnimation(100);
+	ani->Add(10441);
+	animations->Add(RIFLEMAN_ANI_AIM_DOWN_RIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10450);
-	animations->Add(RIFLEMAN_ANI_HIDE, ani);
+	animations->Add(RIFLEMAN_ANI_HIDE_LEFT, ani);
+	ani = new CAnimation(100);
+	ani->Add(10451);
+	animations->Add(RIFLEMAN_ANI_HIDE_RIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10460);
 	ani->Add(10461);
-	animations->Add(RIFLEMAN_ANI_EXPOSE, ani);
+	animations->Add(RIFLEMAN_ANI_EXPOSE_LEFT, ani);
+	ani = new CAnimation(100);
+	ani->Add(10462);
+	ani->Add(10463);
+	animations->Add(RIFLEMAN_ANI_EXPOSE_RIGHT, ani);
 }
 void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_SOLDIER, TEXTURE_PATH_SOLDIER);
