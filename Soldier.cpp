@@ -15,7 +15,7 @@ void CSoldier::Update(DWORD dt) {
 	x += vx * dt;
 	y += vy * dt;
 
-	DebugOutTitle(L"x = %f", this->x);
+	//DebugOutTitle(L"x = %f", this->x);
 	vx = maxVx;
 	if (y >= GROUND_Y) {
 		vy = 0;

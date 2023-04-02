@@ -25,7 +25,7 @@ void CBill::Update(DWORD dt) {
 	}
 	
 
-	//DebugOutTitle(L"bullets = %d", bullets.size());
+	DebugOutTitle(L"bullets = %d", bullets.size());
 
 	
 	if (vx > 0 && x > 290) x = 290;
@@ -178,10 +178,6 @@ void CBill::SetState(int state) {
 			vy = -BILL_JUMP_SPEED_Y;
 		}
 		break;
-	case BILL_STATE_JUMP_RELEASE:
-		if (vy < 0)
-			vy += BILL_JUMP_SPEED_Y / 2;
-		break;
 	case BILL_STATE_DOWN:
 		if (vy == 0) {
 			if (vx == 0) {
@@ -229,9 +225,6 @@ void CBill::KeyDown(int KeyCode) {
 }
 void CBill::KeyUp(int KeyCode) {
 	switch (KeyCode) {
-	case DIK_X:
-		this->SetState(BILL_STATE_JUMP_RELEASE);
-		break;
 	case DIK_Z:
 		this->SetState(BILL_STATE_SHOOT_RELEASE);
 		break;
