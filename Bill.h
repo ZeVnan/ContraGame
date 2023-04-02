@@ -27,8 +27,8 @@
 #define BILL_STATE_UP 40
 #define BILL_STATE_UP_RELEASE 41
 
-#define BILL_STATE_SHOT 50
-#define BILL_STATE_SHOT_RELEASE 51
+#define BILL_STATE_SHOOT 50
+#define BILL_STATE_SHOOT_RELEASE 51
 
 #define BILL_STATE_SWIM_BEGIN 60
 #define BILL_STATE_SWIM 61
@@ -50,16 +50,14 @@
 #define BILL_ANI_LAYDOWN_RIGHT 40
 #define BILL_ANI_LAYDOWN_LEFT 41
 
-#define BILL_ANI_SHOT_UPRIGHT 50
-#define BILL_ANI_SHOT_UPLEFT 51
-#define BILL_ANI_SHOT_DOWNRIGHT 52
-#define BILL_ANI_SHOT_DOWNLEFT 53
-#define BILL_ANI_SHOT_UP_RIGHT 54
-#define BILL_ANI_SHOT_UP_LEFT 55
-#define BILL_ANI_SHOT_RIGHT 56
-#define BILL_ANI_SHOT_LEFT 57
-
-#define GROUND_Y 160.0f
+#define BILL_ANI_SHOOT_UPRIGHT 50
+#define BILL_ANI_SHOOT_UPLEFT 51
+#define BILL_ANI_SHOOT_DOWNRIGHT 52
+#define BILL_ANI_SHOOT_DOWNLEFT 53
+#define BILL_ANI_SHOOT_UP_RIGHT 54
+#define BILL_ANI_SHOOT_UP_LEFT 55
+#define BILL_ANI_SHOOT_RIGHT 56
+#define BILL_ANI_SHOOT_LEFT 57
 
 #define BILL_LAY_HEIGHT_ADJUST 10.0f
 #define BILL_UP_HEIGHT_ADJUST -6.0f
@@ -76,17 +74,10 @@ class CBill :public CGameObject
 	float gunx;
 	float guny;
 	vector<LPBULLET>bullets;
-	int bulletType = BULLET_ANI_MACHINE;
+	int bulletType = BULLET_ANI_SPREAD;
 public:
 	CBill();
-	CBill(float x, float y) : CGameObject(x, y)
-	{
-		isLaying = false;
-		isShooting = false;
-		ny = 0;
-		maxVx = 0.0f;
-		maxVy = 0.0f;
-	}
+	CBill(float x, float y);
 	void Update(DWORD dt);
 	void Render();
 	void SetState(int state);

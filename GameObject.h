@@ -8,6 +8,7 @@
 
 using namespace std;
 
+#define GROUND_Y 160.0f
 class CGameObject
 {
 protected:
@@ -33,9 +34,6 @@ public:
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
 
-	virtual void KeyDown(int KeyCode) = 0;
-	virtual void KeyUp(int KeyCode) = 0;
-	virtual void KeyState(CGame* game) = 0;
 	~CGameObject();
 };
 

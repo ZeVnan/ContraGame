@@ -25,11 +25,6 @@ public:
 	void Update(DWORD dt);
 	void Render();
 	BOOLEAN outOfScreen();
-
-	void KeyDown(int KeyCode) {}
-	void KeyUp(int KeyCode) {}
-	void KeyState(CGame* game) {}
-	~CBullet();
 };
 typedef CBullet* LPBULLET;
 

@@ -1,166 +1,171 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="Animation.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadResource.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleKeyEventHandler.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Rifleman.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Falcon.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Cannon.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bill.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Aircraft.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ScubaSoldier.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WallTurret.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Grass.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Animation.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyEventHandler.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadResource.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleKeyEventHandler.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Aircraft.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannon.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Falcon.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Bill.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Rifleman.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ScubaSoldier.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="WallTurret.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Grass.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="mario.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Animations.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bill.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleKeyEventHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Soldier.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprites.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Textures.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-
-    <ClCompile Include="Falcon.cpp">
-=======
-    <ClCompile Include="Aircraft.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Canon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Cannon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rifleman.cpp">
-
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationFrame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Animations.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bill.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyEventHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleKeyEventHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Soldier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Textures.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-
-    <ClInclude Include="Falcon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WallTurret.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScubaSoldier.h">
-=======
-    <ClInclude Include="Aircraft.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cannon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rifleman.h">
-
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="mario.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Images\bill_animation_2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="textures\mario.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="textures\misc.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Images\bill_animation.png">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{dc66ecd8-dc89-43b2-9d78-d85272586d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{42209c47-c838-4ddc-b3b4-7de63b08fc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Header">
+      <UniqueIdentifier>{3f707486-ff67-4c4c-89a8-5ea78398b6a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Sources">
+      <UniqueIdentifier>{0d26c026-f104-437e-ba0a-c0a4786b1fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Header">
+      <UniqueIdentifier>{1be7eef8-6337-4eee-b29a-d66dc778b6c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Sources">
+      <UniqueIdentifier>{ffc478a3-f2a7-45b0-86d9-8c84bfc04453}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

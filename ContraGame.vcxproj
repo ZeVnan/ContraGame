@@ -143,19 +143,22 @@
     <ClCompile Include="Bill.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Cannon.cpp" />
-    <ClCompile Include="Canon.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Falcon.cpp" />
+    <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Grass.cpp" />
     <ClCompile Include="LoadResource.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Rifleman.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
+    <ClCompile Include="ScubaSoldier.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="WallTurret.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Aircraft.h" />
@@ -167,8 +170,10 @@
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Falcon.h" />
+    <ClInclude Include="Fire.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Grass.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="LoadResource.h" />
     <ClInclude Include="Rifleman.h" />
@@ -182,11 +187,7 @@
     <ClInclude Include="WallTurret.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Images\bill_animation.png" />
-    <Image Include="Images\bill_animation_2.png" />
     <Image Include="mario.ico" />
-    <Image Include="textures\mario.png" />
-    <Image Include="textures\misc.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
