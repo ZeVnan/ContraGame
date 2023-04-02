@@ -35,7 +35,6 @@
 #define ID_TEX_FALCON 6
 #define ID_TEX_SCUBA 7
 #define ID_TEX_WTURRET 8
-
 #define ID_TEX_GRASS 20
 #define ID_TEX_FIRE 21
 
@@ -58,11 +57,8 @@ void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateWTurretAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
-void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
-void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateAircraftAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
-void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
