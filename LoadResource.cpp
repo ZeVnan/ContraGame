@@ -214,6 +214,7 @@ void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	sprites->Add(10601, 34, 0, 65, 31, texFalcon);
 	sprites->Add(10602, 68, 0, 99, 31, texFalcon);
 	sprites->Add(10603, 102, 0, 133, 31, texFalcon);
+	//opened falcon
 	sprites->Add(10604, 136, 0, 167, 31, texFalcon);
 	sprites->Add(10605, 170, 0, 201, 31, texFalcon);
 	sprites->Add(10606, 204, 0, 235, 31, texFalcon);
@@ -226,11 +227,20 @@ void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	ani = new CAnimation(100);
 	ani->Add(10601);
 	ani->Add(10602);
+	ani->Add(10603);
+	animations->Add(FALCON_ANI_OPENING, ani);
+
+	ani = new CAnimation(100);
 	ani->Add(10604);
 	ani->Add(10605);
 	ani->Add(10606);
+	animations->Add(FALCON_ANI_OPENED, ani);
+
+	ani = new CAnimation(100);
 	ani->Add(10603);
-	animations->Add(FALCON_ANI_OPENING, ani);	
+	ani->Add(10602);
+	ani->Add(10601);
+	animations->Add(FALCON_ANI_CLOSING, ani);
 }
 void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations)
 {
