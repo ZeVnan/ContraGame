@@ -22,6 +22,8 @@ void LoadResources() {
 	CreateBillAni(textures, sprites, animations);
 	CreateBulletAni(textures, sprites, animations);
 	CreateSoldierAni(textures, sprites, animations);
+	CreateAircraftAni(textures, sprites, animations);
+	CreateFalconAni(textures, sprites, animations);
 	CreateOtherAni(textures, sprites, animations);
 
 	CSoldier* soldier = new CSoldier(SOLDIER_START_X, SOLDIER_START_Y);
@@ -38,6 +40,10 @@ void LoadResources() {
 	objects.push_back(fire);
 	fire = new CFire(290, 170);
 	objects.push_back(fire);
+	CAircraft* aircraft = new CAircraft(10, 30, AIRCRAFT_ANI_bAMMO);
+	objects.push_back(aircraft);
+	CFalcon* falcon = new CFalcon(40, 160);
+	objects.push_back(falcon);
 }
 
 

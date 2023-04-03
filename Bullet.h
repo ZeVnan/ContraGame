@@ -16,13 +16,14 @@
 
 class CBullet :public CGameObject
 {
-private:
+protected:
 	int type;
 	float maxVx = 0;
 	float maxVy = 0;
 public:
-	CBullet(float x, float y, float vx, float vy, int nx, int ny, int type);
-	void Update(DWORD dt);
+	CBullet();
+	CBullet(float x, float y, int angle);
+	virtual void Update(DWORD dt) = 0;
 	void Render();
 	BOOLEAN outOfScreen();
 };

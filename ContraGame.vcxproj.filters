@@ -67,6 +67,9 @@
     <ClCompile Include="Fire.cpp">
       <Filter>GameObject\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="BulletS.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -139,6 +142,9 @@
       <Filter>GameObject\Header</Filter>
     </ClInclude>
     <ClInclude Include="Fire.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletS.h">
       <Filter>GameObject\Header</Filter>
     </ClInclude>
   </ItemGroup>

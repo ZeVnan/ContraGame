@@ -167,7 +167,7 @@ void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	ani->Add(10086);
 	animations->Add(BILL_ANI_SHOOT_LEFT, ani);
 }
-void CreateBulletAni(/**/CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
+void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_BULLET, TEXTURE_PATH_BULLET);
 	LPTEXTURE texBullet = textures->Get(ID_TEX_BULLET);
 	//id sprite 101xx
@@ -222,7 +222,7 @@ void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	LPANIMATION ani;
 	ani = new CAnimation(100);
 	ani->Add(10600);
-	animations->Add(FALCON_ANI_NORMAL, ani);
+	animations->Add(FALCON_ANI_CLOSED, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10601);

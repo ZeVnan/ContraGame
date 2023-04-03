@@ -7,6 +7,7 @@
 #include "debug.h"
 
 #include "Bullet.h"
+#include "BulletS.h"
 #define BILL_RUN_SPEED 0.1f
 
 #define BILL_JUMP_SPEED_Y 0.2f
@@ -19,7 +20,6 @@
 #define BILL_STATE_RUN_LEFT 11
 
 #define BILL_STATE_JUMP 20
-#define BILL_STATE_JUMP_RELEASE 21
 
 #define BILL_STATE_DOWN 30
 #define BILL_STATE_DOWN_RELEASE 31
@@ -86,7 +86,15 @@ public:
 	void KeyUp(int KeyCode);
 	void KeyState(CGame* game);
 
+	int CalculateAngle();
+
 	void AddBullet();
-	void DelBullet();
+	void DelBullet(int i);
+
+	void ShootSpreadBullet(int angle);
+	void ShootMachineBullet(int angle);
+	void ShootFlameBullet(int angle);
+	void ShootLaserBullet(int angle);
+	void ShootNormalBullet(int angle);
 };
 
