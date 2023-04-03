@@ -23,16 +23,15 @@ void CBill::Update(DWORD dt) {
 	else {
 		vy += BILL_GRAVITY * dt;
 	}
-	
 
-	DebugOutTitle(L"bullets = %d", bullets.size());
+	DebugOutTitle(L"bullets = %d, angle = %d", bullets.size(), CalculateAngle());
 
 	
 	if (vx > 0 && x > 290) x = 290;
 	if (vx < 0 && x < 10) x = 10;
 	for (int i = 0; i < bullets.size(); i++) {
 		if (bullets[i]->outOfScreen())
-			this->DelBullet();
+			this->DelBullet(i);
 		else
 			bullets[i]->Update(dt);
 	}
@@ -212,6 +211,7 @@ void CBill::SetState(int state) {
 	}
 	CGameObject::SetState(state);
 }
+
 void CBill::KeyDown(int KeyCode) {
 	switch (KeyCode) {
 	case DIK_X:
@@ -265,11 +265,65 @@ void CBill::KeyState(CGame* game) {
 		this->SetState(BILL_STATE_NORMAL);
 }
 
-void CBill::AddBullet() {
-	
-	LPBULLET bullet = new CBullet(this->gunx, this->guny, this->vx, this->vy, this->nx, this->ny, this->bulletType);
-	this->bullets.push_back(bullet);
+int CBill::CalculateAngle() {
+	if (vx > 0) {
+		if (ny == 1)
+			return 45;
+		if (ny == -1)
+			return 315;
+		if (ny == 0)
+			return 0;
+	}
+	if (vx < 0) {
+		if (ny == 1)
+			return 135;
+		if (ny == -1)
+			return 225;
+		if (ny == 0)
+			return 180;
+	}
+	if (vx == 0) {
+		if (ny == 1)
+			return 90;
+		if (ny == 0) {
+			if (nx == 1)
+				return 0;
+			else
+				return 180;
+		}
+		if (ny == -1) {
+			if (vy != 0) {
+				return 270;
+			}
+			else {
+				if (nx == 1)
+					return 0;
+				else
+					return 180;
+			}
+		}
+	}
 }
-void CBill::DelBullet() {
-	this->bullets.erase(bullets.begin());
+
+void CBill::AddBullet() {
+	switch (bulletType) {
+	case BULLET_ANI_SPREAD:
+		ShootSpreadBullet(CalculateAngle());
+	}
+}
+void CBill::DelBullet(int i) {
+	bullets.erase(bullets.begin() + i);
+}
+void CBill::ShootSpreadBullet(int angle) {
+	LPBULLETS bulletS;
+	bulletS = new CBulletS(gunx, guny, angle);
+	this->bullets.push_back(bulletS);
+	bulletS = new CBulletS(gunx, guny, angle - 15);
+	this->bullets.push_back(bulletS);
+	bulletS = new CBulletS(gunx, guny, angle + 15);
+	this->bullets.push_back(bulletS);
+	bulletS = new CBulletS(gunx, guny, angle - 30);
+	this->bullets.push_back(bulletS);
+	bulletS = new CBulletS(gunx, guny, angle + 30);
+	this->bullets.push_back(bulletS);
 }
