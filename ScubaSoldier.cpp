@@ -1,7 +1,7 @@
 #include "ScubaSoldier.h"
 
 CScubaSoldier::CScubaSoldier(float x, float y) :CGameObject(x, y) {
-	this->state = 0;
+	this->state = SCUBA_STATE_HIDING;
 	timeleft = SCUBA_HIDING_TIME;
 }
 
@@ -12,10 +12,10 @@ void CScubaSoldier::Update(DWORD dt)
 	{
 		switch (this->state)
 		{
-		case 0:
+		case SCUBA_STATE_HIDING:
 			this->SetState(SCUBA_STATE_HIDING);
 			break;
-		case 1:
+		case SCUBA_STATE_SHOOTING:
 			this->SetState(SCUBA_STATE_SHOOTING);
 			break;
 		}
@@ -29,10 +29,10 @@ void CScubaSoldier::Render()
 	int ani = -1;
 	switch(this->state)
 	{
-	case 0:
+	case SCUBA_STATE_HIDING:
 		ani = SCUBA_ANI_HIDE_RIGHT;
 		break;
-	case 1:
+	case SCUBA_STATE_SHOOTING:
 		ani = SCUBA_ANI_SHOOT_RIGHT;
 		break;
 	}
@@ -46,13 +46,13 @@ void CScubaSoldier::SetState(int state)
 	case SCUBA_STATE_HIDING:
 		isHiding = true;
 		isShooting = false;
-		this->state = 1;
+		this->state = SCUBA_STATE_SHOOTING;
 		timeleft = SCUBA_HIDING_TIME;
 		break;
 	case SCUBA_STATE_SHOOTING:
 		isShooting = true;
 		isHiding = false;
-		this->state = 0;
+		this->state = SCUBA_STATE_HIDING;
 		timeleft = SCUBA_SHOOTING_TIME;
 		break;
 	}

@@ -2,7 +2,7 @@
 
 CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 {
-	this->state = 0;
+	this->state = WTURRET_STATE_APPEAR;
 	timeleft = WTURRET_TIME_APPEAR;
 }
 
@@ -13,43 +13,43 @@ void CWallTurret::Update(DWORD dt)
 	{
 		switch (this->state)
 		{
-		case 0:
+		case WTURRET_STATE_APPEAR:
 			this->SetState(WTURRET_STATE_APPEAR);
 			break;
-		case 1:
+		case WTURRET_STATE_LEFT30:
 			this->SetState(WTURRET_STATE_LEFT30);
 			break;
-		case 2:
+		case WTURRET_STATE_LEFT60:
 			this->SetState(WTURRET_STATE_LEFT60);
 			break;
-		case 3:
+		case WTURRET_STATE_LEFT90:
 			this->SetState(WTURRET_STATE_LEFT90);
 			break;
-		case 4:
+		case WTURRET_STATE_LEFT120:
 			this->SetState(WTURRET_STATE_LEFT120);
 			break;
-		case 5:
+		case WTURRET_STATE_LEFT150:
 			this->SetState(WTURRET_STATE_LEFT150);
 			break;
-		case 6:
+		case WTURRET_STATE_RIGHT30:
 			this->SetState(WTURRET_STATE_RIGHT30);
 			break;
-		case 7:
+		case WTURRET_STATE_RIGHT60:
 			this->SetState(WTURRET_STATE_RIGHT60);
 			break;
-		case 8:
+		case WTURRET_STATE_RIGHT90:
 			this->SetState(WTURRET_STATE_RIGHT90);
 			break;
-		case 9:
+		case WTURRET_STATE_RIGHT120:
 			this->SetState(WTURRET_STATE_RIGHT120);
 			break;
-		case 10:
+		case WTURRET_STATE_RIGHT150:
 			this->SetState(WTURRET_STATE_RIGHT150);
 			break;
-		case 11:
+		case WTURRET_STATE_UP:
 			this->SetState(WTURRET_STATE_UP);
 			break;
-		case 12:
+		case WTURRET_STATE_DOWN:
 			this->SetState(WTURRET_STATE_DOWN);
 			break;
 		}
@@ -63,43 +63,43 @@ void CWallTurret::Render()
 	int ani = -1;
 	switch (this->state)
 	{
-	case 0:
+	case WTURRET_STATE_APPEAR:
 		ani = WTURRET_ANI_APPEAR;
 		break;
-	case 1:
+	case WTURRET_STATE_LEFT30:
 		ani = WTURRET_ANI_LEFT30;
 		break;
-	case 2:
+	case WTURRET_STATE_LEFT60:
 		ani = WTURRET_ANI_LEFT60;
 		break;
-	case 3:
+	case WTURRET_STATE_LEFT90:
 		ani = WTURRET_ANI_LEFT90;
 		break;
-	case 4:
+	case WTURRET_STATE_LEFT120:
 		ani = WTURRET_ANI_LEFT120;
 		break;
-	case 5:
+	case WTURRET_STATE_LEFT150:
 		ani = WTURRET_ANI_LEFT150;
 		break;
-	case 6:
+	case WTURRET_STATE_RIGHT30:
 		ani = WTURRET_ANI_RIGHT30;
 		break;
-	case 7:
+	case WTURRET_STATE_RIGHT60:
 		ani = WTURRET_ANI_RIGHT60;
 		break;
-	case 8:
+	case WTURRET_STATE_RIGHT90:
 		ani = WTURRET_ANI_RIGHT90;
 		break;
-	case 9:
+	case WTURRET_STATE_RIGHT120:
 		ani = WTURRET_ANI_RIGHT120;
 		break;
-	case 10:
+	case WTURRET_STATE_RIGHT150:
 		ani = WTURRET_ANI_RIGHT150;
 		break;
-	case 11:
+	case WTURRET_STATE_UP:
 		ani = WTURRET_ANI_UP;
 		break;
-	case 12:
+	case WTURRET_STATE_DOWN:
 		ani = WTURRET_ANI_DOWN;
 		break;
 	}
@@ -111,55 +111,55 @@ void CWallTurret::SetState(int state)
 	switch (state)
 	{
 	case WTURRET_STATE_APPEAR:
-		this->state = 1;
+		this->state = WTURRET_STATE_LEFT30;
 		timeleft = WTURRET_TIME_APPEAR;
 		break;
 	case WTURRET_STATE_LEFT30:
-		this->state = 2;
+		this->state = WTURRET_STATE_LEFT60;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_LEFT60:
-		this->state = 3;
+		this->state = WTURRET_STATE_LEFT90;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_LEFT90:
-		this->state = 4;
+		this->state = WTURRET_STATE_LEFT120;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_LEFT120:
-		this->state = 5;
+		this->state = WTURRET_STATE_LEFT150;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_LEFT150:
-		this->state = 12;
+		this->state = WTURRET_STATE_DOWN;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_DOWN:
-		this->state = 10;
+		this->state = WTURRET_STATE_RIGHT150;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT150:
-		this->state = 9;
+		this->state = WTURRET_STATE_RIGHT120;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT120:
-		this->state = 8;
+		this->state = WTURRET_STATE_RIGHT90;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT90:
-		this->state = 7;
+		this->state = WTURRET_STATE_RIGHT60;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT60:
-		this->state = 6;
+		this->state = WTURRET_STATE_RIGHT30;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT30:
-		this->state = 11;
+		this->state = WTURRET_STATE_UP;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_UP:
-		this->state = 1;
+		this->state = WTURRET_STATE_LEFT30;
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	}
