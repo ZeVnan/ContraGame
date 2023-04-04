@@ -282,17 +282,17 @@ void CreateWTurretAni(CTextures*& textures, CSprites*& sprites, CAnimations*& an
 	sprites->Add(10700, 96, 64, 128, 96, texWTurret);
 	sprites->Add(10701, 128, 64, 160, 96, texWTurret);
 	sprites->Add(10702, 160, 64, 192, 96, texWTurret);
-	sprites->Add(10703, 96, 64, 128, 64, texWTurret);
-	sprites->Add(10704, 128, 64, 160, 64, texWTurret);
-	sprites->Add(10705, 160, 64, 192, 64, texWTurret);
+	sprites->Add(10703, 96, 32, 128, 64, texWTurret);
+	sprites->Add(10704, 128, 32, 160, 64, texWTurret);
+	sprites->Add(10705, 160, 32, 192, 64, texWTurret);
 	//turret up
 	sprites->Add(10706, 96, 0, 128, 32, texWTurret);
 	sprites->Add(10707, 128, 0, 160, 32, texWTurret);
-	sprites->Add(10708, 180, 0, 192, 32, texWTurret);
+	sprites->Add(10708, 160, 0, 192, 32, texWTurret);
 	//turret down
 	sprites->Add(10709, 96, 96, 128, 128, texWTurret);
 	sprites->Add(10710, 128, 96, 160, 128, texWTurret);
-	sprites->Add(10711, 180, 96, 192, 128, texWTurret);
+	sprites->Add(10711, 160, 96, 192, 128, texWTurret);
 	//turret left 30
 	sprites->Add(10712, 0, 0, 32, 32, texWTurret);
 	sprites->Add(10713, 32, 0, 64, 32, texWTurret);
@@ -315,25 +315,25 @@ void CreateWTurretAni(CTextures*& textures, CSprites*& sprites, CAnimations*& an
 	sprites->Add(10726, 64, 128, 96, 160, texWTurret);
 	
 	//turret right 30
-	sprites->Add(10727, sprites->Get(10712));
-	sprites->Add(10728, sprites->Get(10713));
-	sprites->Add(10729, sprites->Get(10714));
+	sprites->Add(10727, 192, 0, 224, 32, texWTurret);
+	sprites->Add(10728, 224, 0, 256, 32, texWTurret);
+	sprites->Add(10729, 256, 0, 288, 32, texWTurret);
 	//turret right 60
-	sprites->Add(10730, sprites->Get(10715));
-	sprites->Add(10731, sprites->Get(10716));
-	sprites->Add(10732, sprites->Get(10717));
+	sprites->Add(10730, 192, 32, 224, 64, texWTurret);
+	sprites->Add(10731, 224, 32, 256, 64, texWTurret);
+	sprites->Add(10732, 256, 32, 288, 64, texWTurret);
 	//turret right 90
-	sprites->Add(10733, sprites->Get(10718));
-	sprites->Add(10734, sprites->Get(10719));
-	sprites->Add(10735, sprites->Get(10720));
+	sprites->Add(10733, 192, 64, 224, 96, texWTurret);
+	sprites->Add(10734, 224, 64, 256, 96, texWTurret);
+	sprites->Add(10735, 256, 64, 288, 96, texWTurret);
 	//turret right 120
-	sprites->Add(10736, sprites->Get(10721));
-	sprites->Add(10737, sprites->Get(10722));
-	sprites->Add(10738, sprites->Get(10723));
+	sprites->Add(10736, 192, 96, 224, 128, texWTurret);
+	sprites->Add(10737, 224, 96, 256, 128, texWTurret);
+	sprites->Add(10738, 256, 96, 288, 128, texWTurret);
 	//turret right 150
-	sprites->Add(10739, sprites->Get(10724));
-	sprites->Add(10740, sprites->Get(10725));
-	sprites->Add(10741, sprites->Get(10726));
+	sprites->Add(10739, 96, 128, 128, 160, texWTurret);
+	sprites->Add(10740, 128, 128, 160, 160, texWTurret);
+	sprites->Add(10741, 160, 128, 192, 160, texWTurret);
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);

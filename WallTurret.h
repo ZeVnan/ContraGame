@@ -6,6 +6,24 @@
 
 #include "debug.h"
 
+//define state
+#define WTURRET_STATE_APPEAR	0
+#define WTURRET_STATE_LEFT30	1
+#define WTURRET_STATE_LEFT60	2
+#define WTURRET_STATE_LEFT90	3		
+#define WTURRET_STATE_LEFT120	4
+#define WTURRET_STATE_LEFT150	5
+#define WTURRET_STATE_RIGHT30	6
+#define WTURRET_STATE_RIGHT60	7
+#define WTURRET_STATE_RIGHT90	8
+#define WTURRET_STATE_RIGHT120	9
+#define WTURRET_STATE_RIGHT150	10
+#define WTURRET_STATE_UP		11
+#define WTURRET_STATE_DOWN		12
+
+//define temporary animation time
+#define WTURRET_TIME_APPEAR		700
+#define WTURRET_TIME_ROTATE		500
 
 //define animation
 #define WTURRET_ANI_APPEAR		600
@@ -24,5 +42,12 @@
 
 class CWallTurret : public CGameObject
 {
+private:
+	int timeleft;
+public:
+	CWallTurret(float x, float y);
 
+	void Update(DWORD dt);
+	void Render();
+	void SetState(int state);
 };
