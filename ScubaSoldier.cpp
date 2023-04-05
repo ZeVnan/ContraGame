@@ -13,10 +13,10 @@ void CScubaSoldier::Update(DWORD dt)
 		switch (this->state)
 		{
 		case SCUBA_STATE_HIDING:
-			this->SetState(SCUBA_STATE_HIDING);
+			this->SetState(SCUBA_STATE_SHOOTING);
 			break;
 		case SCUBA_STATE_SHOOTING:
-			this->SetState(SCUBA_STATE_SHOOTING);
+			this->SetState(SCUBA_STATE_HIDING);
 			break;
 		}
 	}
@@ -46,15 +46,13 @@ void CScubaSoldier::SetState(int state)
 	case SCUBA_STATE_HIDING:
 		isHiding = true;
 		isShooting = false;
-		this->state = SCUBA_STATE_SHOOTING;
 		timeleft = SCUBA_HIDING_TIME;
 		break;
 	case SCUBA_STATE_SHOOTING:
 		isShooting = true;
 		isHiding = false;
-		this->state = SCUBA_STATE_HIDING;
 		timeleft = SCUBA_SHOOTING_TIME;
 		break;
 	}
-	
+	CGameObject::SetState(state);
 }
