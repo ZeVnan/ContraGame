@@ -6,10 +6,6 @@
 
 #include "debug.h"
 
-#include "Animation.h"
-#include "Animations.h"
-
-#include "GameObject.h"
 #include "Aircraft.h"
 
 #define FALCON_CLOSE_TIME 1500
