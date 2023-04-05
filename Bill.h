@@ -8,6 +8,11 @@
 
 #include "Bullet.h"
 #include "BulletS.h"
+#include "BulletL.h"
+#include "BulletF.h"
+#include "BulletN.h"
+#include "BulletM.h"
+
 #define BILL_RUN_SPEED 0.1f
 
 #define BILL_JUMP_SPEED_Y 0.2f
@@ -64,6 +69,12 @@
 
 #define BILL_START_X 160.0f
 #define BILL_START_Y 10.0f
+
+#define BILL_WAVE_BULLET_NORMAL 4
+#define BILL_WAVE_BULLET_LASER 1
+#define BILL_WAVE_BULLET_FLAME 3
+#define BILL_WAVE_BULLET_SPREAD 2
+#define BILL_WAVE_BULLET_MACHINE 6
 class CBill :public CGameObject
 {
 	BOOLEAN isLaying;
@@ -73,8 +84,12 @@ class CBill :public CGameObject
 	float maxVy;
 	float gunx;
 	float guny;
-	vector<LPBULLET>bullets;
-	int bulletType = BULLET_ANI_SPREAD;
+
+	vector< vector<LPBULLET>>waveContainer;
+	int bulletType;
+	int waveLeft;
+
+	int bulletMtime;
 public:
 	CBill();
 	CBill(float x, float y);
@@ -88,13 +103,16 @@ public:
 
 	int CalculateAngle();
 
-	void AddBullet();
-	void DelBullet(int i);
+	void AddBullet(BOOLEAN KeyState);
 
-	void ShootSpreadBullet(int angle);
-	void ShootMachineBullet(int angle);
-	void ShootFlameBullet(int angle);
-	void ShootLaserBullet(int angle);
-	void ShootNormalBullet(int angle);
+	vector<LPBULLET> ShootSpreadBullet(int angle);
+	vector<LPBULLET> ShootMachineBullet(int angle);
+	vector<LPBULLET> ShootFlameBullet(int angle);
+	vector<LPBULLET> ShootLaserBullet(int angle);
+	vector<LPBULLET> ShootNormalBullet(int angle);
+
+	void SetBulletType(int type);
+	void UpdateBullet(DWORD dt);
+	void RenderBullet();
 };
 
