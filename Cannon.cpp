@@ -32,13 +32,13 @@ void CCannon::Render() {
 	int ani = -1;
 	
 	switch (this->angle_state) {
-	case 0:
+	case CANNON_STATE_LEFT:
 		ani = CANNON_ANI_LEFT;
 		break;
-	case 1:
+	case CANNON_STATE_LEFT_60:
 		ani = CANNON_ANI_LEFT_60;
 		break;
-	case 2:
+	case CANNON_STATE_LEFT_30:
 		ani = CANNON_ANI_LEFT_30;
 		break;
 	}
