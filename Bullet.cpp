@@ -1,6 +1,8 @@
 #include "Bullet.h"
 CBullet::CBullet() {
 	this->type = -1;
+	maxVx = 0;
+	maxVy = 0;
 }
 CBullet::CBullet(float x, float y, int angle) : CBullet() {
 	this->x = x;
