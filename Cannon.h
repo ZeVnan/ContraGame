@@ -1,6 +1,21 @@
 #pragma once
 #include "GameObject.h"
 
+#include "Animation.h"
+#include "Animations.h"
+
+#include "debug.h"
+
+#define ANGLE_STATE_LEFT 0
+#define ANGLE_STATE_LEFT_60 1
+#define ANGLE_STATE_LEFT_30 2
+
+#define CANNON_STATE_LEFT 10
+#define CANNON_STATE_LEFT_60 20
+#define CANNON_STATE_LEFT_30 30
+#define CANNON_STATE_APPEAR 99
+
+
 #define CANNON_ANI_LEFT 300
 #define CANNON_ANI_LEFT_60 301
 #define CANNON_ANI_LEFT_30 302
@@ -8,6 +23,17 @@
 
 class CCannon : public CGameObject
 {
+private:
+	int angle_state;
+	int switchTime;
+	BOOLEAN isShooting;
+	BOOLEAN isAppear;
+public:
+	CCannon();
+	CCannon(float x, float y);
 
+	void Update(DWORD dt);
+	void Render();
+	void SetState(int state);
 };
 

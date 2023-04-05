@@ -22,6 +22,8 @@ void LoadResources() {
 	CreateBillAni(textures, sprites, animations);
 	CreateBulletAni(textures, sprites, animations);
 	CreateSoldierAni(textures, sprites, animations);
+	CreateRiflemanAni(textures, sprites, animations);
+	CreateCannonAni(textures, sprites, animations);
 	CreateAircraftAni(textures, sprites, animations);
 	CreateFalconAni(textures, sprites, animations);
 	CreateScubaAni(textures, sprites, animations);
@@ -31,11 +33,15 @@ void LoadResources() {
 	CSoldier* soldier = new CSoldier(SOLDIER_START_X, SOLDIER_START_Y);
 	objects.push_back(soldier);
 
+	Rifleman* rifleman = new Rifleman(RIFLEMAN_START_X, RIFLEMAN_START_Y);
+	objects.push_back(rifleman);
+
+
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	objects.push_back(bill);
 
 	for (float i = 0; i < 10; i++) {
-		CGrass* grass = new CGrass(10 + i*32, 185);
+		CGrass* grass = new CGrass(10 + i * 32, 185);
 		objects.push_back(grass);
 	}
 	CFire* fire = new CFire(10, 170);
@@ -46,10 +52,13 @@ void LoadResources() {
 	objects.push_back(aircraft);
 	CFalcon* falcon = new CFalcon(40, 160);
 	objects.push_back(falcon);
+	CCannon* cannon = new CCannon(80, 80);
+	objects.push_back(cannon);
 	CScubaSoldier* scuba = new CScubaSoldier(100, 100);
 	objects.push_back(scuba);
 	CWallTurret* turret = new CWallTurret(150, 100);
 	objects.push_back(turret);
+
 }
 
 
@@ -137,7 +146,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 			hInstance,
 			NULL);
 
-	if (!hWnd) 
+	if (!hWnd)
 	{
 		OutputDebugString(L"[ERROR] CreateWindow failed");
 		DWORD ErrCode = GetLastError();

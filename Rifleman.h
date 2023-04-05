@@ -1,6 +1,31 @@
 #pragma once
 #include "GameObject.h"
+#include "Bullet.h"
 
+#define RIFLEMAN_START_X 180.0f
+#define RIFLEMAN_START_Y 40.0f
+#define RIFLEMAN_GRAVITY 0.0004f
+
+#pragma region
+#define RIFLEMAN_STATE_NORMAL_LEFT 0
+#define RIFLEMAN_STATE_NORMAL_RIGHT 1
+
+#define RIFLEMAN_STATE_AIM_UP_LEFT 10
+#define RIFLEMAN_STATE_AIM_UP_RIGHT 11
+
+#define RIFLEMAN_STATE_AIM_DOWN_LEFT 20
+#define RIFLEMAN_STATE_AIM_DOWN_RIGHT 21
+
+#define RIFLEMAN_STATE_HIDING 70
+
+#define RIFLEMAN_STATE_SHOOT 80
+#define RIFLEMAN_STATE_SHOOT_RELEASE 81
+
+#define RIFLEMAN_STATE_EXPOSE 90
+
+#define RIFLEMAN_STATE_DEAD 100
+
+#pragma region
 #define RIFLEMAN_ANI_NORMAL_LEFT 400
 #define RIFLEMAN_ANI_NORMAL_RIGHT 401
 
@@ -23,8 +48,18 @@
 #define RIFLEMAN_ANI_EXPOSE_RIGHT 461
 
 
-class Rifleman
+class Rifleman : public CGameObject
 {
+private:
+	BOOLEAN isShooting;
+	BOOLEAN isHiding;
+	vector<LPBULLET> bullets;
+public:
+	Rifleman();
+	Rifleman(float x, float y);
 
+	void Update(DWORD dt);
+	void Render();
+	void SetState(int state);
 };
 
