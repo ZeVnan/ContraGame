@@ -6,9 +6,6 @@
 
 #include "debug.h"
 
-#define ANGLE_STATE_LEFT 0
-#define ANGLE_STATE_LEFT_60 1
-#define ANGLE_STATE_LEFT_30 2
 
 #define CANNON_STATE_LEFT 10
 #define CANNON_STATE_LEFT_60 20
@@ -24,8 +21,6 @@
 class CCannon : public CGameObject
 {
 private:
-	int angle_state;
-	int switchTime;
 	BOOLEAN isShooting;
 	BOOLEAN isAppear;
 public:

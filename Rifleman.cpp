@@ -4,7 +4,11 @@ Rifleman::Rifleman() {}
 
 Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	isShooting = false;
-	isHiding = false;
+	isHiding = true;
+	gunx = x;
+	guny = y;
+	ny = 0;
+	this->state = RIFLEMAN_STATE_HIDING;
 }
 
 void Rifleman::Update(DWORD dt) {
@@ -24,7 +28,6 @@ void Rifleman::Render() {
 	int ani = -1;
 
 
-
 	if (isHiding) {
 		if (nx > 0) {
 			ani = RIFLEMAN_ANI_HIDE_RIGHT;
@@ -36,18 +39,25 @@ void Rifleman::Render() {
 	else {
 		if (nx > 0) {
 			ani = RIFLEMAN_ANI_NORMAL_RIGHT;
+			if (isShooting) {
+				if (ny == 1) {
+					ani = RIFLEMAN_ANI_AIM_UP_RIGHT;
+				}
+				else if (ny == -1) {
+					ani = RIFLEMAN_ANI_AIM_DOWN_RIGHT;
+				}
+			}
 		}
 		else {
 			ani = RIFLEMAN_ANI_NORMAL_LEFT;
-		}
-	}
-
-	if (isShooting) {
-		if (nx > 0) {
-			ani = RIFLEMAN_ANI_SHOOT_RIGHT;
-		}
-		else {
-			ani = RIFLEMAN_ANI_SHOOT_LEFT;
+			if (isShooting) {
+				if (ny == 1) {
+					ani = RIFLEMAN_ANI_AIM_UP_LEFT;
+				}
+				else if (ny == -1) {
+					ani = RIFLEMAN_ANI_AIM_DOWN_LEFT;
+				}
+			}
 		}
 	}
 
@@ -56,6 +66,18 @@ void Rifleman::Render() {
 
 void Rifleman::SetState(int state) {
 	switch (state) {
+	case RIFLEMAN_STATE_NORMAL_LEFT:
+		break;
+	case RIFLEMAN_STATE_NORMAL_RIGHT:
+		break;
+	case RIFLEMAN_STATE_AIM_DOWN_LEFT:
+		break;
+	case RIFLEMAN_STATE_AIM_DOWN_RIGHT:
+		break;
+	case RIFLEMAN_STATE_AIM_UP_LEFT:
+		break;
+	case RIFLEMAN_STATE_AIM_UP_RIGHT:
+		break;
 	case RIFLEMAN_STATE_HIDING:
 		isShooting = false;
 		isHiding = true;
@@ -68,6 +90,10 @@ void Rifleman::SetState(int state) {
 		break;
 	case RIFLEMAN_STATE_EXPOSE:
 		isShooting = true;
+		isHiding = false;
+		break;
+	case RIFLEMAN_STATE_DEAD:
+		isShooting = false;
 		isHiding = false;
 		break;
 	}

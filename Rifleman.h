@@ -29,14 +29,8 @@
 #define RIFLEMAN_ANI_NORMAL_LEFT 400
 #define RIFLEMAN_ANI_NORMAL_RIGHT 401
 
-#define RIFLEMAN_ANI_SHOOT_LEFT 410
-#define RIFLEMAN_ANI_SHOOT_RIGHT 411
-
 #define RIFLEMAN_ANI_AIM_UP_LEFT 420
 #define RIFLEMAN_ANI_AIM_UP_RIGHT 421
-
-#define RIFLEMAN_ANI_SHOOT_UP_LEFT 430
-#define RIFLEMAN_ANI_SHOOT_UP_RIGHT 431
 
 #define RIFLEMAN_ANI_AIM_DOWN_LEFT 440
 #define RIFLEMAN_ANI_AIM_DOWN_RIGHT 441
@@ -54,6 +48,9 @@ private:
 	BOOLEAN isShooting;
 	BOOLEAN isHiding;
 	vector<LPBULLET> bullets;
+	float gunx;
+	float guny;
+	int ny; // down - -1, normal - 0, up - 1
 public:
 	Rifleman();
 	Rifleman(float x, float y);
