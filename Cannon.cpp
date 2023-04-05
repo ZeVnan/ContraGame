@@ -5,21 +5,22 @@ CCannon::CCannon() {}
 CCannon::CCannon(float x, float y) : CGameObject(x, y){
 	isShooting = false;
 	isAppear = true;
-	state = 0;
-	switchTime = 0;
+	angle_state = ANGLE_STATE_LEFT;
+	switchTime = 500;
 }
 
 void CCannon::Update(DWORD dt) {
 	this->switchTime -= dt;
 	if (this->switchTime < 0) {
-		switch (this->state) {
-		case 0:
+		this->angle_state = rand() % (ANGLE_STATE_LEFT_30 + 1) + ANGLE_STATE_LEFT;
+		switch (this->angle_state) {
+		case ANGLE_STATE_LEFT:
 			this->SetState(CANNON_STATE_LEFT);
 			break;
-		case 1:
+		case ANGLE_STATE_LEFT_60:
 			this->SetState(CANNON_STATE_LEFT_60);
 			break;
-		case 2:
+		case ANGLE_STATE_LEFT_30:
 			this->SetState(CANNON_STATE_LEFT_30);
 			break;
 		}
@@ -30,7 +31,7 @@ void CCannon::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
 	
-	switch (this->state) {
+	switch (this->angle_state) {
 	case 0:
 		ani = CANNON_ANI_LEFT;
 		break;
@@ -47,16 +48,16 @@ void CCannon::Render() {
 void CCannon::SetState(int state) {
 	switch (state) {
 	case CANNON_STATE_LEFT:
-		this->state = 0;
-		this->switchTime = 300;
+		this->angle_state = ANGLE_STATE_LEFT;
+		this->switchTime = 500;
 		break;
 	case CANNON_STATE_LEFT_60:
-		this->state = 1;
-		this->switchTime = 300;
+		this->angle_state = ANGLE_STATE_LEFT_60;
+		this->switchTime = 600;
 		break;
 	case CANNON_STATE_LEFT_30:
-		this->state = 2;
-		this->switchTime = 300;
+		this->angle_state = ANGLE_STATE_LEFT_30;
+		this->switchTime = 700;
 		break;
 	}
 	CGameObject::SetState(state);
