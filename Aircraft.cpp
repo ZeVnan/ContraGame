@@ -64,4 +64,5 @@ void CAircraft::SetState(int state) {
 		isDead = true;
 		break;
 	}
+	CGameObject::SetState(state);
 }

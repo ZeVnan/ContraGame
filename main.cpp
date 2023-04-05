@@ -26,6 +26,8 @@ void LoadResources() {
 	CreateCannonAni(textures, sprites, animations);
 	CreateAircraftAni(textures, sprites, animations);
 	CreateFalconAni(textures, sprites, animations);
+	CreateScubaAni(textures, sprites, animations);
+	CreateWTurretAni(textures, sprites, animations);
 	CreateOtherAni(textures, sprites, animations);
 
 	CSoldier* soldier = new CSoldier(SOLDIER_START_X, SOLDIER_START_Y);
@@ -50,9 +52,13 @@ void LoadResources() {
 	objects.push_back(aircraft);
 	CFalcon* falcon = new CFalcon(40, 160);
 	objects.push_back(falcon);
-
 	CCannon* cannon = new CCannon(80, 80);
 	objects.push_back(cannon);
+	CScubaSoldier* scuba = new CScubaSoldier(100, 100);
+	objects.push_back(scuba);
+	CWallTurret* turret = new CWallTurret(150, 100);
+	objects.push_back(turret);
+
 }
 
 

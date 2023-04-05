@@ -70,6 +70,18 @@
     <ClCompile Include="BulletS.cpp">
       <Filter>GameObject\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="BulletL.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletF.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletN.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletM.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -145,6 +157,18 @@
       <Filter>GameObject\Header</Filter>
     </ClInclude>
     <ClInclude Include="BulletS.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletL.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletF.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletN.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletM.h">
       <Filter>GameObject\Header</Filter>
     </ClInclude>
   </ItemGroup>

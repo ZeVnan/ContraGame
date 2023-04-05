@@ -10,6 +10,10 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 	maxVy = 0.0f;
 	gunx = x;
 	guny = y;
+	bulletType = BULLET_ANI_NORMAL;
+	waveLeft = BILL_WAVE_BULLET_NORMAL;
+
+	bulletMtime = 0;
 }
 void CBill::Update(DWORD dt) {
 	x += vx * dt;
@@ -23,18 +27,19 @@ void CBill::Update(DWORD dt) {
 	else {
 		vy += BILL_GRAVITY * dt;
 	}
-
-	DebugOutTitle(L"bullets = %d, angle = %d", bullets.size(), CalculateAngle());
-
-	
 	if (vx > 0 && x > 290) x = 290;
 	if (vx < 0 && x < 10) x = 10;
-	for (int i = 0; i < bullets.size(); i++) {
-		if (bullets[i]->outOfScreen())
-			this->DelBullet(i);
-		else
-			bullets[i]->Update(dt);
+
+	if (bulletMtime > 0)
+		bulletMtime -= dt;
+	else
+		bulletMtime = 0;
+	UpdateBullet(dt);
+	int a = 0;
+	for (int i = 0; i < waveContainer.size(); i++) {
+		a += waveContainer[i].size();
 	}
+	DebugOutTitle(L"Bullets = %d", a);
 }
 void CBill::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -152,9 +157,7 @@ void CBill::Render() {
 	if (ny == 1 && vx == 0)
 		d = BILL_UP_HEIGHT_ADJUST;
 	animations->Get(ani)->Render(x, y + d);
-	for (int i = 0; i < bullets.size(); i++) {
-		bullets[i]->Render();
-	}
+	RenderBullet();
 }
 void CBill::SetState(int state) {
 	switch (state) {
@@ -219,7 +222,22 @@ void CBill::KeyDown(int KeyCode) {
 		break;
 	case DIK_Z:
 		this->SetState(BILL_STATE_SHOOT);
-		this->AddBullet();
+		this->AddBullet(false);
+		break;
+	case DIK_1:
+		this->SetBulletType(BULLET_ANI_NORMAL);
+		break;
+	case DIK_2:
+		this->SetBulletType(BULLET_ANI_FLAME);
+		break;
+	case DIK_3:
+		this->SetBulletType(BULLET_ANI_LASER);
+		break;
+	case DIK_4:
+		this->SetBulletType(BULLET_ANI_SPREAD);
+		break;
+	case DIK_5:
+		this->SetBulletType(BULLET_ANI_MACHINE);
 		break;
 	}
 }
@@ -244,6 +262,9 @@ void CBill::KeyUp(int KeyCode) {
 }
 void CBill::KeyState(CGame* game) {
 	BOOLEAN normal = true;
+	if (game->IsKeyDown(DIK_Z)) {
+		AddBullet(true);
+	}
 	if (game->IsKeyDown(DIK_DOWN))
 	{
 		this->SetState(BILL_STATE_DOWN);
@@ -305,25 +326,136 @@ int CBill::CalculateAngle() {
 	}
 }
 
-void CBill::AddBullet() {
-	switch (bulletType) {
-	case BULLET_ANI_SPREAD:
-		ShootSpreadBullet(CalculateAngle());
+void CBill::AddBullet(BOOLEAN KeyState) {
+	if (KeyState == true) {
+		if (waveLeft > 0 && bulletType == BULLET_ANI_MACHINE && bulletMtime == 0) {
+			waveContainer.push_back(ShootMachineBullet(CalculateAngle()));
+			waveLeft--;
+			bulletMtime = BULLET_M_TIME;
+		}
+	}
+	else {
+		if (waveLeft > 0) {
+			int fired = false;
+			switch (bulletType) {
+			case BULLET_ANI_SPREAD:
+				waveContainer.push_back(ShootSpreadBullet(CalculateAngle()));
+				fired = true;
+				break;
+			case BULLET_ANI_LASER:
+				waveContainer.push_back(ShootLaserBullet(CalculateAngle()));
+				fired = true;
+				break;
+			case BULLET_ANI_FLAME:
+				waveContainer.push_back(ShootFlameBullet(CalculateAngle()));
+				fired = true;
+				break;
+			case BULLET_ANI_NORMAL:
+				waveContainer.push_back(ShootNormalBullet(CalculateAngle()));
+				fired = true;
+				break;
+			case BULLET_ANI_MACHINE:
+				if (bulletMtime == 0) {
+					waveContainer.push_back(ShootMachineBullet(CalculateAngle()));
+					fired = true;
+					bulletMtime = BULLET_M_TIME;
+				}
+				break;
+			}
+			if (fired == true)
+				waveLeft--;
+		}
 	}
 }
-void CBill::DelBullet(int i) {
-	bullets.erase(bullets.begin() + i);
-}
-void CBill::ShootSpreadBullet(int angle) {
+vector<LPBULLET> CBill::ShootSpreadBullet(int angle) {
 	LPBULLETS bulletS;
+	vector<LPBULLET> temp;
 	bulletS = new CBulletS(gunx, guny, angle);
-	this->bullets.push_back(bulletS);
+	temp.push_back(bulletS);
 	bulletS = new CBulletS(gunx, guny, angle - 15);
-	this->bullets.push_back(bulletS);
+	temp.push_back(bulletS);
 	bulletS = new CBulletS(gunx, guny, angle + 15);
-	this->bullets.push_back(bulletS);
+	temp.push_back(bulletS);
 	bulletS = new CBulletS(gunx, guny, angle - 30);
-	this->bullets.push_back(bulletS);
+	temp.push_back(bulletS);
 	bulletS = new CBulletS(gunx, guny, angle + 30);
-	this->bullets.push_back(bulletS);
+	temp.push_back(bulletS);
+	return temp;
+}
+vector<LPBULLET> CBill::ShootLaserBullet(int angle) {
+	LPBULLETL bulletL;
+	vector<LPBULLET> temp;
+	bulletL = new CBulletL(gunx, guny, angle, 1);
+	temp.push_back(bulletL);
+	bulletL = new CBulletL(gunx, guny, angle, 2);
+	temp.push_back(bulletL);
+	bulletL = new CBulletL(gunx, guny, angle, 3);
+	temp.push_back(bulletL);
+	bulletL = new CBulletL(gunx, guny, angle, 4);
+	temp.push_back(bulletL);
+	return temp;
+}
+vector<LPBULLET> CBill::ShootFlameBullet(int angle) {
+	LPBULLETF bulletF;
+	vector<LPBULLET> temp;
+	bulletF = new CBulletF(gunx, guny, angle);
+	temp.push_back(bulletF);
+	return temp;
+}
+vector<LPBULLET> CBill::ShootNormalBullet(int angle) {
+	LPBULLETN bulletN = new CBulletN(gunx, guny, angle);
+	vector<LPBULLET> temp;
+	temp.push_back(bulletN);
+	return temp;
+}
+vector<LPBULLET> CBill::ShootMachineBullet(int angle) {
+	LPBULLETM bulletM = new CBulletM(gunx, guny, angle);
+	vector <LPBULLET> temp;
+	temp.push_back(bulletM);
+	return temp;
+}
+
+void CBill::SetBulletType(int type) {
+	switch (type) {
+	case BULLET_ANI_NORMAL:
+		waveLeft = BILL_WAVE_BULLET_NORMAL;
+		break;
+	case BULLET_ANI_LASER:
+		waveLeft = BILL_WAVE_BULLET_LASER;
+		break;
+	case BULLET_ANI_FLAME:
+		waveLeft = BILL_WAVE_BULLET_FLAME;
+		break;
+	case BULLET_ANI_SPREAD:
+		waveLeft = BILL_WAVE_BULLET_SPREAD;
+		break;
+	case BULLET_ANI_MACHINE:
+		waveLeft = BILL_WAVE_BULLET_MACHINE;
+		break;
+	}
+	waveLeft -= waveContainer.size();
+	this->bulletType = type;
+}
+void CBill::UpdateBullet(DWORD dt) {
+	for (int i = 0; i < waveContainer.size(); i++) {
+		if (waveContainer[i].size() > 0) {
+			for (int j = 0; j < waveContainer[i].size(); j++) {
+				if (waveContainer[i][j]->outOfScreen())
+					waveContainer[i].erase(waveContainer[i].begin() + j);
+				else
+					waveContainer[i][j]->Update(dt);
+			}
+		}
+		if (waveContainer[i].size() == 0) {
+			waveContainer.erase(waveContainer.begin() + i);
+			waveLeft++;
+		}
+	}
+}
+void CBill::RenderBullet() {
+	for (int i = 0; i < waveContainer.size(); i++) {
+		for (int j = 0; j < waveContainer[i].size(); j++) {
+			waveContainer[i][j]->Render();
+		}
+	}
 }
