@@ -8,16 +8,16 @@ void CFalcon::Update(DWORD dt) {
 	this->timeleft -= dt;
 	if (this->timeleft < 0) {
 		switch (this->state) {
-		case 0:
+		case FALCON_STATE_CLOSE:
 			this->SetState(FALCON_STATE_OPENING);
 			break;
-		case 1:
+		case FALCON_STATE_OPENING:
 			this->SetState(FALCON_STATE_OPEN);
 			break;
-		case 2:
+		case FALCON_STATE_OPEN:
 			this->SetState(FALCON_STATE_CLOSING);
 			break;
-		case 3:
+		case FALCON_STATE_CLOSING:
 			this->SetState(FALCON_STATE_CLOSE);
 			break;
 		}
@@ -28,16 +28,16 @@ void CFalcon::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
 	switch (this->state) {
-	case 0:
+	case FALCON_STATE_CLOSE:
 		ani = FALCON_ANI_CLOSED;
 		break;
-	case 1: 
+	case FALCON_STATE_OPENING:
 		ani = FALCON_ANI_OPENING;
 		break;
-	case 2:
+	case FALCON_STATE_OPEN:
 		ani = FALCON_ANI_OPENED;
 		break;
-	case 3:
+	case FALCON_STATE_CLOSING:
 		ani = FALCON_ANI_CLOSING;
 	}
 	animations->Get(ani)->Render(x, y);
@@ -45,20 +45,17 @@ void CFalcon::Render() {
 void CFalcon::SetState(int state) {
 	switch (state) {
 	case FALCON_STATE_OPEN:
-		this->state = 2;
 		this->timeleft = FALCON_OPEN_TIME;
 		break;
 	case FALCON_STATE_OPENING:
-		this->state = 1;
 		this->timeleft = FALCON_OPENING_TIME;
 		break;
 	case FALCON_STATE_CLOSE:
-		this->state = 0;
 		this->timeleft = FALCON_CLOSE_TIME;
 		break;
 	case FALCON_STATE_CLOSING:
-		this->state = 3;
 		this->timeleft = FALCON_CLOSING_TIME;
 		break;
 	}
+	CGameObject::SetState(state);
 }
