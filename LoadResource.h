@@ -47,7 +47,7 @@
 #define TEXTURE_PATH_BILL L"Images\\bill_animation.png"
 #define TEXTURE_PATH_BULLET L"Images\\Bullets.png"
 #define TEXTURE_PATH_AIRCRAFT L"Images\\aircraft.png"
-#define TEXTURE_PATH_CANNON L"Images\\Cannon_all"
+#define TEXTURE_PATH_CANNON L"Images\\Cannon_all.png"
 #define TEXTURE_PATH_RIFLEMAN L"Images\\rifleman.png"
 #define TEXTURE_PATH_GRASS L"Images\\grass.png"
 #define TEXTURE_PATH_FIRE L"Images\\fire.png"

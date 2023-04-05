@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-class CBulletS :public CBullet {
+class CBulletS:public CBullet {
 
 public:
 	CBulletS(float x, float y, int angle);

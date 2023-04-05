@@ -55,7 +55,7 @@ void CSoldier::Render() {
 					ani = SOLDIER_ANI_SHOOT_RIGHT;
 				}
 				else {
-					ani - SOLDIER_ANI_SHOOT_LEFT;
+					ani = SOLDIER_ANI_SHOOT_LEFT;
 				}
 			}
 			if (vx > 0) {

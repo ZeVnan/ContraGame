@@ -61,4 +61,5 @@ void CFalcon::SetState(int state) {
 		this->timeleft = FALCON_CLOSING_TIME;
 		break;
 	}
+	CGameObject::SetState(state);
 }
