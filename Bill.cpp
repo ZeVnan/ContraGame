@@ -365,6 +365,12 @@ void CBill::AddBullet(BOOLEAN KeyState) {
 			if (fired == true)
 				waveLeft--;
 		}
+		else {
+			if (bulletType == BULLET_ANI_LASER) {
+				waveContainer.clear();
+				waveContainer.push_back(ShootLaserBullet(CalculateAngle()));
+			}
+		}
 	}
 }
 vector<LPBULLET> CBill::ShootSpreadBullet(int angle) {

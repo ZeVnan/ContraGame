@@ -4,19 +4,12 @@ Rifleman::Rifleman() {}
 
 Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	isShooting = false;
-	isHiding = false;
+	isHiding = true;
+	nx = -1;
 }
 
 void Rifleman::Update(DWORD dt) {
-	y += vy * dt;
-
-	if (y >= GROUND_Y) {
-		vy = 0;
-		y = GROUND_Y;
-	}
-	else {
-		vy += RIFLEMAN_GRAVITY * dt;
-	}
+	
 }
 
 void Rifleman::Render() {
@@ -67,7 +60,6 @@ void Rifleman::SetState(int state) {
 		isShooting = false;
 		break;
 	case RIFLEMAN_STATE_EXPOSE:
-		isShooting = true;
 		isHiding = false;
 		break;
 	}
