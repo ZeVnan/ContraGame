@@ -15,9 +15,11 @@ class CSprite
 	LPTEXTURE texture;
 	D3DX10_SPRITE sprite;
 	D3DXMATRIX matScaling;
+	D3DXMATRIX matRotation;
 public:
 	CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex);
 	CSprite(int id, CSprite* psprite);
+	CSprite(int id, CSprite* psprite, int angle);
 	void Draw(float x, float y);
 };
 

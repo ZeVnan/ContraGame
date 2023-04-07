@@ -39,7 +39,7 @@ void CBill::Update(DWORD dt) {
 	for (int i = 0; i < waveContainer.size(); i++) {
 		a += waveContainer[i].size();
 	}
-	DebugOutTitle(L"Bullets = %d", a);
+	//DebugOutTitle(L"State = %d", this->state);
 }
 void CBill::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -364,6 +364,12 @@ void CBill::AddBullet(BOOLEAN KeyState) {
 			}
 			if (fired == true)
 				waveLeft--;
+		}
+		else {
+			if (bulletType == BULLET_ANI_LASER) {
+				waveContainer.clear();
+				waveContainer.push_back(ShootLaserBullet(CalculateAngle()));
+			}
 		}
 	}
 }

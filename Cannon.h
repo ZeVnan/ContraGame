@@ -5,7 +5,11 @@
 #include "Animations.h"
 
 #include "debug.h"
+#define CANNON_START_X 250
+#define CANNON_START_Y 150
 
+#define CANNON_APPEAR_TIME 600
+#define CANNON_SWITCH_TIME 300
 
 #define CANNON_STATE_LEFT 10
 #define CANNON_STATE_LEFT_60 20
@@ -23,6 +27,7 @@ class CCannon : public CGameObject
 private:
 	BOOLEAN isShooting;
 	BOOLEAN isAppear;
+	int timeLeft;
 public:
 	CCannon();
 	CCannon(float x, float y);

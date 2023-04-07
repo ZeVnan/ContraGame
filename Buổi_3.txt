@@ -1,0 +1,6 @@
+Buổi 3
+Khiêm: Class world
+Vũ: phân hoạch không gian
+Ân: camera
+-Nhân vật mỗi người đảm nhận phải đảm nhiệm được vị trí của Bill và phải set
+được state khi bill tới gần

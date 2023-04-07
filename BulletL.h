@@ -6,8 +6,10 @@ class CBulletL:public CBullet
 {
 private:
 	int waitTime;
+	int angle;
 public:
 	CBulletL(float x, float y, int angle, int turn);
 	void Update(DWORD dt);
+	void Render();
 };
 typedef CBulletL* LPBULLETL;
