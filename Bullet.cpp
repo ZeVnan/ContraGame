@@ -9,8 +9,8 @@ CBullet::CBullet(float x, float y, int angle) : CBullet() {
 	this->y = y;
 	float radian = 3.14159 / 180 * angle;
 
-	maxVx = cos(radian) * BULLET_SPEED;
-	maxVy = sin(radian) * -BULLET_SPEED;
+	maxVx =cos(radian) * BULLET_SPEED;
+	maxVy =sin(radian) * -BULLET_SPEED;
 }
 BOOLEAN CBullet::outOfScreen() {
 	if (this->x > 320 || this->x < 0 || this->y > 240 || this->y < 0)

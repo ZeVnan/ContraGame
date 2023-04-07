@@ -39,7 +39,7 @@ void CBill::Update(DWORD dt) {
 	for (int i = 0; i < waveContainer.size(); i++) {
 		a += waveContainer[i].size();
 	}
-	DebugOutTitle(L"Bullets = %d", a);
+	//DebugOutTitle(L"State = %d", this->state);
 }
 void CBill::Render() {
 	CAnimations* animations = CAnimations::GetInstance();

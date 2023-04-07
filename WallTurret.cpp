@@ -54,7 +54,7 @@ void CWallTurret::Update(DWORD dt)
 			break;
 		}
 	}
-	DebugOutTitle(L"state = %d, timeleft = %d", this->state, this->timeleft);
+	//DebugOutTitle(L"state = %d, timeleft = %d", this->state, this->timeleft);
 }
 
 void CWallTurret::Render()

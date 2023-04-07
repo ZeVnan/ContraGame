@@ -30,25 +30,25 @@ void LoadResources() {
 	CreateWTurretAni(textures, sprites, animations);
 	CreateOtherAni(textures, sprites, animations);
 
-	CSoldier* soldier = new CSoldier(SOLDIER_START_X, SOLDIER_START_Y);
+	/*CSoldier* soldier = new CSoldier(SOLDIER_START_X, SOLDIER_START_Y);
 	objects.push_back(soldier);
-	CFire* fire = new CFire(10, 170);
-	objects.push_back(fire);
-	fire = new CFire(290, 170);
-	objects.push_back(fire);
 	CAircraft* aircraft = new CAircraft(10, 30, AIRCRAFT_ANI_bAMMO);
 	objects.push_back(aircraft);
 	CFalcon* falcon = new CFalcon(40, 160);
 	objects.push_back(falcon);
-	/*CCannon* cannon = new CCannon(80, 80);
-	objects.push_back(cannon);*/
+	CCannon* cannon = new CCannon(CANNON_START_X, CANNON_START_Y);
+	objects.push_back(cannon);
 	CScubaSoldier* scuba = new CScubaSoldier(100, 100);
 	objects.push_back(scuba);
 	CWallTurret* turret = new CWallTurret(150, 100);
 	objects.push_back(turret);
 	Rifleman* rifleman = new Rifleman(RIFLEMAN_START_X, RIFLEMAN_START_Y);
-	objects.push_back(rifleman);
+	objects.push_back(rifleman);*/
 	
+	CFire* fire = new CFire(10, 170);
+	objects.push_back(fire);
+	fire = new CFire(290, 170);
+	objects.push_back(fire);
 	for (float i = 0; i < 10; i++) {
 		CGrass* grass = new CGrass(10 + i * 32, 185);
 		objects.push_back(grass);

@@ -2,26 +2,34 @@
 
 CCannon::CCannon() {}
 
-CCannon::CCannon(float x, float y) : CGameObject(x, y){
-	isShooting = false;
+CCannon::CCannon(float x, float y) : CGameObject(x, y) {
+	isShooting = true;
 	isAppear = true;
-	angle_state = ANGLE_STATE_LEFT;
-	switchTime = 500;
+	this->state = CANNON_STATE_APPEAR;
+	timeLeft = CANNON_APPEAR_TIME;
 }
 
 void CCannon::Update(DWORD dt) {
-	this->switchTime -= dt;
-	if (this->switchTime < 0) {
-		this->angle_state = rand() % (ANGLE_STATE_LEFT_30 + 1) + ANGLE_STATE_LEFT;
-		switch (this->angle_state) {
-		case ANGLE_STATE_LEFT:
+	if (timeLeft > 0) {
+		timeLeft -= dt;
+	}
+	else {
+		switch (state) {
+		case CANNON_STATE_APPEAR:
 			this->SetState(CANNON_STATE_LEFT);
+			timeLeft = CANNON_SWITCH_TIME;
 			break;
-		case ANGLE_STATE_LEFT_60:
-			this->SetState(CANNON_STATE_LEFT_60);
-			break;
-		case ANGLE_STATE_LEFT_30:
+		case CANNON_STATE_LEFT:
 			this->SetState(CANNON_STATE_LEFT_30);
+			timeLeft = CANNON_SWITCH_TIME;
+			break;
+		case CANNON_STATE_LEFT_30:
+			this->SetState(CANNON_STATE_LEFT_60);
+			timeLeft = CANNON_SWITCH_TIME;
+			break;
+		case CANNON_STATE_LEFT_60:
+			this->SetState(CANNON_STATE_LEFT);
+			timeLeft = CANNON_SWITCH_TIME;
 			break;
 		}
 	}
@@ -30,8 +38,11 @@ void CCannon::Update(DWORD dt) {
 void CCannon::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
-	
-	switch (this->angle_state) {
+
+	switch (this->state) {
+	case CANNON_STATE_APPEAR:
+		ani = CANNON_ANI_APPEAR;
+		break;
 	case CANNON_STATE_LEFT:
 		ani = CANNON_ANI_LEFT;
 		break;
@@ -48,16 +59,14 @@ void CCannon::Render() {
 void CCannon::SetState(int state) {
 	switch (state) {
 	case CANNON_STATE_LEFT:
-		this->angle_state = ANGLE_STATE_LEFT;
-		this->switchTime = 500;
 		break;
 	case CANNON_STATE_LEFT_60:
-		this->angle_state = ANGLE_STATE_LEFT_60;
-		this->switchTime = 600;
 		break;
 	case CANNON_STATE_LEFT_30:
-		this->angle_state = ANGLE_STATE_LEFT_30;
-		this->switchTime = 700;
+		break;
+	case CANNON_STATE_APPEAR:
+		isAppear = true;
+		isShooting = true;
 		break;
 	}
 	CGameObject::SetState(state);

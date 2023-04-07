@@ -176,6 +176,12 @@ void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	sprites->Add(10100, 58, 42, 60, 44, texBullet);
 	//laser bullet
 	sprites->Add(10101, 23, 39, 38, 44, texBullet);
+	sprites->Add(10105, sprites->Get(10101), 45);
+	sprites->Add(10106, sprites->Get(10101), 135);
+	sprites->Add(10107, sprites->Get(10101), 225);
+	sprites->Add(10108, sprites->Get(10101), 315);
+	sprites->Add(10109, sprites->Get(10101), 90);
+	sprites->Add(10110, sprites->Get(10101), 270);
 	//flame bullet
 	sprites->Add(10102, 41, 37, 48, 44, texBullet);
 	//spread bullet 
@@ -190,6 +196,21 @@ void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	ani = new CAnimation(100);
 	ani->Add(10101);
 	animations->Add(BULLET_ANI_LASER, ani);
+	ani = new CAnimation(100);
+	ani->Add(10105);
+	animations->Add(BULLET_ANI_LASER_45, ani);
+	ani = new CAnimation(100);
+	ani->Add(10106);
+	animations->Add(BULLET_ANI_LASER_135, ani);
+	ani = new CAnimation(100);
+	ani->Add(10107);
+	animations->Add(BULLET_ANI_LASER_225, ani);
+	ani = new CAnimation(100);
+	ani->Add(10108);
+	animations->Add(BULLET_ANI_LASER_315, ani);
+	ani = new CAnimation(100);
+	ani->Add(10109);
+	animations->Add(BULLET_ANI_LASER_90, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10102);
@@ -516,12 +537,12 @@ void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	animations->Add(CANNON_ANI_LEFT_30, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(10110);
-	ani->Add(10111);
-	ani->Add(10112);
-	ani->Add(10113);
-	ani->Add(10114);
-	ani->Add(10115);
+	ani->Add(10410);
+	ani->Add(10411);
+	ani->Add(10412);
+	ani->Add(10413);
+	ani->Add(10414);
+	ani->Add(10415);
 	animations->Add(CANNON_ANI_APPEAR, ani);
 }
 void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
@@ -576,18 +597,12 @@ void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& a
 
 	ani = new CAnimation(100);
 	ani->Add(10420);
+	ani->Add(10430);
 	animations->Add(RIFLEMAN_ANI_AIM_UP_LEFT, ani);
 	ani = new CAnimation(100);
 	ani->Add(10421);
-	animations->Add(RIFLEMAN_ANI_AIM_UP_RIGHT, ani);
-
-	ani = new CAnimation(100);
-	ani->Add(10430);
-	animations->Add(RIFLEMAN_ANI_SHOOT_UP_LEFT, ani);
-	ani = new CAnimation(100);
 	ani->Add(10431);
-	animations->Add(RIFLEMAN_ANI_SHOOT_UP_RIGHT, ani);
-
+	animations->Add(RIFLEMAN_ANI_AIM_UP_RIGHT, ani);
 	ani = new CAnimation(100);
 	ani->Add(10440);
 	animations->Add(RIFLEMAN_ANI_AIM_DOWN_LEFT, ani);
