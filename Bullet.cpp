@@ -10,10 +10,12 @@ CBullet::CBullet(float x, float y, int angle) : CBullet() {
 	float radian = 3.14159 / 180 * angle;
 
 	maxVx =cos(radian) * BULLET_SPEED;
-	maxVy =sin(radian) * -BULLET_SPEED;
+	maxVy =sin(radian) * BULLET_SPEED;
 }
 BOOLEAN CBullet::outOfScreen() {
-	if (this->x > 320 || this->x < 0 || this->y > 240 || this->y < 0)
+	float cx, cy;
+	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
+	if (x < cx || x >(cx + CAM_WIDTH) || y < cy || y >(cy + CAM_HEIGHT))
 		return true;
 	return false;
 }

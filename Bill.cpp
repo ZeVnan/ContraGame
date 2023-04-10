@@ -20,14 +20,13 @@ void CBill::Update(DWORD dt) {
 	y += vy * dt;
 
 	vx = maxVx;
-	if (y >= GROUND_Y) {
+	if (y <= GROUND_Y) {
 		vy = 0;
 		y = GROUND_Y;
 	}
 	else {
 		vy += BILL_GRAVITY * dt;
 	}
-	if (vx > 0 && x > 290) x = 290;
 	if (vx < 0 && x < 10) x = 10;
 
 	if (bulletMtime > 0)
@@ -61,12 +60,12 @@ void CBill::Render() {
 			if (nx > 0) {
 				ani = BILL_ANI_LAYDOWN_RIGHT;
 				gunx = x + 15.0f;
-				guny = y + 10.0f;
+				guny = y - 10.0f;
 			}
 			else {
 				ani = BILL_ANI_LAYDOWN_LEFT;
 				gunx = x - 15.0f;
-				guny = y + 10.0f;
+				guny = y - 10.0f;
 			}
 		}
 		else {
@@ -75,24 +74,24 @@ void CBill::Render() {
 					if (nx > 0) {
 						ani = BILL_ANI_SHOOT_UP_RIGHT;
 						gunx = x + 4.0f;
-						guny = y - 30.0f;
+						guny = y + 30.0f;
 					}
 					else {
 						ani = BILL_ANI_SHOOT_UP_LEFT;
 						gunx = x - 4.0f;
-						guny = y - 30.0f;
+						guny = y + 30.0f;
 					}
 				}
 				if (ny == 0){
 					if (nx > 0) {
 						ani = BILL_ANI_NORMAL_RIGHT;
 						gunx = x + 10.0f;
-						guny = y - 4.5f;
+						guny = y + 4.5f;
 					}	
 					else {
 						ani = BILL_ANI_NORMAL_LEFT;
 						gunx = x - 10.0f;
-						guny = y - 4.5f;
+						guny = y + 4.5f;
 					}
 						
 				}
@@ -103,23 +102,23 @@ void CBill::Render() {
 						if (isShooting == true) {
 							ani = BILL_ANI_SHOOT_RIGHT;
 							gunx = x + 10.0f;
-							guny = y - 4.5f;
+							guny = y + 4.5f;
 						}
 						else {
 							ani = BILL_ANI_RUN_RIGHT;
 							gunx = x + 10.0f;
-							guny = y - 4.5f;
+							guny = y + 4.5f;
 						}
 					}
 					if (ny == 1) {
 						ani = BILL_ANI_SHOOT_UPRIGHT;
 						gunx = x + 10.0f;
-						guny = y - 17.0f;
+						guny = y + 17.0f;
 					}
 					if (ny == -1) {
 						ani = BILL_ANI_SHOOT_DOWNRIGHT;
 						gunx = x + 10.0f;
-						guny = y + 5.0f;
+						guny = y - 5.0f;
 					}
 				}	
 				else {
@@ -127,23 +126,23 @@ void CBill::Render() {
 						if (isShooting == true) {
 							ani = BILL_ANI_SHOOT_LEFT;
 							gunx = x - 10.0f;
-							guny = y - 4.5f;
+							guny = y + 4.5f;
 						}
 						else {
 							ani = BILL_ANI_RUN_LEFT;
 							gunx = x - 10.0f;
-							guny = y - 4.5f;
+							guny = y + 4.5f;
 						}
 					}
 					if (ny == 1) {
 						ani = BILL_ANI_SHOOT_UPLEFT;
 						gunx = x - 10.0f;
-						guny = y - 17.0f;
+						guny = y + 17.0f;
 					}
 					if (ny == -1) {
 						ani = BILL_ANI_SHOOT_DOWNLEFT;
 						gunx = x - 10.0f;
-						guny = y + 5.0f;
+						guny = y - 5.0f;
 					}
 				}
 			}
@@ -177,7 +176,7 @@ void CBill::SetState(int state) {
 		break;
 	case BILL_STATE_JUMP:
 		if (vy == 0) {
-			vy = -BILL_JUMP_SPEED_Y;
+			vy = BILL_JUMP_SPEED_Y;
 		}
 		break;
 	case BILL_STATE_DOWN:

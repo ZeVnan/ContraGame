@@ -25,6 +25,7 @@
 #include "Fire.h"
 
 #include "SampleKeyEventHandler.h"
+#include "Camera.h"
 
 #define ID_TEX_BILL 0
 #define ID_TEX_BULLET 1

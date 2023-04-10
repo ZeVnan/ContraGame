@@ -2,12 +2,11 @@
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Contra"
-#define WINDOW_ICON_PATH L"mario.ico"
+#define WINDOW_ICON_PATH L"Images\\Contra.ico"
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
 
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+
 
 CBill* bill = NULL;
 vector<LPGAMEOBJECT> objects;
@@ -45,12 +44,16 @@ void LoadResources() {
 	Rifleman* rifleman = new Rifleman(RIFLEMAN_START_X, RIFLEMAN_START_Y);
 	objects.push_back(rifleman);*/
 	
-	CFire* fire = new CFire(10, 170);
+	/*CFire* fire = new CFire(10, 170);
 	objects.push_back(fire);
 	fire = new CFire(290, 170);
-	objects.push_back(fire);
-	for (float i = 0; i < 10; i++) {
-		CGrass* grass = new CGrass(10 + i * 32, 185);
+	objects.push_back(fire);*/
+	for (float i = 0; i < 30; i++) {
+		CGrass* grass = new CGrass(10 + i * 32, 16);
+		objects.push_back(grass);
+	}
+	for (float i = 0; i < 30; i++) {
+		CGrass* grass = new CGrass(10 + i * 32, 240);
 		objects.push_back(grass);
 	}
 	bill = new CBill(BILL_START_X, BILL_START_Y);
@@ -81,6 +84,12 @@ void Update(DWORD dt)
 	{
 		objects[i]->Update(dt);
 	}
+	float x, y;
+	bill->GetPosition(x, y);
+	CGame::GetInstance()->GetCamera()->Update(x, y);
+	float cx, cy;
+	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
+	DebugOutTitle(L"cy = %f, cx = %f, x = %f, y = %f", cy, cx, x, y);
 }
 
 void Render()

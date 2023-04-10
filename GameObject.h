@@ -5,10 +5,11 @@
 #include <vector>
 
 #include "Game.h"
+#include "Camera.h"
 
 using namespace std;
 
-#define GROUND_Y 160.0f
+#define GROUND_Y 40.0f
 class CGameObject
 {
 protected:
@@ -20,13 +21,41 @@ protected:
 
 	int nx;	 
 
-	int state;									
-public: 
-	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	int state;			
 
-	void SetState(int state) { this->state = state; }
-	int GetState() { return this->state; }
+	bool isDeleted;
+public: 
+	void SetPosition(float x, float y) {
+		this->x = x;
+		this->y = y;
+	}
+	void GetPosition(float& x, float& y) {
+		x = this->x;
+		y = this->y;
+	}
+
+	void SetSpeed(float vx, float vy) {
+		this->vx = vx;
+		this->vy = vy;
+	}
+	void GetSpeed(float& vx, float& vy) {
+		vx = this->vx;
+		vy = this->vy;
+	}
+
+	void SetState(int state) { 
+		this->state = state; 
+	}
+	int GetState() { 
+		return this->state; 
+	}
+
+	virtual void Delete() {
+		isDeleted = true;
+	}
+	bool IsDeleted() {
+		return isDeleted;
+	}
 
 	CGameObject();
 	CGameObject(float x, float y):CGameObject() { this->x = x; this->y = y; }
