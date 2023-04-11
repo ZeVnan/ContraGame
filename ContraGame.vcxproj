@@ -147,6 +147,7 @@
     <ClCompile Include="BulletM.cpp" />
     <ClCompile Include="BulletN.cpp" />
     <ClCompile Include="BulletS.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Falcon.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="WallTurret.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Aircraft.h" />
@@ -177,6 +179,7 @@
     <ClInclude Include="BulletM.h" />
     <ClInclude Include="BulletN.h" />
     <ClInclude Include="BulletS.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Falcon.h" />
@@ -195,6 +198,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="WallTurret.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico" />

@@ -82,6 +82,12 @@
     <ClCompile Include="BulletM.cpp">
       <Filter>GameObject\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>GameObject\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -169,6 +175,12 @@
       <Filter>GameObject\Header</Filter>
     </ClInclude>
     <ClInclude Include="BulletM.h">
+      <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
       <Filter>GameObject\Header</Filter>
     </ClInclude>
   </ItemGroup>
