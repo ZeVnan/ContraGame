@@ -88,6 +88,9 @@
     <ClCompile Include="World.cpp">
       <Filter>GameObject\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="WorldPart.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -182,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="World.h">
       <Filter>GameObject\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldPart.h">
+      <Filter>System\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
