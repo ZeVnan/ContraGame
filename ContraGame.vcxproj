@@ -167,6 +167,7 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="WallTurret.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="WorldPart.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Aircraft.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="WallTurret.h" />
     <ClInclude Include="World.h" />
+    <ClInclude Include="WorldPart.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="mario.ico" />
