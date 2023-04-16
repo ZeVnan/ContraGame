@@ -88,7 +88,7 @@ LPGAMEOBJECT CWorld::getAircraft(xml_node node)
 	x = stof(properties["X"]);
 	y = stof(properties["Y"]);
 
-	auto aircraft = new CAircraft(x, y);
+	auto aircraft = new CAircraft(x, y, AIRCRAFT_ANI_sAMMO);
 
 	return aircraft;
 }

@@ -1,7 +1,7 @@
 #include "Aircraft.h"
 
-CAircraft::CAircraft(float x, float y) :CGameObject(x, y) {
-	//this->ammo = ammo;
+CAircraft::CAircraft(float x, float y, int ammo) :CGameObject(x, y) {
+	this->ammo = ammo;
 	vx = AIRCRAFT_SPEED_X;
 	ay = AIRCRAFT_ACCEL_Y;
 }
@@ -34,7 +34,7 @@ void CAircraft::Render() {
 	if (isDead == false) {
 		ani = AIRCRAFT_ANI_NORMAL;
 	}
-	/*else {
+	else {
 		switch (this->ammo) {
 		case AIRCRAFT_ANI_bAMMO:
 			ani = AIRCRAFT_ANI_bAMMO;
@@ -55,7 +55,7 @@ void CAircraft::Render() {
 			ani = AIRCRAFT_ANI_sAMMO;
 			break;
 		}
-	}*/
+	}
 	animations->Get(ani)->Render(x, y);
 }
 void CAircraft::SetState(int state) {
