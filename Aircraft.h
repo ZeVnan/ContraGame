@@ -26,9 +26,10 @@ class CAircraft : public CGameObject
 private:
 	BOOLEAN isDead = false;
 	float ay;
-	int ammo;
+	//int ammo;
 public:
-	CAircraft(float x, float y, int ammo);
+	CAircraft();
+	CAircraft(float x, float y);
 
 	void Update(DWORD dt);
 	void Render();

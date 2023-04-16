@@ -14,7 +14,6 @@
 #include "Bill.h"
 #include "Bullet.h"
 #include "Soldier.h"
-#include "Soldier.h"
 #include "Falcon.h"
 #include "WallTurret.h"
 #include "ScubaSoldier.h"
