@@ -1,1 +1,197 @@
-#include "World.h"
+﻿#include "World.h"
+
+CWorld::CWorld() {}
+
+float CWorld::getHeight() { return this->height; }
+float CWorld::getWidth() { return this->width; }
+
+CWorld::CWorld(float height, float width) {
+	this->height = height;
+	this->width = width;
+}
+
+map<string, string> CWorld::getObjectProperties(xml_node node)
+{
+	map<string, string> properties;
+
+	// general
+	properties["X"] = node.attribute("X").as_string();
+	properties["Y"] = node.attribute("Y").as_string();
+	properties["Width"] = node.attribute("Width").as_string();
+	properties["Height"] = node.attribute("Height").as_string();
+
+	// parameters
+	xml_node params = node.child("Params");
+	for (auto item : params)
+	{
+		auto key = item.attribute("Key").as_string();
+		auto value = item.attribute("Value").as_string();
+		properties[key] = value;
+	}
+	//the code explain everything all at once
+	return properties;
+}
+
+LPGAMEOBJECT CWorld::getSoldier(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto soldier = new CSoldier(x, y);
+
+	return soldier;
+}
+LPGAMEOBJECT CWorld::getRifleman(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto rifleman = new Rifleman(x, y);
+
+	return rifleman;
+}
+LPGAMEOBJECT CWorld::getCannon(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto cannon = new CCannon(x, y);
+
+	return cannon;
+}
+LPGAMEOBJECT CWorld::getAircraft(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto aircraft = new CAircraft(x, y, AIRCRAFT_ANI_sAMMO);
+
+	return aircraft;
+}
+LPGAMEOBJECT CWorld::getFalcon(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto falcon = new CFalcon(x, y);
+
+	return falcon;
+}
+LPGAMEOBJECT CWorld::getWallTurret(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto wallTurret = new CWallTurret(x, y);
+
+	return wallTurret;
+}
+
+
+LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
+{
+	switch (id)
+	{
+	case CannonID:
+		return getCannon(node);
+	case SoldierID:
+		return getSoldier(node);
+	case FalconID:
+		return getFalcon(node);
+	case AircraftID:
+		return getAircraft(node);
+	case RiflemanID:
+		return getRifleman(node);
+	case WallTurretID:
+		return getWallTurret(node);
+	default:
+		return nullptr;
+		break;
+	}
+	return nullptr;
+}
+
+vector<LPGAMEOBJECT>* CWorld::getObjectsListFromFile(const string path)
+{
+	pugi::xml_document doc;
+	vector<LPGAMEOBJECT>* listobject = new vector<LPGAMEOBJECT>();
+
+	// Mở file và đọc
+	xml_parse_result result = doc.load_file(path.data(), pugi::parse_default | pugi::parse_pi);
+	if (result == false)
+	{
+		return listobject;
+	}
+
+	xml_node tilemap = doc.child("Tilesmap");
+	if (tilemap == NULL)
+		return listobject;
+
+	xml_node objects = tilemap.child("Objects");
+	auto list = objects.children();
+
+	// Lấy id từ file xml. so sánh với eID, tuỳ theo eID nào mà gọi đến ĐÚNG HÀM LOAD cho riêng object đó.
+	// Chỗ này em ciêm copy code nên cũng ko rõ là có thực sự dùng HÀM LOAD gì hay ko nhưng mà nó có push_back để add nên giữ
+	for (auto item : list)
+	{
+		int id = item.attribute("Id").as_int();
+		eID enumID;
+		try {
+			enumID = (eID)id;
+		}
+		catch (exception e) {
+			continue;
+		}
+		LPGAMEOBJECT obj = getObjectById(item, enumID);
+		if (obj != NULL)
+			listobject->push_back(obj);
+	}
+
+	return listobject;
+}
+
+CWorld::~CWorld() {
+	return;
+}

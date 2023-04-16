@@ -28,6 +28,7 @@ private:
 	float ay;
 	int ammo;
 public:
+	CAircraft();
 	CAircraft(float x, float y, int ammo);
 
 	void Update(DWORD dt);
