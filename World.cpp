@@ -1,6 +1,10 @@
 ﻿#include "World.h"
 
 CWorld::CWorld() {}
+
+float CWorld::getHeight() { return this->height; }
+float CWorld::getWidth() { return this->width; }
+
 CWorld::CWorld(float height, float width) {
 	this->height = height;
 	this->width = width;
@@ -44,7 +48,7 @@ LPGAMEOBJECT CWorld::getSoldier(xml_node node)
 
 	return soldier;
 }
-LPGAMEOBJECT CWorld::getRifleman(xml_node node) 
+LPGAMEOBJECT CWorld::getRifleman(xml_node node)
 {
 	auto properties = getObjectProperties(node);
 	if (properties.size() == 0)

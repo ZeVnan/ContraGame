@@ -27,6 +27,10 @@ private:
 public:
 	CWorld();
 	CWorld(float height, float width);
+
+	float getWidth();
+	float getHeight();
+
 	LPGAMEOBJECT getObjectById(xml_node node, eID enumID);
 	vector<LPGAMEOBJECT>* getObjectsListFromFile(const string path);
 

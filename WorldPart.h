@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-#include "CWorld.h"
+#include "World.h"
 #include "Camera.h"
 #include <vector>
 
@@ -16,8 +16,8 @@ private:
     vector<WorldPart> subParts;
 public:
     WorldPart();
-    WorldPart(Cworld world);
     WorldPart(float h, float w, float x, float y);
+
     void CheckSplit(CWorld& world);
     void HorizontalSplit(CWorld& world);
     void VerticalSplit(CWorld& world);
