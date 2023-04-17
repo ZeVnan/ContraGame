@@ -22,12 +22,12 @@ enum eID
 	BulletID = 1,
 	//
 	//stage 1 characters
-	//Missing: Boss, Explosions,...
-	SoldierID = 2,
-	AircraftID = 3,
-	CannonID = 4,
-	RiflemanID = 5,
-	FalconID = 6,
-	WallTurretID = 7,
+	//Missing: Boss, Explosions, Bridge,...
+	SoldierID = 2,		//Dunno cause hohoanhtung got soldierCreator - research later
+	AircraftID = 3,		//done
+	CannonID = 4,		//done
+	RiflemanID = 5,		//done
+	FalconID = 6,		//done
+	WallTurretID = 7,	//done
 	
 };
