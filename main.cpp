@@ -12,7 +12,35 @@ CBill* bill = NULL;
 vector<LPGAMEOBJECT> objects;
 CSampleKeyHandler* keyHandler;
 
+LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message) {
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
 
+	return 0;
+}
+void ClearScene() {
+	for (UINT i = 0; i < objects.size(); i++) {
+		objects.erase(objects.begin() + i);
+	}
+	objects.clear();
+}
+bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
+void PurgeDeletedObject() {
+	for (UINT i = 0; i < objects.size(); i++) {
+		if (objects[i]->IsDeleted()) {
+			objects.erase(objects.begin() + i);
+		}
+	}
+	objects.erase(
+		std::remove_if(objects.begin(), objects.end(), IsGameObjectDeleted),
+		objects.end());
+}
 void LoadResources() {
 	CTextures* textures = CTextures::GetInstance();
 	CSprites* sprites = CSprites::GetInstance();
@@ -29,50 +57,27 @@ void LoadResources() {
 	CreateWTurretAni(textures, sprites, animations);
 	CreateOtherAni(textures, sprites, animations);
 
-	/*CSoldier* soldier = new CSoldier(SOLDIER_START_X, SOLDIER_START_Y);
-	objects.push_back(soldier);
-	CAircraft* aircraft = new CAircraft(10, 30, AIRCRAFT_ANI_bAMMO);
-	objects.push_back(aircraft);
-	CFalcon* falcon = new CFalcon(40, 160);
-	objects.push_back(falcon);
-	CCannon* cannon = new CCannon(CANNON_START_X, CANNON_START_Y);
-	objects.push_back(cannon);
-	CScubaSoldier* scuba = new CScubaSoldier(100, 100);
-	objects.push_back(scuba);
-	CWallTurret* turret = new CWallTurret(150, 100);
-	objects.push_back(turret);
-	Rifleman* rifleman = new Rifleman(RIFLEMAN_START_X, RIFLEMAN_START_Y);
-	objects.push_back(rifleman);*/
-	
-	/*CFire* fire = new CFire(10, 170);
-	objects.push_back(fire);
-	fire = new CFire(290, 170);
-	objects.push_back(fire);*/
-	for (float i = 0; i < 30; i++) {
+	ClearScene();
+	bill = new CBill(BILL_START_X, BILL_START_Y);
+	objects.push_back(bill);
+	for (int i = 0; i < 30; i++) {
 		CGrass* grass = new CGrass(10 + i * 32, 16);
 		objects.push_back(grass);
 	}
-	for (float i = 0; i < 30; i++) {
-		CGrass* grass = new CGrass(10 + i * 32, 240);
+	for (int i = 0; i < 5; i++) {
+		CGrass* grass = new CGrass(300 + i * 32, 96);
 		objects.push_back(grass);
 	}
-	bill = new CBill(BILL_START_X, BILL_START_Y);
-	objects.push_back(bill);
+	CGrass* grass = new CGrass(268, 56);
+	objects.push_back(grass);
+	grass = new CGrass(460, 56);
+	objects.push_back(grass);
+	grass = new CGrass(520, 42);
+	objects.push_back(grass);
 }
 
 
-LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message) {
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
 
-	return 0;
-}
 
 /*
 	Update world status for this frame
@@ -80,16 +85,22 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 */
 void Update(DWORD dt)
 {
-	for (int i = 0; i < (int)objects.size(); i++)
-	{
-		objects[i]->Update(dt);
+	vector<LPGAMEOBJECT> coObjects;
+	for (UINT i = 0; i < objects.size(); i++) {
+		coObjects.push_back(objects[i]);
 	}
+	for (UINT i = 0; i < (int)objects.size(); i++)
+	{
+		objects[i]->Update(dt, &coObjects);
+	}
+	PurgeDeletedObject();
+
 	float x, y;
 	bill->GetPosition(x, y);
 	CGame::GetInstance()->GetCamera()->Update(x, y);
 	float cx, cy;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-	DebugOutTitle(L"cy = %f, cx = %f, x = %f, y = %f", cy, cx, x, y);
+	//DebugOutTitle(L"cy = %f, cx = %f, x = %f, y = %f", cy, cx, x, y);
 }
 
 void Render()
@@ -190,8 +201,8 @@ int Run()
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
-			Update((DWORD)dt);
 			CGame::GetInstance()->ProcessKeyboard();
+			Update((DWORD)dt);
 			Render();
 		}
 		else

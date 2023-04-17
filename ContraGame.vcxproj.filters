@@ -1,102 +1,157 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Animation.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Animations.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="debug.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadResource.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleKeyEventHandler.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprites.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Textures.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Soldier.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Rifleman.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Falcon.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Cannon.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>GameObject\Sources</Filter>
+    <ClCompile Include="pugi\src\pugixml.cpp" />
+    <ClCompile Include="Aircraft.cpp">
+      <Filter>Game Object\Source File</Filter>
     </ClCompile>
     <ClCompile Include="Bill.cpp">
-      <Filter>GameObject\Sources</Filter>
+      <Filter>Game Object\Source File</Filter>
     </ClCompile>
-    <ClCompile Include="Aircraft.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="ScubaSoldier.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="WallTurret.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Grass.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Fire.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletS.cpp">
-      <Filter>GameObject\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletL.cpp">
-      <Filter>GameObject\Sources</Filter>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Game Object\Source File</Filter>
     </ClCompile>
     <ClCompile Include="BulletF.cpp">
-      <Filter>GameObject\Sources</Filter>
+      <Filter>Game Object\Source File</Filter>
     </ClCompile>
-    <ClCompile Include="BulletN.cpp">
-      <Filter>GameObject\Sources</Filter>
+    <ClCompile Include="BulletL.cpp">
+      <Filter>Game Object\Source File</Filter>
     </ClCompile>
     <ClCompile Include="BulletM.cpp">
-      <Filter>GameObject\Sources</Filter>
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletN.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletS.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Cannon.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Falcon.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Grass.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Rifleman.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="ScubaSoldier.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="WallTurret.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>System\Source FIle</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>System\Sources</Filter>
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadResource.cpp">
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleKeyEventHandler.cpp">
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>System\Source FIle</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldPart.cpp">
+      <Filter>Game Object\Source File</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp">
-      <Filter>GameObject\Sources</Filter>
+      <Filter>Game Object\Source File</Filter>
     </ClCompile>
-
-    <ClCompile Include="pugi\src\pugixml.cpp" />
-
-    <ClCompile Include="WorldPart.cpp">
-      <Filter>System\Sources</Filter>
+    <ClCompile Include="Collision.cpp">
+      <Filter>System\Source FIle</Filter>
     </ClCompile>
-
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="define.h" />
+    <ClInclude Include="pugi\src\pugiconfig.hpp" />
+    <ClInclude Include="pugi\src\pugixml.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Aircraft.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Bill.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletF.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletL.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletM.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletN.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletS.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannon.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Falcon.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Grass.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Rifleman.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ScubaSoldier.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="WallTurret.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>System\Header</Filter>
     </ClInclude>
@@ -104,6 +159,9 @@
       <Filter>System\Header</Filter>
     </ClInclude>
     <ClInclude Include="Animations.h">
+      <Filter>System\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>System\Header</Filter>
     </ClInclude>
     <ClInclude Include="debug.h">
@@ -133,96 +191,40 @@
     <ClInclude Include="Textures.h">
       <Filter>System\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Aircraft.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Cannon.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Falcon.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Bill.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Rifleman.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ScubaSoldier.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Soldier.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="WallTurret.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Grass.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Fire.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletS.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletL.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletF.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletN.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletM.h">
-      <Filter>GameObject\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>System\Header</Filter>
-    </ClInclude>
     <ClInclude Include="World.h">
-      <Filter>GameObject\Header</Filter>
+      <Filter>Game Object\Header</Filter>
     </ClInclude>
-
-    <ClInclude Include="pugi\src\pugixml.hpp" />
-    <ClInclude Include="pugi\src\pugiconfig.hpp" />
-    <ClInclude Include="define.h">
-
     <ClInclude Include="WorldPart.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
       <Filter>System\Header</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="mario.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="GameObject">
-      <UniqueIdentifier>{dc66ecd8-dc89-43b2-9d78-d85272586d63}</UniqueIdentifier>
+    <ResourceCompile Include="ContraGame.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Game Object">
+      <UniqueIdentifier>{75fb0e24-514e-4569-8b16-fb5bf255b577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Object\Header">
+      <UniqueIdentifier>{5b994de5-1da0-435c-bb44-06f92e16e5a2}</UniqueIdentifier>
     </Filter>
     <Filter Include="System">
-      <UniqueIdentifier>{42209c47-c838-4ddc-b3b4-7de63b08fc8f}</UniqueIdentifier>
+      <UniqueIdentifier>{23d0d888-1af8-4369-b048-2071c7c98d9a}</UniqueIdentifier>
     </Filter>
     <Filter Include="System\Header">
-      <UniqueIdentifier>{3f707486-ff67-4c4c-89a8-5ea78398b6a3}</UniqueIdentifier>
+      <UniqueIdentifier>{228e8ab6-ee0e-412a-bae2-6fda1fe8ccbf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Sources">
-      <UniqueIdentifier>{0d26c026-f104-437e-ba0a-c0a4786b1fa5}</UniqueIdentifier>
+    <Filter Include="System\Source FIle">
+      <UniqueIdentifier>{a0ecc55a-e315-44a6-a3e9-37fdfd5466bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Header">
-      <UniqueIdentifier>{1be7eef8-6337-4eee-b29a-d66dc778b6c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Sources">
-      <UniqueIdentifier>{ffc478a3-f2a7-45b0-86d9-8c84bfc04453}</UniqueIdentifier>
+    <Filter Include="Game Object\Source File">
+      <UniqueIdentifier>{3b4cce28-664e-4ab1-baaa-08809ae88354}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

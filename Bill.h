@@ -75,10 +75,14 @@
 #define BILL_WAVE_BULLET_FLAME 4
 #define BILL_WAVE_BULLET_SPREAD 2
 #define BILL_WAVE_BULLET_MACHINE 6
+
+#define BILL_BOX_NORMAL_WIDTH 24
+#define BILL_BOX_NORMAL_HEIGHT 35
 class CBill :public CGameObject
 {
 	BOOLEAN isLaying;
 	BOOLEAN isShooting;
+	BOOLEAN isOnPlatform;
 	int ny;    //normal:0, up:1, down:-1
 	float maxVx;
 	float maxVy;
@@ -93,7 +97,7 @@ class CBill :public CGameObject
 public:
 	CBill();
 	CBill(float x, float y);
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
 
@@ -101,10 +105,14 @@ public:
 	void KeyUp(int KeyCode);
 	void KeyState(CGame* game);
 
+	void CreateBox(DWORD dt);
+	/*bool isCollidable();
+	bool isBlocking();*/
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
+
 	int CalculateAngle();
-
 	void AddBullet(BOOLEAN KeyState);
-
 	vector<LPBULLET> ShootSpreadBullet(int angle);
 	vector<LPBULLET> ShootMachineBullet(int angle);
 	vector<LPBULLET> ShootFlameBullet(int angle);

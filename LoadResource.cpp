@@ -721,6 +721,7 @@ void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& an
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_GRASS, TEXTURE_PATH_GRASS);
 	textures->Add(ID_TEX_FIRE, TEXTURE_PATH_FIRE);
+	textures->Add(ID_TEX_BOX, TEXTURE_PATH_BOX);
 
 	LPTEXTURE texGrass = textures->Get(ID_TEX_GRASS);
 	LPTEXTURE texFire = textures->Get(ID_TEX_FIRE);
