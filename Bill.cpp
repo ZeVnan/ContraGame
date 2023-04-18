@@ -5,6 +5,7 @@ CBill::CBill() :CGameObject() {
 CBill::CBill(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
+	isOnPlatform = false;
 	ny = 0;
 	maxVx = 0.0f;
 	maxVy = 0.0f;
@@ -15,18 +16,9 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 
 	bulletMtime = 0;
 }
-void CBill::Update(DWORD dt) {
-	x += vx * dt;
-	y += vy * dt;
-
+void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
-	if (y <= GROUND_Y) {
-		vy = 0;
-		y = GROUND_Y;
-	}
-	else {
-		vy += BILL_GRAVITY * dt;
-	}
+	vy += BILL_GRAVITY * dt;
 	if (vx < 0 && x < 10) x = 10;
 
 	if (bulletMtime > 0)
@@ -38,7 +30,10 @@ void CBill::Update(DWORD dt) {
 	for (int i = 0; i < waveContainer.size(); i++) {
 		a += waveContainer[i].size();
 	}
-	//DebugOutTitle(L"State = %d", this->state);
+	isOnPlatform = false;
+	CCollision::GetInstance()->Process(this, coObjects, dt);
+	//DebugOutTitle(L"vx = %f, vy = %f", vx, vy);
+	//DebugOutTitle(L"%d", isOnPlatform);
 }
 void CBill::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -157,6 +152,7 @@ void CBill::Render() {
 		d = BILL_UP_HEIGHT_ADJUST;
 	animations->Get(ani)->Render(x, y + d);
 	RenderBullet();
+	RenderBox();
 }
 void CBill::SetState(int state) {
 	switch (state) {
@@ -285,6 +281,32 @@ void CBill::KeyState(CGame* game) {
 		this->SetState(BILL_STATE_NORMAL);
 }
 
+void CBill::CreateBox(DWORD dt) {
+	bbox.left = x - BILL_BOX_NORMAL_WIDTH / 2;
+	bbox.top = y - BILL_BOX_NORMAL_HEIGHT / 2;
+	bbox.right= x + BILL_BOX_NORMAL_WIDTH / 2;
+	bbox.bottom = y + BILL_BOX_NORMAL_HEIGHT / 2;
+	bbox.vpf_x = vx * dt;
+	bbox.vpf_y = vy * dt;
+}
+void CBill::NoCollision(DWORD dt) {
+	x += vx * dt;
+	y += vy * dt;
+}
+void CBill::CollisionWith(LPCOLLISIONEVENT e) {
+	if (e->normal_y != 0 && e->dest_obj->isBlocking())
+	{
+		vy = 0;
+		if (e->normal_y > 0) isOnPlatform = true;
+	}
+	else
+		if (e->normal_x != 0 && e->dest_obj->isBlocking())
+		{
+			//vx = 0;
+			//DebugOutTitle(L"x = %f", e->dest_obj->GetBox().left);
+		}
+}
+
 int CBill::CalculateAngle() {
 	if (vx > 0) {
 		if (ny == 1)
@@ -324,7 +346,6 @@ int CBill::CalculateAngle() {
 		}
 	}
 }
-
 void CBill::AddBullet(BOOLEAN KeyState) {
 	if (KeyState == true) {
 		if (waveLeft > 0 && bulletType == BULLET_ANI_MACHINE && bulletMtime == 0) {

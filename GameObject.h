@@ -6,6 +6,7 @@
 
 #include "Game.h"
 #include "Camera.h"
+#include "Collision.h"
 
 using namespace std;
 
@@ -21,7 +22,8 @@ protected:
 
 	int nx;	 
 
-	int state;			
+	int state;
+	box bbox;
 
 	bool isDeleted;
 public: 
@@ -57,11 +59,24 @@ public:
 		return isDeleted;
 	}
 
+	virtual void CreateBox(DWORD dt) {};
+	box GetBox() { return this->bbox; }
+	void RenderBox();
+
 	CGameObject();
 	CGameObject(float x, float y):CGameObject() { this->x = x; this->y = y; }
 
-	virtual void Update(DWORD dt) = 0;
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render() = 0;
+
+	virtual bool isCollidable() {
+		return true;
+	}
+	virtual bool isBlocking() {
+		return true;
+	}
+	virtual void NoCollision(DWORD dt) {};
+	virtual void CollisionWith(LPCOLLISIONEVENT e) {};
 
 	~CGameObject();
 };

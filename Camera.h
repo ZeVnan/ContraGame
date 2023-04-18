@@ -9,6 +9,8 @@ private:
 	float x = 0;
 	float y = 0;
 	float maxX;
+	float maxY;
+	float minX;
 	float minY;
 public:
 	CCamera(float worldWidth, float worldHeight);
@@ -17,6 +19,6 @@ public:
 		x = this->x;
 		y = this->y;
 	}
-	void TranslateToCamCoord(float& y);
+	void TranslateToCamCoord(float& x, float& y);
 };
 
