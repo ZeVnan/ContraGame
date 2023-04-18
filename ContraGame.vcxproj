@@ -149,6 +149,7 @@
     <ClCompile Include="BulletS.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cannon.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Falcon.cpp" />
     <ClCompile Include="Fire.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="BulletS.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cannon.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Falcon.h" />
@@ -194,6 +196,7 @@
     <ClInclude Include="LoadResource.h" />
     <ClInclude Include="pugi\src\pugiconfig.hpp" />
     <ClInclude Include="pugi\src\pugixml.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Rifleman.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="ScubaSoldier.h" />
@@ -207,7 +210,7 @@
     <ClInclude Include="WorldPart.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="mario.ico" />
+    <ResourceCompile Include="ContraGame.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

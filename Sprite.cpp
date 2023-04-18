@@ -73,11 +73,12 @@ void CSprite::Draw(float x, float y)
 	CGame* g = CGame::GetInstance();
 
 	float cx, cy;
-	g->GetCamera()->GetCamPos(cx, cy);
-	g->GetCamera()->TranslateToCamCoord(y);
+	cx = x;
+	cy = y;
+	g->GetCamera()->TranslateToCamCoord(cx, cy);
 
 	D3DXMATRIX matTranslation;
-	D3DXMatrixTranslation(&matTranslation, x - cx, g->GetBackBufferHeight() - y + cy, 0.1f);
+	D3DXMatrixTranslation(&matTranslation, cx, g->GetBackBufferHeight() - cy, 0.1f);
 
 	this->sprite.matWorld = (this->matScaling *this->matRotation* matTranslation);
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
