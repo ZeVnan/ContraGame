@@ -6,7 +6,7 @@
 #include <vector>
 
 
-class WorldPart : public CWorld
+class WorldPart
 {
 private:
     float height;
@@ -14,6 +14,7 @@ private:
     float x;
     float y;
     vector<WorldPart> subParts;
+    vector<LPGAMEOBJECT> gameObj;
 public:
     WorldPart();
     WorldPart(float h, float w, float x, float y);
@@ -21,4 +22,5 @@ public:
     void CheckSplit(CWorld& world);
     void HorizontalSplit(CWorld& world);
     void VerticalSplit(CWorld& world);
+    BOOL checkObj(LPGAMEOBJECT Obj);
 };
