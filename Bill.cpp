@@ -18,9 +18,7 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 }
 void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
-	if (isOnPlatform == false) {
-		vy += BILL_GRAVITY * dt;
-	}
+	vy += BILL_GRAVITY * dt;
 	if (vx < 0 && x < 10) x = 10;
 
 	if (bulletMtime > 0)
@@ -32,8 +30,10 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	for (int i = 0; i < waveContainer.size(); i++) {
 		a += waveContainer[i].size();
 	}
+	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	//DebugOutTitle(L"vx = %f, vy = %f", vx, vy);
+	//DebugOutTitle(L"%d", isOnPlatform);
 }
 void CBill::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -297,13 +297,13 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (e->normal_y != 0 && e->dest_obj->isBlocking())
 	{
 		vy = 0;
-		if (e->normal_y < 0) isOnPlatform = true;
+		if (e->normal_y > 0) isOnPlatform = true;
 	}
 	else
 		if (e->normal_x != 0 && e->dest_obj->isBlocking())
 		{
-			vx = 0;
-			DebugOutTitle(L"x = %f", e->dest_obj->GetBox().left);
+			//vx = 0;
+			//DebugOutTitle(L"x = %f", e->dest_obj->GetBox().left);
 		}
 }
 

@@ -33,7 +33,7 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT src_obj, LPGAMEOBJECT dest_o
 	float br = vpf_x > 0 ? src_box.right + vpf_x : src_box.right;
 	float bb = vpf_y > 0 ? src_box.bottom + vpf_y : src_box.bottom;
 
-	if (br < dest_box.left || bl > dest_box.right || bb < dest_box.top || bt >dest_box.bottom) return NULL;
+	if (br < dest_box.left || bl > dest_box.right || bb < dest_box.top || bt > dest_box.bottom) return NULL;
 	//end broad phasing 
 	if (vpf_x == 0 && vpf_y == 0) return NULL;
 
@@ -83,7 +83,8 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT src_obj, LPGAMEOBJECT dest_o
 	if (t_entry > t_exit) return NULL;
 
 	time = t_entry;
-
+	if (tx_entry == 0)
+	DebugOutTitle(L"tx_entry = %f, ty_entry = %f", tx_entry, ty_entry);
 	if (tx_entry > ty_entry)
 	{
 		normal_y = 0.0f;
@@ -101,11 +102,11 @@ vector<LPCOLLISIONEVENT> CCollision::Scan(LPGAMEOBJECT src_obj, vector<LPGAMEOBJ
 	vector <LPCOLLISIONEVENT> temp;
 	for (UINT i = 0; i < dest_obj->size(); i++) {
 		LPCOLLISIONEVENT e = SweptAABB(src_obj, dest_obj->at(i), dt);
-		if (e == NULL) continue;
-		if (e->happened())
-			temp.push_back(e);
-		else
-			delete e;
+		if (e == NULL) {
+			delete(e);
+			continue;
+		}
+		else temp.push_back(e);
 	}
 	return temp;
 }
@@ -126,11 +127,11 @@ void CCollision::Filter(LPGAMEOBJECT objSrc,
 		if (coEvents[i]->dest_obj->IsDeleted()) continue;
 		if (coEvents[i]->dest_obj->isBlocking() == false) continue;
 
-		if (coEvents[i]->time < min_tx && coEvents[i]->normal_x != 0 && filterX == 1) {
+		if (coEvents[i]->time < min_tx && coEvents[i]->normal_x != 0) {
 			min_tx = coEvents[i]->time;
 			min_ix = i;
 		}
-		if (coEvents[i]->time < min_ty && coEvents[i]->normal_y != 0 && filterY == 1) {
+		if (coEvents[i]->time < min_ty && coEvents[i]->normal_y != 0) {
 			min_ty = coEvents[i]->time;
 			min_iy = i;
 		}
@@ -153,64 +154,19 @@ void CCollision::Process(LPGAMEOBJECT src_obj, vector<LPGAMEOBJECT>* coObjects, 
 		Filter(src_obj, coEvents, colX, colY);
 		float x, y;
 		src_obj->GetPosition(x, y);
-		if (colX != NULL && colY != NULL) {
-			if (colY->time < colX->time) {
-				y += colY->time * src_obj->GetBox().vpf_y;
-				src_obj->CollisionWith(colY);
-
-				LPCOLLISIONEVENT colX_other = NULL;
-				colX->isDeleted = true;
-
-				coEvents.push_back(SweptAABB(src_obj, colX->dest_obj, dt));
-				Filter(src_obj, coEvents, colX_other, colY, 1, 1, 0);
-
-				if (colX_other != NULL) {
-					x+=colX_other->time* src_obj->GetBox().vpf_x;
-					src_obj->CollisionWith(colX_other);
-				}
-				else {
-					x += src_obj->GetBox().vpf_x;
-				}
-			}
-			else {
-				x += colX->time * src_obj->GetBox().vpf_x;
-				src_obj->CollisionWith(colX);
-
-				LPCOLLISIONEVENT colY_other = NULL;
-				colY->isDeleted = true;
-
-				coEvents.push_back(SweptAABB(src_obj, colY->dest_obj, dt));
-				Filter(src_obj, coEvents, colX, colY_other, 1, 0, 1);
-
-				if (colY_other != NULL) {
-					x += colY_other->time * src_obj->GetBox().vpf_y;
-					src_obj->CollisionWith(colY_other);
-				}
-				else {
-					x += src_obj->GetBox().vpf_y;
-				}
-			}
+		if (colX != NULL) {
+			x += colX->time * src_obj->GetBox().vpf_x;
+			src_obj->CollisionWith(colX);
 		}
 		else {
-			if (colX != NULL)
-			{
-				x += colX->time * src_obj->GetBox().vpf_x;
-				y += src_obj->GetBox().vpf_y;
-				src_obj->CollisionWith(colX);
-			}
-			else {
-				if (colY != NULL)
-				{
-					x += src_obj->GetBox().vpf_x;
-					y += colY->time * src_obj->GetBox().vpf_y;
-					src_obj->CollisionWith(colY);
-				}
-				else
-				{
-					x += src_obj->GetBox().vpf_x;
-					y += src_obj->GetBox().vpf_y;
-				}
-			}
+			x += src_obj->GetBox().vpf_x;
+		}
+		if (colY != NULL) {
+			y += colY->time * src_obj->GetBox().vpf_y;
+			src_obj->CollisionWith(colY);
+		}
+		else {
+			y += src_obj->GetBox().vpf_y;
 		}
 		src_obj->SetPosition(x, y);
 	}

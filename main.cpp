@@ -74,6 +74,8 @@ void LoadResources() {
 	objects.push_back(grass);
 	grass = new CGrass(520, 42);
 	objects.push_back(grass);
+	grass = new CGrass(560, 96);
+	objects.push_back(grass);
 }
 
 
