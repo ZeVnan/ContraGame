@@ -32,14 +32,17 @@ public:
 	float getWidth();
 	float getHeight();
 	
-	vector<LPGAMEOBJECT> getObjectList() { return this->objectList; }
+	vector<LPGAMEOBJECT>& getObjectList() { return this->objectList; }
 	void setObjectList(vector<LPGAMEOBJECT> a) { this->objectList = a; }
 	
 	vector<CWorldPart*>& getWPList() { return this->WPList; }
 	void setWPList(vector<CWorldPart*> wp) { this->WPList = wp; }
 
 	LPGAMEOBJECT getObjectById(xml_node node, eID enumID);
-	vector<LPGAMEOBJECT> getObjectsListFromFile(const string path);
+	void getObjectsListFromFile(const string path);
+
+	void ClearWorld();
+	void ClearDeletedObjects();
 
 	~CWorld();
 };

@@ -6,6 +6,8 @@ CWorldPart::CWorldPart()
 	height = 0;
 	x = 0;
 	y = 0;
+	firstPart = NULL;
+	secondPart = NULL;
 }
 CWorldPart::CWorldPart(LPWORLD world) {
 	this->width = world->getWidth();
@@ -40,7 +42,7 @@ BOOL CWorldPart::checkObj(LPGAMEOBJECT Obj)
 }
 
 
-void CWorldPart::VerticalSplit(LPWORLD world)
+void CWorldPart::HorizontalSplit(LPWORLD world)
 {
 	
 	if (width > CAM_WIDTH && objects.size() > 0)
@@ -73,7 +75,7 @@ void CWorldPart::VerticalSplit(LPWORLD world)
 	}
 }
 
-void CWorldPart::HorizontalSplit(LPWORLD world)
+void CWorldPart::VerticalSplit(LPWORLD world)
 {
 	if (height > CAM_HEIGHT && this->objects.size() > 0)
 	{
@@ -114,5 +116,33 @@ void CWorldPart::Split(LPWORLD world)
 	else
 	{
 		HorizontalSplit(world);
+	}
+}
+void CWorldPart::ClearWorldPart() {
+	/*for (int i = 0; i < objects.size(); i++) {
+		delete objects[i];
+	}*/
+	objects.clear();
+}
+void CWorldPart::ClearDeletedObjects() {
+	for (int i = 0; i < objects.size(); i++) {
+		if (objects[i]->IsDeleted()) {
+			//delete objects[i];
+			objects.erase(objects.begin() + i);
+		}
+	}
+}
+void CWorldPart::Update(DWORD dt) {
+	vector<LPGAMEOBJECT> coObjects;
+	for (int i = 0; i < objects.size(); i++) {
+		coObjects.push_back(objects[i]);
+	}
+	for (int i = 0; i < objects.size(); i++) {
+		objects[i]->Update(dt, &coObjects);
+	}
+}
+void CWorldPart::Render() {
+	for (int i = 0; i < objects.size(); i++) {
+		objects[i]->Render();
 	}
 }

@@ -154,7 +154,7 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 	return nullptr;
 }
 
-vector<LPGAMEOBJECT> CWorld::getObjectsListFromFile(const string path)
+void CWorld::getObjectsListFromFile(const string path)
 {
 	pugi::xml_document doc;
 	//vector<LPGAMEOBJECT>* listobject = new vector<LPGAMEOBJECT>();
@@ -163,12 +163,12 @@ vector<LPGAMEOBJECT> CWorld::getObjectsListFromFile(const string path)
 	xml_parse_result result = doc.load_file(path.data(), pugi::parse_default | pugi::parse_pi);
 	if (result == false)
 	{
-		return listobject;
+		this->objectList = listobject;
 	}
 
 	xml_node tilemap = doc.child("Tilesmap");
 	if (tilemap == NULL)
-		return listobject;
+		this->objectList = listobject;
 
 	xml_node objects = tilemap.child("Objects");
 	auto list = objects.children();
@@ -190,7 +190,19 @@ vector<LPGAMEOBJECT> CWorld::getObjectsListFromFile(const string path)
 			listobject.push_back(obj);
 	}
 
-	return listobject;
+	this->objectList = listobject;
+}
+void CWorld::ClearWorld() {
+	for (int i = 0; i < this->WPList.size(); i++) {
+		WPList[i]->ClearWorldPart();
+		delete WPList[i];
+	}
+	WPList.clear();
+}
+void CWorld::ClearDeletedObjects() {
+	for (int i = 0; i < this->WPList.size(); i++) {
+		WPList[i]->ClearDeletedObjects();
+	}
 }
 
 CWorld::~CWorld() {

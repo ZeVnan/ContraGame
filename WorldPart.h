@@ -25,5 +25,15 @@ public:
     void HorizontalSplit(LPWORLD world);
     void VerticalSplit(LPWORLD world);
     BOOL checkObj(LPGAMEOBJECT Obj);
+
+    float getWidth() { return this->width; }
+    float getHeight() { return this->height; }
+    float getX() { return this->x; }
+    float getY() { return this->y; }
+
+    void ClearWorldPart();
+    void ClearDeletedObjects();
+    void Update(DWORD dt);
+    void Render();
 };
 typedef CWorldPart* LPWORLDPART;

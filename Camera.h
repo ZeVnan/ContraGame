@@ -1,4 +1,7 @@
 #pragma once
+class CWorldPart;
+typedef CWorldPart* LPWORLDPART;
+
 #define SCREEN_WIDTH 360
 #define SCREEN_HEIGHT 270
 #define CAM_WIDTH 320
@@ -20,5 +23,6 @@ public:
 		y = this->y;
 	}
 	void TranslateToCamCoord(float& x, float& y);
+	bool CheckWorldPart(LPWORLDPART part);
 };
 
