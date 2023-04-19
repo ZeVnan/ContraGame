@@ -1,20 +1,32 @@
 ﻿#include "WorldPart.h"
 
-WorldPart::WorldPart()
+CWorldPart::CWorldPart()
 {
-
+	width = 0;
+	height = 0;
+	x = 0;
+	y = 0;
+}
+CWorldPart::CWorldPart(LPWORLD world) {
+	this->width = world->getWidth();
+	this->height = world->getHeight();
+	x = 0;
+	y = 0;
+	this->objects = world->getObjectList();
 }
 
-WorldPart::WorldPart(float h, float w, float x, float y)
+CWorldPart::CWorldPart(float width, float height, float x, float y)
 {
-	this->height = h;
-	this->width = w;
+	this->width = width;
+	this->height = height;
 	this->x = x;
 	this->y = y;
+	firstPart = NULL;
+	secondPart = NULL;
 }
 
 
-BOOL WorldPart::checkObj(LPGAMEOBJECT Obj)
+BOOL CWorldPart::checkObj(LPGAMEOBJECT Obj)
 {
 	float x, y;
 	Obj->GetPosition(x, y);
@@ -28,97 +40,74 @@ BOOL WorldPart::checkObj(LPGAMEOBJECT Obj)
 }
 
 
-void WorldPart::VerticalSplit(CWorld& world)
+void CWorldPart::VerticalSplit(LPWORLD world)
 {
 	
-	if (width > CAM_WIDTH && gameObj.size() > 0)
+	if (width > CAM_WIDTH && objects.size() > 0)
 	{
-		float subHeight = height;
-		float subWidth = width / 2;
+		this->firstPart = new CWorldPart(this->width / 2, this->height, this->x, this->y);
+		this->secondPart = new CWorldPart(this->width / 2, this->height, this->x + this->width / 2, this->y);
 
-		WorldPart leftSubPart{ subHeight, subWidth, x, y };
-		WorldPart rightSubPart{ subHeight, subWidth, x + subWidth, y };
-
-		for (int i = 0; i < this->gameObj.size(); i++)
+		for (int i = 0; i < this->objects.size(); i++)
 		{
-			if (leftSubPart.checkObj(gameObj[i]) && rightSubPart.checkObj(gameObj[i]))
+			if (firstPart->checkObj(this->objects[i]) && secondPart->checkObj(this->objects[i]))
 			{
-				leftSubPart.gameObj.push_back(gameObj[i]);
+				firstPart->objects.push_back(this->objects[i]);
 			}
-			else if (leftSubPart.checkObj(gameObj[i]))
+			else if (firstPart->checkObj(this->objects[i]))
 			{
-				leftSubPart.gameObj.push_back(gameObj[i]);
+				firstPart->objects.push_back(this->objects[i]);
 			}
-			else if (rightSubPart.checkObj(gameObj[i]))
+			else if (secondPart->checkObj(this->objects[i]))
 			{
-				rightSubPart.gameObj.push_back(gameObj[i]);
+				secondPart->objects.push_back(this->objects[i]);
 			}
 		}
-
-		// Add the new sub-parts to the end of the subParts vector
-		subParts.push_back(leftSubPart);
-		subParts.push_back(rightSubPart);
-
-		// Remove the old part from the beginning of the vector
-		subParts.erase(subParts.begin());
-
-		leftSubPart.VerticalSplit(world);
-		rightSubPart.VerticalSplit(world);
-
+		this->objects.clear();
+		firstPart->VerticalSplit(world);
+		secondPart->VerticalSplit(world);
 	}
 	else
 	{
-		world.getWPList().push_back(this);
-		//world.WPlist.push_back(this);
+		world->getWPList().push_back(this);
 	}
 }
 
-void WorldPart::HorizontalSplit(CWorld& world)
+void CWorldPart::HorizontalSplit(LPWORLD world)
 {
-	if (height > CAM_HEIGHT && gameObj.size() > 0)
+	if (height > CAM_HEIGHT && this->objects.size() > 0)
 	{
-		float subHeight = height / 2;
-		float subWidth = width;
+		this->firstPart = new CWorldPart(this->width, this->height / 2, this->x, this->y);
+		this->secondPart = new CWorldPart(this->width, this->height / 2, this->x, this->y + this->height / 2);
 
-		WorldPart downSubPart{ subHeight, subWidth, x, y };
-		WorldPart upSubPart{ subHeight, subWidth, x, y + subHeight };
-
-		for (int i = 0; i < this->gameObj.size(); i++)
+		for (int i = 0; i < this->objects.size(); i++)
 		{
-			if (downSubPart.checkObj(gameObj[i]) && upSubPart.checkObj(gameObj[i]))
+			if (firstPart->checkObj(this->objects[i]) && secondPart->checkObj(this->objects[i]))
 			{
-				downSubPart.gameObj.push_back(gameObj[i]);
+				firstPart->objects.push_back(this->objects[i]);
 			}
-			else if (downSubPart.checkObj(gameObj[i]))
+			else if (firstPart->checkObj(this->objects[i]))
 			{
-				downSubPart.gameObj.push_back(gameObj[i]);
+				firstPart->objects.push_back(this->objects[i]);
 			}
-			else if (upSubPart.checkObj(gameObj[i]))
+			else if (secondPart->checkObj(this->objects[i]))
 			{
-				upSubPart.gameObj.push_back(gameObj[i]);
+				secondPart->objects.push_back(this->objects[i]);
 			}
 		}
-
-		// Add the new sub-parts to the end of the subParts vector
-		subParts.push_back(downSubPart);
-		subParts.push_back(upSubPart);
-
-		// Remove the old part from the beginning of the vector
-		subParts.erase(subParts.begin());
-
-		downSubPart.VerticalSplit(world);
-		upSubPart.VerticalSplit(world);
+		this->objects.clear();
+		firstPart->VerticalSplit(world);
+		secondPart->VerticalSplit(world);
 	}
 	else
 	{
-		world.getWPList().push_back(this);
-		//world.WPlist.push_back(this);
+		world->getWPList().push_back(this);
 	}
 }
 
-void WorldPart::CheckSplit(CWorld& world)
+void CWorldPart::Split(LPWORLD world)
 {
-	if (world.getHeight() < world.getWidth())
+	if (world->getHeight() < world->getWidth())
 	{
 		VerticalSplit(world);
 	}

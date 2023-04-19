@@ -26,7 +26,7 @@ private:
 public:
 	CFalcon(float x, float y);
 	
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
 };

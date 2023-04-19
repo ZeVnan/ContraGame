@@ -1,4 +1,5 @@
 ﻿#include "World.h"
+#include "WorldPart.h"
 
 CWorld::CWorld() {}
 
@@ -153,11 +154,11 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 	return nullptr;
 }
 
-vector<LPGAMEOBJECT>* CWorld::getObjectsListFromFile(const string path)
+vector<LPGAMEOBJECT> CWorld::getObjectsListFromFile(const string path)
 {
 	pugi::xml_document doc;
-	vector<LPGAMEOBJECT>* listobject = new vector<LPGAMEOBJECT>();
-
+	//vector<LPGAMEOBJECT>* listobject = new vector<LPGAMEOBJECT>();
+	vector<LPGAMEOBJECT> listobject;
 	// Mở file và đọc
 	xml_parse_result result = doc.load_file(path.data(), pugi::parse_default | pugi::parse_pi);
 	if (result == false)
@@ -186,7 +187,7 @@ vector<LPGAMEOBJECT>* CWorld::getObjectsListFromFile(const string path)
 		}
 		LPGAMEOBJECT obj = getObjectById(item, enumID);
 		if (obj != NULL)
-			listobject->push_back(obj);
+			listobject.push_back(obj);
 	}
 
 	return listobject;

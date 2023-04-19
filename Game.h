@@ -88,6 +88,6 @@ public:
 
 	void SetPointSamplerState();
 
-	CCamera* GetCamera() { return this->camera; }
+	CCamera*& GetCamera() { return this->camera; }
 	~CGame();
 };

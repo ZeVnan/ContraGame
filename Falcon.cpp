@@ -4,7 +4,7 @@ CFalcon::CFalcon(float x, float y) :CGameObject(x, y) {
 	this->state = 0;
 	timeleft = FALCON_CLOSE_TIME;
 }
-void CFalcon::Update(DWORD dt) {
+void CFalcon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	this->timeleft -= dt;
 	if (this->timeleft < 0) {
 		switch (this->state) {

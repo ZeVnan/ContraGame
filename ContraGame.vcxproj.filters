@@ -214,6 +214,9 @@
     <Filter Include="Game Object\Header">
       <UniqueIdentifier>{5b994de5-1da0-435c-bb44-06f92e16e5a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Object\Source File">
+      <UniqueIdentifier>{3b4cce28-664e-4ab1-baaa-08809ae88354}</UniqueIdentifier>
+    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{23d0d888-1af8-4369-b048-2071c7c98d9a}</UniqueIdentifier>
     </Filter>
@@ -222,9 +225,6 @@
     </Filter>
     <Filter Include="System\Source FIle">
       <UniqueIdentifier>{a0ecc55a-e315-44a6-a3e9-37fdfd5466bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Object\Source File">
-      <UniqueIdentifier>{3b4cce28-664e-4ab1-baaa-08809ae88354}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

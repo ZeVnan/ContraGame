@@ -5,7 +5,7 @@ CScubaSoldier::CScubaSoldier(float x, float y) :CGameObject(x, y) {
 	timeleft = SCUBA_HIDING_TIME;
 }
 
-void CScubaSoldier::Update(DWORD dt)
+void CScubaSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->timeleft -= dt;
 	if (this->timeleft < 0) 

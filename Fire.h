@@ -11,6 +11,6 @@ public:
 	CFire(float x, float y);
 
 	void Render();
-	void Update(DWORD dt) {}
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 };
 

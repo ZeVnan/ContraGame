@@ -9,8 +9,12 @@
 
 
 CBill* bill = NULL;
-vector<LPGAMEOBJECT> objects;
+vector<LPGAMEOBJECT> stage1_objects;
 CSampleKeyHandler* keyHandler;
+
+LPWORLD stage1 = new CWorld(3000, 100000);
+LPWORLDPART stage1_part = new CWorldPart(stage1);
+
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -25,21 +29,21 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 void ClearScene() {
-	for (UINT i = 0; i < objects.size(); i++) {
-		objects.erase(objects.begin() + i);
+	for (UINT i = 0; i < stage1_objects.size(); i++) {
+		stage1_objects.erase(stage1_objects.begin() + i);
 	}
-	objects.clear();
+	stage1_objects.clear();
 }
 bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
 void PurgeDeletedObject() {
-	for (UINT i = 0; i < objects.size(); i++) {
-		if (objects[i]->IsDeleted()) {
-			objects.erase(objects.begin() + i);
+	for (UINT i = 0; i < stage1_objects.size(); i++) {
+		if (stage1_objects[i]->IsDeleted()) {
+			stage1_objects.erase(stage1_objects.begin() + i);
 		}
 	}
-	objects.erase(
-		std::remove_if(objects.begin(), objects.end(), IsGameObjectDeleted),
-		objects.end());
+	stage1_objects.erase(
+		std::remove_if(stage1_objects.begin(), stage1_objects.end(), IsGameObjectDeleted),
+		stage1_objects.end());
 }
 void LoadResources() {
 	CTextures* textures = CTextures::GetInstance();
@@ -58,24 +62,18 @@ void LoadResources() {
 	CreateOtherAni(textures, sprites, animations);
 
 	ClearScene();
+
+	CGame::GetInstance()->GetCamera() = new CCamera(stage1->getWidth(), stage1->getHeight());
+	stage1->setObjectList(stage1->getObjectsListFromFile(STAGE1_PATH));
+
+	
+	for (int i = 0; i < 300; i++) {
+		CGrass* grass = new CGrass(10 + i * 32, 92);
+		stage1_objects.push_back(grass);
+	}
+	
 	bill = new CBill(BILL_START_X, BILL_START_Y);
-	objects.push_back(bill);
-	for (int i = 0; i < 30; i++) {
-		CGrass* grass = new CGrass(10 + i * 32, 16);
-		objects.push_back(grass);
-	}
-	for (int i = 0; i < 5; i++) {
-		CGrass* grass = new CGrass(300 + i * 32, 96);
-		objects.push_back(grass);
-	}
-	CGrass* grass = new CGrass(268, 56);
-	objects.push_back(grass);
-	grass = new CGrass(460, 56);
-	objects.push_back(grass);
-	grass = new CGrass(520, 42);
-	objects.push_back(grass);
-	grass = new CGrass(560, 96);
-	objects.push_back(grass);
+	stage1_objects.push_back(bill);
 }
 
 
@@ -88,12 +86,12 @@ void LoadResources() {
 void Update(DWORD dt)
 {
 	vector<LPGAMEOBJECT> coObjects;
-	for (UINT i = 0; i < objects.size(); i++) {
-		coObjects.push_back(objects[i]);
+	for (UINT i = 0; i < stage1_objects.size(); i++) {
+		coObjects.push_back(stage1_objects[i]);
 	}
-	for (UINT i = 0; i < (int)objects.size(); i++)
+	for (UINT i = 0; i < (int)stage1_objects.size(); i++)
 	{
-		objects[i]->Update(dt, &coObjects);
+		stage1_objects[i]->Update(dt, &coObjects);
 	}
 	PurgeDeletedObject();
 
@@ -102,7 +100,7 @@ void Update(DWORD dt)
 	CGame::GetInstance()->GetCamera()->Update(x, y);
 	float cx, cy;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-	//DebugOutTitle(L"cy = %f, cx = %f, x = %f, y = %f", cy, cx, x, y);
+	DebugOutTitle(L"cy = %f, cx = %f, x = %f, y = %f", cy, cx, x, y);
 }
 
 void Render()
@@ -121,11 +119,10 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-	for (int i = 0; i < (int)objects.size(); i++)
+	for (int i = 0; i < (int)stage1_objects.size(); i++)
 	{
-		objects[i]->Render();
+		stage1_objects[i]->Render();
 	}
-
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
 }

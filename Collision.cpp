@@ -83,7 +83,7 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT src_obj, LPGAMEOBJECT dest_o
 	if (t_entry > t_exit) return NULL;
 
 	time = t_entry;
-	if (tx_entry == 0)
+
 
 	if (tx_entry > ty_entry)
 	{
@@ -106,7 +106,8 @@ vector<LPCOLLISIONEVENT> CCollision::Scan(LPGAMEOBJECT src_obj, vector<LPGAMEOBJ
 			delete(e);
 			continue;
 		}
-		else temp.push_back(e);
+		else 
+			temp.push_back(e);
 	}
 	return temp;
 }

@@ -13,15 +13,7 @@ Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	timeLeft = RIFLEMAN_SWITCH_TIME;
 }
 
-void Rifleman::Update(DWORD dt) {
-	if (y >= GROUND_Y) {
-		vy = 0;
-		y = GROUND_Y;
-	}
-	else {
-		vy += RIFLEMAN_GRAVITY * dt;
-	}
-	y += vy * dt;
+void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (timeLeft > 0)
 		timeLeft -= dt;
 	else {

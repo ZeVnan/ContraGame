@@ -31,7 +31,7 @@ public:
 	CAircraft();
 	CAircraft(float x, float y, int ammo);
 
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
 };

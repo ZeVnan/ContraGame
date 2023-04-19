@@ -25,6 +25,8 @@
 
 #include "SampleKeyEventHandler.h"
 #include "Camera.h"
+#include "World.h"
+#include "WorldPart.h"
 
 #define ID_TEX_BOX -10
 #define ID_TEX_BILL 0
@@ -53,6 +55,8 @@
 #define TEXTURE_PATH_RIFLEMAN L"Images\\rifleman.png"
 #define TEXTURE_PATH_GRASS L"Images\\grass.png"
 #define TEXTURE_PATH_FIRE L"Images\\fire.png"
+
+#define STAGE1_PATH "Map\\stage1.xml"
 
 void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
