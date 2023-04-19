@@ -84,7 +84,7 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT src_obj, LPGAMEOBJECT dest_o
 
 	time = t_entry;
 	if (tx_entry == 0)
-	DebugOutTitle(L"tx_entry = %f, ty_entry = %f", tx_entry, ty_entry);
+
 	if (tx_entry > ty_entry)
 	{
 		normal_y = 0.0f;
