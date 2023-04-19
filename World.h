@@ -43,6 +43,8 @@ public:
 
 	void ClearWorld();
 	void ClearDeletedObjects();
+	void Update(DWORD dt);
+	void Render();
 
 	~CWorld();
 };

@@ -77,11 +77,7 @@ void LoadStage(int stage) {
 */
 void Update(DWORD dt)
 {
-	for (UINT i = 0; i < world->getWPList().size(); i++) {
-		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(world->getWPList()[i])) {
-			world->getWPList()[i]->Update(dt);
-		}
-	}
+	world->Update(dt);
 	world->ClearDeletedObjects();
 
 	float x, y;
@@ -108,11 +104,7 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-	for (UINT i = 0; i < world->getWPList().size(); i++) {
-		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(world->getWPList()[i])) {
-			world->getWPList()[i]->Render();
-		}
-	}
+	world->Render();
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
 }

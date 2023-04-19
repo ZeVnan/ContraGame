@@ -204,6 +204,20 @@ void CWorld::ClearDeletedObjects() {
 		WPList[i]->ClearDeletedObjects();
 	}
 }
+void CWorld::Update(DWORD dt) {
+	for (int i = 0; i < WPList.size(); i++) {
+		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
+			WPList[i]->Update(dt);
+		}
+	}
+}
+void CWorld::Render() {
+	for (int i = 0; i < WPList.size(); i++) {
+		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
+			WPList[i]->Render();
+		}
+	}
+}
 
 CWorld::~CWorld() {
 	return;
