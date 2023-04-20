@@ -207,13 +207,27 @@ void CWorld::ClearDeletedObjects() {
 }
 void CWorld::Update(DWORD dt) {
 	UpdateObjectContainer();
+	
 	for (int i = 0; i < WPList.size(); i++) {
 		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
-			WPList[i]->Update(dt);
-			if (i - 1 >= 0) WPList[i - 1]->Update(dt);
-			if (i - 2 >= 0) WPList[i - 2]->Update(dt);
-			if (i + 1 < WPList.size()) WPList[i + 1]->Update(dt);
-			if (i + 2 < WPList.size()) WPList[i + 2]->Update(dt);
+			vector<LPGAMEOBJECT> tempObjectList;
+			WPList[i]->GetObjectToTempList(tempObjectList);
+			if (i - 1 >= 0)
+				WPList[i - 1]->GetObjectToTempList(tempObjectList);
+			if (i - 2 >= 0)
+				WPList[i - 2]->GetObjectToTempList(tempObjectList);
+			if (i + 1 < tempObjectList.size())
+				WPList[i + 1]->GetObjectToTempList(tempObjectList);
+			if (i + 2 < tempObjectList.size())
+				WPList[i + 2]->GetObjectToTempList(tempObjectList);
+
+			vector<LPGAMEOBJECT> coObjects;
+			for (UINT i = 0; i < tempObjectList.size(); i++) {
+				coObjects.push_back(tempObjectList[i]);
+			}
+			for (UINT i = 0; i < tempObjectList.size(); i++) {
+				tempObjectList[i]->Update(dt, &coObjects);
+			}
 			break;
 		}
 	}

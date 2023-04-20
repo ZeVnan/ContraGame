@@ -132,13 +132,9 @@ void CWorldPart::ClearDeletedObjects() {
 		}
 	}
 }
-void CWorldPart::Update(DWORD dt) {
-	vector<LPGAMEOBJECT> coObjects;
+void CWorldPart::GetObjectToTempList(vector<LPGAMEOBJECT>& a) {
 	for (int i = 0; i < objects.size(); i++) {
-		coObjects.push_back(objects[i]);
-	}
-	for (int i = 0; i < objects.size(); i++) {
-		objects[i]->Update(dt, &coObjects);
+		a.push_back(objects[i]);
 	}
 }
 void CWorldPart::Render() {

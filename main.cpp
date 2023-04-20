@@ -51,9 +51,9 @@ void LoadResources() {
 	CreateOtherAni(textures, sprites, animations);
 }void LoadStage1() {
 	world = new CWorld(1000, 10000);
-	//world->getObjectsListFromFile(STAGE1_PATH);
+	world->getObjectsListFromFile(STAGE1_PATH);
 	for (int i = 0; i < 300; i++) {
-		CGrass* grass = new CGrass(10 + i * 32, 192);
+		CGrass* grass = new CGrass(10 + i * 32, 168);
 		world->getObjectList().push_back(grass);
 	}
 	bill = new CBill(BILL_START_X, BILL_START_Y);

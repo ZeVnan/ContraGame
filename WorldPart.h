@@ -33,7 +33,7 @@ public:
 
     void ClearWorldPart();
     void ClearDeletedObjects();
-    void Update(DWORD dt);
+    void GetObjectToTempList(vector<LPGAMEOBJECT>& a);
     void Render();
 
     vector<LPGAMEOBJECT> GetOutOfPartObject();
