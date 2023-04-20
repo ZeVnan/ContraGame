@@ -24,18 +24,8 @@ bool CCamera::CheckWorldPart(LPWORLDPART part) {
 	float part_right = part->getX() + part->getWidth();
 	float part_bottom = part->getY();
 	
-	float cam_left = x - CAM_WIDTH / 2;
-	float cam_top = y + CAM_HEIGHT / 2;
-	float cam_right = x + CAM_WIDTH / 2;
-	float cam_bottom = y - CAM_HEIGHT / 2;
-
-	bool OK_1 = false;
-	bool OK_2 = false;
-	if ((cam_left <= part_left && part_left <= cam_right) ||
-		(cam_left <= part_right && part_right <= cam_right) ||
-		(part_left < cam_left && cam_right < part_right)) OK_1 = true;
-	if ((cam_top >= part_top && part_top >= cam_bottom) ||
-		(cam_top >= part_bottom && part_bottom >= cam_bottom) ||
-		(part_top > cam_top && cam_bottom > part_bottom)) OK_2 = true;
-	return OK_1 && OK_2;
+	if (part_left <= this->x && this->x <= part_right &&
+		part_bottom <= this->y && this->y <= part_top)
+		return true;
+	return false;
 }

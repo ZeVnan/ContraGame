@@ -51,9 +51,9 @@ void LoadResources() {
 	CreateOtherAni(textures, sprites, animations);
 }void LoadStage1() {
 	world = new CWorld(1000, 10000);
-	world->getObjectsListFromFile(STAGE1_PATH);
+	//world->getObjectsListFromFile(STAGE1_PATH);
 	for (int i = 0; i < 300; i++) {
-		CGrass* grass = new CGrass(10 + i * 32, 92);
+		CGrass* grass = new CGrass(10 + i * 32, 192);
 		world->getObjectList().push_back(grass);
 	}
 	bill = new CBill(BILL_START_X, BILL_START_Y);
@@ -77,6 +77,7 @@ void LoadStage(int stage) {
 */
 void Update(DWORD dt)
 {
+
 	world->Update(dt);
 	world->ClearDeletedObjects();
 
@@ -86,6 +87,7 @@ void Update(DWORD dt)
 	float cx, cy;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
 	DebugOutTitle(L"cy = %f, cx = %f, x = %f, y = %f", cy, cx, x, y);
+
 }
 
 void Render()

@@ -1,5 +1,6 @@
 ﻿#include "World.h"
 #include "WorldPart.h"
+#include "Bill.h"
 
 CWorld::CWorld() {}
 
@@ -205,9 +206,15 @@ void CWorld::ClearDeletedObjects() {
 	}
 }
 void CWorld::Update(DWORD dt) {
+	UpdateObjectContainer();
 	for (int i = 0; i < WPList.size(); i++) {
 		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
 			WPList[i]->Update(dt);
+			if (i - 1 >= 0) WPList[i - 1]->Update(dt);
+			if (i - 2 >= 0) WPList[i - 2]->Update(dt);
+			if (i + 1 < WPList.size()) WPList[i + 1]->Update(dt);
+			if (i + 2 < WPList.size()) WPList[i + 2]->Update(dt);
+			break;
 		}
 	}
 }
@@ -215,10 +222,37 @@ void CWorld::Render() {
 	for (int i = 0; i < WPList.size(); i++) {
 		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
 			WPList[i]->Render();
+			if (i - 1 >= 0) WPList[i - 1]->Render();
+			if (i - 2 >= 0) WPList[i - 2]->Render();
+			if (i + 1 < WPList.size()) WPList[i + 1]->Render();
+			if (i + 2 < WPList.size()) WPList[i + 2]->Render();
+			break;
 		}
 	}
 }
-
+void CWorld::UpdateObjectContainer() {
+	int cur = 0;
+	for (int i = 0; i < WPList.size(); i++) {
+		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
+			cur = i;
+			break;
+		}
+	}
+	for (int i = cur - 2; i <= cur + 2; i++) {
+		if (i < 0 || i >= WPList.size()) continue;
+		vector<LPGAMEOBJECT> temp = WPList[i]->GetOutOfPartObject();
+		for (int j = 0; j < temp.size(); j++) {
+			if (i - 1 >= 0) {
+				if (WPList[i - 1]->checkObj(temp[j]))
+					WPList[i - 1]->TakeNewObject(temp[j]);
+			}
+			if (i + 1 < WPList.size()) {
+				if (WPList[i + 1]->checkObj(temp[j]))
+					WPList[i + 1]->TakeNewObject(temp[j]);
+			}
+		}
+	}
+}
 CWorld::~CWorld() {
 	return;
 }

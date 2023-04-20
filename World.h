@@ -45,6 +45,7 @@ public:
 	void ClearDeletedObjects();
 	void Update(DWORD dt);
 	void Render();
+	void UpdateObjectContainer();
 
 	~CWorld();
 };

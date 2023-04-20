@@ -35,5 +35,8 @@ public:
     void ClearDeletedObjects();
     void Update(DWORD dt);
     void Render();
+
+    vector<LPGAMEOBJECT> GetOutOfPartObject();
+    void TakeNewObject(LPGAMEOBJECT obj);
 };
 typedef CWorldPart* LPWORLDPART;

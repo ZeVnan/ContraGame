@@ -32,10 +32,10 @@ BOOL CWorldPart::checkObj(LPGAMEOBJECT Obj)
 {
 	float x, y;
 	Obj->GetPosition(x, y);
-	if (x <= this->x && x >= this->x + this->width) {
+	if (x < this->x || x > this->x + this->width) {
 		return false;
 	}
-	if (y <= this->y && y >= this->y + this->height) {
+	if (y < this->y || y > this->y + this->height) {
 		return false;
 	}
 	return true;
@@ -66,8 +66,8 @@ void CWorldPart::HorizontalSplit(LPWORLD world)
 			}
 		}
 		this->objects.clear();
-		firstPart->VerticalSplit(world);
-		secondPart->VerticalSplit(world);
+		firstPart->HorizontalSplit(world);
+		secondPart->HorizontalSplit(world);
 	}
 	else
 	{
@@ -111,23 +111,23 @@ void CWorldPart::Split(LPWORLD world)
 {
 	if (world->getHeight() < world->getWidth())
 	{
-		VerticalSplit(world);
+		HorizontalSplit(world);
 	}
 	else
 	{
-		HorizontalSplit(world);
+		VerticalSplit(world);
 	}
 }
 void CWorldPart::ClearWorldPart() {
-	/*for (int i = 0; i < objects.size(); i++) {
+	for (int i = 0; i < objects.size(); i++) {
 		delete objects[i];
-	}*/
+	}
 	objects.clear();
 }
 void CWorldPart::ClearDeletedObjects() {
 	for (int i = 0; i < objects.size(); i++) {
 		if (objects[i]->IsDeleted()) {
-			//delete objects[i];
+			delete objects[i];
 			objects.erase(objects.begin() + i);
 		}
 	}
@@ -145,4 +145,17 @@ void CWorldPart::Render() {
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
 	}
+}
+vector<LPGAMEOBJECT> CWorldPart::GetOutOfPartObject() {
+	vector<LPGAMEOBJECT> temp;
+	for (int i = 0; i < objects.size(); i++) {
+		if (checkObj(objects[i]) == false) {
+			temp.push_back(objects[i]);
+			objects.erase(objects.begin() + i);
+		}
+	}
+	return temp;
+}
+void CWorldPart::TakeNewObject(LPGAMEOBJECT obj) {
+	this->objects.push_back(obj);
 }
