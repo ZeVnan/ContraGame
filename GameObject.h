@@ -78,7 +78,7 @@ public:
 	virtual void NoCollision(DWORD dt) {};
 	virtual void CollisionWith(LPCOLLISIONEVENT e) {};
 
-	~CGameObject();
+	~CGameObject() {};
 };
 
 typedef CGameObject* LPGAMEOBJECT;

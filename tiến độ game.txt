@@ -1,0 +1,18 @@
+Nhân vật: 
+	chưa làm đủ 
+	chưa có tự động
+	chưa có interact với nhân vật chính
+	chưa có explosion
+animation: 
+	chưa add hết 
+camera: tạm ổn
+world: 
+	chưa load được tile map
+	còn nhân vật chưa load
+worldpart: 
+	chưa cập nhật được theo thời gian
+collision: chưa đủ
+âm thanh: chưa có
+start: chưa có
+credit: chưa có
+cutscene tự đọng: chưa có

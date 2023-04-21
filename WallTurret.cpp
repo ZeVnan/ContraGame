@@ -6,7 +6,7 @@ CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 	timeleft = WTURRET_TIME_APPEAR;
 }
 
-void CWallTurret::Update(DWORD dt)
+void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->timeleft -= dt;
 	if (this->timeleft < 0)

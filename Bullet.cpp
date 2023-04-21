@@ -15,7 +15,7 @@ CBullet::CBullet(float x, float y, int angle) : CBullet() {
 BOOLEAN CBullet::outOfScreen() {
 	float cx, cy;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-	if (x < cx || x >(cx + CAM_WIDTH) || y < cy || y >(cy + CAM_HEIGHT))
+	if (x < (cx - CAM_WIDTH / 2) || x >(cx + CAM_WIDTH / 2) || y < (cy - CAM_HEIGHT / 2) || y >(cy + CAM_HEIGHT / 2))
 		return true;
 	return false;
 }

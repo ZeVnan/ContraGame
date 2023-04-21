@@ -9,8 +9,11 @@
 
 
 CBill* bill = NULL;
-vector<LPGAMEOBJECT> objects;
 CSampleKeyHandler* keyHandler;
+
+LPWORLD world = new CWorld(1000, 1000);
+LPWORLDPART worldpart = new CWorldPart();
+
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -24,22 +27,12 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	return 0;
 }
-void ClearScene() {
-	for (UINT i = 0; i < objects.size(); i++) {
-		objects.erase(objects.begin() + i);
-	}
-	objects.clear();
+void ClearWorld() {
+
+	world->ClearWorld();
 }
-bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
-void PurgeDeletedObject() {
-	for (UINT i = 0; i < objects.size(); i++) {
-		if (objects[i]->IsDeleted()) {
-			objects.erase(objects.begin() + i);
-		}
-	}
-	objects.erase(
-		std::remove_if(objects.begin(), objects.end(), IsGameObjectDeleted),
-		objects.end());
+void ClearDeletedObject() {
+	world->ClearDeletedObjects();
 }
 void LoadResources() {
 	CTextures* textures = CTextures::GetInstance();
@@ -56,30 +49,27 @@ void LoadResources() {
 	CreateScubaAni(textures, sprites, animations);
 	CreateWTurretAni(textures, sprites, animations);
 	CreateOtherAni(textures, sprites, animations);
-
-	ClearScene();
+}void LoadStage1() {
+	world = new CWorld(1000, 10000);
+	world->getObjectsListFromFile(STAGE1_PATH);
+	for (int i = 0; i < 300; i++) {
+		CGrass* grass = new CGrass(10 + i * 32, 168);
+		world->getObjectList().push_back(grass);
+	}
 	bill = new CBill(BILL_START_X, BILL_START_Y);
-	objects.push_back(bill);
-	for (int i = 0; i < 30; i++) {
-		CGrass* grass = new CGrass(10 + i * 32, 16);
-		objects.push_back(grass);
-	}
-	for (int i = 0; i < 5; i++) {
-		CGrass* grass = new CGrass(300 + i * 32, 96);
-		objects.push_back(grass);
-	}
-	CGrass* grass = new CGrass(268, 56);
-	objects.push_back(grass);
-	grass = new CGrass(460, 56);
-	objects.push_back(grass);
-	grass = new CGrass(520, 42);
-	objects.push_back(grass);
-	grass = new CGrass(560, 96);
-	objects.push_back(grass);
+	world->getObjectList().push_back(bill);
+	worldpart = new CWorldPart(world);
+	worldpart->Split(world);
+	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), world->getHeight());
 }
-
-
-
+void LoadStage(int stage) {
+	ClearWorld();
+	switch (stage) {
+	case 1:
+		LoadStage1();
+		break;
+	}
+}
 
 /*
 	Update world status for this frame
@@ -87,22 +77,17 @@ void LoadResources() {
 */
 void Update(DWORD dt)
 {
-	vector<LPGAMEOBJECT> coObjects;
-	for (UINT i = 0; i < objects.size(); i++) {
-		coObjects.push_back(objects[i]);
-	}
-	for (UINT i = 0; i < (int)objects.size(); i++)
-	{
-		objects[i]->Update(dt, &coObjects);
-	}
-	PurgeDeletedObject();
+
+	world->Update(dt);
+	world->ClearDeletedObjects();
 
 	float x, y;
 	bill->GetPosition(x, y);
 	CGame::GetInstance()->GetCamera()->Update(x, y);
 	float cx, cy;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-	//DebugOutTitle(L"cy = %f, cx = %f, x = %f, y = %f", cy, cx, x, y);
+	DebugOutTitle(L"cy = %f, cx = %f, x = %f, y = %f", cy, cx, x, y);
+
 }
 
 void Render()
@@ -121,11 +106,7 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-	for (int i = 0; i < (int)objects.size(); i++)
-	{
-		objects[i]->Render();
-	}
-
+	world->Render();
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
 }
@@ -233,6 +214,7 @@ int WINAPI WinMain(
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	LoadResources();
+	LoadStage(1);
 
 	Run();
 

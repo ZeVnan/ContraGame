@@ -5,27 +5,10 @@ CAircraft::CAircraft(float x, float y, int ammo) :CGameObject(x, y) {
 	vx = AIRCRAFT_SPEED_X;
 	ay = AIRCRAFT_ACCEL_Y;
 }
-void CAircraft::Update(DWORD dt) {
+void CAircraft::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	x += vx * dt;
 	y += vy * dt;
 
-	vy += ay;
-	if (vy >= AIRCRAFT_SPEED_Y) {
-		vy == AIRCRAFT_SPEED_Y;
-	}
-
-	if (y < 10) {
-		ay = AIRCRAFT_ACCEL_Y;
-		y = 10;
-		vy = 0;
-	}
-	if (y > 50) {
-		ay = -AIRCRAFT_ACCEL_Y;
-		y = 50;
-		vy = 0;
-	}
-
-	if (x > 290) x = 10;
 	//DebugOutTitle(L"vy = %f, y = %f, ay = %f", this->vy, this->y, this->ay);
 }
 void CAircraft::Render() {

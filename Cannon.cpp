@@ -9,7 +9,7 @@ CCannon::CCannon(float x, float y) : CGameObject(x, y) {
 	timeLeft = CANNON_APPEAR_TIME;
 }
 
-void CCannon::Update(DWORD dt) {
+void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (timeLeft > 0) {
 		timeLeft -= dt;
 	}

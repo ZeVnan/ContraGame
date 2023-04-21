@@ -7,7 +7,7 @@
 #include "Rifleman.h"
 
 #include "define.h"
-#include "WorldPart.h"
+class CWorldPart;
 
 class CWorld
 {
@@ -15,7 +15,7 @@ private:
 	float width;
 	float height;
 	vector<LPGAMEOBJECT> objectList;
-	vector<WorldPart*> WPList;
+	vector<CWorldPart*> WPList;
 	LPGAMEOBJECT getRifleman(xml_node node);
 	LPGAMEOBJECT getSoldier(xml_node node);
 	LPGAMEOBJECT getCannon(xml_node node);
@@ -31,14 +31,23 @@ public:
 
 	float getWidth();
 	float getHeight();
-	//vector<WorldPart*> WPlist;
 	
-	vector<WorldPart*> getWPList() { return this->WPList; }
-	void setWPList(vector<WorldPart*> wp) { this->WPList = wp; }
+	vector<LPGAMEOBJECT>& getObjectList() { return this->objectList; }
+	void setObjectList(vector<LPGAMEOBJECT> a) { this->objectList = a; }
+	
+	vector<CWorldPart*>& getWPList() { return this->WPList; }
+	void setWPList(vector<CWorldPart*> wp) { this->WPList = wp; }
 
 	LPGAMEOBJECT getObjectById(xml_node node, eID enumID);
-	vector<LPGAMEOBJECT>* getObjectsListFromFile(const string path);
+	void getObjectsListFromFile(const string path);
+
+	void ClearWorld();
+	void ClearDeletedObjects();
+	void Update(DWORD dt);
+	void Render();
+	void UpdateObjectContainer();
 
 	~CWorld();
 };
+typedef CWorld* LPWORLD;
 
