@@ -8,6 +8,8 @@ CWorldPart::CWorldPart()
 	y = 0;
 	firstPart = NULL;
 	secondPart = NULL;
+	thirdPart = NULL;
+	fourthPart = NULL;
 }
 CWorldPart::CWorldPart(LPWORLD world) {
 	this->width = world->getWidth();
@@ -25,6 +27,8 @@ CWorldPart::CWorldPart(float width, float height, float x, float y)
 	this->y = y;
 	firstPart = NULL;
 	secondPart = NULL;
+	thirdPart = NULL;
+	fourthPart = NULL;
 }
 
 
@@ -42,82 +46,91 @@ BOOL CWorldPart::checkObj(LPGAMEOBJECT Obj)
 }
 
 
-void CWorldPart::HorizontalSplit(LPWORLD world)
-{
-	
-	if (width > CAM_WIDTH && objects.size() > 0)
-	{
-		this->firstPart = new CWorldPart(this->width / 2, this->height, this->x, this->y);
-		this->secondPart = new CWorldPart(this->width / 2, this->height, this->x + this->width / 2, this->y);
-
-		for (int i = 0; i < this->objects.size(); i++)
-		{
-			if (firstPart->checkObj(this->objects[i]) && secondPart->checkObj(this->objects[i]))
-			{
-				firstPart->objects.push_back(this->objects[i]);
-			}
-			else if (firstPart->checkObj(this->objects[i]))
-			{
-				firstPart->objects.push_back(this->objects[i]);
-			}
-			else if (secondPart->checkObj(this->objects[i]))
-			{
-				secondPart->objects.push_back(this->objects[i]);
-			}
-		}
-		this->objects.clear();
-		firstPart->HorizontalSplit(world);
-		secondPart->HorizontalSplit(world);
-	}
-	else
-	{
-		world->getWPList().push_back(this);
-	}
-}
-
-void CWorldPart::VerticalSplit(LPWORLD world)
-{
-	if (height > CAM_HEIGHT && this->objects.size() > 0)
-	{
-		this->firstPart = new CWorldPart(this->width, this->height / 2, this->x, this->y);
-		this->secondPart = new CWorldPart(this->width, this->height / 2, this->x, this->y + this->height / 2);
-
-		for (int i = 0; i < this->objects.size(); i++)
-		{
-			if (firstPart->checkObj(this->objects[i]) && secondPart->checkObj(this->objects[i]))
-			{
-				firstPart->objects.push_back(this->objects[i]);
-			}
-			else if (firstPart->checkObj(this->objects[i]))
-			{
-				firstPart->objects.push_back(this->objects[i]);
-			}
-			else if (secondPart->checkObj(this->objects[i]))
-			{
-				secondPart->objects.push_back(this->objects[i]);
-			}
-		}
-		this->objects.clear();
-		firstPart->VerticalSplit(world);
-		secondPart->VerticalSplit(world);
-	}
-	else
-	{
-		world->getWPList().push_back(this);
-	}
-}
-
 void CWorldPart::Split(LPWORLD world)
 {
-	if (world->getHeight() < world->getWidth())
+	
+	if (width > CAM_WIDTH && objects.size() > 0 || height > CAM_HEIGHT && this->objects.size() > 0)
 	{
-		HorizontalSplit(world);
+		this->firstPart = new CWorldPart(this->width / 2, this->height / 2, this->x, this->y);
+		this->secondPart = new CWorldPart(this->width / 2, this->height / 2, this->x, this->y + this->height / 2);
+		this->thirdPart = new CWorldPart(this->width / 2, this->height / 2, this->x + this->width / 2, this->y + this->height / 2);
+		this->fourthPart = new CWorldPart(this->width / 2, this->height / 2, this->x + this->width / 2, this->y);
+		for (int i = 0; i < this->objects.size(); i++)
+		{
+			float objX, objY;
+			objects[i]->GetPosition(objX, objY);
+			bool isCenterObject = (this->x + this->width / 2 == objX && this->y + this->height / 2 == objY);
+
+			if (firstPart->checkObj(this->objects[i]))
+			{
+				if (secondPart->checkObj(this->objects[i]) && !isCenterObject)
+				{
+					// Object belongs to both firstPart and secondPart
+					firstPart->objects.push_back(this->objects[i]);
+				}
+				else if (fourthPart->checkObj(this->objects[i]) && !isCenterObject)
+				{
+					// Object belongs to both firstPart and fourthPart
+					firstPart->objects.push_back(this->objects[i]);
+				}
+				else
+				{
+					// Object belongs only to firstPart
+					firstPart->objects.push_back(this->objects[i]);
+				}
+			}
+			else if (secondPart->checkObj(this->objects[i]))
+			{
+				if (thirdPart->checkObj(this->objects[i]) && !isCenterObject)
+				{
+					// Object belongs to both secondPart and thirdPart
+					secondPart->objects.push_back(this->objects[i]);
+				}
+				else
+				{
+					// Object belongs only to secondPart
+					secondPart->objects.push_back(this->objects[i]);
+				}
+			}
+			else if (thirdPart->checkObj(this->objects[i]))
+			{
+				if (isCenterObject)
+				{
+					// Object belongs only to firstPart
+					firstPart->objects.push_back(this->objects[i]);
+				}
+				else
+				{
+					// Object belongs only to thirdPart
+					thirdPart->objects.push_back(this->objects[i]);
+				}
+			}
+			else if (fourthPart->checkObj(this->objects[i]))
+			{
+				if (isCenterObject)
+				{
+					// Object belongs only to firstPart
+					firstPart->objects.push_back(this->objects[i]);
+				}
+				else
+				{
+					// Object belongs only to fourthPart
+					fourthPart->objects.push_back(this->objects[i]);
+				}
+			}
+		}
+		this->objects.clear();
+		firstPart->Split(world);
+		secondPart->Split(world);
+		thirdPart->Split(world);
+		fourthPart->Split(world);
 	}
 	else
 	{
-		VerticalSplit(world);
+		world->getWPList().push_back(this);
 	}
 }
+
 void CWorldPart::ClearWorldPart() {
 	for (int i = 0; i < objects.size(); i++) {
 		delete objects[i];
