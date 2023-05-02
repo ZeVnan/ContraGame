@@ -86,7 +86,7 @@ void Update(DWORD dt)
 	CGame::GetInstance()->GetCamera()->Update(x, y);
 	float cx, cy;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-	DebugOutTitle(L"cy = %f, cx = %f, x = %f, y = %f", cy, cx, x, y);
+	DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
 
 }
 

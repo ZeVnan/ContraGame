@@ -208,61 +208,40 @@ void CWorld::ClearDeletedObjects() {
 void CWorld::Update(DWORD dt) {
 	UpdateObjectContainer();
 	
+	vector<LPGAMEOBJECT> tempObjectList;
 	for (int i = 0; i < WPList.size(); i++) {
 		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
-			vector<LPGAMEOBJECT> tempObjectList;
 			WPList[i]->GetObjectToTempList(tempObjectList);
-			if (i - 1 >= 0)
-				WPList[i - 1]->GetObjectToTempList(tempObjectList);
-			if (i - 2 >= 0)
-				WPList[i - 2]->GetObjectToTempList(tempObjectList);
-			if (i + 1 < tempObjectList.size())
-				WPList[i + 1]->GetObjectToTempList(tempObjectList);
-			if (i + 2 < tempObjectList.size())
-				WPList[i + 2]->GetObjectToTempList(tempObjectList);
-
-			vector<LPGAMEOBJECT> coObjects;
-			for (UINT i = 0; i < tempObjectList.size(); i++) {
-				coObjects.push_back(tempObjectList[i]);
-			}
-			for (UINT i = 0; i < tempObjectList.size(); i++) {
-				tempObjectList[i]->Update(dt, &coObjects);
-			}
-			break;
 		}
+	}
+	vector<LPGAMEOBJECT> coObjects;
+	for (UINT i = 0; i < tempObjectList.size(); i++) {
+		coObjects.push_back(tempObjectList[i]);
+	}
+	for (UINT i = 0; i < tempObjectList.size(); i++) {
+		tempObjectList[i]->Update(dt, &coObjects);
 	}
 }
 void CWorld::Render() {
 	for (int i = 0; i < WPList.size(); i++) {
 		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
 			WPList[i]->Render();
-			if (i - 1 >= 0) WPList[i - 1]->Render();
-			if (i - 2 >= 0) WPList[i - 2]->Render();
-			if (i + 1 < WPList.size()) WPList[i + 1]->Render();
-			if (i + 2 < WPList.size()) WPList[i + 2]->Render();
-			break;
 		}
 	}
 }
 void CWorld::UpdateObjectContainer() {
-	int cur = 0;
 	for (int i = 0; i < WPList.size(); i++) {
 		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
-			cur = i;
-			break;
-		}
-	}
-	for (int i = cur - 2; i <= cur + 2; i++) {
-		if (i < 0 || i >= WPList.size()) continue;
-		vector<LPGAMEOBJECT> temp = WPList[i]->GetOutOfPartObject();
-		for (int j = 0; j < temp.size(); j++) {
-			if (i - 1 >= 0) {
-				if (WPList[i - 1]->checkObj(temp[j]))
-					WPList[i - 1]->TakeNewObject(temp[j]);
-			}
-			if (i + 1 < WPList.size()) {
-				if (WPList[i + 1]->checkObj(temp[j]))
-					WPList[i + 1]->TakeNewObject(temp[j]);
+			vector<LPGAMEOBJECT> temp;
+			WPList[i]->GetOutOfPartObject(temp);
+			for (int j = 0; j < WPList.size(); j++) {
+				if (j != i) {
+					for (int k = 0; i < temp.size(); k++) {
+						if (WPList[i]->checkObj(temp[k])) {
+							WPList[i]->TakeNewObject(temp[k]);
+						}
+					}
+				}
 			}
 		}
 	}
