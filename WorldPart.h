@@ -13,8 +13,10 @@ private:
     float width;
     float x;
     float y;
-    CWorldPart* firstPart;  //left, bottom
-    CWorldPart* secondPart;     //right, top
+    CWorldPart* firstPart;
+    CWorldPart* secondPart;
+    CWorldPart* thirdPart;
+    CWorldPart* fourthPart;
     vector<LPGAMEOBJECT> objects;
 public:
     CWorldPart();
@@ -22,8 +24,6 @@ public:
     CWorldPart(float width, float height, float x, float y);
 
     void Split(LPWORLD world);
-    void HorizontalSplit(LPWORLD world);
-    void VerticalSplit(LPWORLD world);
     BOOL checkObj(LPGAMEOBJECT Obj);
 
     float getWidth() { return this->width; }
