@@ -34,7 +34,7 @@ map<string, string> CWorld::getObjectProperties(xml_node node)
 	return properties;
 }
 
-LPGAMEOBJECT CWorld::getSoldier(xml_node node)
+LPGAMEOBJECT CWorld::spawnSoldier(xml_node node)
 {
 	auto properties = getObjectProperties(node);
 	if (properties.size() == 0)
@@ -50,7 +50,7 @@ LPGAMEOBJECT CWorld::getSoldier(xml_node node)
 
 	return soldier;
 }
-LPGAMEOBJECT CWorld::getRifleman(xml_node node)
+LPGAMEOBJECT CWorld::spawnRifleman(xml_node node)
 {
 	auto properties = getObjectProperties(node);
 	if (properties.size() == 0)
@@ -66,7 +66,7 @@ LPGAMEOBJECT CWorld::getRifleman(xml_node node)
 
 	return rifleman;
 }
-LPGAMEOBJECT CWorld::getCannon(xml_node node)
+LPGAMEOBJECT CWorld::spawnCannon(xml_node node)
 {
 	auto properties = getObjectProperties(node);
 	if (properties.size() == 0)
@@ -82,7 +82,7 @@ LPGAMEOBJECT CWorld::getCannon(xml_node node)
 
 	return cannon;
 }
-LPGAMEOBJECT CWorld::getAircraft(xml_node node)
+LPGAMEOBJECT CWorld::spawnAircraft(xml_node node)
 {
 	auto properties = getObjectProperties(node);
 	if (properties.size() == 0)
@@ -98,7 +98,7 @@ LPGAMEOBJECT CWorld::getAircraft(xml_node node)
 
 	return aircraft;
 }
-LPGAMEOBJECT CWorld::getFalcon(xml_node node)
+LPGAMEOBJECT CWorld::spawnFalcon(xml_node node)
 {
 	auto properties = getObjectProperties(node);
 	if (properties.size() == 0)
@@ -114,7 +114,7 @@ LPGAMEOBJECT CWorld::getFalcon(xml_node node)
 
 	return falcon;
 }
-LPGAMEOBJECT CWorld::getWallTurret(xml_node node)
+LPGAMEOBJECT CWorld::spawnWallTurret(xml_node node)
 {
 	auto properties = getObjectProperties(node);
 	if (properties.size() == 0)
@@ -137,17 +137,17 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 	switch (id)
 	{
 	case CannonID:
-		return getCannon(node);
+		return spawnCannon(node);
 	case SoldierID:
-		return getSoldier(node);
+		return spawnSoldier(node);
 	case FalconID:
-		return getFalcon(node);
+		return spawnFalcon(node);
 	case AircraftID:
-		return getAircraft(node);
+		return spawnAircraft(node);
 	case RiflemanID:
-		return getRifleman(node);
+		return spawnRifleman(node);
 	case WallTurretID:
-		return getWallTurret(node);
+		return spawnWallTurret(node);
 	default:
 		return nullptr;
 		break;

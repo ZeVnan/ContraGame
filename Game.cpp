@@ -372,7 +372,7 @@ void CGame::ProcessKeyboard()
 
 CGame::~CGame()
 {
-	pBlendStateAlpha->Release();
+	pBlendStateAlpha->Release();	
 	spriteObject->Release();
 	pRenderTargetView->Release();
 	pSwapChain->Release();

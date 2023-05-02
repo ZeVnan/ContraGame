@@ -16,12 +16,12 @@ private:
 	float height;
 	vector<LPGAMEOBJECT> objectList;
 	vector<CWorldPart*> WPList;
-	LPGAMEOBJECT getRifleman(xml_node node);
-	LPGAMEOBJECT getSoldier(xml_node node);
-	LPGAMEOBJECT getCannon(xml_node node);
-	LPGAMEOBJECT getWallTurret(xml_node node);
-	LPGAMEOBJECT getAircraft(xml_node node);
-	LPGAMEOBJECT getFalcon(xml_node node);
+	LPGAMEOBJECT spawnRifleman(xml_node node);
+	LPGAMEOBJECT spawnSoldier(xml_node node);
+	LPGAMEOBJECT spawnCannon(xml_node node);
+	LPGAMEOBJECT spawnWallTurret(xml_node node);
+	LPGAMEOBJECT spawnAircraft(xml_node node);
+	LPGAMEOBJECT spawnFalcon(xml_node node);
 
 	map<string, string> getObjectProperties(xml_node node);
 	
