@@ -230,18 +230,17 @@ void CWorld::Render() {
 	}
 }
 void CWorld::UpdateObjectContainer() {
+	vector<LPGAMEOBJECT> temp;
 	for (int i = 0; i < WPList.size(); i++) {
 		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
-			vector<LPGAMEOBJECT> temp;
 			WPList[i]->GetOutOfPartObject(temp);
-			for (int j = 0; j < WPList.size(); j++) {
-				if (j != i) {
-					for (int k = 0; i < temp.size(); k++) {
-						if (WPList[i]->checkObj(temp[k])) {
-							WPList[i]->TakeNewObject(temp[k]);
-						}
-					}
-				}
+		}
+	}
+	for (int j = 0; j < WPList.size(); j++) {
+		for (int k = 0; k < temp.size(); k++) {
+			if (WPList[j]->checkObj(temp[k])) {
+				WPList[j]->TakeNewObject(temp[k]);
+				temp.erase(temp.begin() + k);
 			}
 		}
 	}
