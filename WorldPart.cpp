@@ -49,7 +49,7 @@ BOOL CWorldPart::checkObj(LPGAMEOBJECT Obj)
 void CWorldPart::Split(LPWORLD world)
 {
 	
-	if (width > CAM_WIDTH && objects.size() > 0 || height > CAM_HEIGHT && this->objects.size() > 0)
+	if ((width > CAM_WIDTH || height > CAM_HEIGHT) && this->objects.size() > 0)
 	{
 		this->firstPart = new CWorldPart(this->width / 2, this->height / 2, this->x, this->y);
 		this->secondPart = new CWorldPart(this->width / 2, this->height / 2, this->x, this->y + this->height / 2);
@@ -155,15 +155,13 @@ void CWorldPart::Render() {
 		objects[i]->Render();
 	}
 }
-vector<LPGAMEOBJECT> CWorldPart::GetOutOfPartObject() {
-	vector<LPGAMEOBJECT> temp;
+void CWorldPart::GetOutOfPartObject(vector<LPGAMEOBJECT>& a) {
 	for (int i = 0; i < objects.size(); i++) {
 		if (checkObj(objects[i]) == false) {
-			temp.push_back(objects[i]);
+			a.push_back(objects[i]);
 			objects.erase(objects.begin() + i);
 		}
 	}
-	return temp;
 }
 void CWorldPart::TakeNewObject(LPGAMEOBJECT obj) {
 	this->objects.push_back(obj);

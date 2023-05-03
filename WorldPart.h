@@ -36,7 +36,7 @@ public:
     void GetObjectToTempList(vector<LPGAMEOBJECT>& a);
     void Render();
 
-    vector<LPGAMEOBJECT> GetOutOfPartObject();
+    void GetOutOfPartObject(vector<LPGAMEOBJECT>& a);
     void TakeNewObject(LPGAMEOBJECT obj);
 };
 typedef CWorldPart* LPWORLDPART;

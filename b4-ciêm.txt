@@ -1,0 +1,21 @@
+====26/4====
+Yêu cầu:
+1. đổi tên hàm cho phù hợp(yêu cầu của cô)
+2. load tile từ file lên (tương tự như load object)
+	2.1. hàm load tile cũng tượng tự như load obj: trả về 1 vector
+3. object còn gì nữa thì load hết
+	3.1. nếu chưa có class thì tạo class lớp đó
+	3.1.1 ví dụ:
+	-class water: không có animation.
+	+trong suốt, không có hình ảnh, không di chuyển (hàm update và render bỏ trống)
+	+(hình ảnh của water được thể hiện qua tile chứ nó không có hình ảnh thật)
+	-class land:
+	+1 land gồm nhiều grass (land có 1 vector quản lí các grass của nó)
+	+dựa vào thông tin về width, height, x, y của land mà thiết kế 1 hàm sao cho khi load 1 land thì load được số grass tương ứng với height và width
+	+hàm render của land sẽ render tất cả các grass mà nó quản lí (vòng for)
+	3.1.2 các obj chưa biết làm gì như bridge, great wall, soldier creator:
+	+tạo class
+	+có các thuộc tính đảm bảo yêu cầu trong file xml
+	+các hàm khác có thể bỏ trống
+DEADLINE: thứ 2 ngày 1/5/2023
+============
