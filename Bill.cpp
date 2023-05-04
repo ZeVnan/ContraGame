@@ -1,4 +1,6 @@
 #include "Bill.h"
+
+#include "Grass.h"
 CBill::CBill() :CGameObject() {
 
 }
@@ -294,17 +296,24 @@ void CBill::NoCollision(DWORD dt) {
 	y += vy * dt;
 }
 void CBill::CollisionWith(LPCOLLISIONEVENT e) {
-	if (e->normal_y != 0 && e->dest_obj->isBlocking())
-	{
-		vy = 0;
-		if (e->normal_y > 0) isOnPlatform = true;
+	if (dynamic_cast<CGrass*>(e->dest_obj)) {
+		CollisionWithGrass(e);
 	}
-	else
-		if (e->normal_x != 0 && e->dest_obj->isBlocking())
-		{
-			//vx = 0;
-			//DebugOutTitle(L"x = %f", e->dest_obj->GetBox().left);
+}
+void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
+	if (e->normal_x != 0) {
+		this->x += e->time * this->GetBox().vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		if (e->normal_y > 0) {
+			this->y += e->time * this->GetBox().vpf_y;
+			vy = 0;
+			isOnPlatform = true;
 		}
+		else {
+			this->y += this->GetBox().vpf_y;
+		}
+	}
 }
 
 int CBill::CalculateAngle() {

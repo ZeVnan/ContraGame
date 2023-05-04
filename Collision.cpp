@@ -156,15 +156,18 @@ void CCollision::Process(LPGAMEOBJECT src_obj, vector<LPGAMEOBJECT>* coObjects, 
 		float x, y;
 		src_obj->GetPosition(x, y);
 		if (colX != NULL) {
-			x += colX->time * src_obj->GetBox().vpf_x;
+			//x += colX->time * src_obj->GetBox().vpf_x;
 			src_obj->CollisionWith(colX);
+			src_obj->GetPosition(x, y);
 		}
 		else {
 			x += src_obj->GetBox().vpf_x;
+			src_obj->SetPosition(x, y);
 		}
 		if (colY != NULL) {
-			y += colY->time * src_obj->GetBox().vpf_y;
+			//y += colY->time * src_obj->GetBox().vpf_y;
 			src_obj->CollisionWith(colY);
+			src_obj->GetPosition(x, y);
 		}
 		else {
 			y += src_obj->GetBox().vpf_y;
