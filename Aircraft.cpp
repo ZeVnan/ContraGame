@@ -49,3 +49,22 @@ void CAircraft::SetState(int state) {
 	}
 	CGameObject::SetState(state);
 }
+
+void CAircraft::CreateBox(DWORD dt) {
+	bbox.left = x - AIRCRAFT_BOX_WIDTH / 2;
+	bbox.top = y - AIRCRAFT_BOX_HEIGHT / 2;
+	bbox.right = x + AIRCRAFT_BOX_WIDTH / 2;
+	bbox.bottom = y + AIRCRAFT_BOX_HEIGHT / 2;
+	bbox.vpf_x = vx * dt;
+	bbox.vpf_y = vy * dt;
+}
+
+void CAircraft::NoCollision(DWORD dt) {
+	x += vx * dt;
+	y += vy * dt;
+}
+void CAircraft::CollisionWith(LPCOLLISIONEVENT e) {
+
+	//Aircraft explodes by Bill's bullet & drop some bullet artifact
+
+}

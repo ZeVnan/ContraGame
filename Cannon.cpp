@@ -1,7 +1,6 @@
 #include "Cannon.h"
 
 CCannon::CCannon() {}
-
 CCannon::CCannon(float x, float y) : CGameObject(x, y) {
 	isShooting = true;
 	isAppear = true;
@@ -34,7 +33,6 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		}
 	}
 }
-
 void CCannon::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
@@ -55,7 +53,6 @@ void CCannon::Render() {
 	}
 	animations->Get(ani)->Render(x, y);
 }
-
 void CCannon::SetState(int state) {
 	switch (state) {
 	case CANNON_STATE_LEFT:
@@ -70,4 +67,20 @@ void CCannon::SetState(int state) {
 		break;
 	}
 	CGameObject::SetState(state);
+}
+
+void CCannon::CreateBox(DWORD dt) {
+	bbox.left = x - CANNON_BOX_WIDTH / 2;
+	bbox.top = y - CANNON_BOX_HEIGHT / 2;
+	bbox.right = x + CANNON_BOX_WIDTH / 2;
+	bbox.bottom = y + CANNON_BOX_HEIGHT / 2;
+}
+
+void CCannon::NoCollision(DWORD dt) {
+	
+}
+void CCannon::CollisionWith(LPCOLLISIONEVENT e) {
+
+	//Cannon explodes by Bill's bullets
+
 }

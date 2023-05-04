@@ -59,3 +59,19 @@ void CFalcon::SetState(int state) {
 	}
 	CGameObject::SetState(state);
 }
+
+void CFalcon::CreateBox(DWORD dt) {
+	bbox.left = x - FALCON_BOX_WIDTH / 2;
+	bbox.top = y - FALCON_BOX_HEIGHT / 2;
+	bbox.right = x + FALCON_BOX_WIDTH / 2;
+	bbox.bottom = y + FALCON_BOX_HEIGHT / 2;
+}
+
+void CFalcon::NoCollision(DWORD dt) {
+
+}
+void CFalcon::CollisionWith(LPCOLLISIONEVENT e) {
+
+	//Falcon explodes by Bill's bullets & drop bullet artifact
+
+}
