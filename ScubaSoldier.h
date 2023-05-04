@@ -15,6 +15,11 @@
 #define SCUBA_ANI_SHOOT_LEFT 702
 #define SCUBA_ANI_SHOOT_RIGHT 703
 
+#define SCUBA_BOX_HIDE_WIDTH	15
+#define SCUBA_BOX_HIDE_HEIGHT	15
+#define SCUBA_BOX_SHOOT_WIDTH	15
+#define SCUBA_BOX_SHOOT_HEIGHT	30
+
 class CScubaSoldier : public CGameObject
 {
 private:
