@@ -32,5 +32,9 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
+
+	void CreateBox(DWORD dt);
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
 };
 

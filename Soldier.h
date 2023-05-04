@@ -73,6 +73,10 @@ public:
 
 	void AddBullet();
 	void DelBullet();
+
+	void CreateBox(DWORD dt);
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
 };
 
 
