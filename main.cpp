@@ -57,8 +57,14 @@ void LoadResources() {
 		CGrass* grass = new CGrass(10 + i * 32, 168);
 		world->getObjectList().push_back(grass);
 	}
-	CGrass* grass = new CGrass(200, 210);
-	world->getObjectList().push_back(grass);
+	for (int i = 0; i < 20; i++) {
+		CGrass* grass = new CGrass(200 + i * 64, 210);
+		world->getObjectList().push_back(grass);
+	}
+	for (int i = 0; i < 20; i++) {
+		CGrass* grass = new CGrass(220 + i * 64, 242);
+		world->getObjectList().push_back(grass);
+	}
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	world->getObjectList().push_back(bill);
 	

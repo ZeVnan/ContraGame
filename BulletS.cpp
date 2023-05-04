@@ -6,6 +6,6 @@ void CBulletS::Update(DWORD dt) {
 	x += vx * dt;
 	y += vy * dt;
 }
-CBulletS::CBulletS(float x, float y, int angle):CBullet(x, y, angle) {
+CBulletS::CBulletS(float x, float y, int angle, bool friendly):CBullet(x, y, angle, friendly) {
 	this->type = BULLET_ANI_SPREAD;
 }

@@ -1,6 +1,6 @@
 #include "BulletF.h"
 
-CBulletF::CBulletF(float x, float y, int angle) : CBullet::CBullet(x, y, angle) {
+CBulletF::CBulletF(float x, float y, int angle, bool friendly) : CBullet::CBullet(x, y, angle, friendly) {
 	type = BULLET_ANI_FLAME;
 	parameter = 2 * BULLET_F_RADIUS * 3.14159;
 	vr = BULLET_F_SPEED_R;

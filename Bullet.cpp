@@ -3,10 +3,12 @@ CBullet::CBullet() {
 	this->type = -1;
 	maxVx = 0;
 	maxVy = 0;
+	friendly = true;
 }
-CBullet::CBullet(float x, float y, int angle) : CBullet() {
+CBullet::CBullet(float x, float y, int angle, bool friendly) : CBullet() {
 	this->x = x;
 	this->y = y;
+	this->friendly = friendly;
 	float radian = 3.14159 / 180 * angle;
 
 	maxVx =cos(radian) * BULLET_SPEED;

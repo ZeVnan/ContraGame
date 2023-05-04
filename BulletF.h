@@ -12,7 +12,7 @@ private:
 	float centerx;
 	float centery;
 public:
-	CBulletF(float x, float y, int angle);
+	CBulletF(float x, float y, int angle, bool friendly);
 	void Update(DWORD dt);
 };
 typedef CBulletF* LPBULLETF;

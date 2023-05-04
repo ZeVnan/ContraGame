@@ -6,7 +6,7 @@ private:
 	int lastBulletTime;
 public:
 	DWORD shootTime;
-	CBulletM(float x, float y, int angle);
+	CBulletM(float x, float y, int angle, bool friendly);
 	void Update(DWORD dt);
 };
 typedef CBulletM* LPBULLETM;

@@ -11,15 +11,15 @@
 
 #define AIRCRAFT_STATE_DEAD 0
 
-#define AIRCRAFT_ANI_NORMAL 200
-#define AIRCRAFT_ANI_bAMMO 201
-#define AIRCRAFT_ANI_fAMMO 202
-#define AIRCRAFT_ANI_lAMMO 203
-#define AIRCRAFT_ANI_mAMMO 204
-#define AIRCRAFT_ANI_rAMMO 205
-#define AIRCRAFT_ANI_sAMMO 206
+#define AIRCRAFT_ANI_NORMAL 10300
+#define AIRCRAFT_ANI_bAMMO 10301
+#define AIRCRAFT_ANI_fAMMO 10302
+#define AIRCRAFT_ANI_lAMMO 10303
+#define AIRCRAFT_ANI_mAMMO 10304
+#define AIRCRAFT_ANI_rAMMO 10305
+#define AIRCRAFT_ANI_sAMMO 10306
 
-#define AIRCRAFT_ANI_INVUL 207
+#define AIRCRAFT_ANI_INVUL 10310
 
 class CAircraft : public CGameObject
 {
@@ -28,7 +28,6 @@ private:
 	float ay;
 	int ammo;
 public:
-	CAircraft();
 	CAircraft(float x, float y, int ammo);
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);

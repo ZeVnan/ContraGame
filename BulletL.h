@@ -8,7 +8,7 @@ private:
 	int waitTime;
 	int angle;
 public:
-	CBulletL(float x, float y, int angle, int turn);
+	CBulletL(float x, float y, int angle, int turn, bool friendly);
 	void Update(DWORD dt);
 	void Render();
 };

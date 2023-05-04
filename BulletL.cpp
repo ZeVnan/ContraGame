@@ -1,6 +1,6 @@
 #include "BulletL.h"
 
-CBulletL::CBulletL(float x, float y, int angle, int turn) : CBullet::CBullet(x, y, angle) {
+CBulletL::CBulletL(float x, float y, int angle, int turn, bool friendly) : CBullet::CBullet(x, y, angle, friendly) {
 	type = BULLET_ANI_LASER;
 	waitTime = turn * BULLET_L_WAITTIME;
 	this->angle = angle;

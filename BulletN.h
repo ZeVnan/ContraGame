@@ -3,7 +3,7 @@
 
 class CBulletN :public CBullet {
 public:
-	CBulletN(float x, float y, int angle);
+	CBulletN(float x, float y, int angle, bool friendly);
 	void Update(DWORD dt);
 };
 typedef CBulletN* LPBULLETN;
