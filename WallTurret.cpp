@@ -156,9 +156,13 @@ void CWallTurret::CreateBox(DWORD dt) {
 	bbox.top = y - WTURRET_BOX_HEIGHT / 2;
 	bbox.right = x + WTURRET_BOX_WIDTH / 2;
 	bbox.bottom = y + WTURRET_BOX_HEIGHT / 2;
+	x += 0;
+	y += 0;
 }
 
 void CWallTurret::NoCollision(DWORD dt) {
+	x += 0;
+	y += 0;
 }
 void CWallTurret::CollisionWith(LPCOLLISIONEVENT e) {
 

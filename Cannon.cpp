@@ -74,10 +74,13 @@ void CCannon::CreateBox(DWORD dt) {
 	bbox.top = y - CANNON_BOX_HEIGHT / 2;
 	bbox.right = x + CANNON_BOX_WIDTH / 2;
 	bbox.bottom = y + CANNON_BOX_HEIGHT / 2;
+	x += 0;
+	y += 0;
 }
 
 void CCannon::NoCollision(DWORD dt) {
-	
+	x += 0;
+	y += 0;
 }
 void CCannon::CollisionWith(LPCOLLISIONEVENT e) {
 

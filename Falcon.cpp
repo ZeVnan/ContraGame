@@ -65,10 +65,13 @@ void CFalcon::CreateBox(DWORD dt) {
 	bbox.top = y - FALCON_BOX_HEIGHT / 2;
 	bbox.right = x + FALCON_BOX_WIDTH / 2;
 	bbox.bottom = y + FALCON_BOX_HEIGHT / 2;
+	x += 0;
+	y += 0;
 }
 
 void CFalcon::NoCollision(DWORD dt) {
-
+	x += 0;
+	y += 0;
 }
 void CFalcon::CollisionWith(LPCOLLISIONEVENT e) {
 

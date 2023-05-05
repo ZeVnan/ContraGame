@@ -16,11 +16,11 @@ void CFire::CreateBox(DWORD dt) {
 	bbox.right = x + FIRE_BOX_WIDTH / 2;
 	bbox.bottom = y + FIRE_BOX_HEIGHT / 2;
 	bbox.vpf_x = vx * dt;
-	bbox.vpf_y = vy * dt;
+	bbox.vpf_y = 0;
 }
 void CFire::NoCollision(DWORD dt) {
 	x += vx * dt;
-	y += vy * dt;
+	y += 0;
 }
 void CFire::CollisionWith(LPCOLLISIONEVENT e) {
 
