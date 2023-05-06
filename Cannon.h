@@ -21,6 +21,9 @@
 #define CANNON_ANI_LEFT_60 301
 #define CANNON_ANI_LEFT_30 302
 #define CANNON_ANI_APPEAR 310
+ 
+#define CANNON_BOX_WIDTH 32
+#define CANNON_BOX_HEIGHT 32
 
 class CCannon : public CGameObject
 {
@@ -35,5 +38,9 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
+
+	void CreateBox(DWORD dt);
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
 };
 

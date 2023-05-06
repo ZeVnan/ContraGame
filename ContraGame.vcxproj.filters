@@ -95,6 +95,8 @@
     <ClCompile Include="Collision.cpp">
       <Filter>System\Source FIle</Filter>
     </ClCompile>
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
@@ -200,6 +202,9 @@
     <ClInclude Include="Collision.h">
       <Filter>System\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileSet.h" />
+    <ClInclude Include="config.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

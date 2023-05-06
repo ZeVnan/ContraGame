@@ -43,6 +43,8 @@ public:
 		if (_rsview != NULL) this->_rsview->Release();
 		if (_tex != NULL) this->_tex->Release();
 	}
+
+
 };
 
 typedef CTexture* LPTEXTURE;

@@ -1,7 +1,8 @@
-#pragma once
+﻿#pragma once
 
 #include "Texture.h"
 #include "Game.h"
+#include "define.h"
 
 class CSprite
 {
@@ -17,10 +18,16 @@ class CSprite
 	D3DXMATRIX matScaling;
 	D3DXMATRIX matRotation;
 public:
+
+	int getSpriteHeight();
+	int getSpriteWidth();
+
 	CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex);
 	CSprite(int id, CSprite* psprite);
 	CSprite(int id, CSprite* psprite, int angle);
-	void Draw(float x, float y);
+
+	void Draw(float x, float y);	
+
 };
 
 typedef CSprite* LPSPRITE;

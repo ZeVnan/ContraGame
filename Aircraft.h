@@ -21,6 +21,9 @@
 
 #define AIRCRAFT_ANI_INVUL 207
 
+#define AIRCRAFT_BOX_WIDTH 25
+#define AIRCRAFT_BOX_HEIGHT 15
+
 class CAircraft : public CGameObject
 {
 private:
@@ -34,5 +37,9 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
+
+	void CreateBox(DWORD dt);
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
 };
 

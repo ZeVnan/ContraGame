@@ -40,6 +40,9 @@
 #define WTURRET_ANI_UP			611
 #define WTURRET_ANI_DOWN		612
 
+#define WTURRET_BOX_WIDTH 32
+#define WTURRET_BOX_HEIGHT 32
+
 class CWallTurret : public CGameObject
 {
 private:
@@ -50,4 +53,8 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
+
+	void CreateBox(DWORD dt);
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
 };

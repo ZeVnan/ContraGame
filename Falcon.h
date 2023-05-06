@@ -18,6 +18,9 @@
 #define FALCON_ANI_OPENED		502
 #define FALCON_ANI_CLOSING		503
 
+#define FALCON_BOX_WIDTH 31
+#define FALCON_BOX_HEIGHT 31
+
 class CFalcon : public CGameObject
 {
 private:
@@ -29,4 +32,8 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
+
+	void CreateBox(DWORD dt);
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
 };

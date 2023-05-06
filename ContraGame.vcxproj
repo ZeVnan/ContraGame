@@ -166,6 +166,8 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="WallTurret.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldPart.cpp" />
@@ -185,6 +187,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="config.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Falcon.h" />
@@ -205,6 +208,8 @@
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileSet.h" />
     <ClInclude Include="WallTurret.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldPart.h" />

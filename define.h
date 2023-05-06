@@ -1,8 +1,13 @@
 #pragma once
+#include <d3d10.h>		// d3d9.lib
+#include <d3dx10.h>		// d3dx9.lib
+#include <dinput.h>		// dinput8.lib, dxguid.lib
+#include <dsound.h>		// dsound.lib
+
+#include <vector>
 #include <math.h>
 #include <string>
 #include <map>
-#include <vector>
 
 #include "pugixml.hpp"
 
@@ -20,14 +25,40 @@ enum eID
 {
 	BillID = 0,			// Main character.
 	BulletID = 1,
-	//
-	//stage 1 characters
-	//Missing: Boss, Explosions, Bridge,...
-	SoldierID = 2,		//Dunno cause hohoanhtung got soldierCreator - research later
-	AircraftID = 3,		//done
-	CannonID = 4,		//done
-	RiflemanID = 5,		//done
-	FalconID = 6,		//done
-	WallTurretID = 7,	//done
+	SoldierID = 2,		
+	AircraftID = 3,		
+	CannonID = 4,		
+	RiflemanID = 5,		
+	FalconID = 6,	
+	WallTurretID = 7,	
 	
+	LAND = 12,			
+	CREATOR = 13,
 };
+
+enum eLandType
+{
+	GRASS,
+	WATER,
+	BRIDGELAND
+};
+
+enum eMapType
+{
+	VERTICAL = 0,
+	HORIZONTAL = 1
+};
+
+enum eAirCraftType
+{
+	B,
+	F,
+	L,
+	M,
+	R,
+	S,
+	I,
+};
+
+typedef D3DXVECTOR3 GVector3;
+typedef D3DXVECTOR2 GVector2;

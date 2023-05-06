@@ -1,4 +1,11 @@
-#include "Sprite.h"
+﻿#include "Sprite.h"
+
+int CSprite::getSpriteHeight() {
+	return (this->right - this->left + 1);
+}
+int CSprite::getSpriteWidth() {
+	return (this->bottom - this->top + 1);
+}
 
 CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex)
 {
@@ -9,7 +16,7 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 	this->bottom = bottom;
 	this->texture = tex;
 
-	// Set the sprite�s shader resource view
+	// Set the sprite’s shader resource view
 	sprite.pTexture = tex->getShaderResourceView();
 
 	int spriteWidth = (this->right - this->left + 1);
@@ -27,7 +34,6 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 	D3DXMatrixRotationZ(&this->matRotation, D3DXToRadian(0));
 }
-
 CSprite::CSprite(int id, CSprite* psprite) {
 	this->id = id;
 	this->left = psprite->left;
@@ -36,8 +42,8 @@ CSprite::CSprite(int id, CSprite* psprite) {
 	this->bottom = psprite->bottom;
 	this->texture = psprite->texture;
 
-	int spriteWidth = (this->right - this->left + 1);
-	int spriteHeight = (this->bottom - this->top + 1);
+	int spriteWidth = getSpriteHeight();
+	int spriteHeight = getSpriteWidth();
 
 	this->sprite.pTexture = psprite->sprite.pTexture;
 
@@ -68,6 +74,8 @@ CSprite::CSprite(int id, CSprite* psprite, int angle) {
 	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 }
 
+
+
 void CSprite::Draw(float x, float y)
 {
 	CGame* g = CGame::GetInstance();
@@ -83,4 +91,3 @@ void CSprite::Draw(float x, float y)
 	this->sprite.matWorld = (this->matScaling *this->matRotation* matTranslation);
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }
-

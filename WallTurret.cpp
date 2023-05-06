@@ -56,7 +56,6 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	//DebugOutTitle(L"state = %d, timeleft = %d", this->state, this->timeleft);
 }
-
 void CWallTurret::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -105,7 +104,6 @@ void CWallTurret::Render()
 	}
 	animations->Get(ani)->Render(x, y);
 }
-
 void CWallTurret::SetState(int state)
 {
 	switch (state)
@@ -151,4 +149,23 @@ void CWallTurret::SetState(int state)
 		break;
 	}
 	CGameObject::SetState(state);
+}
+
+void CWallTurret::CreateBox(DWORD dt) {
+	bbox.left = x - WTURRET_BOX_WIDTH / 2;
+	bbox.top = y - WTURRET_BOX_HEIGHT / 2;
+	bbox.right = x + WTURRET_BOX_WIDTH / 2;
+	bbox.bottom = y + WTURRET_BOX_HEIGHT / 2;
+	x += 0;
+	y += 0;
+}
+
+void CWallTurret::NoCollision(DWORD dt) {
+	x += 0;
+	y += 0;
+}
+void CWallTurret::CollisionWith(LPCOLLISIONEVENT e) {
+
+	//Aircraft explodes by Bill's bullet & drop some bullet artifact
+
 }
