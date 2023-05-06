@@ -46,6 +46,12 @@
 #define SOLDIER_ANI_DIE_LEFT 140
 #define SOLDIER_ANI_DIE_RIGHT 141
 
+#define SOLDIER_BOX_RUN_WIDTH	16
+#define SOLDIER_BOX_RUN_HEIGHT	32
+#define SOLDIER_BOX_SHOOT_WIDTH	24
+#define SOLDIER_BOX_SHOOT_HEIGHT	32
+#define SOLDIER_BOX_LAY_WIDTH	32
+#define SOLDIER_BOX_LAY_HEIGHT	15
 
 class CSoldier: public CGameObject
 {
@@ -67,6 +73,10 @@ public:
 
 	void AddBullet();
 	void DelBullet();
+
+	void CreateBox(DWORD dt);
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
 };
 
 

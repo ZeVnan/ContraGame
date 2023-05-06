@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 #include "Bullet.h"
 
@@ -47,6 +47,15 @@
 #define RIFLEMAN_ANI_EXPOSE_RIGHT 461
 
 #define RIFLEMAN_SWITCH_TIME 300
+
+//Áp dụng được cho toàn bộ animation khi đứng của rifleman
+#define RIFLEMAN_BOX_NORMAL_HEIGHT	38
+#define RIFLEMAN_BOX_NORMAL_WIDTH	23
+
+#define RIFLEMAN_BOX_HIDE_WIDTH		23
+#define RIFLEMAN_BOX_HIDE_HEIGHT	16
+
+
 class Rifleman : public CGameObject
 {
 private:
@@ -64,5 +73,9 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
+
+	void CreateBox(DWORD dt);
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
 };
 
