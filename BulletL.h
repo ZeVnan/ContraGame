@@ -2,6 +2,8 @@
 #include "Bullet.h"
 
 #define BULLET_L_WAITTIME 50
+
+
 class CBulletL:public CBullet
 {
 private:
@@ -11,5 +13,6 @@ public:
 	CBulletL(float x, float y, int angle, int turn, bool friendly);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
+	void CreateBox(DWORD dt);
 };
 typedef CBulletL* LPBULLETL;

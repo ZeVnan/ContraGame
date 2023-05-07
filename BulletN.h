@@ -1,7 +1,7 @@
 #pragma once
 #include "Bullet.h"
-#define BOX_WIDTH 2
-#define BOX_HEIGHT 2
+#define BULLET_N_BOX_WIDTH 2
+#define BULLET_N_BOX_HEIGHT 2
 class CBulletN :public CBullet {
 public:
 	CBulletN(float x, float y, int angle, bool friendly);

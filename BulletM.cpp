@@ -5,6 +5,13 @@ CBulletM::CBulletM(float x, float y, int angle, bool friendly) :CBullet::CBullet
 void CBulletM::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
 	vy = maxVy;
-	x += vx * dt;
-	y += vy * dt;
+	CCollision::GetInstance()->Process(this, coObjects, dt);
+}
+void CBulletM::CreateBox(DWORD dt) {
+	bbox.left = x - BULLET_M_BOX_WIDTH / 2;
+	bbox.top = y + BULLET_M_BOX_HEIGHT / 2;
+	bbox.right = x + BULLET_M_BOX_WIDTH / 2;
+	bbox.bottom = y - BULLET_M_BOX_HEIGHT / 2;
+	bbox.vpf_x = vx * dt;
+	bbox.vpf_y = vy * dt;
 }

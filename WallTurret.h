@@ -63,5 +63,8 @@ public:
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
+	bool isCollidable() {
+		return !isExploded;
+	}
 };
 typedef CWallTurret* LPWALLTURRET;

@@ -11,15 +11,13 @@ CBulletN::CBulletN(float x, float y, int angle, bool friendly) :CBullet::CBullet
 void CBulletN::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
 	vy = maxVy;
-	x += vx * dt;
-	y += vy * dt;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 }
 void CBulletN::CreateBox(DWORD dt) {
-	bbox.left = x - BOX_WIDTH / 2;
-	bbox.top = y + BOX_HEIGHT / 2;
-	bbox.right = x + BOX_WIDTH / 2;
-	bbox.bottom = y - BOX_HEIGHT / 2;
+	bbox.left = x - BULLET_N_BOX_WIDTH / 2;
+	bbox.top = y + BULLET_N_BOX_HEIGHT / 2;
+	bbox.right = x + BULLET_N_BOX_WIDTH / 2;
+	bbox.bottom = y - BULLET_N_BOX_HEIGHT / 2;
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;
 }

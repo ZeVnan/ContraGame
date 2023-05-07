@@ -48,3 +48,6 @@ void CBulletL::Render(){
 	}
 	animations->Get(aniId)->Render(x, y);
 }
+void CBulletL::CreateBox(DWORD dt) {
+
+}

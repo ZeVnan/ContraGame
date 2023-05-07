@@ -37,7 +37,7 @@ void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 	}
 }
 void CBullet::CollisionWithWallTurret(LPCOLLISIONEVENT e) {
-	if (friendly == false)
+	if (friendly == false || (LPWALLTURRET(e->dest_obj))->isCollidable() == false)
 		return;
 	(LPWALLTURRET(e->dest_obj))->SetState(WTURRET_STATE_EXPLODE);
 	e->src_obj->Delete();
