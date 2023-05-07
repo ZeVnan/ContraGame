@@ -5,7 +5,7 @@ CBulletL::CBulletL(float x, float y, int angle, int turn, bool friendly) : CBull
 	waitTime = turn * BULLET_L_WAITTIME;
 	this->angle = angle;
 }
-void CBulletL::Update(DWORD dt) {
+void CBulletL::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (waitTime > 0) {
 		waitTime -= dt;
 	}

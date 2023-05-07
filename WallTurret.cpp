@@ -9,6 +9,10 @@ CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->timeleft -= dt;
+	if (this->isExploded == true && this->timeleft < 0) {
+		isDeleted = true;
+		return;
+	}
 	if (this->timeleft < 0)
 	{
 		switch (this->state)
@@ -54,9 +58,8 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			break;
 		}
 	}
-	//DebugOutTitle(L"state = %d, timeleft = %d", this->state, this->timeleft);
+	DebugOutTitle(L"state = %d, timeleft = %d, isDeleted = %d", this->state, this->timeleft, this->isDeleted);
 }
-
 void CWallTurret::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -102,10 +105,12 @@ void CWallTurret::Render()
 	case WTURRET_STATE_DOWN:
 		ani = WTURRET_ANI_DOWN;
 		break;
+	case WTURRET_STATE_EXPLODE:
+		ani = EXPLOSION_2_ANI;
+		break;
 	}
 	animations->Get(ani)->Render(x, y);
 }
-
 void CWallTurret::SetState(int state)
 {
 	switch (state)
@@ -149,6 +154,29 @@ void CWallTurret::SetState(int state)
 	case WTURRET_STATE_UP:
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
+	case WTURRET_STATE_EXPLODE:
+		this->isExploded = true;
+		timeleft = WTURRET_TIME_EXPLODE;
+		break;
 	}
 	CGameObject::SetState(state);
+}
+
+void CWallTurret::CreateBox(DWORD dt) {
+	bbox.left = x - WTURRET_BOX_WIDTH / 2;
+	bbox.top = y - WTURRET_BOX_HEIGHT / 2;
+	bbox.right = x + WTURRET_BOX_WIDTH / 2;
+	bbox.bottom = y + WTURRET_BOX_HEIGHT / 2;
+	x += 0;
+	y += 0;
+}
+
+void CWallTurret::NoCollision(DWORD dt) {
+	x += 0;
+	y += 0;
+}
+void CWallTurret::CollisionWith(LPCOLLISIONEVENT e) {
+
+	//Aircraft explodes by Bill's bullet & drop some bullet artifact
+
 }

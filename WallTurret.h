@@ -20,10 +20,12 @@
 #define WTURRET_STATE_RIGHT150	24
 #define WTURRET_STATE_UP		30
 #define WTURRET_STATE_DOWN		31
+#define WTURRET_STATE_EXPLODE	40
 
 //define temporary animation time
 #define WTURRET_TIME_APPEAR		700
 #define WTURRET_TIME_ROTATE		500
+#define WTURRET_TIME_EXPLODE	600
 
 //define animation
 #define WTURRET_ANI_APPEAR		10700
@@ -43,6 +45,9 @@
 #define WTURRET_ANI_UP			10730
 #define WTURRET_ANI_DOWN		10731
 
+#define WTURRET_BOX_WIDTH 32
+#define WTURRET_BOX_HEIGHT 32
+
 class CWallTurret : public CGameObject
 {
 private:
@@ -53,4 +58,10 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
+
+	void CreateBox(DWORD dt);
+	void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
+	bool isBlocking() { return false; }
 };
+typedef CWallTurret* LPWALLTURRET;

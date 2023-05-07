@@ -1,5 +1,5 @@
 #include "BulletS.h"
-void CBulletS::Update(DWORD dt) {
+void CBulletS::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
 	vy = maxVy;
 

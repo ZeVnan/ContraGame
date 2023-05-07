@@ -56,3 +56,36 @@ void CScubaSoldier::SetState(int state)
 	}
 	CGameObject::SetState(state);
 }
+
+void CScubaSoldier::CreateBox(DWORD dt)
+{
+	if (isHiding)
+	{
+		bbox.left = x - SCUBA_BOX_HIDE_WIDTH / 2;
+		bbox.top = y - SCUBA_BOX_HIDE_HEIGHT / 2;
+		bbox.right = x + SCUBA_BOX_HIDE_WIDTH / 2;
+		bbox.bottom = y + SCUBA_BOX_HIDE_HEIGHT / 2;
+		bbox.vpf_x = vx * dt;
+		bbox.vpf_y = vy * dt;
+	}
+	else
+	{
+		bbox.left = x - SCUBA_BOX_SHOOT_WIDTH / 2;
+		bbox.top = y - SCUBA_BOX_SHOOT_HEIGHT / 2;
+		bbox.right = x + SCUBA_BOX_SHOOT_WIDTH / 2;
+		bbox.bottom = y + SCUBA_BOX_SHOOT_HEIGHT / 2;
+		bbox.vpf_x = vx * dt;
+		bbox.vpf_y = vy * dt;
+	}
+	
+}
+
+void CScubaSoldier::NoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+}
+
+void CScubaSoldier::CollisionWith(LPCOLLISIONEVENT e)
+{
+}

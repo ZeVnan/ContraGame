@@ -728,14 +728,30 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	textures->Add(ID_TEX_GRASS, TEXTURE_PATH_GRASS);
 	textures->Add(ID_TEX_FIRE, TEXTURE_PATH_FIRE);
 	textures->Add(ID_TEX_BOX, TEXTURE_PATH_BOX);
+	textures->Add(ID_TEX_EXPLOSION, TEXTURE_PATH_EXPLOSION);
 
 	LPTEXTURE texGrass = textures->Get(ID_TEX_GRASS);
 	LPTEXTURE texFire = textures->Get(ID_TEX_FIRE);
+	LPTEXTURE texExplosion = textures->Get(ID_TEX_EXPLOSION);
 	//grass
 	sprites->Add(20000, 0, 0, 32, 16, texGrass);
 	//fire
 	sprites->Add(20001, 0, 0, 16, 16, texFire);
 	sprites->Add(20002, 16, 0, 32, 16, texFire);
+	//explosion type 1
+	sprites->Add(20010, 0, 0, 25, 32, texExplosion);
+	sprites->Add(20011, 164, 0, 189, 32, texExplosion);
+	sprites->Add(20012, 26, 0, 55, 32, texExplosion);
+	sprites->Add(20013, 190, 0, 219, 32, texExplosion);
+	sprites->Add(20014, 56, 0, 89, 32, texExplosion);
+	sprites->Add(20015, 220, 0, 253, 32, texExplosion);
+	//explosion type 2
+	sprites->Add(20020, 90, 0, 106, 32, texExplosion);
+	sprites->Add(20021, 254, 0, 270, 32, texExplosion);
+	sprites->Add(20022, 107, 0, 131, 32, texExplosion);
+	sprites->Add(20023, 271, 0, 295, 32, texExplosion);
+	sprites->Add(20024, 132, 0, 163, 32, texExplosion);
+	sprites->Add(20025, 296, 0, 327, 32, texExplosion);
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);
@@ -746,4 +762,22 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(20001);
 	ani->Add(20002);
 	animations->Add(FIRE_ANI, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20010);
+	ani->Add(20011);
+	ani->Add(20012);
+	ani->Add(20013);
+	ani->Add(20014);
+	ani->Add(20015);
+	animations->Add(EXPLOSION_1_ANI, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20020);
+	ani->Add(20021);
+	ani->Add(20022);
+	ani->Add(20023);
+	ani->Add(20024);
+	ani->Add(20025);
+	animations->Add(EXPLOSION_2_ANI, ani);
 }

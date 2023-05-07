@@ -36,9 +36,19 @@ public:
 	int getType() { return type; }
 	CBullet();
 	CBullet(float x, float y, int angle, bool friendly);
-	virtual void Update(DWORD dt) = 0;
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) = 0;
 	void Render();
 	BOOLEAN outOfScreen();
+
+	bool isBlocking() {
+		return false;
+	}
+	virtual void NoCollision(DWORD dt);
+	void CollisionWith(LPCOLLISIONEVENT e);
+	void CollisionWithWallTurret(LPCOLLISIONEVENT e);
+	~CBullet() {
+
+	}
 };
 typedef CBullet* LPBULLET;
 

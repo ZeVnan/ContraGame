@@ -7,6 +7,6 @@ private:
 public:
 	DWORD shootTime;
 	CBulletM(float x, float y, int angle, bool friendly);
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 };
 typedef CBulletM* LPBULLETM;

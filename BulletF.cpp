@@ -8,7 +8,7 @@ CBulletF::CBulletF(float x, float y, int angle, bool friendly) : CBullet::CBulle
 	centerx = x;
 	centery = y;
 }
-void CBulletF::Update(DWORD dt) {
+void CBulletF::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	degree += (vr * dt) / parameter * 360;
 	if (degree >= 360)
 		degree -= 360;

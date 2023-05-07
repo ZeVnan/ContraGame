@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "WallTurret.h"
 CBullet::CBullet() {
 	this->type = -1;
 	maxVx = 0;
@@ -25,4 +26,19 @@ void CBullet::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = this->type;
 	animations->Get(aniId)->Render(x, y);
+}
+void CBullet::NoCollision(DWORD dt) {
+	x += vx * dt;
+	y += vy * dt;
+}
+void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<LPWALLTURRET>(e->dest_obj)) {
+		CollisionWithWallTurret(e);
+	}
+}
+void CBullet::CollisionWithWallTurret(LPCOLLISIONEVENT e) {
+	if (friendly == false)
+		return;
+	(LPWALLTURRET(e->dest_obj))->SetState(WTURRET_STATE_EXPLODE);
+	e->src_obj->Delete();
 }

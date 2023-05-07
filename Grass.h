@@ -3,7 +3,7 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "debug.h"
-#define GRASS_ANI 2000
+#define GRASS_ANI 20000
 #define GRASS_WIDTH 32
 #define GRASS_HEIGHT 16
 
@@ -16,4 +16,5 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	void CreateBox(DWORD dt);
 };
+typedef CGrass* LPGRASS;
 

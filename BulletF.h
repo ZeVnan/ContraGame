@@ -13,6 +13,6 @@ private:
 	float centery;
 public:
 	CBulletF(float x, float y, int angle, bool friendly);
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 };
 typedef CBulletF* LPBULLETF;

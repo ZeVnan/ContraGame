@@ -9,7 +9,7 @@ private:
 	int angle;
 public:
 	CBulletL(float x, float y, int angle, int turn, bool friendly);
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 };
 typedef CBulletL* LPBULLETL;

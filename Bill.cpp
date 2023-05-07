@@ -25,7 +25,7 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 		bulletMtime -= dt;
 	else
 		bulletMtime = 0;
-	UpdateBullet(dt);
+	UpdateBullet(dt, coObjects);
 	int a = 0;
 	for (int i = 0; i < waveContainer.size(); i++) {
 		a += waveContainer[i].size();
@@ -301,7 +301,7 @@ void CBill::NoCollision(DWORD dt) {
 	y += vy * dt;
 }
 void CBill::CollisionWith(LPCOLLISIONEVENT e) {
-	if (dynamic_cast<CGrass*>(e->dest_obj)) {
+	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
 		CollisionWithGrass(e);
 	}
 }
@@ -482,14 +482,16 @@ void CBill::SetBulletType(int type) {
 	waveLeft -= waveContainer.size();
 	this->bulletType = type;
 }
-void CBill::UpdateBullet(DWORD dt) {
+void CBill::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	for (int i = 0; i < waveContainer.size(); i++) {
 		if (waveContainer[i].size() > 0) {
 			for (int j = 0; j < waveContainer[i].size(); j++) {
-				if (waveContainer[i][j]->outOfScreen())
+				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
+					delete waveContainer[i][j];
 					waveContainer[i].erase(waveContainer[i].begin() + j);
+				}
 				else
-					waveContainer[i][j]->Update(dt);
+					waveContainer[i][j]->Update(dt, coObjects);
 			}
 		}
 		if (waveContainer[i].size() == 0) {

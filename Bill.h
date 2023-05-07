@@ -123,7 +123,7 @@ public:
 	vector<LPBULLET> ShootNormalBullet(int angle);
 
 	void SetBulletType(int type);
-	void UpdateBullet(DWORD dt);
+	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();
 };
 
