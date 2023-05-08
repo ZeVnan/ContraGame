@@ -3,6 +3,7 @@ void CBulletS::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
 	vy = maxVy;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
+	damage = 15;
 }
 CBulletS::CBulletS(float x, float y, int angle, bool friendly):CBullet(x, y, angle, friendly) {
 	this->type = BULLET_ANI_SPREAD;

@@ -26,6 +26,7 @@ void CBullet::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = this->type;
 	animations->Get(aniId)->Render(x, y);
+	RenderBox();
 }
 void CBullet::NoCollision(DWORD dt) {
 	x += vx * dt;
@@ -39,6 +40,7 @@ void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 void CBullet::CollisionWithWallTurret(LPCOLLISIONEVENT e) {
 	if (friendly == false || (LPWALLTURRET(e->dest_obj))->isCollidable() == false)
 		return;
-	(LPWALLTURRET(e->dest_obj))->SetState(WTURRET_STATE_EXPLODE);
+	(LPWALLTURRET(e->dest_obj))->TakeDamage(this->damage);
+	//(LPWALLTURRET(e->dest_obj))->SetState(WTURRET_STATE_EXPLODE);
 	e->src_obj->Delete();
 }

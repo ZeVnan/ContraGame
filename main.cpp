@@ -65,8 +65,10 @@ void LoadResources() {
 		CGrass* grass = new CGrass(220 + i * 64, 242);
 		world->getObjectList().push_back(grass);
 	}
-	CWallTurret* wturret = new CWallTurret(200, 300);
-	world->getObjectList().push_back(wturret);
+	for (int i = 0; i < 10; i++) {
+		CWallTurret* wturret = new CWallTurret(200 + i * 60, 300);
+		world->getObjectList().push_back(wturret);
+	}
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	world->getObjectList().push_back(bill);
 	

@@ -32,6 +32,7 @@ protected:
 	float maxVx;
 	float maxVy;
 	bool friendly;
+	int damage;
 public:
 	int getType() { return type; }
 	CBullet();

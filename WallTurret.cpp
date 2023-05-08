@@ -4,10 +4,14 @@ CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 {
 	this->state = WTURRET_STATE_APPEAR;
 	timeleft = WTURRET_TIME_APPEAR;
+	HP = 100;
 }
 
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (this->HP <= 0 && this->isExploded == false) {
+		this->SetState(WTURRET_STATE_EXPLODE);
+	}
 	this->timeleft -= dt;
 	if (this->isExploded == true && this->timeleft < 0) {
 		isDeleted = true;
@@ -58,7 +62,7 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			break;
 		}
 	}
-	DebugOutTitle(L"state = %d, timeleft = %d, isDeleted = %d", this->state, this->timeleft, this->isDeleted);
+	//DebugOutTitle(L"state = %d, timeleft = %d, isDeleted = %d", this->state, this->timeleft, this->isDeleted);
 }
 void CWallTurret::Render()
 {
@@ -156,7 +160,7 @@ void CWallTurret::SetState(int state)
 		break;
 	case WTURRET_STATE_EXPLODE:
 		this->isExploded = true;
-		timeleft = WTURRET_TIME_EXPLODE;
+		timeleft = TIME_EXPLODE;
 		break;
 	}
 	CGameObject::SetState(state);

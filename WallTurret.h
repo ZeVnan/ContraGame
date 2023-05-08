@@ -25,7 +25,6 @@
 //define temporary animation time
 #define WTURRET_TIME_APPEAR		700
 #define WTURRET_TIME_ROTATE		500
-#define WTURRET_TIME_EXPLODE	600
 
 //define animation
 #define WTURRET_ANI_APPEAR		10700
@@ -52,8 +51,12 @@ class CWallTurret : public CGameObject
 {
 private:
 	int timeleft;
+	int HP;
 public:
 	CWallTurret(float x, float y);
+	void TakeDamage(int damage) {
+		this->HP -= damage;
+	}
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();

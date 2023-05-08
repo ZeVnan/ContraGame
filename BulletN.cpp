@@ -7,6 +7,7 @@ CBulletN::CBulletN(float x, float y, int angle, bool friendly) :CBullet::CBullet
 	else {
 		this->type = BULLET_ANI_NORMAL;
 	}
+	this->damage = 10;
 }
 void CBulletN::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
