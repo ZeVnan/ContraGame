@@ -29,16 +29,8 @@ void CBulletF::CreateBox(DWORD dt) {
 	bbox.top = y + BULLET_F_BOX_HEIGHT / 2;
 	bbox.right = x + BULLET_F_BOX_WIDTH / 2;
 	bbox.bottom = y - BULLET_F_BOX_HEIGHT / 2;
-	int vr_degree = 0;
-	if (degree >= 0 && degree < 90)
-		vr_degree = 180 - (90 - degree);
-	if (degree >= 90 && degree < 180)
-		vr_degree = 180 + (degree - 90);
-	if (degree >= 180 && degree < 270)
-		vr_degree = 360 - (270 - degree);
-	if (degree >= 270 && degree < 360)
-		vr_degree = degree - 270;
+	int vr_degree = degree + 90;
 	float vr_rad = 3.14159 / 180 * vr_degree;
-	bbox.vpf_x = (cos(vr_rad) + vx) * dt;
-	bbox.vpf_y = (sin(vr_rad) + vy) * dt;
+	bbox.vpf_x = (cos(vr_rad) * vr + vx) * dt;
+	bbox.vpf_y = (sin(vr_rad) * vr + vy) * dt;
 }
