@@ -1,11 +1,11 @@
 #include "Bill.h"
-CBill::CBill() :CGameObject() {
 
-}
+#include "Grass.h"
 CBill::CBill(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
 	isOnPlatform = false;
+	isDropping = false;
 	ny = 0;
 	maxVx = 0.0f;
 	maxVy = 0.0f;
@@ -16,7 +16,7 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 
 	bulletMtime = 0;
 }
-void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	vx = maxVx;
 	vy += BILL_GRAVITY * dt;
 	if (vx < 0 && x < 10) x = 10;
@@ -25,15 +25,14 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		bulletMtime -= dt;
 	else
 		bulletMtime = 0;
-	UpdateBullet(dt);
+	UpdateBullet(dt, coObjects);
 	int a = 0;
 	for (int i = 0; i < waveContainer.size(); i++) {
 		a += waveContainer[i].size();
 	}
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
-	//DebugOutTitle(L"vx = %f, vy = %f", vx, vy);
-	//DebugOutTitle(L"%d", isOnPlatform);
+	isDropping = false;
 }
 void CBill::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -175,6 +174,9 @@ void CBill::SetState(int state) {
 			vy = BILL_JUMP_SPEED_Y;
 		}
 		break;
+	case BILL_STATE_DROP:
+		isDropping = true;
+		break;
 	case BILL_STATE_DOWN:
 		if (vy == 0) {
 			if (vx == 0) {
@@ -213,7 +215,12 @@ void CBill::SetState(int state) {
 void CBill::KeyDown(int KeyCode) {
 	switch (KeyCode) {
 	case DIK_X:
-		this->SetState(BILL_STATE_JUMP);
+		if (ny == -1) {
+			this->SetState(BILL_STATE_DROP);
+		}
+		else {
+			this->SetState(BILL_STATE_JUMP);
+		}
 		break;
 	case DIK_Z:
 		this->SetState(BILL_STATE_SHOOT);
@@ -294,17 +301,30 @@ void CBill::NoCollision(DWORD dt) {
 	y += vy * dt;
 }
 void CBill::CollisionWith(LPCOLLISIONEVENT e) {
-	if (e->normal_y != 0 && e->dest_obj->isBlocking())
-	{
-		vy = 0;
-		if (e->normal_y > 0) isOnPlatform = true;
+	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
+		CollisionWithGrass(e);
 	}
-	else
-		if (e->normal_x != 0 && e->dest_obj->isBlocking())
-		{
-			//vx = 0;
-			//DebugOutTitle(L"x = %f", e->dest_obj->GetBox().left);
+}
+void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
+	if (e->normal_x != 0) {
+		//this->x += e->time * this->GetBox().vpf_x;
+		this->x += this->GetBox().vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		if (e->normal_y > 0) {
+			if (isDropping == false) {
+				this->y += e->time * this->GetBox().vpf_y;
+				vy = 0;
+				isOnPlatform = true;
+			}
+			else {
+				this->y += this->GetBox().vpf_y;
+			}
 		}
+		else {
+			this->y += this->GetBox().vpf_y;
+		}
+	}
 }
 
 int CBill::CalculateAngle() {
@@ -396,46 +416,46 @@ void CBill::AddBullet(BOOLEAN KeyState) {
 vector<LPBULLET> CBill::ShootSpreadBullet(int angle) {
 	LPBULLETS bulletS;
 	vector<LPBULLET> temp;
-	bulletS = new CBulletS(gunx, guny, angle);
+	bulletS = new CBulletS(gunx, guny, angle, true);
 	temp.push_back(bulletS);
-	bulletS = new CBulletS(gunx, guny, angle - 15);
+	bulletS = new CBulletS(gunx, guny, angle - 15, true);
 	temp.push_back(bulletS);
-	bulletS = new CBulletS(gunx, guny, angle + 15);
+	bulletS = new CBulletS(gunx, guny, angle + 15, true);
 	temp.push_back(bulletS);
-	bulletS = new CBulletS(gunx, guny, angle - 30);
+	bulletS = new CBulletS(gunx, guny, angle - 30, true);
 	temp.push_back(bulletS);
-	bulletS = new CBulletS(gunx, guny, angle + 30);
+	bulletS = new CBulletS(gunx, guny, angle + 30, true);
 	temp.push_back(bulletS);
 	return temp;
 }
 vector<LPBULLET> CBill::ShootLaserBullet(int angle) {
 	LPBULLETL bulletL;
 	vector<LPBULLET> temp;
-	bulletL = new CBulletL(gunx, guny, angle, 1);
+	bulletL = new CBulletL(gunx, guny, angle, 1, true);
 	temp.push_back(bulletL);
-	bulletL = new CBulletL(gunx, guny, angle, 2);
+	bulletL = new CBulletL(gunx, guny, angle, 2, true);
 	temp.push_back(bulletL);
-	bulletL = new CBulletL(gunx, guny, angle, 3);
+	bulletL = new CBulletL(gunx, guny, angle, 3, true);
 	temp.push_back(bulletL);
-	bulletL = new CBulletL(gunx, guny, angle, 4);
+	bulletL = new CBulletL(gunx, guny, angle, 4, true);
 	temp.push_back(bulletL);
 	return temp;
 }
 vector<LPBULLET> CBill::ShootFlameBullet(int angle) {
 	LPBULLETF bulletF;
 	vector<LPBULLET> temp;
-	bulletF = new CBulletF(gunx, guny, angle);
+	bulletF = new CBulletF(gunx, guny, angle, true);
 	temp.push_back(bulletF);
 	return temp;
 }
 vector<LPBULLET> CBill::ShootNormalBullet(int angle) {
-	LPBULLETN bulletN = new CBulletN(gunx, guny, angle);
+	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, true);
 	vector<LPBULLET> temp;
 	temp.push_back(bulletN);
 	return temp;
 }
 vector<LPBULLET> CBill::ShootMachineBullet(int angle) {
-	LPBULLETM bulletM = new CBulletM(gunx, guny, angle);
+	LPBULLETM bulletM = new CBulletM(gunx, guny, angle, true);
 	vector <LPBULLET> temp;
 	temp.push_back(bulletM);
 	return temp;
@@ -462,14 +482,16 @@ void CBill::SetBulletType(int type) {
 	waveLeft -= waveContainer.size();
 	this->bulletType = type;
 }
-void CBill::UpdateBullet(DWORD dt) {
+void CBill::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	for (int i = 0; i < waveContainer.size(); i++) {
 		if (waveContainer[i].size() > 0) {
 			for (int j = 0; j < waveContainer[i].size(); j++) {
-				if (waveContainer[i][j]->outOfScreen())
+				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
+					delete waveContainer[i][j];
 					waveContainer[i].erase(waveContainer[i].begin() + j);
+				}
 				else
-					waveContainer[i][j]->Update(dt);
+					waveContainer[i][j]->Update(dt, coObjects);
 			}
 		}
 		if (waveContainer[i].size() == 0) {

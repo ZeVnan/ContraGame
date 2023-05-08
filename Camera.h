@@ -2,10 +2,10 @@
 class CWorldPart;
 typedef CWorldPart* LPWORLDPART;
 
-#define SCREEN_WIDTH 360
-#define SCREEN_HEIGHT 270
-#define CAM_WIDTH 320
-#define CAM_HEIGHT 240
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 450
+#define CAM_WIDTH 600
+#define CAM_HEIGHT 450
 class CCamera
 {
 private:

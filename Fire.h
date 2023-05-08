@@ -4,7 +4,7 @@
 #include "Animations.h"
 #include "debug.h"
 
-#define FIRE_ANI 2001
+#define FIRE_ANI 20001
 
 #define FIRE_BOX_WIDTH 16
 #define FIRE_BOX_HEIGHT 16

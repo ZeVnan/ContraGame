@@ -12,22 +12,7 @@ CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	guny = y;
 }
 void CSoldier::Update(DWORD dt) {
-	x += vx * dt;
-	y += vy * dt;
-
-	//DebugOutTitle(L"x = %f", this->x);
-	vx = maxVx;
-	if (y >= GROUND_Y) {
-		vy = 0;
-		y = GROUND_Y;
-	}
-	else {
-		vy += SOLDIER_GRAVITY * dt;
-	}
-	if (vx > 0 && x > 290) this->SetState(SOLDIER_STATE_RUN_LEFT);
-	if (vx < 0 && x < 10) this->SetState(SOLDIER_STATE_RUN_RIGHT);
-
-	if (x > 73 && x < 77 || x > 223 && x < 227) this->SetState(SOLDIER_STATE_JUMP);
+	
 }
 void CSoldier::Render() {
 	CAnimations* animations = CAnimations::GetInstance();

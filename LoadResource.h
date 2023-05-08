@@ -28,6 +28,7 @@
 #include "World.h"
 #include "WorldPart.h"
 
+#define ID_TEX_EXPLOSION -11
 #define ID_TEX_BOX -10
 #define ID_TEX_BILL 0
 #define ID_TEX_BULLET 1
@@ -41,6 +42,7 @@
 #define ID_TEX_GRASS 20
 #define ID_TEX_FIRE 21
 
+#define TEXTURE_PATH_EXPLOSION L"Images\\Explosion.png"
 #define TEXTURE_PATH_BOX L"Images\\bbox.png"
 #define TEXTURE_PATH_BILL L"Images\\bill_animation.png"
 #define TEXTURE_PATH_BULLET L"Images\\Bullets.png"

@@ -14,9 +14,12 @@ Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 }
 
 void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	if (timeLeft > 0)
-		timeLeft -= dt;
-	else {
+	timeLeft -= dt;
+	if (this->isExploded == true && this->timeLeft < 0) {
+		isDeleted = true;
+		return;
+	}
+	if (timeLeft < 0) {
 		switch (this->state) {
 		case RIFLEMAN_STATE_NORMAL:
 			this->SetState(RIFLEMAN_STATE_UP);
@@ -32,13 +35,13 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			break;
 		}
 	}
-	//DebugOutTitle(L"State = %d, timeleft = %f", this->state, this->timeLeft);
+	//DebugOutTitle(L"timeleft = %f", this->timeLeft);
 }
 
 void Rifleman::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
-
+	
 
 	if (isHiding) {
 		if (nx > 0) {
@@ -58,9 +61,11 @@ void Rifleman::Render() {
 					ani = RIFLEMAN_ANI_AIM_DOWN_RIGHT;
 				}
 				if (ny == 0) {
-					ani = RIFLEMAN_ANI_NORMAL_RIGHT;
+					ani = RIFLEMAN_ANI_SHOOT_RIGHT;
 				}
 			}
+			else
+				ani = RIFLEMAN_ANI_NORMAL_RIGHT;
 		}
 		else {
 			if (isShooting) {
@@ -71,12 +76,17 @@ void Rifleman::Render() {
 					ani = RIFLEMAN_ANI_AIM_DOWN_LEFT;
 				}
 				if (ny == 0) {
-					ani = RIFLEMAN_ANI_NORMAL_LEFT;
+					ani = RIFLEMAN_ANI_SHOOT_LEFT;
 				}
 			}
+			else
+				ani = RIFLEMAN_ANI_NORMAL_LEFT;
 		}
 	}
-
+	if (isExploded) {
+		ani = EXPLOSION_1_ANI;
+	}
+	RenderBox();
 	animations->Get(ani)->Render(x, y);
 }
 
@@ -110,9 +120,11 @@ void Rifleman::SetState(int state) {
 	case RIFLEMAN_STATE_EXPOSE:
 		isHiding = false;
 		break;
-	case RIFLEMAN_STATE_DEAD:
+	case RIFLEMAN_STATE_EXPLODE:
 		isShooting = false;
 		isHiding = false;
+		isExploded = true;
+		timeLeft = TIME_EXPLODE;
 		break;
 	}
 	CGameObject::SetState(state);

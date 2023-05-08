@@ -14,6 +14,7 @@ CGameObject::CGameObject()
 	nx = 1;	
 	state = -1;
 	isDeleted = false;
+	isExploded = false;
 }
 void CGameObject::RenderBox() {
 	RECT* rect = new RECT();

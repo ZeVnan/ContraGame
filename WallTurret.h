@@ -8,37 +8,41 @@
 
 //define state
 #define WTURRET_STATE_APPEAR	0
-#define WTURRET_STATE_LEFT30	1
-#define WTURRET_STATE_LEFT60	2
-#define WTURRET_STATE_LEFT90	3		
-#define WTURRET_STATE_LEFT120	4
-#define WTURRET_STATE_LEFT150	5
-#define WTURRET_STATE_RIGHT30	6
-#define WTURRET_STATE_RIGHT60	7
-#define WTURRET_STATE_RIGHT90	8
-#define WTURRET_STATE_RIGHT120	9
-#define WTURRET_STATE_RIGHT150	10
-#define WTURRET_STATE_UP		11
-#define WTURRET_STATE_DOWN		12
+#define WTURRET_STATE_LEFT30	10
+#define WTURRET_STATE_LEFT60	11
+#define WTURRET_STATE_LEFT90	12		
+#define WTURRET_STATE_LEFT120	13
+#define WTURRET_STATE_LEFT150	14
+#define WTURRET_STATE_RIGHT30	20
+#define WTURRET_STATE_RIGHT60	21
+#define WTURRET_STATE_RIGHT90	22
+#define WTURRET_STATE_RIGHT120	23
+#define WTURRET_STATE_RIGHT150	24
+#define WTURRET_STATE_UP		30
+#define WTURRET_STATE_DOWN		31
+#define WTURRET_STATE_EXPLODE	40
 
 //define temporary animation time
 #define WTURRET_TIME_APPEAR		700
 #define WTURRET_TIME_ROTATE		500
 
 //define animation
-#define WTURRET_ANI_APPEAR		600
-#define WTURRET_ANI_LEFT30		601
-#define WTURRET_ANI_LEFT60		602
-#define WTURRET_ANI_LEFT90		603
-#define WTURRET_ANI_LEFT120		604
-#define WTURRET_ANI_LEFT150		605
-#define WTURRET_ANI_RIGHT30		606
-#define WTURRET_ANI_RIGHT60		607
-#define WTURRET_ANI_RIGHT90		608
-#define WTURRET_ANI_RIGHT120	609
-#define WTURRET_ANI_RIGHT150	610
-#define WTURRET_ANI_UP			611
-#define WTURRET_ANI_DOWN		612
+#define WTURRET_ANI_APPEAR		10700
+
+#define WTURRET_ANI_LEFT30		10710
+#define WTURRET_ANI_LEFT60		10711
+#define WTURRET_ANI_LEFT90		10712
+#define WTURRET_ANI_LEFT120		10713
+#define WTURRET_ANI_LEFT150		10714
+
+#define WTURRET_ANI_RIGHT30		10720
+#define WTURRET_ANI_RIGHT60		10721
+#define WTURRET_ANI_RIGHT90		10722
+#define WTURRET_ANI_RIGHT120	10723
+#define WTURRET_ANI_RIGHT150	10724
+
+#define WTURRET_ANI_UP			10730
+#define WTURRET_ANI_DOWN		10731
 
 #define WTURRET_BOX_WIDTH 32
 #define WTURRET_BOX_HEIGHT 32
@@ -47,8 +51,12 @@ class CWallTurret : public CGameObject
 {
 private:
 	int timeleft;
+	int HP;
 public:
 	CWallTurret(float x, float y);
+	void TakeDamage(int damage) {
+		this->HP -= damage;
+	}
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
@@ -57,4 +65,9 @@ public:
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	bool isBlocking() { return false; }
+	bool isCollidable() {
+		return !isExploded;
+	}
 };
+typedef CWallTurret* LPWALLTURRET;

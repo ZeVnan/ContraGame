@@ -1,11 +1,24 @@
 #include "BulletN.h"
 
-CBulletN::CBulletN(float x, float y, int angle) :CBullet::CBullet(x, y, angle) {
-	this->type = BULLET_ANI_NORMAL;
+CBulletN::CBulletN(float x, float y, int angle, bool friendly) :CBullet::CBullet(x, y, angle, friendly) {
+	if (friendly == true) {
+		this->type = BULLET_ANI_NORMAL_BILL;
+	}
+	else {
+		this->type = BULLET_ANI_NORMAL;
+	}
+	this->damage = 10;
 }
-void CBulletN::Update(DWORD dt) {
+void CBulletN::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
 	vy = maxVy;
-	x += vx * dt;
-	y += vy * dt;
+	CCollision::GetInstance()->Process(this, coObjects, dt);
+}
+void CBulletN::CreateBox(DWORD dt) {
+	bbox.left = x - BULLET_N_BOX_WIDTH / 2;
+	bbox.top = y + BULLET_N_BOX_HEIGHT / 2;
+	bbox.right = x + BULLET_N_BOX_WIDTH / 2;
+	bbox.bottom = y - BULLET_N_BOX_HEIGHT / 2;
+	bbox.vpf_x = vx * dt;
+	bbox.vpf_y = vy * dt;
 }

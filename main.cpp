@@ -51,15 +51,34 @@ void LoadResources() {
 	CreateOtherAni(textures, sprites, animations);
 }void LoadStage1() {
 	world = new CWorld(1000, 10000);
-	world->getObjectsListFromFile(STAGE1_PATH);
+	//world->getObjectsListFromFile(STAGE1_PATH);
+
 	for (int i = 0; i < 300; i++) {
 		CGrass* grass = new CGrass(10 + i * 32, 168);
 		world->getObjectList().push_back(grass);
 	}
+	for (int i = 0; i < 5; i++) {
+		CGrass* grass = new CGrass(200 + i * 64, 210);
+		world->getObjectList().push_back(grass);
+	}
+	for (int i = 0; i < 5; i++) {
+		CGrass* grass = new CGrass(200 + i * 64, 126);
+		world->getObjectList().push_back(grass);
+	}
+	for (int i = 0; i < 5; i++) {
+		CWallTurret* wturret = new CWallTurret(200 + i * 60, 300);
+		world->getObjectList().push_back(wturret);
+	}
+	for (int i = 0; i < 5; i++) {
+		Rifleman* rifleman = new Rifleman(500 + i * 60, 300);
+		world->getObjectList().push_back(rifleman);
+	}
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	world->getObjectList().push_back(bill);
+	
 	worldpart = new CWorldPart(world);
 	worldpart->Split(world);
+
 	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), world->getHeight());
 }
 void LoadStage(int stage) {
@@ -86,7 +105,7 @@ void Update(DWORD dt)
 	CGame::GetInstance()->GetCamera()->Update(x, y);
 	float cx, cy;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-	DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
+	//DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
 
 }
 
@@ -211,7 +230,7 @@ int WINAPI WinMain(
 	keyHandler = new CSampleKeyHandler();
 	game->InitKeyboard(keyHandler);
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 1.5, SCREEN_HEIGHT * 1.5, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	LoadResources();
 	LoadStage(1);

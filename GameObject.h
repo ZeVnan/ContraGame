@@ -10,7 +10,10 @@
 
 using namespace std;
 
-#define GROUND_Y 40.0f
+#define EXPLOSION_1_ANI 20002
+#define EXPLOSION_2_ANI 20003
+
+#define TIME_EXPLODE	600
 class CGameObject
 {
 protected:
@@ -26,6 +29,7 @@ protected:
 	box bbox;
 
 	bool isDeleted;
+	bool isExploded;
 public: 
 	void SetPosition(float x, float y) {
 		this->x = x;

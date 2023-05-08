@@ -1,11 +1,12 @@
 #include "BulletL.h"
 
-CBulletL::CBulletL(float x, float y, int angle, int turn) : CBullet::CBullet(x, y, angle) {
+CBulletL::CBulletL(float x, float y, int angle, int turn, bool friendly) : CBullet::CBullet(x, y, angle, friendly) {
 	type = BULLET_ANI_LASER;
 	waitTime = turn * BULLET_L_WAITTIME;
 	this->angle = angle;
+	this->damage = 15;
 }
-void CBulletL::Update(DWORD dt) {
+void CBulletL::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (waitTime > 0) {
 		waitTime -= dt;
 	}
@@ -14,8 +15,7 @@ void CBulletL::Update(DWORD dt) {
 		vx = maxVx;
 		vy = maxVy;
 	}
-	x += vx * dt;
-	y += vy * dt;
+	CCollision::GetInstance()->Process(this, coObjects, dt);
 }
 void CBulletL::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
@@ -47,4 +47,26 @@ void CBulletL::Render(){
 		break;
 	}
 	animations->Get(aniId)->Render(x, y);
+}
+void CBulletL::CreateBox(DWORD dt) {
+	if (angle == 0 || angle == 180) {
+		bbox.left = x - BULLET_L_BOX_WIDTH_1 / 2;
+		bbox.top = y + BULLET_L_BOX_HEIGHT_1 / 2;
+		bbox.right = x + BULLET_L_BOX_WIDTH_1 / 2;
+		bbox.bottom = y - BULLET_L_BOX_HEIGHT_1 / 2;
+	}
+	else if (angle == 90 || angle == 270) {
+		bbox.left = x - BULLET_L_BOX_WIDTH_2 / 2;
+		bbox.top = y + BULLET_L_BOX_HEIGHT_2 / 2;
+		bbox.right = x + BULLET_L_BOX_WIDTH_2 / 2;
+		bbox.bottom = y - BULLET_L_BOX_HEIGHT_2 / 2;
+	}
+	else {
+		bbox.left = x - BULLET_L_BOX_WIDTH_3 / 2;
+		bbox.top = y + BULLET_L_BOX_HEIGHT_3 / 2;
+		bbox.right = x + BULLET_L_BOX_WIDTH_3 / 2;
+		bbox.bottom = y - BULLET_L_BOX_HEIGHT_3 / 2;
+	}
+	bbox.vpf_x = vx * dt;
+	bbox.vpf_y = vy * dt;
 }

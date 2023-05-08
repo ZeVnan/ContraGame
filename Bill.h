@@ -25,6 +25,7 @@
 #define BILL_STATE_RUN_LEFT 11
 
 #define BILL_STATE_JUMP 20
+#define BILL_STATE_DROP 21
 
 #define BILL_STATE_DOWN 30
 #define BILL_STATE_DOWN_RELEASE 31
@@ -42,27 +43,28 @@
 #define BILL_STATE_DEAD 70
 
 
+
 #pragma region
-#define BILL_ANI_NORMAL_RIGHT 10
-#define BILL_ANI_NORMAL_LEFT 11
+#define BILL_ANI_NORMAL_RIGHT 10000
+#define BILL_ANI_NORMAL_LEFT 10001
 
-#define BILL_ANI_RUN_RIGHT 20
-#define BILL_ANI_RUN_LEFT 21
+#define BILL_ANI_RUN_RIGHT 10010
+#define BILL_ANI_RUN_LEFT 10011
 
-#define BILL_ANI_JUMP_RIGHT 30
-#define BILL_ANI_JUMP_LEFT 31
+#define BILL_ANI_JUMP_RIGHT 10020
+#define BILL_ANI_JUMP_LEFT 10021
 
-#define BILL_ANI_LAYDOWN_RIGHT 40
-#define BILL_ANI_LAYDOWN_LEFT 41
+#define BILL_ANI_LAYDOWN_RIGHT 10030
+#define BILL_ANI_LAYDOWN_LEFT 10031
 
-#define BILL_ANI_SHOOT_UPRIGHT 50
-#define BILL_ANI_SHOOT_UPLEFT 51
-#define BILL_ANI_SHOOT_DOWNRIGHT 52
-#define BILL_ANI_SHOOT_DOWNLEFT 53
-#define BILL_ANI_SHOOT_UP_RIGHT 54
-#define BILL_ANI_SHOOT_UP_LEFT 55
-#define BILL_ANI_SHOOT_RIGHT 56
-#define BILL_ANI_SHOOT_LEFT 57
+#define BILL_ANI_SHOOT_UPRIGHT 10040
+#define BILL_ANI_SHOOT_UPLEFT 10041
+#define BILL_ANI_SHOOT_DOWNRIGHT 10042
+#define BILL_ANI_SHOOT_DOWNLEFT 10043
+#define BILL_ANI_SHOOT_UP_RIGHT 10044
+#define BILL_ANI_SHOOT_UP_LEFT 10045
+#define BILL_ANI_SHOOT_RIGHT 10046
+#define BILL_ANI_SHOOT_LEFT 10047
 
 #define BILL_LAY_HEIGHT_ADJUST -10.0f
 #define BILL_UP_HEIGHT_ADJUST 6.0f
@@ -83,6 +85,7 @@ class CBill :public CGameObject
 	BOOLEAN isLaying;
 	BOOLEAN isShooting;
 	BOOLEAN isOnPlatform;
+	BOOLEAN isDropping;
 	int ny;    //normal:0, up:1, down:-1
 	float maxVx;
 	float maxVy;
@@ -95,7 +98,6 @@ class CBill :public CGameObject
 
 	int bulletMtime;
 public:
-	CBill();
 	CBill(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
@@ -110,6 +112,7 @@ public:
 	bool isBlocking();*/
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	void CollisionWithGrass(LPCOLLISIONEVENT e);
 
 	int CalculateAngle();
 	void AddBullet(BOOLEAN KeyState);
@@ -120,7 +123,7 @@ public:
 	vector<LPBULLET> ShootNormalBullet(int angle);
 
 	void SetBulletType(int type);
-	void UpdateBullet(DWORD dt);
+	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();
 };
 
