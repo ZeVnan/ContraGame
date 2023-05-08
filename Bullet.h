@@ -47,6 +47,7 @@ public:
 	virtual void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
 	void CollisionWithWallTurret(LPCOLLISIONEVENT e);
+	void CollisionWithRifleman(LPCOLLISIONEVENT e);
 	~CBullet() {
 
 	}

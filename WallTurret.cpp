@@ -114,6 +114,7 @@ void CWallTurret::Render()
 		break;
 	}
 	animations->Get(ani)->Render(x, y);
+	RenderBox();
 }
 void CWallTurret::SetState(int state)
 {

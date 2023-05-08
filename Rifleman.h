@@ -22,7 +22,7 @@
 #define RIFLEMAN_STATE_EXPOSE 40
 #define RIFLEMAN_STATE_REHIDE 41
 
-#define RIFLEMAN_STATE_DEAD 50
+#define RIFLEMAN_STATE_EXPLODE 50
 
 #pragma region
 #define RIFLEMAN_ANI_NORMAL_LEFT 10500
@@ -77,5 +77,7 @@ public:
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	bool isBlocking() { return false; }
+	bool isCollidable() { return !isExploded; }
 };
-
+typedef Rifleman* LPRIFLEMAN;

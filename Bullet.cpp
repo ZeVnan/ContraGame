@@ -1,10 +1,12 @@
 #include "Bullet.h"
 #include "WallTurret.h"
+#include "Rifleman.h"
 CBullet::CBullet() {
 	this->type = -1;
 	maxVx = 0;
 	maxVy = 0;
 	friendly = true;
+	damage = 0;
 }
 CBullet::CBullet(float x, float y, int angle, bool friendly) : CBullet() {
 	this->x = x;
@@ -36,11 +38,21 @@ void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPWALLTURRET>(e->dest_obj)) {
 		CollisionWithWallTurret(e);
 	}
+	if (dynamic_cast<LPRIFLEMAN>(e->dest_obj)) {
+		CollisionWithRifleman(e);
+	}
 }
+//in-human collision
 void CBullet::CollisionWithWallTurret(LPCOLLISIONEVENT e) {
 	if (friendly == false || (LPWALLTURRET(e->dest_obj))->isCollidable() == false)
 		return;
 	(LPWALLTURRET(e->dest_obj))->TakeDamage(this->damage);
-	//(LPWALLTURRET(e->dest_obj))->SetState(WTURRET_STATE_EXPLODE);
+	e->src_obj->Delete();
+}
+//human collision
+void CBullet::CollisionWithRifleman(LPCOLLISIONEVENT e) {
+	if (friendly == false || (LPRIFLEMAN(e->dest_obj))->isCollidable() == false)
+		return;
+	(LPRIFLEMAN(e->dest_obj))->SetState(RIFLEMAN_STATE_EXPLODE);
 	e->src_obj->Delete();
 }
