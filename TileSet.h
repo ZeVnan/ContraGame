@@ -10,7 +10,7 @@
 class TileSet
 {
 private:
-	CSprite* _tileImage;
+	LPTEXTURE tex;
 	int _widthtile;  // kích thước tile
 	int _heighttile; // kích thước tile
 	std::string _filename;
@@ -19,13 +19,12 @@ private:
 	std::vector<Tile*> _listTiles;
 
 public:
-	TileSet(eID spriteId);
+	TileSet(LPTEXTURE tex);
 
 	int getWidthtile() const;
 	void setWidthtile(const int& value);
 	int getHeighttile() const;
 	void setHeighttile(const int& value);
 
-	void loadListTiles(pugi::xml_node& node);
-	CSprite* getSprite();
+	void loadListTiles(pugi::xml_node& node, CSprites*& sprites);
 };

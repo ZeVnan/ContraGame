@@ -8,13 +8,15 @@ class Tile
 private:
 
 	int _id;
-	RECT _srcRect;
-	CSprite* _refSprite; // ảnh gồm nhiều tile. khi vẽ cắt bằng srcRect như Sprite
+	float x;
+	float y;
 
 public:
+	Tile(int id, float x, float y);
 
-	const int& getId() const;
-
-	Tile(CSprite* refSprite, RECT srcRect, int id);
+	int getId() { return this->_id; }
+	float getX() { return this->x; }
+	float getY() { return this->y; }
 };
+typedef Tile* LPTILE;
 

@@ -1,9 +1,9 @@
 ﻿#include "Sprite.h"
 
-int CSprite::getSpriteHeight() {
+int CSprite::getSpriteWidth() {
 	return (this->right - this->left + 1);
 }
-int CSprite::getSpriteWidth() {
+int CSprite::getSpriteHeight() {
 	return (this->bottom - this->top + 1);
 }
 
@@ -31,7 +31,7 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	sprite.TextureIndex = 0;
 
-	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+	//D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 	D3DXMatrixRotationZ(&this->matRotation, D3DXToRadian(0));
 }
 CSprite::CSprite(int id, CSprite* psprite) {
@@ -55,7 +55,7 @@ CSprite::CSprite(int id, CSprite* psprite) {
 
 	this->sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	this->sprite.TextureIndex = 0;
-	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+	//D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 	D3DXMatrixRotationZ(&this->matRotation, D3DXToRadian(0));
 }
 CSprite::CSprite(int id, CSprite* psprite, int angle) {
@@ -71,7 +71,7 @@ CSprite::CSprite(int id, CSprite* psprite, int angle) {
 	int spriteHeight = (this->bottom - this->top + 1);
 	
 	D3DXMatrixRotationZ(&this->matRotation, D3DXToRadian(angle));
-	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+	//D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 }
 
 
@@ -84,10 +84,24 @@ void CSprite::Draw(float x, float y)
 	cx = x;
 	cy = y;
 	g->GetCamera()->TranslateToCamCoord(cx, cy);
-
+	D3DXMatrixScaling(&this->matScaling, (FLOAT)getSpriteWidth() * 2, (FLOAT)getSpriteHeight() * 2, 2.0f);
 	D3DXMATRIX matTranslation;
 	D3DXMatrixTranslation(&matTranslation, cx, g->GetBackBufferHeight() - cy, 0.1f);
 
 	this->sprite.matWorld = (this->matScaling *this->matRotation* matTranslation);
+	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
+}
+void CSprite::DrawTile(float x, float y) {
+	CGame* g = CGame::GetInstance();
+
+	float cx, cy;
+	cx = x;
+	cy = y;
+	g->GetCamera()->TranslateToCamCoord2(cx, cy);
+	D3DXMatrixScaling(&this->matScaling, (FLOAT)getSpriteWidth(), (FLOAT)getSpriteHeight(), 1.0f);
+	D3DXMATRIX matTranslation;
+	D3DXMatrixTranslation(&matTranslation, cx, g->GetBackBufferHeight() - cy, 0.1f);
+
+	this->sprite.matWorld = (this->matScaling * this->matRotation * matTranslation);
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }

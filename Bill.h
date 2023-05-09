@@ -13,11 +13,11 @@
 #include "BulletN.h"
 #include "BulletM.h"
 
-#define BILL_RUN_SPEED 0.1f
+#define BILL_RUN_SPEED 0.2f
 
 #define BILL_JUMP_SPEED_Y 0.2f
 
-#define BILL_GRAVITY -0.0004f
+#define BILL_GRAVITY -0.00025f
 
 #define BILL_STATE_NORMAL 0
 
@@ -70,7 +70,7 @@
 #define BILL_UP_HEIGHT_ADJUST 6.0f
 
 #define BILL_START_X 100.0f
-#define BILL_START_Y 250.0f
+#define BILL_START_Y 400.0f
 
 #define BILL_WAVE_BULLET_NORMAL 4
 #define BILL_WAVE_BULLET_LASER 1
@@ -78,8 +78,8 @@
 #define BILL_WAVE_BULLET_SPREAD 2
 #define BILL_WAVE_BULLET_MACHINE 6
 
-#define BILL_BOX_NORMAL_WIDTH 24
-#define BILL_BOX_NORMAL_HEIGHT 35
+#define BILL_BOX_NORMAL_WIDTH 48
+#define BILL_BOX_NORMAL_HEIGHT 70
 class CBill :public CGameObject
 {
 	BOOLEAN isLaying;

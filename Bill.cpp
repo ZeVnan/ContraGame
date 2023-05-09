@@ -19,7 +19,10 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	vx = maxVx;
 	vy += BILL_GRAVITY * dt;
-	if (vx < 0 && x < 10) x = 10;
+	if (vx < 0 && x < 10) 
+		x = 10;
+	if (vx > 0 && x > 6990) 
+		x = 6990;
 
 	if (bulletMtime > 0)
 		bulletMtime -= dt;
@@ -33,6 +36,7 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	isDropping = false;
+	DebugOutTitle(L"x = %f, y = %f", x, y);
 }
 void CBill::Render() {
 	CAnimations* animations = CAnimations::GetInstance();

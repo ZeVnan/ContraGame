@@ -23,6 +23,7 @@ public:
 		y = this->y;
 	}
 	void TranslateToCamCoord(float& x, float& y);
+	void TranslateToCamCoord2(float& x, float& y);
 	bool CheckWorldPart(LPWORLDPART part);
 };
 
