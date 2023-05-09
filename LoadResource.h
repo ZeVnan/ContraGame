@@ -28,6 +28,8 @@
 #include "World.h"
 #include "WorldPart.h"
 
+#include "Map.h"
+
 #define ID_TEX_EXPLOSION -11
 #define ID_TEX_BOX -10
 #define ID_TEX_BILL 0
@@ -41,6 +43,8 @@
 #define ID_TEX_WTURRET 8
 #define ID_TEX_GRASS 20
 #define ID_TEX_FIRE 21
+
+#define ID_TEX_STAGE1_TILE 100
 
 #define TEXTURE_PATH_EXPLOSION L"Images\\Explosion.png"
 #define TEXTURE_PATH_BOX L"Images\\bbox.png"
@@ -59,6 +63,7 @@
 #define TEXTURE_PATH_FIRE L"Images\\fire.png"
 
 #define STAGE1_PATH "Map\\stage1.xml"
+#define STAGE1_TILE L"Map\\stage1.png"
 
 void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
@@ -70,3 +75,4 @@ void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
+void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a);

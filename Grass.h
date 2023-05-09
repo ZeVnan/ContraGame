@@ -4,8 +4,8 @@
 #include "Animations.h"
 #include "debug.h"
 #define GRASS_ANI 20000
-#define GRASS_WIDTH 32
-#define GRASS_HEIGHT 16
+#define GRASS_WIDTH 64
+#define GRASS_HEIGHT 32
 
 class CGrass:public CGameObject
 {

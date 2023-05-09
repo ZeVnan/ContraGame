@@ -7,9 +7,9 @@ CWorld::CWorld() {}
 float CWorld::getHeight() { return this->height; }
 float CWorld::getWidth() { return this->width; }
 
-CWorld::CWorld(float height, float width) {
-	this->height = height;
+CWorld::CWorld(float width, float height) {
 	this->width = width;
+	this->height = height;
 }
 
 map<string, string> CWorld::getObjectProperties(xml_node node)
@@ -130,7 +130,23 @@ LPGAMEOBJECT CWorld::spawnWallTurret(xml_node node)
 
 	return wallTurret;
 }
+LPGAMEOBJECT CWorld::spawnLand(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
 
+	float x, y, _width;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+	_width = stof(properties["Width"]);
+
+	auto land = new CLand(x, y, _width);
+
+	return land;
+}
 
 LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 {
@@ -148,6 +164,8 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnRifleman(node);
 	case WallTurretID:
 		return spawnWallTurret(node);
+	case LAND:
+		return spawnLand(node);
 	default:
 		return nullptr;
 		break;
@@ -187,10 +205,15 @@ void CWorld::getObjectsListFromFile(const string path)
 			continue;
 		}
 		LPGAMEOBJECT obj = getObjectById(item, enumID);
-		if (obj != NULL)
-			listobject.push_back(obj);
+		if (obj != NULL) {
+			if (dynamic_cast<LPLAND>(obj)) {
+				(LPLAND(obj))->PushObjectToList(listobject);
+			}
+			else {
+				listobject.push_back(obj);
+			}
+		}
 	}
-
 	this->objectList = listobject;
 }
 void CWorld::ClearWorld() {
@@ -243,6 +266,12 @@ void CWorld::UpdateObjectContainer() {
 				temp.erase(temp.begin() + k);
 			}
 		}
+	}
+}
+void CWorld::DrawTile() {
+	CSprites* sprites = CSprites::GetInstance();
+	for (int i = 0; i < tileList.size(); i++) {
+		sprites->Get(tileList[i]->getId())->DrawTile(tileList[i]->getY(), tileList[i]->getX());
 	}
 }
 CWorld::~CWorld() {

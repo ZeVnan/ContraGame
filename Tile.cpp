@@ -1,15 +1,7 @@
 #include "Tile.h"
 
-Tile::Tile(CSprite* refSprite, RECT srcRect, int id)
-{
+Tile::Tile(int id, float x, float y) {
 	this->_id = id;
-	this->_srcRect = srcRect;
-	this->_refSprite = refSprite;
-
-}
-
-
-const int& Tile::getId() const
-{
-	return this->_id;
+	this->x = x;
+	this->y = y;
 }

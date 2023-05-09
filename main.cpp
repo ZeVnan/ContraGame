@@ -14,6 +14,7 @@ CSampleKeyHandler* keyHandler;
 LPWORLD world = new CWorld(1000, 1000);
 LPWORLDPART worldpart = new CWorldPart();
 
+vector<LPTILE> stage1_tiles;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -49,37 +50,19 @@ void LoadResources() {
 	CreateScubaAni(textures, sprites, animations);
 	CreateWTurretAni(textures, sprites, animations);
 	CreateOtherAni(textures, sprites, animations);
-}void LoadStage1() {
-	world = new CWorld(1000, 10000);
-	//world->getObjectsListFromFile(STAGE1_PATH);
 
-	for (int i = 0; i < 300; i++) {
-		CGrass* grass = new CGrass(10 + i * 32, 168);
-		world->getObjectList().push_back(grass);
-	}
-	for (int i = 0; i < 5; i++) {
-		CGrass* grass = new CGrass(200 + i * 64, 210);
-		world->getObjectList().push_back(grass);
-	}
-	for (int i = 0; i < 5; i++) {
-		CGrass* grass = new CGrass(200 + i * 64, 126);
-		world->getObjectList().push_back(grass);
-	}
-	for (int i = 0; i < 5; i++) {
-		CWallTurret* wturret = new CWallTurret(200 + i * 60, 300);
-		world->getObjectList().push_back(wturret);
-	}
-	for (int i = 0; i < 5; i++) {
-		Rifleman* rifleman = new Rifleman(500 + i * 60, 300);
-		world->getObjectList().push_back(rifleman);
-	}
+	CreateStageTile(textures, sprites, stage1_tiles);
+}void LoadStage1() {
+	world = new CWorld(7000, 7000);
+	world->getObjectsListFromFile(STAGE1_PATH);
+	//world->setTileList(stage1_tiles);
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	world->getObjectList().push_back(bill);
 	
 	worldpart = new CWorldPart(world);
 	worldpart->Split(world);
 
-	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), world->getHeight());
+	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), 432);
 }
 void LoadStage(int stage) {
 	ClearWorld();
@@ -125,6 +108,7 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
+	world->DrawTile();
 	world->Render();
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);

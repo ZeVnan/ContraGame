@@ -1,16 +1,12 @@
 ﻿#include "TileSet.h"
 #include "Tile.h"
 
-TileSet::TileSet(eID spriteId)
+TileSet::TileSet(LPTEXTURE tex)
 {
-	CSprite* sp = CSprites::GetInstance()->Get(spriteId);
-	this->_tileImage = sp;
-	this->_heighttile = sp->getSpriteHeight();
-	this->_widthtile = sp->getSpriteWidth();
-
+	this->tex = tex;
 }
 
-void TileSet::loadListTiles(pugi::xml_node& node)
+void TileSet::loadListTiles(pugi::xml_node& node, CSprites*& sprites)
 {
 	/*	
 		tilelistnode chứa tất cả các element <Tile> trong file xml.
@@ -21,16 +17,16 @@ void TileSet::loadListTiles(pugi::xml_node& node)
 	*/
 	auto tilelistnode = node.child("Tiles").children();
 	Tile* tile = nullptr;
-	RECT srcRECT = { 0,0,0,0 };
 	int id = 0;
+	float left = 0, top = 0, right = 0, bottom = 0;
 	for (pugi::xml_node_iterator it : tilelistnode)
 	{
 		id = it->attribute("Id").as_int();
-		srcRECT.top = it->child("Rect").attribute("Y").as_int();
-		srcRECT.left = it->child("Rect").attribute("X").as_int();
-		srcRECT.bottom = srcRECT.top + it->child("Rect").attribute("Width").as_int() + 1;
-		srcRECT.right = srcRECT.left + it->child("Rect").attribute("Height").as_int() + 1;
-		this->_listTiles.push_back(new Tile(this->_tileImage, srcRECT, id));
+		left = it->child("Rect").attribute("X").as_int();
+		top = it->child("Rect").attribute("Y").as_int();
+		right = left + it->child("Rect").attribute("Height").as_int() + 1;
+		bottom = top + it->child("Rect").attribute("Width").as_int() + 1;
+		sprites->Add(id, left, top, right, bottom, this->tex);
 	}
 }
 
@@ -52,9 +48,4 @@ int TileSet::getHeighttile() const
 void TileSet::setHeighttile(const int& value)
 {
 	this->_heighttile = value;
-}
-
-CSprite* TileSet::getSprite()
-{
-	return this->_tileImage;
 }

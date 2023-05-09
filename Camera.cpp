@@ -18,6 +18,10 @@ void CCamera::TranslateToCamCoord(float& x, float& y) {
 	x = x - (this->x - CAM_WIDTH / 2);
 	y = -y + (this->y + CAM_HEIGHT / 2);
 }
+void CCamera::TranslateToCamCoord2(float& x, float& y) {
+	x = x - (this->x - CAM_WIDTH / 2);
+	y = y + (this->y - CAM_HEIGHT / 2);
+}
 bool CCamera::CheckWorldPart(LPWORLDPART part) {
 	float part_left = part->getX();
 	float part_top = part->getY() + part->getHeight();

@@ -97,6 +97,13 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileSet.cpp" />
+    <ClCompile Include="Land.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
@@ -205,6 +212,13 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="Land.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Water.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -27,7 +27,7 @@ public:
 	CSprite(int id, CSprite* psprite, int angle);
 
 	void Draw(float x, float y);	
-
+	void DrawTile(float x, float y);
 };
 
 typedef CSprite* LPSPRITE;

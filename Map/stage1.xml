@@ -381,7 +381,7 @@
     </Tiles>
   </TileSet>
   <Objects>
-    <!--<Item Id="12" Name="land1" X="64" Y="245" Width="1472" Height="5">
+    <Item Id="12" Name="land1" X="64" Y="245" Width="1472" Height="5">
       <ActiveBound X="64" Y="245" Width="1472" Height="5" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
@@ -669,8 +669,8 @@
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
       </Params>
-    </Item>-->
-    <!--<Item Id="12" Name="water1" X="0" Y="48" Width="584" Height="32">
+    </Item>
+    <Item Id="12" Name="water1" X="0" Y="48" Width="584" Height="32">
       <ActiveBound X="0" Y="48" Width="584" Height="32" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
@@ -697,7 +697,7 @@
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="1" />
       </Params>
-    </Item>-->
+    </Item>
     <Item Id="5" Name="rifleMan1" X="624" Y="120" Width="32" Height="64">
       <ActiveBound X="624" Y="120" Width="32" Height="64" />
       <Params>

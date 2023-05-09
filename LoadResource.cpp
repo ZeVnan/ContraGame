@@ -781,3 +781,10 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(20025);
 	animations->Add(EXPLOSION_2_ANI, ani);
 }
+
+void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a) {
+	textures->Add(ID_TEX_STAGE1_TILE, STAGE1_TILE);
+
+	LPTEXTURE tex_stage1 = textures->Get(ID_TEX_STAGE1_TILE);
+	a = Map::LoadFromFile(STAGE1_PATH, tex_stage1, sprites)->tileList;
+}
