@@ -6,6 +6,7 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 	isShooting = false;
 	isOnPlatform = false;
 	isDropping = false;
+	isJumping = true;
 	ny = 0;
 	maxVx = 0.0f;
 	maxVy = 0.0f;
@@ -17,8 +18,10 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 	bulletMtime = 0;
 }
 void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
+	//don't change the order of this function
 	vx = maxVx;
-	vy += BILL_GRAVITY * dt;
+	if (isOnPlatform == false)
+		vy += BILL_GRAVITY * dt;
 	if (vx < 0 && x < 10) 
 		x = 10;
 	if (vx > 0 && x > 6990) 
@@ -32,14 +35,10 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	else
 		bulletMtime = 0;
 	UpdateBullet(dt, coObjects);
-	int a = 0;
-	for (int i = 0; i < waveContainer.size(); i++) {
-		a += waveContainer[i].size();
-	}
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	isDropping = false;
-	DebugOutTitle(L"x = %f, y = %f", x, y);
+	//DebugOutTitle(L"x = %f, y = %f, %d", x, y, isJumping);
 }
 void CBill::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -152,8 +151,8 @@ void CBill::Render() {
 	if (ani == -1) ani = BILL_ANI_NORMAL_RIGHT;
 
 	float d = 0;
-	if (isLaying)
-		d = BILL_LAY_HEIGHT_ADJUST;
+	/*if (isLaying)
+		d = BILL_LAY_HEIGHT_ADJUST;*/
 	if (ny == 1 && vx == 0)
 		d = BILL_UP_HEIGHT_ADJUST;
 	animations->Get(ani)->Render(x, y + d);
@@ -167,6 +166,7 @@ void CBill::SetState(int state) {
 		nx = 1;
 		if (isLaying == true) {
 			isLaying = false;
+			y -= BILL_LAY_HEIGHT_ADJUST;	//support change bbox
 		}
 		break;
 	case BILL_STATE_RUN_LEFT:
@@ -174,11 +174,13 @@ void CBill::SetState(int state) {
 		nx = -1;
 		if (isLaying == true) {
 			isLaying = false;
+			y -= BILL_LAY_HEIGHT_ADJUST;	//support change bbox
 		}
 		break;
 	case BILL_STATE_JUMP:
 		if (vy == 0) {
 			vy = BILL_JUMP_SPEED_Y;
+			isJumping = true;		//support change bbox
 		}
 		break;
 	case BILL_STATE_DROP:
@@ -187,6 +189,8 @@ void CBill::SetState(int state) {
 	case BILL_STATE_DOWN:
 		if (vy == 0) {
 			if (vx == 0) {
+				if (isLaying == false)
+					y += BILL_LAY_HEIGHT_ADJUST;	//support change bbox
 				isLaying = true;
 			}
 		}
@@ -195,6 +199,7 @@ void CBill::SetState(int state) {
 	case BILL_STATE_DOWN_RELEASE:
 		if (vx == 0) {
 			isLaying = false;
+			y -= BILL_LAY_HEIGHT_ADJUST;	//support change bbox
 		}
 		ny = 0;
 		break;
@@ -296,10 +301,26 @@ void CBill::KeyState(CGame* game) {
 }
 
 void CBill::CreateBox(DWORD dt) {
-	bbox.left = x - BILL_BOX_NORMAL_WIDTH / 2;
-	bbox.top = y - BILL_BOX_NORMAL_HEIGHT / 2;
-	bbox.right= x + BILL_BOX_NORMAL_WIDTH / 2;
-	bbox.bottom = y + BILL_BOX_NORMAL_HEIGHT / 2;
+	if (isLaying == true) {
+		bbox.left = x - BILL_BOX_LAY_WIDTH / 2;
+		bbox.top = y - BILL_BOX_LAY_HEIGHT / 2;
+		bbox.right = x + BILL_BOX_LAY_WIDTH / 2;
+		bbox.bottom = y + BILL_BOX_LAY_HEIGHT / 2;
+	}
+	else
+	if (isJumping) {
+		bbox.left = x - BILL_BOX_JUMP_WIDTH / 2;
+		bbox.top = y - BILL_BOX_JUMP_HEIGHT / 2;
+		bbox.right = x + BILL_BOX_JUMP_WIDTH / 2;
+		bbox.bottom = y + BILL_BOX_JUMP_HEIGHT / 2;
+	}
+	else
+	{
+		bbox.left = x - BILL_BOX_NORMAL_WIDTH / 2;
+		bbox.top = y - BILL_BOX_NORMAL_HEIGHT / 2;
+		bbox.right = x + BILL_BOX_NORMAL_WIDTH / 2;
+		bbox.bottom = y + BILL_BOX_NORMAL_HEIGHT / 2;
+	}
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;
 }
@@ -314,7 +335,6 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 }
 void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
 	if (e->normal_x != 0) {
-		//this->x += e->time * this->GetBox().vpf_x;
 		this->x += this->GetBox().vpf_x;
 	}
 	else if (e->normal_y != 0) {
@@ -323,6 +343,11 @@ void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
 				this->y += e->time * this->GetBox().vpf_y;
 				vy = 0;
 				isOnPlatform = true;
+				//support change bbox
+				if (isJumping == true) {
+					isJumping = false;
+					y += BILL_JUMPTONORMAL_POSITION_ADJUST;
+				}
 			}
 			else {
 				this->y += this->GetBox().vpf_y;

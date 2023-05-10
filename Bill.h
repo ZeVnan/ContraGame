@@ -66,8 +66,9 @@
 #define BILL_ANI_SHOOT_RIGHT 10046
 #define BILL_ANI_SHOOT_LEFT 10047
 
-#define BILL_LAY_HEIGHT_ADJUST -10.0f
+#define BILL_LAY_HEIGHT_ADJUST -18.0f
 #define BILL_UP_HEIGHT_ADJUST 12.0f
+#define BILL_JUMPTONORMAL_POSITION_ADJUST 15.0f
 
 #define BILL_START_X 100.0f
 #define BILL_START_Y 400.0f
@@ -75,28 +76,35 @@
 #define BILL_WAVE_BULLET_NORMAL 4
 #define BILL_WAVE_BULLET_LASER 1
 #define BILL_WAVE_BULLET_FLAME 4
-#define BILL_WAVE_BULLET_SPREAD 2
+#define BILL_WAVE_BULLET_SPREAD 3
 #define BILL_WAVE_BULLET_MACHINE 6
 
 #define BILL_BOX_NORMAL_WIDTH 48
 #define BILL_BOX_NORMAL_HEIGHT 70
+
+#define BILL_BOX_JUMP_WIDTH 42
+#define BILL_BOX_JUMP_HEIGHT 40
+
+#define BILL_BOX_LAY_WIDTH 66
+#define BILL_BOX_LAY_HEIGHT 34
 class CBill :public CGameObject
 {
 	BOOLEAN isLaying;
 	BOOLEAN isShooting;
-	BOOLEAN isOnPlatform;
-	BOOLEAN isDropping;
+	BOOLEAN isOnPlatform;	//support collision
+	BOOLEAN isDropping;		//support collision
+	BOOLEAN isJumping;		//support change bbox
 	int ny;    //normal:0, up:1, down:-1
 	float maxVx;
 	float maxVy;
-	float gunx;
+	float gunx;		
 	float guny;
 
-	vector< vector<LPBULLET>>waveContainer;
+	vector< vector<LPBULLET>>waveContainer;		//support bullet control
 	int bulletType;
-	int waveLeft;
+	int waveLeft;		//support bullet control
 
-	int bulletMtime;
+	int bulletMtime;	//support bullet type M control
 public:
 	CBill(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
@@ -108,8 +116,7 @@ public:
 	void KeyState(CGame* game);
 
 	void CreateBox(DWORD dt);
-	/*bool isCollidable();
-	bool isBlocking();*/
+	bool isBlocking() { return false; }
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
 	void CollisionWithGrass(LPCOLLISIONEVENT e);

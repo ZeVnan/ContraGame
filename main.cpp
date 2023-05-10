@@ -55,7 +55,7 @@ void LoadResources() {
 }void LoadStage1() {
 	world = new CWorld(7000, 7000);
 	world->getObjectsListFromFile(STAGE1_PATH);
-	world->setTileList(stage1_tiles);
+	//world->setTileList(stage1_tiles);
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	world->getObjectList().push_back(bill);
 	
