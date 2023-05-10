@@ -44,8 +44,8 @@
 #define WTURRET_ANI_UP			10730
 #define WTURRET_ANI_DOWN		10731
 
-#define WTURRET_BOX_WIDTH 32
-#define WTURRET_BOX_HEIGHT 32
+#define WTURRET_BOX_WIDTH 64
+#define WTURRET_BOX_HEIGHT 64
 
 class CWallTurret : public CGameObject
 {

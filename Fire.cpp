@@ -11,10 +11,10 @@ void CFire::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 }
 
 void CFire::CreateBox(DWORD dt) {
-	bbox.left = x - FIRE_BOX_WIDTH / 2;
-	bbox.top = y - FIRE_BOX_HEIGHT / 2;
-	bbox.right = x + FIRE_BOX_WIDTH / 2;
-	bbox.bottom = y + FIRE_BOX_HEIGHT / 2;
+	bbox.left = (x - FIRE_BOX_WIDTH / 2);
+	bbox.top = (y - FIRE_BOX_HEIGHT / 2);
+	bbox.right = (x + FIRE_BOX_WIDTH / 2);
+	bbox.bottom = (y + FIRE_BOX_HEIGHT / 2);
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = 0;
 }
