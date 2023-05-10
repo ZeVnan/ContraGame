@@ -61,10 +61,10 @@ void CFalcon::SetState(int state) {
 }
 
 void CFalcon::CreateBox(DWORD dt) {
-	bbox.left = x - FALCON_BOX_WIDTH / 2;
-	bbox.top = y - FALCON_BOX_HEIGHT / 2;
-	bbox.right = x + FALCON_BOX_WIDTH / 2;
-	bbox.bottom = y + FALCON_BOX_HEIGHT / 2;
+	bbox.left = (x - FALCON_BOX_WIDTH / 2);
+	bbox.top = (y - FALCON_BOX_HEIGHT / 2);
+	bbox.right = (x + FALCON_BOX_WIDTH / 2);
+	bbox.bottom = (y + FALCON_BOX_HEIGHT / 2);
 	x += 0;
 	y += 0;
 }

@@ -18,8 +18,8 @@
 #define FALCON_ANI_OPENED		10602
 #define FALCON_ANI_CLOSING		10603
 
-#define FALCON_BOX_WIDTH 31
-#define FALCON_BOX_HEIGHT 31
+#define FALCON_BOX_WIDTH 62
+#define FALCON_BOX_HEIGHT 62
 
 class CFalcon : public CGameObject
 {
