@@ -51,10 +51,10 @@ void CAircraft::SetState(int state) {
 }
 
 void CAircraft::CreateBox(DWORD dt) {
-	bbox.left = x - AIRCRAFT_BOX_WIDTH / 2;
-	bbox.top = y - AIRCRAFT_BOX_HEIGHT / 2;
-	bbox.right = x + AIRCRAFT_BOX_WIDTH / 2;
-	bbox.bottom = y + AIRCRAFT_BOX_HEIGHT / 2;
+	bbox.left = (x - AIRCRAFT_BOX_WIDTH / 2) * 2;
+	bbox.top = (y - AIRCRAFT_BOX_HEIGHT / 2) * 2;
+	bbox.right = (x + AIRCRAFT_BOX_WIDTH / 2) * 2;
+	bbox.bottom = (y + AIRCRAFT_BOX_HEIGHT / 2) * 2;
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;
 }
