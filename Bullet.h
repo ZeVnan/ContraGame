@@ -6,7 +6,7 @@
 
 #include "debug.h"
 
-#define BULLET_SPEED 0.2f;
+#define BULLET_SPEED 0.4f;
 
 #define BULLET_ANI_NORMAL 10100
 #define BULLET_ANI_NORMAL_BILL 10101

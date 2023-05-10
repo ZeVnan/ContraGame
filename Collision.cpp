@@ -158,6 +158,7 @@ void CCollision::Process(LPGAMEOBJECT src_obj, vector<LPGAMEOBJECT>* coObjects, 
 		if (colX != NULL) {
 			src_obj->CollisionWith(colX);
 			src_obj->GetPosition(x, y);
+			colX->isDeleted = true;
 		}
 		else {
 			x += src_obj->GetBox().vpf_x;
@@ -166,6 +167,7 @@ void CCollision::Process(LPGAMEOBJECT src_obj, vector<LPGAMEOBJECT>* coObjects, 
 		if (colY != NULL) {
 			src_obj->CollisionWith(colY);
 			src_obj->GetPosition(x, y);
+			colY->isDeleted = true;
 		}
 		else {
 			y += src_obj->GetBox().vpf_y;
