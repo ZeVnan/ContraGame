@@ -15,9 +15,9 @@
 
 #define BILL_RUN_SPEED 0.2f
 
-#define BILL_JUMP_SPEED_Y 0.2f
+#define BILL_JUMP_SPEED_Y 0.4f
 
-#define BILL_GRAVITY -0.00025f
+#define BILL_GRAVITY -0.00075f
 
 #define BILL_STATE_NORMAL 0
 

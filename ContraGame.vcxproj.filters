@@ -86,24 +86,30 @@
     <ClCompile Include="Textures.cpp">
       <Filter>System\Source FIle</Filter>
     </ClCompile>
-    <ClCompile Include="WorldPart.cpp">
-      <Filter>Game Object\Source File</Filter>
-    </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>Game Object\Source File</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>System\Source FIle</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="Land.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
     <ClCompile Include="Water.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="World.cpp">
+      <Filter>Container\SourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldPart.cpp">
+      <Filter>Container\SourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSet.cpp">
+      <Filter>Container\SourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Container\SourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Container\SourceFile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
@@ -200,17 +206,9 @@
     <ClInclude Include="Textures.h">
       <Filter>System\Header</Filter>
     </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>Game Object\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldPart.h">
-      <Filter>Game Object\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>System\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h" />
-    <ClInclude Include="TileSet.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Land.h">
       <Filter>Game Object\Header</Filter>
@@ -218,7 +216,21 @@
     <ClInclude Include="Water.h">
       <Filter>Game Object\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="World.h">
+      <Filter>Container\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldPart.h">
+      <Filter>Container\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Container\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Container\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSet.h">
+      <Filter>Container\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -244,6 +256,15 @@
     </Filter>
     <Filter Include="System\Source FIle">
       <UniqueIdentifier>{a0ecc55a-e315-44a6-a3e9-37fdfd5466bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Container">
+      <UniqueIdentifier>{875196bc-6c01-4fbe-aced-eea14ec55e82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Container\Header">
+      <UniqueIdentifier>{f93d31a6-c07f-45fa-8347-c43f1ef91e31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Container\SourceFile">
+      <UniqueIdentifier>{b94bfa65-0227-48f7-9876-1fcb4b54389f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
