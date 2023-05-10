@@ -22,8 +22,8 @@
 #define CANNON_ANI_LEFT_30 10402
 #define CANNON_ANI_APPEAR 10403
 
-#define CANNON_BOX_WIDTH 32
-#define CANNON_BOX_HEIGHT 32
+#define CANNON_BOX_WIDTH 64
+#define CANNON_BOX_HEIGHT 64
 
 class CCannon : public CGameObject
 {

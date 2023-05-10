@@ -168,10 +168,10 @@ void CWallTurret::SetState(int state)
 }
 
 void CWallTurret::CreateBox(DWORD dt) {
-	bbox.left = (x - WTURRET_BOX_WIDTH / 2) * 2;
-	bbox.top = (y - WTURRET_BOX_HEIGHT / 2) * 2;
-	bbox.right = (x + WTURRET_BOX_WIDTH / 2) * 2;
-	bbox.bottom = (y + WTURRET_BOX_HEIGHT / 2) * 2;
+	bbox.left = (x - WTURRET_BOX_WIDTH / 2);
+	bbox.top = (y - WTURRET_BOX_HEIGHT / 2);
+	bbox.right = (x + WTURRET_BOX_WIDTH / 2);
+	bbox.bottom = (y + WTURRET_BOX_HEIGHT / 2);
 	x += 0;
 	y += 0;
 }

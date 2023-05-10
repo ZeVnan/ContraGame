@@ -6,8 +6,8 @@
 
 #define FIRE_ANI 20001
 
-#define FIRE_BOX_WIDTH 16
-#define FIRE_BOX_HEIGHT 16
+#define FIRE_BOX_WIDTH 32
+#define FIRE_BOX_HEIGHT 32
 
 class CFire:public CGameObject
 {

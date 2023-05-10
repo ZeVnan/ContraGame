@@ -21,8 +21,8 @@
 
 #define AIRCRAFT_ANI_INVUL 10310
 
-#define AIRCRAFT_BOX_WIDTH 25
-#define AIRCRAFT_BOX_HEIGHT 15
+#define AIRCRAFT_BOX_WIDTH 50
+#define AIRCRAFT_BOX_HEIGHT 30
 
 class CAircraft : public CGameObject
 {
