@@ -55,14 +55,14 @@ void LoadResources() {
 }void LoadStage1() {
 	world = new CWorld(7000, 7000);
 	world->getObjectsListFromFile(STAGE1_PATH);
-	//world->setTileList(stage1_tiles);
+	world->setTileList(stage1_tiles);
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	world->getObjectList().push_back(bill);
 	
 	worldpart = new CWorldPart(world);
 	worldpart->Split(world);
 
-	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), 432);
+	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), 470);
 }
 void LoadStage(int stage) {
 	ClearWorld();

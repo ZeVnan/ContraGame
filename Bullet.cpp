@@ -37,10 +37,14 @@ void CBullet::NoCollision(DWORD dt) {
 void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPWALLTURRET>(e->dest_obj)) {
 		CollisionWithWallTurret(e);
+		return;
 	}
 	if (dynamic_cast<LPRIFLEMAN>(e->dest_obj)) {
 		CollisionWithRifleman(e);
+		return;
 	}
+	x += bbox.vpf_x;
+	y += bbox.vpf_y;
 }
 //in-human collision
 void CBullet::CollisionWithWallTurret(LPCOLLISIONEVENT e) {

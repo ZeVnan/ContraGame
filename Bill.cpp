@@ -23,7 +23,10 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 		x = 10;
 	if (vx > 0 && x > 6990) 
 		x = 6990;
-
+	if (vy > 0 && y > 470)
+		y = 470;
+	if (vy < 10 && y < 50)
+		y = BILL_START_Y;
 	if (bulletMtime > 0)
 		bulletMtime -= dt;
 	else
