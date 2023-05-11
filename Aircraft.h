@@ -9,7 +9,8 @@
 
 #define AIRCRAFT_ACCEL_Y 0.008f
 
-#define AIRCRAFT_STATE_DEAD 0
+#define AIRCRAFT_STATE_NORMAL 0
+#define AIRCRAFT_STATE_EXPLODE 1
 
 #define AIRCRAFT_ANI_NORMAL 13000
 #define AIRCRAFT_ANI_bAMMO 13001
@@ -24,12 +25,15 @@
 #define AIRCRAFT_BOX_WIDTH 50
 #define AIRCRAFT_BOX_HEIGHT 30
 
+#define AIRCRAFT_TIME 600
+
 class CAircraft : public CGameObject
 {
 private:
-	BOOLEAN isDead = false;
+	BOOLEAN isDead;
 	float ay;
 	int ammo;
+	int timeleft;
 public:
 	CAircraft(float x, float y, int ammo);
 
@@ -41,6 +45,9 @@ public:
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
-	bool isCollidable() { return !isExploded; }
+	bool isCollidable() {
+		return !isExploded;
+	}
 };
+typedef CAircraft* LPAIRCRAFT;
 

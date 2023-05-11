@@ -8,6 +8,10 @@ CScubaSoldier::CScubaSoldier(float x, float y) :CGameObject(x, y) {
 void CScubaSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->timeleft -= dt;
+	if (this->isExploded == true && this->timeleft < 0) {
+		isDeleted = true;
+		return;
+	}
 	if (this->timeleft < 0) 
 	{
 		switch (this->state)
@@ -31,10 +35,14 @@ void CScubaSoldier::Render()
 	{
 	case SCUBA_STATE_HIDING:
 		ani = SCUBA_ANI_HIDE_RIGHT;
+		isExploded = false;
 		break;
 	case SCUBA_STATE_SHOOTING:
 		ani = SCUBA_ANI_SHOOT_RIGHT;
 		break;
+	}
+	if (isExploded) {
+		ani = EXPLOSION_1_ANI;
 	}
 	animations->Get(ani)->Render(x, y);
 }
@@ -52,6 +60,11 @@ void CScubaSoldier::SetState(int state)
 		isShooting = true;
 		isHiding = false;
 		timeleft = SCUBA_SHOOTING_TIME;
+		break;
+	case SCUBA_STATE_EXPLODE:
+		isHiding = false;
+		isExploded = true;
+		timeleft = TIME_EXPLODE;
 		break;
 	}
 	CGameObject::SetState(state);

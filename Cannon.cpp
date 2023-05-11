@@ -6,9 +6,18 @@ CCannon::CCannon(float x, float y) : CGameObject(x, y) {
 	isAppear = true;
 	this->state = CANNON_STATE_APPEAR;
 	timeLeft = CANNON_APPEAR_TIME;
+	HP = 100;
 }
 
 void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	if (this->HP <= 0 && this->isExploded == false) {
+		this->SetState(CANNON_STATE_EXPLODE);
+	}
+	this->timeLeft -= dt;
+	if (this->isExploded == true && this->timeLeft < 0) {
+		isDeleted = true;
+		return;
+	}
 	if (timeLeft > 0) {
 		timeLeft -= dt;
 	}
@@ -50,8 +59,12 @@ void CCannon::Render() {
 	case CANNON_STATE_LEFT_30:
 		ani = CANNON_ANI_LEFT_30;
 		break;
+	case CANNON_STATE_EXPLODE:
+		ani = EXPLOSION_2_ANI;
+		break;
 	}
 	animations->Get(ani)->Render(x, y);
+	RenderBox();
 }
 void CCannon::SetState(int state) {
 	switch (state) {
@@ -64,6 +77,10 @@ void CCannon::SetState(int state) {
 	case CANNON_STATE_APPEAR:
 		isAppear = true;
 		isShooting = true;
+		break;
+	case CANNON_STATE_EXPLODE:
+		this->isExploded = true;
+		timeLeft = TIME_EXPLODE;
 		break;
 	}
 	CGameObject::SetState(state);

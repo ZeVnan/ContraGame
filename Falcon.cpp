@@ -3,9 +3,14 @@
 CFalcon::CFalcon(float x, float y) :CGameObject(x, y) {
 	this->state = 0;
 	timeleft = FALCON_CLOSE_TIME;
+	isExploded = false;
 }
 void CFalcon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	this->timeleft -= dt;
+	if (this->isExploded == true && this->timeleft < 0) {
+		isDeleted = true;
+		return;
+	}
 	if (this->timeleft < 0) {
 		switch (this->state) {
 		case FALCON_STATE_CLOSE:
@@ -39,6 +44,10 @@ void CFalcon::Render() {
 		break;
 	case FALCON_STATE_CLOSING:
 		ani = FALCON_ANI_CLOSING;
+		break;
+	}
+	if (isExploded) {
+		ani = EXPLOSION_2_ANI;
 	}
 	animations->Get(ani)->Render(x, y);
 }
@@ -55,6 +64,10 @@ void CFalcon::SetState(int state) {
 		break;
 	case FALCON_STATE_CLOSING:
 		this->timeleft = FALCON_CLOSING_TIME;
+		break;
+	case FALCON_STATE_EXPLODE:
+		this->isExploded = true;
+		timeleft = TIME_EXPLODE;
 		break;
 	}
 	CGameObject::SetState(state);

@@ -12,6 +12,7 @@
 #define FALCON_STATE_OPEN 1
 #define FALCON_STATE_CLOSING 2
 #define FALCON_STATE_OPENING 3
+#define FALCON_STATE_EXPLODE 4
 
 #define FALCON_ANI_CLOSED		16000
 #define FALCON_ANI_OPENING		16001
@@ -39,3 +40,4 @@ public:
 	bool isBlocking() { return false; }
 	bool isCollidable() { return !isExploded; }
 };
+typedef CFalcon* LPFALCON;

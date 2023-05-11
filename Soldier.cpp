@@ -1,18 +1,30 @@
 #include "Soldier.h"
+#include "Grass.h"
 
 CSoldier::CSoldier() :CGameObject() {
-
+	
 }
 CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
+	isOnPlatform = false;
+	this->SetState(SOLDIER_STATE_JUMP_RELEASE);
 	maxVx = SOLDIER_RUN_SPEED;
 	maxVy = 0.0f;
 	gunx = x;
 	guny = y;
 }
-void CSoldier::Update(DWORD dt) {
-	
+void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	timeleft -= dt;
+	if (this->isExploded == true && this->timeleft < 0) {
+		isDeleted = true;
+		return;
+	}
+	vx = maxVx;
+	vy += SOLDIER_GRAVITY * dt;
+	isOnPlatform = false;
+	this->SetState(SOLDIER_STATE_JUMP);
+	//DebugOutTitle(L"timeleft = %f", this->timeleft);
 }
 void CSoldier::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -54,6 +66,9 @@ void CSoldier::Render() {
 	float d = 0;
 	if (isLaying)
 		d = SOLDIER_LAY_HEIGHT_ADJUST;
+	if (isExploded) {
+		ani = EXPLOSION_1_ANI;
+	}
 	animations->Get(ani)->Render(x, y);
 }
 void CSoldier::SetState(int State) {
@@ -92,6 +107,12 @@ void CSoldier::SetState(int State) {
 		break;
 	case SOLDIER_STATE_LAYDOWN_RELEASE:
 		isLaying = false;
+		break;
+	case SOLDIER_STATE_EXPLODE:
+		isExploded = true;
+		isShooting = false;
+		isLaying = false;
+		timeleft = TIME_EXPLODE;
 		break;
 	}
 	CGameObject::SetState(state);
@@ -136,4 +157,25 @@ void CSoldier::NoCollision(DWORD dt)
 
 void CSoldier::CollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
+		CollisionWithGrass(e);
+	}
+}
+
+void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
+{
+	if (e->normal_x != 0) {
+		//this->x += e->time * this->GetBox().vpf_x;
+		this->x += this->GetBox().vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		if (e->normal_y > 0) {
+				this->y += e->time * this->GetBox().vpf_y;
+				vy = 0;
+				isOnPlatform = true;
+		}
+		else {
+			this->y += this->GetBox().vpf_y;
+		}
+	}
 }
