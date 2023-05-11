@@ -6,6 +6,7 @@
 #include "Cannon.h"
 #include "Rifleman.h"
 #include "Land.h"
+#include "Waters.h"
 
 #include "define.h"
 #include "Tile.h"
@@ -26,6 +27,7 @@ private:
 	LPGAMEOBJECT spawnAircraft(xml_node node);
 	LPGAMEOBJECT spawnFalcon(xml_node node);
 	LPGAMEOBJECT spawnLand(xml_node node);
+	LPGAMEOBJECT spawnWater(xml_node node);
 
 	map<string, string> getObjectProperties(xml_node node);
 	

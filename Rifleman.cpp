@@ -86,7 +86,6 @@ void Rifleman::Render() {
 	if (isExploded) {
 		ani = EXPLOSION_1_ANI;
 	}
-	RenderBox();
 	animations->Get(ani)->Render(x, y);
 }
 

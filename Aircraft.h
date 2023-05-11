@@ -11,15 +11,15 @@
 
 #define AIRCRAFT_STATE_DEAD 0
 
-#define AIRCRAFT_ANI_NORMAL 10300
-#define AIRCRAFT_ANI_bAMMO 10301
-#define AIRCRAFT_ANI_fAMMO 10302
-#define AIRCRAFT_ANI_lAMMO 10303
-#define AIRCRAFT_ANI_mAMMO 10304
-#define AIRCRAFT_ANI_rAMMO 10305
-#define AIRCRAFT_ANI_sAMMO 10306
+#define AIRCRAFT_ANI_NORMAL 13000
+#define AIRCRAFT_ANI_bAMMO 13001
+#define AIRCRAFT_ANI_fAMMO 13002
+#define AIRCRAFT_ANI_lAMMO 13003
+#define AIRCRAFT_ANI_mAMMO 13004
+#define AIRCRAFT_ANI_rAMMO 13005
+#define AIRCRAFT_ANI_sAMMO 13006
 
-#define AIRCRAFT_ANI_INVUL 10310
+#define AIRCRAFT_ANI_INVUL 13010
 
 #define AIRCRAFT_BOX_WIDTH 50
 #define AIRCRAFT_BOX_HEIGHT 30
@@ -40,5 +40,7 @@ public:
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	bool isBlocking() { return false; }
+	bool isCollidable() { return !isExploded; }
 };
 

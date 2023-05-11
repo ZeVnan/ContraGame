@@ -32,6 +32,7 @@ enum eID
 	FalconID = 6,	
 	WallTurretID = 7,	
 	
+	WATER = 11,
 	LAND = 12,			
 	CREATOR = 13,
 };
@@ -39,7 +40,6 @@ enum eID
 enum eLandType
 {
 	GRASS,
-	WATER,
 	BRIDGELAND
 };
 

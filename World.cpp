@@ -147,7 +147,23 @@ LPGAMEOBJECT CWorld::spawnLand(xml_node node)
 
 	return land;
 }
+LPGAMEOBJECT CWorld::spawnWater(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
 
+	float x, y, _width;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+	_width = stof(properties["Width"]);
+
+	auto water = new CWaters(x, y, _width);
+
+	return water;
+}
 LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 {
 	switch (id)
@@ -166,6 +182,8 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnWallTurret(node);
 	case LAND:
 		return spawnLand(node);
+	case WATER:
+		return spawnWater(node);
 	default:
 		return nullptr;
 		break;
@@ -208,6 +226,9 @@ void CWorld::getObjectsListFromFile(const string path)
 		if (obj != NULL) {
 			if (dynamic_cast<LPLAND>(obj)) {
 				(LPLAND(obj))->PushObjectToList(listobject);
+			}
+			else if (dynamic_cast<LPWATERS>(obj)) {
+				(LPWATERS(obj))->PushObjectToList(listobject);
 			}
 			else {
 				listobject.push_back(obj);
