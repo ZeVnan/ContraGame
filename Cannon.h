@@ -17,10 +17,10 @@
 #define CANNON_STATE_APPEAR 40
 
 
-#define CANNON_ANI_LEFT 10400
-#define CANNON_ANI_LEFT_60 10401
-#define CANNON_ANI_LEFT_30 10402
-#define CANNON_ANI_APPEAR 10403
+#define CANNON_ANI_LEFT 14000
+#define CANNON_ANI_LEFT_60 14001
+#define CANNON_ANI_LEFT_30 14002
+#define CANNON_ANI_APPEAR 14003
 
 #define CANNON_BOX_WIDTH 64
 #define CANNON_BOX_HEIGHT 64
@@ -42,5 +42,7 @@ public:
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	bool isBlocking() { return false; }
+	bool isCollidable() { return !isExploded; }
 };
 

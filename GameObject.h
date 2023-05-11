@@ -71,7 +71,7 @@ public:
 	CGameObject(float x, float y):CGameObject() { this->x = x; this->y = y; }
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
-	virtual void Render() = 0;
+	virtual void Render() { RenderBox(); };
 
 	virtual bool isCollidable() {
 		return true;

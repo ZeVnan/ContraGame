@@ -402,8 +402,8 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="land4" X="584" Y="55" Width="112" Height="32">
-      <ActiveBound X="584" Y="55" Width="112" Height="32" />
+    <Item Id="12" Name="land4" X="576" Y="55" Width="128" Height="32">
+      <ActiveBound X="576" Y="55" Width="128" Height="32" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
@@ -431,8 +431,8 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="land7" X="2824" Y="53" Width="176" Height="20">
-      <ActiveBound X="2824" Y="53" Width="176" Height="20" />
+    <Item Id="12" Name="land7" X="2816" Y="53" Width="192" Height="20">
+      <ActiveBound X="2816" Y="53" Width="192" Height="20" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
@@ -460,8 +460,8 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="land11" X="3464" Y="53" Width="376" Height="5">
-      <ActiveBound X="3464" Y="53" Width="376" Height="5" />
+    <Item Id="12" Name="land11" X="3456" Y="53" Width="384" Height="5">
+      <ActiveBound X="3456" Y="53" Width="384" Height="5" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
@@ -521,7 +521,7 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="land19" X="4688" Y="181" Width="112" Height="5">
+    <Item Id="12" Name="land19" X="4672" Y="181" Width="128" Height="5">
       <ActiveBound X="4672" Y="181" Width="128" Height="5" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
@@ -640,8 +640,8 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="land35" X="6016" Y="53" Width="480" Height="5">
-      <ActiveBound X="6016" Y="53" Width="480" Height="5" />
+    <Item Id="12" Name="land35" X="6016" Y="53" Width="512" Height="5">
+      <ActiveBound X="6016" Y="53" Width="512" Height="5" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
@@ -655,8 +655,8 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="land37" X="1224" Y="53" Width="112" Height="20">
-      <ActiveBound X="1224" Y="53" Width="112" Height="20" />
+    <Item Id="12" Name="land37" X="1216" Y="53" Width="128" Height="20">
+      <ActiveBound X="1216" Y="53" Width="112" Height="20" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
@@ -670,29 +670,29 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="water1" X="0" Y="48" Width="584" Height="32">
+    <Item Id="11" Name="water1" X="0" Y="48" Width="584" Height="32">
       <ActiveBound X="0" Y="48" Width="584" Height="32" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="1" />
       </Params>
     </Item>
-    <Item Id="12" Name="water2" X="696" Y="48" Width="528" Height="32">
-      <ActiveBound X="696" Y="48" Width="528" Height="32" />
+    <Item Id="11" Name="water2" X="704" Y="48" Width="528" Height="32">
+      <ActiveBound X="704" Y="48" Width="528" Height="32" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="1" />
       </Params>
     </Item>
-    <Item Id="12" Name="water3" X="1336" Y="48" Width="1488" Height="32">
-      <ActiveBound X="1336" Y="48" Width="1488" Height="32" />
+    <Item Id="11" Name="water3" X="1344" Y="48" Width="1488" Height="32">
+      <ActiveBound X="1344" Y="48" Width="1488" Height="32" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="1" />
       </Params>
     </Item>
-    <Item Id="12" Name="water4" X="3000" Y="48" Width="464" Height="32">
-      <ActiveBound X="3000" Y="48" Width="464" Height="32" />
+    <Item Id="11" Name="water4" X="3008" Y="48" Width="464" Height="32">
+      <ActiveBound X="3008" Y="48" Width="464" Height="32" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="1" />
@@ -809,8 +809,8 @@
     <Item Id="18" Name="greatwall" X="6432" Y="384" Width="128" Height="320">
       <ActiveBound X="6432" Y="384" Width="128" Height="320" />
     </Item>
-    <Item Id="12" Name="land40" X="6496" Y="96" Width="160" Height="5">
-      <ActiveBound X="6496" Y="96" Width="160" Height="5" />
+    <Item Id="12" Name="land40" X="6496" Y="96" Width="192" Height="5">
+      <ActiveBound X="6496" Y="96" Width="192" Height="5" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
         <Elem Key="type" Value="0" />
