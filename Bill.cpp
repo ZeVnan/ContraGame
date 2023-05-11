@@ -546,6 +546,8 @@ int CBill::CalculateAngle() {
 	}
 }
 void CBill::AddBullet(BOOLEAN KeyState) {
+	if (isDiving == true)
+		return;
 	if (KeyState == true) {
 		if (waveLeft > 0 && bulletType == BULLET_ANI_MACHINE && bulletMtime == 0) {
 			waveContainer.push_back(ShootMachineBullet(CalculateAngle()));
