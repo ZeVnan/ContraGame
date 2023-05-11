@@ -1,11 +1,15 @@
 #include "Bill.h"
 
 #include "Grass.h"
+#include "Water.h"
 CBill::CBill(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
+	isSwimming = false;
+	isDiving = false;
 	isOnPlatform = false;
 	isDropping = false;
+	isJumping = true;
 	ny = 0;
 	maxVx = 0.0f;
 	maxVy = 0.0f;
@@ -15,10 +19,15 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 	waveLeft = BILL_WAVE_BULLET_NORMAL;
 
 	bulletMtime = 0;
+	timeLeft = 0;
 }
 void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
+	//don't change the order of this function
+	if (timeLeft > 0)
+		timeLeft -= dt;
 	vx = maxVx;
-	vy += BILL_GRAVITY * dt;
+	if (isOnPlatform == false && isSwimming == false)
+		vy += BILL_GRAVITY * dt;
 	if (vx < 0 && x < 10) 
 		x = 10;
 	if (vx > 0 && x > 6990) 
@@ -32,174 +41,261 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	else
 		bulletMtime = 0;
 	UpdateBullet(dt, coObjects);
-	int a = 0;
-	for (int i = 0; i < waveContainer.size(); i++) {
-		a += waveContainer[i].size();
-	}
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	isDropping = false;
-	//DebugOutTitle(L"x = %f, y = %f", x, y);
+	DebugOutTitle(L"Laying:%d, OnPlatform:%d, Swimming:%d, diving:%d, jumping:%d, vy:%f",
+		isLaying, isOnPlatform, isSwimming, isDiving, isJumping, vy);
 }
-void CBill::Render() {
+void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
-	if (vy != 0) {
-		if (nx > 0) {
-			ani = BILL_ANI_JUMP_RIGHT;
-			gunx = x;
-			guny = y;
+	if (isSwimming == false) {
+		if (vy != 0) {
+			if (nx > 0) {
+				ani = BILL_ANI_JUMP_RIGHT;
+				gunx = x;
+				guny = y;
+			}
+			else {
+				ani = BILL_ANI_JUMP_LEFT;
+				gunx = x;
+				guny = y;
+			}
 		}
 		else {
-			ani = BILL_ANI_JUMP_LEFT;
-			gunx = x;
-			guny = y;
+			if (isLaying) {
+				if (nx > 0) {
+					ani = BILL_ANI_LAYDOWN_RIGHT;
+					gunx = x + 15.0f;
+					guny = y - 10.0f;
+				}
+				else {
+					ani = BILL_ANI_LAYDOWN_LEFT;
+					gunx = x - 15.0f;
+					guny = y - 10.0f;
+				}
+			}
+			else {
+				if (vx == 0) {
+					if (ny == 1) {
+						if (nx > 0) {
+							ani = BILL_ANI_SHOOT_UP_RIGHT;
+							gunx = x + 4.0f;
+							guny = y + 30.0f;
+						}
+						else {
+							ani = BILL_ANI_SHOOT_UP_LEFT;
+							gunx = x - 4.0f;
+							guny = y + 30.0f;
+						}
+					}
+					if (ny == 0) {
+						if (nx > 0) {
+							ani = BILL_ANI_NORMAL_RIGHT;
+							gunx = x + 10.0f;
+							guny = y + 4.5f;
+						}
+						else {
+							ani = BILL_ANI_NORMAL_LEFT;
+							gunx = x - 10.0f;
+							guny = y + 4.5f;
+						}
+
+					}
+				}
+				else {
+					if (vx > 0) {
+						if (ny == 0) {
+							if (isShooting == true) {
+								ani = BILL_ANI_SHOOT_RIGHT;
+								gunx = x + 10.0f;
+								guny = y + 4.5f;
+							}
+							else {
+								ani = BILL_ANI_RUN_RIGHT;
+								gunx = x + 10.0f;
+								guny = y + 4.5f;
+							}
+						}
+						if (ny == 1) {
+							ani = BILL_ANI_SHOOT_UPRIGHT;
+							gunx = x + 10.0f;
+							guny = y + 17.0f;
+						}
+						if (ny == -1) {
+							ani = BILL_ANI_SHOOT_DOWNRIGHT;
+							gunx = x + 10.0f;
+							guny = y - 5.0f;
+						}
+					}
+					else {
+						if (ny == 0) {
+							if (isShooting == true) {
+								ani = BILL_ANI_SHOOT_LEFT;
+								gunx = x - 10.0f;
+								guny = y + 4.5f;
+							}
+							else {
+								ani = BILL_ANI_RUN_LEFT;
+								gunx = x - 10.0f;
+								guny = y + 4.5f;
+							}
+						}
+						if (ny == 1) {
+							ani = BILL_ANI_SHOOT_UPLEFT;
+							gunx = x - 10.0f;
+							guny = y + 17.0f;
+						}
+						if (ny == -1) {
+							ani = BILL_ANI_SHOOT_DOWNLEFT;
+							gunx = x - 10.0f;
+							guny = y - 5.0f;
+						}
+					}
+				}
+			}
 		}
 	}
 	else {
-		if (isLaying) {
-			if (nx > 0) {
-				ani = BILL_ANI_LAYDOWN_RIGHT;
-				gunx = x + 15.0f;
-				guny = y - 10.0f;
-			}
-			else {
-				ani = BILL_ANI_LAYDOWN_LEFT;
-				gunx = x - 15.0f;
-				guny = y - 10.0f;
-			}
+		if (timeLeft >= 0) {
+			ani = BILL_ANI_SWIMMING_BEGIN;
+			gunx = x;
+			guny = y;
 		}
 		else {
-			if (vx == 0) {
-				if (ny == 1) {
-					if (nx > 0) {
-						ani = BILL_ANI_SHOOT_UP_RIGHT;
-						gunx = x + 4.0f;
-						guny = y + 30.0f;
-					}
-					else {
-						ani = BILL_ANI_SHOOT_UP_LEFT;
-						gunx = x - 4.0f;
-						guny = y + 30.0f;
-					}
-				}
-				if (ny == 0){
-					if (nx > 0) {
-						ani = BILL_ANI_NORMAL_RIGHT;
-						gunx = x + 10.0f;
-						guny = y + 4.5f;
-					}	
-					else {
-						ani = BILL_ANI_NORMAL_LEFT;
-						gunx = x - 10.0f;
-						guny = y + 4.5f;
-					}
-						
-				}
+			if (isDiving == true) {
+				ani = BILL_ANI_DIVING;
+				gunx = x;
+				guny = y;
 			}
 			else {
-				if (vx > 0) {
-					if (ny == 0) {
-						if (isShooting == true) {
-							ani = BILL_ANI_SHOOT_RIGHT;
-							gunx = x + 10.0f;
-							guny = y + 4.5f;
+				if (isShooting == true) {
+					if (ny == 1) {
+						if (vx == 0) {
+							if (nx > 0) {
+								ani = BILL_ANI_SWIMMING_SHOOT_UP_RIGHT;
+								gunx = x;
+								guny = y;
+							}
+							else {
+								ani = BILL_ANI_SWIMMING_SHOOT_UP_LEFT;
+								gunx = x;
+								guny = y;
+							}
+						}
+						if (vx > 0) {
+							ani = BILL_ANI_SWIMMING_SHOOT_UPRIGHT;
+							gunx = x;
+							guny = y;
+						}
+						if (vx < 0) {
+							ani = BILL_ANI_SWIMMING_SHOOT_UPLEFT;
+							gunx = x;
+							guny = y;
+						}
+					}
+					else {
+						if (nx > 0) {
+							ani = BILL_ANI_SWIMMING_SHOOT_RIGHT;
+							gunx = x;
+							guny = y;
 						}
 						else {
-							ani = BILL_ANI_RUN_RIGHT;
-							gunx = x + 10.0f;
-							guny = y + 4.5f;
+							ani = BILL_ANI_SWIMMING_SHOOT_LEFT;
+							gunx = x;
+							guny = y;
 						}
 					}
-					if (ny == 1) {
-						ani = BILL_ANI_SHOOT_UPRIGHT;
-						gunx = x + 10.0f;
-						guny = y + 17.0f;
-					}
-					if (ny == -1) {
-						ani = BILL_ANI_SHOOT_DOWNRIGHT;
-						gunx = x + 10.0f;
-						guny = y - 5.0f;
-					}
-				}	
+				}
 				else {
-					if (ny == 0){
-						if (isShooting == true) {
-							ani = BILL_ANI_SHOOT_LEFT;
-							gunx = x - 10.0f;
-							guny = y + 4.5f;
-						}
-						else {
-							ani = BILL_ANI_RUN_LEFT;
-							gunx = x - 10.0f;
-							guny = y + 4.5f;
-						}
+					if (nx > 0) {
+						ani = BILL_ANI_SWIMMING_RIGHT;
+						gunx = x;
+						guny = y;
 					}
-					if (ny == 1) {
-						ani = BILL_ANI_SHOOT_UPLEFT;
-						gunx = x - 10.0f;
-						guny = y + 17.0f;
-					}
-					if (ny == -1) {
-						ani = BILL_ANI_SHOOT_DOWNLEFT;
-						gunx = x - 10.0f;
-						guny = y - 5.0f;
+					else {
+						ani = BILL_ANI_SWIMMING_LEFT;
+						gunx = x;
+						guny = y;
 					}
 				}
 			}
 		}
 	}
+	
 	if (ani == -1) ani = BILL_ANI_NORMAL_RIGHT;
 
 	float d = 0;
-	if (isLaying)
-		d = BILL_LAY_HEIGHT_ADJUST;
-	if (ny == 1 && vx == 0)
+	if (ny == 1 && vx == 0 && isSwimming == false)
 		d = BILL_UP_HEIGHT_ADJUST;
+	if (ani == BILL_ANI_DIVING)
+		d = BILL_DIVE_HEIGHT_ADJUST;
 	animations->Get(ani)->Render(x, y + d);
 	RenderBullet();
-	RenderBox();
 }
 void CBill::SetState(int state) {
 	switch (state) {
 	case BILL_STATE_RUN_RIGHT:
 		maxVx = BILL_RUN_SPEED;
 		nx = 1;
-		if (isLaying == true) {
+		if (isSwimming == false && isLaying == true) {
 			isLaying = false;
+			y -= BILL_LAY_HEIGHT_ADJUST;	//support change bbox
 		}
 		break;
 	case BILL_STATE_RUN_LEFT:
 		maxVx = -BILL_RUN_SPEED;
 		nx = -1;
-		if (isLaying == true) {
+		if (isSwimming == false && isLaying == true) {
 			isLaying = false;
+			y -= BILL_LAY_HEIGHT_ADJUST;	//support change bbox
 		}
 		break;
 	case BILL_STATE_JUMP:
-		if (vy == 0) {
-			vy = BILL_JUMP_SPEED_Y;
+		if (isSwimming == false) {
+			if (ny == -1) {
+				if (vx != 0)
+					break;
+				isJumping = true;
+				isDropping = true;
+				isLaying = false;
+			}
+			else {
+				vy = BILL_JUMP_SPEED_Y;
+				isJumping = true;		//support change bbox
+			}
+			isOnPlatform = false;
 		}
 		break;
-	case BILL_STATE_DROP:
-		isDropping = true;
-		break;
 	case BILL_STATE_DOWN:
+		ny = -1;
 		if (vy == 0) {
-			if (vx == 0) {
+			if (isSwimming == true) {
+				isDiving = true;
+			}
+			else {
+				if (isLaying == false) {
+					y += BILL_LAY_HEIGHT_ADJUST;
+				}
 				isLaying = true;
 			}
 		}
-		ny = -1;
 		break;
 	case BILL_STATE_DOWN_RELEASE:
-		if (vx == 0) {
-			isLaying = false;
-		}
 		ny = 0;
+		if (isSwimming == true) {
+			isDiving = false;
+		}
+		else {
+			if (isLaying == true) {
+				y -= BILL_LAY_HEIGHT_ADJUST;
+				isLaying = false;
+			}
+		}
 		break;
 	case BILL_STATE_UP:
-		if (isLaying == true)
+		if (isSwimming == false && isLaying == true)
 			break;
 		ny = 1;
 		break;
@@ -215,6 +311,30 @@ void CBill::SetState(int state) {
 	case BILL_STATE_NORMAL:
 		maxVx = 0;
 		break;
+	case BILL_STATE_INTO_WATER:
+		if (isSwimming == false) {
+			timeLeft = BILL_TIME_SWIM_BEGIN;
+		}
+		isSwimming = true;
+		isOnPlatform = false;
+		isLaying = false;
+		isJumping = false;
+		vy = 0;
+		break;
+	case BILL_STATE_OUT_OF_WATER:
+		isSwimming = false;
+		isDiving = false;
+		break;
+	case BILL_STATE_ON_LAND:
+		isOnPlatform = true;
+		isJumping = false;
+		isSwimming = false;
+		isDiving = false;
+		vy = 0;
+		break;
+	case BILL_STATE_OFF_LAND:
+		isOnPlatform = false;
+		break;
 	}
 	CGameObject::SetState(state);
 }
@@ -222,12 +342,7 @@ void CBill::SetState(int state) {
 void CBill::KeyDown(int KeyCode) {
 	switch (KeyCode) {
 	case DIK_X:
-		if (ny == -1) {
-			this->SetState(BILL_STATE_DROP);
-		}
-		else {
-			this->SetState(BILL_STATE_JUMP);
-		}
+		this->SetState(BILL_STATE_JUMP);
 		break;
 	case DIK_Z:
 		this->SetState(BILL_STATE_SHOOT);
@@ -296,40 +411,97 @@ void CBill::KeyState(CGame* game) {
 }
 
 void CBill::CreateBox(DWORD dt) {
-	bbox.left = x - BILL_BOX_NORMAL_WIDTH / 2;
-	bbox.top = y - BILL_BOX_NORMAL_HEIGHT / 2;
-	bbox.right= x + BILL_BOX_NORMAL_WIDTH / 2;
-	bbox.bottom = y + BILL_BOX_NORMAL_HEIGHT / 2;
+	if (isSwimming == true) {
+		bbox.left = x - BILL_BOX_SWIM_WIDTH / 2;
+		bbox.top = y - BILL_BOX_SWIM_HEIGHT / 2;
+		bbox.right = x + BILL_BOX_SWIM_WIDTH / 2;
+		bbox.bottom = y + BILL_BOX_SWIM_HEIGHT / 2;
+	}
+	else
+	if (isLaying == true) {
+		bbox.left = x - BILL_BOX_LAY_WIDTH / 2;
+		bbox.top = y - BILL_BOX_LAY_HEIGHT / 2;
+		bbox.right = x + BILL_BOX_LAY_WIDTH / 2;
+		bbox.bottom = y + BILL_BOX_LAY_HEIGHT / 2;
+	}
+	else
+	if (isJumping == true) {
+		bbox.left = x - BILL_BOX_JUMP_WIDTH / 2;
+		bbox.top = y - BILL_BOX_JUMP_HEIGHT / 2;
+		bbox.right = x + BILL_BOX_JUMP_WIDTH / 2;
+		bbox.bottom = y + BILL_BOX_JUMP_HEIGHT / 2;
+	}
+	else
+	{
+		bbox.left = x - BILL_BOX_NORMAL_WIDTH / 2;
+		bbox.top = y - BILL_BOX_NORMAL_HEIGHT / 2;
+		bbox.right = x + BILL_BOX_NORMAL_WIDTH / 2;
+		bbox.bottom = y + BILL_BOX_NORMAL_HEIGHT / 2;
+	}
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;
 }
 void CBill::NoCollision(DWORD dt) {
 	x += vx * dt;
-	y += vy * dt;
+	y += vy * dt; 
 }
 void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
 		CollisionWithGrass(e);
 	}
+	if (dynamic_cast<LPWATER>(e->dest_obj)) {
+		CollisionWithWater(e);
+	}
 }
 void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
 	if (e->normal_x != 0) {
-		//this->x += e->time * this->GetBox().vpf_x;
-		this->x += this->GetBox().vpf_x;
+		if (isSwimming == true) {
+			float a = BILL_WATER_TO_LAND_POSITION_ADJUST;
+			if (e->dest_obj->GetBox().bottom - this->bbox.top <= a) {
+				y += BILL_WATER_TO_LAND_POSITION_ADJUST;
+				SetState(BILL_STATE_ON_LAND);
+				y += BILL_SWIM_NORMAL_POSITION_ADJUST;
+			}	
+		}
+		this->x += bbox.vpf_x;
 	}
 	else if (e->normal_y != 0) {
 		if (e->normal_y > 0) {
 			if (isDropping == false) {
-				this->y += e->time * this->GetBox().vpf_y;
-				vy = 0;
-				isOnPlatform = true;
+				//support change bbox
+				if (isJumping == true) {
+					isJumping = false;
+					y += BILL_JUMP_NORMAL_POSITION_ADJUST;
+				}
+				this->y += e->time * bbox.vpf_y;
+				SetState(BILL_STATE_ON_LAND);
 			}
 			else {
-				this->y += this->GetBox().vpf_y;
+				this->y += bbox.vpf_y;
 			}
 		}
 		else {
-			this->y += this->GetBox().vpf_y;
+			this->y += bbox.vpf_y;
+		}
+	}
+}
+void CBill::CollisionWithWater(LPCOLLISIONEVENT e) {
+	if (e->normal_x != 0) {
+		this->x += bbox.vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		if (e->normal_y > 0) {
+			if (isJumping == true) {
+				y -= BILL_JUMP_SWIM_POSITION_ADJUST;
+			}
+			else {
+				y -= BILL_NORMAL_SWIM_POSITION_ADJUST;
+			}
+			SetState(BILL_STATE_INTO_WATER);
+			this->y += e->time * bbox.vpf_y;
+		}
+		else {
+			this->y += bbox.vpf_y;
 		}
 	}
 }
@@ -374,6 +546,8 @@ int CBill::CalculateAngle() {
 	}
 }
 void CBill::AddBullet(BOOLEAN KeyState) {
+	if (isDiving == true)
+		return;
 	if (KeyState == true) {
 		if (waveLeft > 0 && bulletType == BULLET_ANI_MACHINE && bulletMtime == 0) {
 			waveContainer.push_back(ShootMachineBullet(CalculateAngle()));

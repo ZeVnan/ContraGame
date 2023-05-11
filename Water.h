@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#define WATER_BOX_WIDTH 32
+#define WATER_BOX_WIDTH 64
 #define WATER_BOX_HEIGHT 32
 class CWater : public CGameObject
 {

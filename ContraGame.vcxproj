@@ -172,6 +172,7 @@
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="WallTurret.cpp" />
     <ClCompile Include="Water.cpp" />
+    <ClCompile Include="Waters.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldPart.cpp" />
   </ItemGroup>
@@ -217,6 +218,7 @@
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="WallTurret.h" />
     <ClInclude Include="Water.h" />
+    <ClInclude Include="Waters.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldPart.h" />
   </ItemGroup>

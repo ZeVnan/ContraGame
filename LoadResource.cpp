@@ -2,7 +2,7 @@
 #include "LoadResource.h"
 
 void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
-	//100xx
+	//10xxx
 	textures->Add(ID_TEX_BILL, TEXTURE_PATH_BILL);
 	LPTEXTURE texBill = textures->Get(ID_TEX_BILL);
 	//normal right
@@ -69,6 +69,26 @@ void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	sprites->Add(10084, sprites->Get(10081));
 	sprites->Add(10085, sprites->Get(10082));
 	sprites->Add(10086, sprites->Get(10083));
+	//swimming begin 
+	sprites->Add(10090, 94, 115, 111, 131, texBill);
+	//diving
+	sprites->Add(10100, 112, 123, 129, 131, texBill);
+	//swimming right
+	sprites->Add(10110, 130, 115, 147, 131, texBill);
+	//swimming left
+	sprites->Add(10111, sprites->Get(10110));
+	//swimming shot right
+	sprites->Add(10120, 191, 113, 217, 131, texBill);
+	//swimming shot left
+	sprites->Add(10121, sprites->Get(10120));
+	//swimming shot up right
+	sprites->Add(10130, 169, 103, 187, 131, texBill);
+	//swimming shot up left
+	sprites->Add(10131, sprites->Get(10130));
+	//swimming shot upright
+	sprites->Add(10140, 148, 113, 168, 131, texBill);
+	//swimming shot upleft
+	sprites->Add(10141, sprites->Get(10140));
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);
@@ -166,11 +186,51 @@ void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	ani->Add(10085);
 	ani->Add(10086);
 	animations->Add(BILL_ANI_SHOOT_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10090);
+	animations->Add(BILL_ANI_SWIMMING_BEGIN, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10100);
+	animations->Add(BILL_ANI_DIVING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10110);
+	animations->Add(BILL_ANI_SWIMMING_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10111);
+	animations->Add(BILL_ANI_SWIMMING_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10120);
+	animations->Add(BILL_ANI_SWIMMING_SHOOT_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10121);
+	animations->Add(BILL_ANI_SWIMMING_SHOOT_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10130);
+	animations->Add(BILL_ANI_SWIMMING_SHOOT_UP_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10131);
+	animations->Add(BILL_ANI_SWIMMING_SHOOT_UP_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10140);
+	animations->Add(BILL_ANI_SWIMMING_SHOOT_UPRIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10141);
+	animations->Add(BILL_ANI_SWIMMING_SHOOT_UPLEFT, ani);
 }
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_BULLET, TEXTURE_PATH_BULLET);
 	LPTEXTURE texBullet = textures->Get(ID_TEX_BULLET);
-	//id sprite 101xx
+	//id sprite 11xxx
 	//bill
 	//normal bullet
 	sprites->Add(10100, 58, 42, 60, 44, texBullet);
@@ -233,7 +293,7 @@ void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_SOLDIER, TEXTURE_PATH_SOLDIER);
 	LPTEXTURE texSoldier = textures->Get(ID_TEX_SOLDIER);
-	//sprite id 102xx
+	//sprite id 12xxx
 	//run left
 	sprites->Add(10200, 90, 0, 106, 32, texSoldier);
 	sprites->Add(10201, 72, 0, 88, 32, texSoldier);
@@ -324,7 +384,7 @@ void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& an
 void CreateAircraftAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_AIRCRAFT, TEXTURE_PATH_AIRCRAFT);
 	LPTEXTURE aircraftTex = textures->Get(ID_TEX_AIRCRAFT);
-	//aircraft 103xx
+	//aircraft 13xxx
 
 	//normal
 	sprites->Add(10310, 2, 0, 27, 15, aircraftTex);
@@ -378,7 +438,7 @@ void CreateAircraftAni(CTextures*& textures, CSprites*& sprites, CAnimations*& a
 void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_CANNON, TEXTURE_PATH_CANNON);
 	LPTEXTURE cannonTex = textures->Get(ID_TEX_CANNON);
-	//cannon 104xx
+	//cannon 14xxx
 
 	//left
 	sprites->Add(10400, 66, 66, 98, 98, cannonTex);
@@ -431,7 +491,7 @@ void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_RIFLEMAN, TEXTURE_PATH_RIFLEMAN);
 	LPTEXTURE riflemanTex = textures->Get(ID_TEX_RIFLEMAN);
-	//rifleman 105xx
+	//rifleman 15xxx
 	//normal-left
 	sprites->Add(10500, 0, 0, 23, 38, riflemanTex);
 	//normal-right
@@ -513,7 +573,7 @@ void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 {
 	textures->Add(ID_TEX_FALCON, TEXTURE_PATH_FALCON);
 	LPTEXTURE texFalcon = textures->Get(ID_TEX_FALCON);
-	//id sprite 106xx
+	//id sprite 16xxx
 	//normal falcon
 	sprites->Add(10600, 0, 0, 31, 31, texFalcon);
 	//opening falcon
@@ -552,7 +612,7 @@ void CreateWTurretAni(CTextures*& textures, CSprites*& sprites, CAnimations*& an
 {
 	textures->Add(ID_TEX_WTURRET, TEXTURE_PATH_WTURRET);
 	LPTEXTURE texWTurret = textures->Get(ID_TEX_WTURRET);
-	//id tex 107xx
+	//id tex 17xxx
 	//turret appear
 	sprites->Add(10700, 96, 64, 128, 96, texWTurret);
 	sprites->Add(10701, 128, 64, 160, 96, texWTurret);
@@ -696,7 +756,7 @@ void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 {
 	textures->Add(ID_TEX_SCUBA, TEXTURE_PATH_SCUBA);
 	LPTEXTURE texScuba = textures->Get(ID_TEX_SCUBA);
-	//id sprite 108xx
+	//id sprite 18xxx
 	//Scuba soldier hide right
 	sprites->Add(10800, 2, 0, 17, 30, texScuba);
 	//Scuba soldier hide left

@@ -15,11 +15,11 @@ CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	guny = y;
 }
 void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	/*timeleft -= dt;
+	timeleft -= dt;
 	if (this->isExploded == true && this->timeleft < 0) {
 		isDeleted = true;
 		return;
-	}*/
+	}
 	vx = maxVx;
 	vy += SOLDIER_GRAVITY * dt;
 	isOnPlatform = false;

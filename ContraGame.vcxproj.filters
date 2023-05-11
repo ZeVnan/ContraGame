@@ -110,6 +110,9 @@
     <ClCompile Include="Map.cpp">
       <Filter>Container\SourceFile</Filter>
     </ClCompile>
+    <ClCompile Include="Waters.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
@@ -230,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="TileSet.h">
       <Filter>Container\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Waters.h">
+      <Filter>Game Object\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
