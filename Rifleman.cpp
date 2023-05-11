@@ -10,32 +10,32 @@ Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	ny = 0;
 	nx = -1;
 	this->state = RIFLEMAN_STATE_NORMAL;
-	timeLeft = RIFLEMAN_SWITCH_TIME;
+	timeleft = RIFLEMAN_SWITCH_TIME;
 }
 
 void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	timeLeft -= dt;
-	if (this->isExploded == true && this->timeLeft < 0) {
+	timeleft -= dt;
+	if (this->isExploded == true && this->timeleft < 0) {
 		isDeleted = true;
 		return;
 	}
-	if (timeLeft < 0) {
+	if (timeleft < 0) {
 		switch (this->state) {
 		case RIFLEMAN_STATE_NORMAL:
 			this->SetState(RIFLEMAN_STATE_UP);
-			timeLeft = RIFLEMAN_SWITCH_TIME;
+			timeleft = RIFLEMAN_SWITCH_TIME;
 			break;
 		case RIFLEMAN_STATE_UP:
 			this->SetState(RIFLEMAN_STATE_DOWN);
-			timeLeft = RIFLEMAN_SWITCH_TIME;
+			timeleft = RIFLEMAN_SWITCH_TIME;
 			break;
 		case RIFLEMAN_STATE_DOWN:
 			this->SetState(RIFLEMAN_STATE_NORMAL);
-			timeLeft = RIFLEMAN_SWITCH_TIME;
+			timeleft = RIFLEMAN_SWITCH_TIME;
 			break;
 		}
 	}
-	//DebugOutTitle(L"timeleft = %f", this->timeLeft);
+	//DebugOutTitle(L"timeleft = %f", this->timeleft);
 }
 
 void Rifleman::Render() {
@@ -124,7 +124,7 @@ void Rifleman::SetState(int state) {
 		isShooting = false;
 		isHiding = false;
 		isExploded = true;
-		timeLeft = TIME_EXPLODE;
+		timeleft = TIME_EXPLODE;
 		break;
 	}
 	CGameObject::SetState(state);

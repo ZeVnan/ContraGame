@@ -39,7 +39,7 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	isDropping = false;
-	DebugOutTitle(L"x = %f, y = %f", x, y);
+	//DebugOutTitle(L"x = %f, y = %f", x, y);
 }
 void CBill::Render() {
 	CAnimations* animations = CAnimations::GetInstance();

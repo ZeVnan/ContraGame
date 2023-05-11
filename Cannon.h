@@ -9,12 +9,13 @@
 #define CANNON_START_Y 150
 
 #define CANNON_APPEAR_TIME 600
-#define CANNON_SWITCH_TIME 300
+#define CANNON_SWITCH_TIME 600
 
 #define CANNON_STATE_LEFT 10
 #define CANNON_STATE_LEFT_60 20
 #define CANNON_STATE_LEFT_30 30
 #define CANNON_STATE_APPEAR 40
+#define CANNON_STATE_EXPLODE 50
 
 
 #define CANNON_ANI_LEFT 10400
@@ -30,10 +31,15 @@ class CCannon : public CGameObject
 private:
 	BOOLEAN isShooting;
 	BOOLEAN isAppear;
+	int HP;
 	int timeLeft;
 public:
 	CCannon();
 	CCannon(float x, float y);
+
+	void TakeDamage(int damage) {
+		this->HP -= damage;
+	}
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
@@ -42,5 +48,9 @@ public:
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	bool isBlocking() { return false; }
+	bool isCollidable() {
+		return !isExploded;
+	}
 };
-
+typedef CCannon* LPCANNON;

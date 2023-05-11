@@ -9,16 +9,17 @@
 
 #define SCUBA_STATE_HIDING 0
 #define SCUBA_STATE_SHOOTING 1
+#define SCUBA_STATE_EXPLODE 2
 
 #define SCUBA_ANI_HIDE_LEFT 10800
 #define SCUBA_ANI_HIDE_RIGHT 10801
 #define SCUBA_ANI_SHOOT_LEFT 10810
 #define SCUBA_ANI_SHOOT_RIGHT 10811
 
-#define SCUBA_BOX_HIDE_WIDTH	15
-#define SCUBA_BOX_HIDE_HEIGHT	15
-#define SCUBA_BOX_SHOOT_WIDTH	15
-#define SCUBA_BOX_SHOOT_HEIGHT	30
+#define SCUBA_BOX_HIDE_WIDTH	30
+#define SCUBA_BOX_HIDE_HEIGHT	30
+#define SCUBA_BOX_SHOOT_WIDTH	30
+#define SCUBA_BOX_SHOOT_HEIGHT	60
 
 class CScubaSoldier : public CGameObject
 {
@@ -36,5 +37,8 @@ public:
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	bool isBlocking() { return false; }
+	bool isCollidable() { return !isExploded; }
 };
+typedef CScubaSoldier* LPSCUBA;
 

@@ -49,11 +49,11 @@
 #define RIFLEMAN_SWITCH_TIME 300
 
 //Áp dụng được cho toàn bộ animation khi đứng của rifleman
-#define RIFLEMAN_BOX_NORMAL_HEIGHT	38
-#define RIFLEMAN_BOX_NORMAL_WIDTH	23
+#define RIFLEMAN_BOX_NORMAL_HEIGHT	76
+#define RIFLEMAN_BOX_NORMAL_WIDTH	46
 
-#define RIFLEMAN_BOX_HIDE_WIDTH		23
-#define RIFLEMAN_BOX_HIDE_HEIGHT	16
+#define RIFLEMAN_BOX_HIDE_WIDTH		46
+#define RIFLEMAN_BOX_HIDE_HEIGHT	32
 
 
 class Rifleman : public CGameObject
@@ -65,7 +65,7 @@ private:
 	float gunx;
 	float guny;
 	int ny; // down - -1, normal - 0, up - 1
-	float timeLeft;
+	float timeleft;
 public:
 	Rifleman();
 	Rifleman(float x, float y);
