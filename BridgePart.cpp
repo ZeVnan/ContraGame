@@ -13,8 +13,6 @@ void CBridgePart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		return;
 	else {
 		timeLeft -= dt;
-		if (number == 0)
-			DebugOutTitle(L"%d", timeLeft);
 		if (timeLeft < 0) {
 			if (isExploded == false) {
 				SetState(BRIDGEPART_STATE_EXPLODE);
