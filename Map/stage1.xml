@@ -698,40 +698,40 @@
         <Elem Key="type" Value="1" />
       </Params>
     </Item>
-    <Item Id="5" Name="rifleMan1" X="624" Y="120" Width="32" Height="64">
-      <ActiveBound X="624" Y="120" Width="32" Height="64" />
+    <Item Id="5" Name="rifleMan1" X="624" Y="110" Width="32" Height="64">
+      <ActiveBound X="624" Y="110" Width="32" Height="64" />
       <Params>
         <Elem Key="status" Value="0" />
       </Params>
     </Item>
-    <Item Id="5" Name="rifleMan2" X="1280" Y="120" Width="32" Height="64">
-      <ActiveBound X="1280" Y="120" Width="32" Height="64" />
+    <Item Id="5" Name="rifleMan2" X="1280" Y="110" Width="32" Height="64">
+      <ActiveBound X="1280" Y="110" Width="32" Height="64" />
     </Item>
-    <Item Id="7" Name="wallTurret1" X="2496" Y="192" Width="64" Height="64">
+    <Item Id="7" Name="wallTurret1" X="2511" Y="177" Width="64" Height="64">
       <ActiveBound X="2496" Y="192" Width="64" Height="64" />
     </Item>
-    <Item Id="7" Name="wallTurret2" X="3264" Y="256" Width="64" Height="64">
+    <Item Id="7" Name="wallTurret2" X="3279" Y="241" Width="64" Height="64">
       <ActiveBound X="3264" Y="256" Width="64" Height="64" />
     </Item>
-    <Item Id="7" Name="wallTurret3" X="3648" Y="256" Width="64" Height="64">
+    <Item Id="7" Name="wallTurret3" X="3663" Y="241" Width="64" Height="64">
       <ActiveBound X="3648" Y="256" Width="64" Height="64" />
     </Item>
-    <Item Id="4" Name="cannon1" X="4096" Y="192" Width="64" Height="64">
-      <ActiveBound X="4096" Y="192" Width="64" Height="64" />
+    <Item Id="4" Name="cannon1" X="4111" Y="177" Width="64" Height="64">
+      <ActiveBound X="4111" Y="192" Width="64" Height="64" />
     </Item>
-    <Item Id="4" Name="cannon2" X="4352" Y="384" Width="64" Height="64">
+    <Item Id="4" Name="cannon2" X="4367" Y="369" Width="64" Height="64">
       <ActiveBound X="4352" Y="384" Width="64" Height="64" />
     </Item>
-    <Item Id="5" Name="rifleMan3" X="4736" Y="256" Width="32" Height="64">
-      <ActiveBound X="4736" Y="256" Width="32" Height="64" />
+    <Item Id="5" Name="rifleMan3" X="4751" Y="226" Width="32" Height="64">
+      <ActiveBound X="4736" Y="236" Width="32" Height="64" />
     </Item>
-    <Item Id="4" Name="cannon4" X="5504" Y="256" Width="64" Height="64">
+    <Item Id="4" Name="cannon4" X="5519" Y="243" Width="64" Height="64">
       <ActiveBound X="5504" Y="256" Width="64" Height="64" />
     </Item>
-    <Item Id="7" Name="wallTurret4" X="5952" Y="128" Width="64" Height="64">
+    <Item Id="7" Name="wallTurret4" X="5967" Y="113" Width="64" Height="64">
       <ActiveBound X="5952" Y="128" Width="64" Height="64" />
     </Item>
-    <Item Id="7" Name="wallTurret5" X="6208" Y="128" Width="64" Height="64">
+    <Item Id="7" Name="wallTurret5" X="6223" Y="113" Width="64" Height="64">
       <ActiveBound X="6208" Y="128" Width="64" Height="64" />
     </Item>
     <Item Id="3" Name="airCraft2" X="2176" Y="384" Width="64" Height="32">
@@ -740,8 +740,8 @@
         <Elem Key="type" Value="5" />
       </Params>
     </Item>
-    <Item Id="5" Name="rifleMan4" X="2496" Y="320" Width="32" Height="64">
-      <ActiveBound X="2496" Y="320" Width="32" Height="64" />
+    <Item Id="5" Name="rifleMan4" X="2496" Y="300" Width="32" Height="64">
+      <ActiveBound X="2496" Y="300" Width="32" Height="64" />
     </Item>
     <Item Id="3" Name="airCraft1" X="480" Y="384" Width="64" Height="32">
       <ActiveBound X="480" Y="384" Width="1200" Height="200" />
@@ -764,19 +764,19 @@
     <Item Id="435345" Name="bridge2" X="2112" Y="256" Width="256" Height="64">
       <ActiveBound X="2112" Y="256" Width="256" Height="64" />
     </Item>
-    <Item Id="6" Name="falcon1" X="640" Y="192" Width="64" Height="64">
+    <Item Id="6" Name="falcon1" X="655" Y="177" Width="64" Height="64">
       <ActiveBound X="640" Y="192" Width="64" Height="64" />
       <Params>
         <Elem Key="type" Value="3" />
       </Params>
     </Item>
-    <Item Id="6" Name="falcon2" X="3136" Y="192" Width="64" Height="64">
+    <Item Id="6" Name="falcon2" X="3151" Y="177" Width="64" Height="64">
       <ActiveBound X="3136" Y="192" Width="64" Height="64" />
       <Params>
         <Elem Key="type" Value="1" />
       </Params>
     </Item>
-    <Item Id="6" Name="falcon3" X="4544" Y="128" Width="64" Height="64">
+    <Item Id="6" Name="falcon3" X="4559" Y="113" Width="64" Height="64">
       <ActiveBound X="4544" Y="128" Width="64" Height="64" />
       <Params>
         <Elem Key="type" Value="5" />
@@ -794,14 +794,14 @@
         <Elem Key="type" Value="2" />
       </Params>
     </Item>
-    <Item Id="5" Name="rifleMan5" X="2688" Y="310" Width="32" Height="54">
-      <ActiveBound X="2688" Y="320" Width="32" Height="64" />
+    <Item Id="5" Name="rifleMan5" X="2688" Y="300" Width="32" Height="54">
+      <ActiveBound X="2688" Y="300" Width="32" Height="64" />
       <Params>
         <Elem Key="status" Value="1048576" />
       </Params>
     </Item>
-    <Item Id="5" Name="rifleMan6" X="3072" Y="374" Width="32" Height="54">
-      <ActiveBound X="3072" Y="384" Width="32" Height="64" />
+    <Item Id="5" Name="rifleMan6" X="3072" Y="363" Width="32" Height="54">
+      <ActiveBound X="3072" Y="354" Width="32" Height="64" />
       <Params>
         <Elem Key="status" Value="1048576" />
       </Params>
@@ -816,11 +816,11 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="2" Name="soldier2" X="640" Y="320" Width="64" Height="64">
-      <ActiveBound X="640" Y="320" Width="64" Height="64" />
+    <Item Id="2" Name="soldier2" X="640" Y="290" Width="64" Height="64">
+      <ActiveBound X="640" Y="290" Width="64" Height="64" />
     </Item>
-    <Item Id="2" Name="soldier3" X="768" Y="320" Width="64" Height="64">
-      <ActiveBound X="768" Y="320" Width="64" Height="64" />
+    <Item Id="2" Name="soldier3" X="768" Y="290" Width="64" Height="64">
+      <ActiveBound X="768" Y="290" Width="64" Height="64" />
     </Item>
     <Item Id="13" Name="soldierCreator2" X="1152" Y="320" Width="64" Height="64">
       <ActiveBound X="960" Y="320" Width="256" Height="64" />
