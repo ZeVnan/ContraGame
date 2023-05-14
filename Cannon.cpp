@@ -64,7 +64,6 @@ void CCannon::Render() {
 		break;
 	}
 	animations->Get(ani)->Render(x, y);
-	RenderBox();
 }
 void CCannon::SetState(int state) {
 	switch (state) {

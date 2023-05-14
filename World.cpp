@@ -164,6 +164,23 @@ LPGAMEOBJECT CWorld::spawnWater(xml_node node)
 
 	return water;
 }
+LPGAMEOBJECT CWorld::spawnBridge(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y, _width;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+	_width = stof(properties["Width"]);
+
+	auto bridge = new CBridge(x, y, _width);
+
+	return bridge;
+}
 LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 {
 	switch (id)
@@ -184,6 +201,8 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnLand(node);
 	case WATER:
 		return spawnWater(node);
+	case BRIDGE:
+		return spawnBridge(node);
 	default:
 		return nullptr;
 		break;
@@ -211,7 +230,6 @@ void CWorld::getObjectsListFromFile(const string path)
 	auto list = objects.children();
 
 	// Lấy id từ file xml. so sánh với eID, tuỳ theo eID nào mà gọi đến ĐÚNG HÀM LOAD cho riêng object đó.
-	// Chỗ này em ciêm copy code nên cũng ko rõ là có thực sự dùng HÀM LOAD gì hay ko nhưng mà nó có push_back để add nên giữ
 	for (auto item : list)
 	{
 		int id = item.attribute("Id").as_int();
@@ -229,6 +247,10 @@ void CWorld::getObjectsListFromFile(const string path)
 			}
 			else if (dynamic_cast<LPWATERS>(obj)) {
 				(LPWATERS(obj))->PushObjectToList(listobject);
+			}
+			else if (dynamic_cast<LPBRIDGE>(obj)) {
+				(LPBRIDGE(obj))->PushObjectToList(listobject);
+				listobject.push_back(obj);
 			}
 			else {
 				listobject.push_back(obj);
@@ -251,7 +273,7 @@ void CWorld::ClearDeletedObjects() {
 }
 void CWorld::Update(DWORD dt) {
 	UpdateObjectContainer();
-	
+
 	vector<LPGAMEOBJECT> tempObjectList;
 	for (int i = 0; i < WPList.size(); i++) {
 		if (CGame::GetInstance()->GetCamera()->CheckWorldPart(WPList[i])) {
@@ -291,8 +313,8 @@ void CWorld::UpdateObjectContainer() {
 }
 void CWorld::DrawTile() {
 	CSprites* sprites = CSprites::GetInstance();
-	for (int i = 0; i < tileList.size(); i++) {
-		sprites->Get(tileList[i]->getId())->DrawTile(tileList[i]->getY(), tileList[i]->getX());
+	for (int i = 0; i < WPList.size(); i++) {
+		WPList[i]->DrawTile();
 	}
 }
 CWorld::~CWorld() {

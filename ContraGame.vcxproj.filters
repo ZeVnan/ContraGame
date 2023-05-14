@@ -113,6 +113,12 @@
     <ClCompile Include="Waters.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
+    <ClCompile Include="BridgePart.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Bridge.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
@@ -235,6 +241,12 @@
       <Filter>Container\Header</Filter>
     </ClInclude>
     <ClInclude Include="Waters.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BridgePart.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Bridge.h">
       <Filter>Game Object\Header</Filter>
     </ClInclude>
   </ItemGroup>

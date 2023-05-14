@@ -2,6 +2,8 @@
 
 #include "Grass.h"
 #include "Water.h"
+#include "BridgePart.h"
+#include "Bridge.h"
 CBill::CBill(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
@@ -44,8 +46,7 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	isDropping = false;
-	DebugOutTitle(L"Laying:%d, OnPlatform:%d, Swimming:%d, diving:%d, jumping:%d, vy:%f",
-		isLaying, isOnPlatform, isSwimming, isDiving, isJumping, vy);
+	//DebugOutTitle(L"x = %f, y = %f", x, y);
 }
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
@@ -253,6 +254,8 @@ void CBill::SetState(int state) {
 		}
 		break;
 	case BILL_STATE_JUMP:
+		if (vy != 0)
+			break;
 		if (isSwimming == false) {
 			if (ny == -1) {
 				if (vx != 0)
@@ -452,6 +455,12 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPWATER>(e->dest_obj)) {
 		CollisionWithWater(e);
 	}
+	if (dynamic_cast<LPBRIDGEPART>(e->dest_obj)) {
+		CollisionWithGrass(e);	//similar to grass
+	}
+	if (dynamic_cast<LPBRIDGE>(e->dest_obj)) {
+		CollisionWithBridge(e);
+	}
 }
 void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
 	if (e->normal_x != 0) {
@@ -503,6 +512,39 @@ void CBill::CollisionWithWater(LPCOLLISIONEVENT e) {
 		else {
 			this->y += bbox.vpf_y;
 		}
+	}
+}
+void CBill::CollisionWithBridgePart(LPCOLLISIONEVENT e) {
+	if (e->normal_x != 0) {
+		this->x += bbox.vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		if (e->normal_y > 0) {
+			if (e->dest_obj->IsExploded() == true) {
+				this->y += bbox.vpf_y;
+				return;
+			}
+			if (isDropping == false) {
+				//support change bbox
+				if (isJumping == true) {
+					isJumping = false;
+					y += BILL_JUMP_NORMAL_POSITION_ADJUST;
+				}
+				this->y += e->time * bbox.vpf_y;
+				SetState(BILL_STATE_ON_LAND);
+			}
+			else {
+				this->y += bbox.vpf_y;
+			}
+		}
+		else {
+			this->y += bbox.vpf_y;
+		}
+	}
+}
+void CBill::CollisionWithBridge(LPCOLLISIONEVENT e) {
+	if (e->normal_y != 0) {
+		((LPBRIDGE)e->dest_obj)->Explode();
 	}
 }
 

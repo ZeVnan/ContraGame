@@ -1,5 +1,6 @@
 ﻿#include "WorldPart.h"
 
+
 CWorldPart::CWorldPart()
 {
 	width = 0;
@@ -17,6 +18,7 @@ CWorldPart::CWorldPart(LPWORLD world) {
 	x = 0;
 	y = 0;
 	this->objects = world->getObjectList();
+	this->tiles = world->getTileList();
 }
 
 CWorldPart::CWorldPart(float width, float height, float x, float y)
@@ -45,6 +47,19 @@ BOOL CWorldPart::checkObj(LPGAMEOBJECT Obj)
 	return true;
 }
 
+BOOL CWorldPart::checkTile(LPTILE tile) {
+	float x, y;
+	x = tile->getX();
+	y = tile->getY();
+	if (x < this->x || x > this->x + this->width) {
+		return false;
+	}
+	if (y < this->y || y > this->y + this->height) {
+		return false;
+	}
+	return true;
+}
+
 
 void CWorldPart::Split(LPWORLD world)
 {
@@ -55,6 +70,74 @@ void CWorldPart::Split(LPWORLD world)
 		this->secondPart = new CWorldPart(this->width / 2, this->height / 2, this->x, this->y + this->height / 2);
 		this->thirdPart = new CWorldPart(this->width / 2, this->height / 2, this->x + this->width / 2, this->y + this->height / 2);
 		this->fourthPart = new CWorldPart(this->width / 2, this->height / 2, this->x + this->width / 2, this->y);
+		//split tile
+		for (int i = 0; i < this->tiles.size(); i++)
+		{
+			float tileX, tileY;
+			tileX = tiles[i]->getX();
+			tileY = tiles[i]->getY();
+			bool isCenterTile = (this->x + this->width / 2 == tileX && this->y + this->height / 2 == tileY);
+
+			if (firstPart->checkTile(this->tiles[i]))
+			{
+				if (secondPart->checkTile(this->tiles[i]) && !isCenterTile)
+				{
+					// Object belongs to both firstPart and secondPart
+					firstPart->tiles.push_back(this->tiles[i]);
+				}
+				else if (fourthPart->checkTile(this->tiles[i]) && !isCenterTile)
+				{
+					// Object belongs to both firstPart and fourthPart
+					firstPart->tiles.push_back(this->tiles[i]);
+				}
+				else
+				{
+					// Object belongs only to firstPart
+					firstPart->tiles.push_back(this->tiles[i]);
+				}
+			}
+			else if (secondPart->checkTile(this->tiles[i]))
+			{
+				if (thirdPart->checkTile(this->tiles[i]) && !isCenterTile)
+				{
+					// Object belongs to both secondPart and thirdPart
+					secondPart->tiles.push_back(this->tiles[i]);
+				}
+				else
+				{
+					// Object belongs only to secondPart
+					secondPart->tiles.push_back(this->tiles[i]);
+				}
+			}
+			else if (thirdPart->checkTile(this->tiles[i]))
+			{
+				if (isCenterTile)
+				{
+					// Object belongs only to firstPart
+					firstPart->tiles.push_back(this->tiles[i]);
+				}
+				else
+				{
+					// Object belongs only to thirdPart
+					thirdPart->tiles.push_back(this->tiles[i]);
+				}
+			}
+			else if (fourthPart->checkTile(this->tiles[i]))
+			{
+				if (isCenterTile)
+				{
+					// Object belongs only to firstPart
+					firstPart->tiles.push_back(this->tiles[i]);
+				}
+				else
+				{
+					// Object belongs only to fourthPart
+					fourthPart->tiles.push_back(this->tiles[i]);
+				}
+			}
+		}
+		this->tiles.clear();
+		//split object
 		for (int i = 0; i < this->objects.size(); i++)
 		{
 			float objX, objY;
@@ -153,6 +236,12 @@ void CWorldPart::GetObjectToTempList(vector<LPGAMEOBJECT>& a) {
 void CWorldPart::Render() {
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
+	}
+}
+void CWorldPart::DrawTile() {
+	CSprites* sprites = CSprites::GetInstance();
+	for (int i = 0; i < tiles.size(); i++) {
+		sprites->Get(tiles[i]->getId())->DrawTile(tiles[i]->getY(), tiles[i]->getX());
 	}
 }
 void CWorldPart::GetOutOfPartObject(vector<LPGAMEOBJECT>& a) {

@@ -789,10 +789,12 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	textures->Add(ID_TEX_FIRE, TEXTURE_PATH_FIRE);
 	textures->Add(ID_TEX_BOX, TEXTURE_PATH_BOX);
 	textures->Add(ID_TEX_EXPLOSION, TEXTURE_PATH_EXPLOSION);
+	textures->Add(ID_TEX_BRIDGE, TEXTURE_PATH_BRIDGE);
 
 	LPTEXTURE texGrass = textures->Get(ID_TEX_GRASS);
 	LPTEXTURE texFire = textures->Get(ID_TEX_FIRE);
 	LPTEXTURE texExplosion = textures->Get(ID_TEX_EXPLOSION);
+	LPTEXTURE texBridge = textures->Get(ID_TEX_BRIDGE);
 	//grass
 	sprites->Add(20000, 0, 0, 32, 16, texGrass);
 	//fire
@@ -812,6 +814,12 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	sprites->Add(20023, 271, 0, 295, 32, texExplosion);
 	sprites->Add(20024, 132, 0, 163, 32, texExplosion);
 	sprites->Add(20025, 296, 0, 327, 32, texExplosion);
+	//bridge 
+	sprites->Add(20030, 0, 0, 16, 16, texBridge);	//upleft
+	sprites->Add(20031, 0, 16, 16, 32, texBridge);	//upright
+	sprites->Add(20032, 16, 0, 32, 16, texBridge);	//downbegin
+	sprites->Add(20033, 16, 16, 32, 32, texBridge); //down
+	sprites->Add(20034, 32, 16, 48, 32, texBridge);	//downend
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);
@@ -840,6 +848,26 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(20024);
 	ani->Add(20025);
 	animations->Add(EXPLOSION_2_ANI, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20030);
+	animations->Add(BRIDGEPART_ANI_UPLEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20031);
+	animations->Add(BRIDGEPART_ANI_UPRIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20032);
+	animations->Add(BRIDGEPART_ANI_DOWNBEGIN, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20033);
+	animations->Add(BRIDGEPART_ANI_DOWN, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20034);
+	animations->Add(BRIDGEPART_ANI_DOWNEND, ani);
 }
 
 void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a) {

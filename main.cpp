@@ -58,6 +58,12 @@ void LoadResources() {
 	world->setTileList(stage1_tiles);
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	world->getObjectList().push_back(bill);
+	/*for (int i = 0; i < 10; i++) {
+		CGrass* a = new CGrass(10 + i * 64, 300);
+		world->getObjectList().push_back(a);
+	}
+	CSoldier* a = new CSoldier(50, 350);
+	world->getObjectList().push_back(a);*/
 	
 	worldpart = new CWorldPart(world);
 	worldpart->Split(world);

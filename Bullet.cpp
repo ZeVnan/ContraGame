@@ -47,12 +47,15 @@ void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 	}
 	if (dynamic_cast<LPCANNON>(e->dest_obj)) {
 		CollisionWithCannon(e);
+		return;
 	}
 	if (dynamic_cast<LPAIRCRAFT>(e->dest_obj)) {
 		CollisionWithAircraft(e);
+		return;
 	}
 	if (dynamic_cast<LPFALCON>(e->dest_obj)) {
 		CollisionWithFalcon(e);
+		return;
 	}
 	if (dynamic_cast<LPRIFLEMAN>(e->dest_obj)) {
 		CollisionWithRifleman(e);
@@ -63,7 +66,7 @@ void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 		return;
 	}
 	if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
-		CollisionWithScubaSoldier(e);
+		CollisionWithSoldier(e);
 		return;
 	}
 	x += bbox.vpf_x;
