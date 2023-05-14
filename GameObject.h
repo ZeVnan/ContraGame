@@ -62,6 +62,9 @@ public:
 	bool IsDeleted() {
 		return isDeleted;
 	}
+	bool IsExploded() {
+		return isExploded;
+	}
 
 	virtual void CreateBox(DWORD dt) {};
 	box GetBox() { return this->bbox; }

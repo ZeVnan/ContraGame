@@ -35,6 +35,7 @@ enum eID
 	WATER = 11,
 	LAND = 12,			
 	CREATOR = 13,
+	BRIDGE = 14,
 };
 
 enum eLandType

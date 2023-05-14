@@ -13,7 +13,7 @@
 #include "BulletN.h"
 #include "BulletM.h"
 
-#define BILL_RUN_SPEED 0.2f
+#define BILL_RUN_SPEED 0.15f
 #define BILL_JUMP_SPEED_Y 0.4f
 
 #define BILL_GRAVITY -0.00075f
@@ -145,6 +145,8 @@ public:
 	void CollisionWith(LPCOLLISIONEVENT e);
 	void CollisionWithGrass(LPCOLLISIONEVENT e);
 	void CollisionWithWater(LPCOLLISIONEVENT e);
+	void CollisionWithBridgePart(LPCOLLISIONEVENT e);
+	void CollisionWithBridge(LPCOLLISIONEVENT e);
 
 	int CalculateAngle();
 	void AddBullet(BOOLEAN KeyState);

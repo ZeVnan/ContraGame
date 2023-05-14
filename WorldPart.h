@@ -4,6 +4,7 @@
 #include "World.h"
 #include "Camera.h"
 #include <vector>
+#include "Tile.h"
 
 
 class CWorldPart
@@ -18,6 +19,7 @@ private:
     CWorldPart* thirdPart;
     CWorldPart* fourthPart;
     vector<LPGAMEOBJECT> objects;
+    vector<LPTILE> tiles;
 public:
     CWorldPart();
     CWorldPart(LPWORLD world);
@@ -25,6 +27,7 @@ public:
 
     void Split(LPWORLD world);
     BOOL checkObj(LPGAMEOBJECT Obj);
+    BOOL checkTile(LPTILE Tile);
 
     float getWidth() { return this->width; }
     float getHeight() { return this->height; }
@@ -35,6 +38,7 @@ public:
     void ClearDeletedObjects();
     void GetObjectToTempList(vector<LPGAMEOBJECT>& a);
     void Render();
+    void DrawTile();
 
     void GetOutOfPartObject(vector<LPGAMEOBJECT>& a);
     void TakeNewObject(LPGAMEOBJECT obj);

@@ -7,6 +7,7 @@
 #include "Rifleman.h"
 #include "Land.h"
 #include "Waters.h"
+#include "Bridge.h"
 
 #include "define.h"
 #include "Tile.h"
@@ -28,6 +29,7 @@ private:
 	LPGAMEOBJECT spawnFalcon(xml_node node);
 	LPGAMEOBJECT spawnLand(xml_node node);
 	LPGAMEOBJECT spawnWater(xml_node node);
+	LPGAMEOBJECT spawnBridge(xml_node node);
 
 	map<string, string> getObjectProperties(xml_node node);
 	

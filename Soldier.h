@@ -65,7 +65,6 @@ private:
 	vector<LPBULLET> bullets;
 	int timeleft;
 public:
-	CSoldier();
 	CSoldier(float x, float y);
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

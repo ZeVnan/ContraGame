@@ -63,7 +63,7 @@ void CAircraft::Render() {
 	if (isExploded) {
 		ani = EXPLOSION_2_ANI;
 	}
-	RenderBox();
+
 	animations->Get(ani)->Render(x, y);
 }
 void CAircraft::SetState(int state) {
@@ -71,7 +71,6 @@ void CAircraft::SetState(int state) {
 	case AIRCRAFT_STATE_NORMAL:
 		isDead = false;
 		isExploded = false;
-		timeleft = TIME_EXPLODE;
 		break;
 	case AIRCRAFT_STATE_EXPLODE:
 		isDead = true;

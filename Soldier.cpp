@@ -1,9 +1,7 @@
 #include "Soldier.h"
 #include "Grass.h"
 
-CSoldier::CSoldier() :CGameObject() {
-	
-}
+
 CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
@@ -24,7 +22,7 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vy += SOLDIER_GRAVITY * dt;
 	isOnPlatform = false;
 	this->SetState(SOLDIER_STATE_JUMP);
-	//DebugOutTitle(L"timeleft = %f", this->timeleft);
+	DebugOutTitle(L"timeleft = %f", this->timeleft);
 }
 void CSoldier::Render() {
 	CAnimations* animations = CAnimations::GetInstance();

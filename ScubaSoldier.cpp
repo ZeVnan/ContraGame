@@ -3,6 +3,8 @@
 CScubaSoldier::CScubaSoldier(float x, float y) :CGameObject(x, y) {
 	this->state = SCUBA_STATE_HIDING;
 	timeleft = SCUBA_HIDING_TIME;
+	isHiding = true;
+	isShooting = false;
 }
 
 void CScubaSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

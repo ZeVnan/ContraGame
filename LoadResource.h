@@ -22,6 +22,7 @@
 #include "Rifleman.h"
 #include "Grass.h"
 #include "Fire.h"
+#include "BridgePart.h"
 
 #include "SampleKeyEventHandler.h"
 #include "Camera.h"
@@ -43,6 +44,7 @@
 #define ID_TEX_WTURRET 8
 #define ID_TEX_GRASS 20
 #define ID_TEX_FIRE 21
+#define ID_TEX_BRIDGE 22
 
 #define ID_TEX_STAGE1_TILE 100
 
@@ -61,6 +63,7 @@
 #define TEXTURE_PATH_RIFLEMAN L"Images\\rifleman.png"
 #define TEXTURE_PATH_GRASS L"Images\\grass.png"
 #define TEXTURE_PATH_FIRE L"Images\\fire.png"
+#define TEXTURE_PATH_BRIDGE L"Images\\bridge.png"
 
 #define STAGE1_PATH "Map\\stage1.xml"
 #define STAGE1_TILE L"Map\\stage1.png"
