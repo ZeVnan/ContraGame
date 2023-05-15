@@ -722,7 +722,7 @@
     <Item Id="4" Name="cannon2" X="4367" Y="369" Width="64" Height="64">
       <ActiveBound X="4352" Y="384" Width="64" Height="64" />
     </Item>
-    <Item Id="5" Name="rifleMan3" X="4751" Y="226" Width="32" Height="64">
+    <Item Id="5" Name="rifleMan3" X="4751" Y="235" Width="32" Height="64">
       <ActiveBound X="4736" Y="236" Width="32" Height="64" />
     </Item>
     <Item Id="4" Name="cannon4" X="5519" Y="243" Width="64" Height="64">
