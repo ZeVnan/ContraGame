@@ -1,5 +1,7 @@
 #pragma once
 #include "GameObject.h"
+#include "Bullet.h"
+#include "BulletN.h"
 
 #include "Animation.h"
 #include "Animations.h"
@@ -9,7 +11,8 @@
 #define CANNON_START_Y 150
 
 #define CANNON_APPEAR_TIME 600
-#define CANNON_SWITCH_TIME 600
+#define CANNON_SWITCH_TIME 2000
+#define CANNON_WAVE_BULLET 3
 
 #define CANNON_STATE_LEFT 10
 #define CANNON_STATE_LEFT_60 20
@@ -22,6 +25,10 @@
 #define CANNON_ANI_LEFT_60 14001
 #define CANNON_ANI_LEFT_30 14002
 #define CANNON_ANI_APPEAR 14003
+//#define CANNON_ANI_SHOOT_LEFT 14004
+//#define CANNON_ANI_SHOOT_LEFT_60 14005
+//#define CANNON_ANI_SHOOT_LEFT_30 14006
+
 
 #define CANNON_BOX_WIDTH 64
 #define CANNON_BOX_HEIGHT 64
@@ -32,6 +39,9 @@ private:
 	BOOLEAN isShooting;
 	BOOLEAN isAppear;
 	int HP;
+
+	vector< vector<LPBULLET>>waveContainer;
+	int waveLeft = CANNON_WAVE_BULLET;
 	int timeLeft;
 public:
 	CCannon();
@@ -52,5 +62,9 @@ public:
 	bool isCollidable() {
 		return !isExploded;
 	}
+
+	vector<LPBULLET> ShootNormalBullet(int angle);
+	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void RenderBullet();
 };
 typedef CCannon* LPCANNON;
