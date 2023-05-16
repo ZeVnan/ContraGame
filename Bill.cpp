@@ -555,6 +555,8 @@ void CBill::CollisionWithBridge(LPCOLLISIONEVENT e) {
 }
 //collision with enemy object
 void CBill::CollisionWithAircraft(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<LPAIRCRAFT>(e->dest_obj)->IsCollectible() == false)
+		return;
 	switch (dynamic_cast<LPAIRCRAFT>(e->dest_obj)->getAmmonType()) {
 	case AIRCRAFT_ANI_fAMMO:
 		this->SetBulletType(BULLET_ANI_FLAME);
