@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "GameObject.h"
-#include "Bullet.h"
+#include "BulletN.h"
 
 #define RIFLEMAN_START_X 180.0f
 #define RIFLEMAN_START_Y 10.0f
@@ -61,11 +61,12 @@ class Rifleman : public CGameObject
 private:
 	BOOLEAN isShooting;
 	BOOLEAN isHiding;
-	vector<LPBULLET> bullets;
+	vector<vector<LPBULLET>> waveContainer;
 	float gunx;
 	float guny;
 	int ny; // down - -1, normal - 0, up - 1
 	float timeleft;
+	int waveLeft;
 public:
 	Rifleman();
 	Rifleman(float x, float y);
@@ -79,5 +80,11 @@ public:
 	void CollisionWith(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
 	bool isCollidable() { return !isExploded; }
+
+	int CalculateAngle();
+	vector<LPBULLET> ShootNormalBullet(int angle);
+	void AddBullet();
+	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void RenderBullet();
 };
 typedef Rifleman* LPRIFLEMAN;

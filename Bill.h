@@ -123,7 +123,7 @@ class CBill :public CGameObject
 	float gunx;		
 	float guny;
 
-	vector< vector<LPBULLET>>waveContainer;		//support bullet control
+	vector<vector<LPBULLET>> waveContainer;		//support bullet control
 	int bulletType;
 	int waveLeft;		//support bullet control
 
