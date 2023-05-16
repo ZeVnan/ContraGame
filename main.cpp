@@ -11,7 +11,7 @@
 CBill* bill = NULL;
 CSampleKeyHandler* keyHandler;
 
-LPWORLD world = new CWorld(1000, 1000);
+LPWORLD world = new CWorld(1000, 1000, 0);
 LPWORLDPART worldpart = new CWorldPart();
 
 vector<LPTILE> stage1_tiles;
@@ -53,17 +53,11 @@ void LoadResources() {
 
 	CreateStageTile(textures, sprites, stage1_tiles);
 }void LoadStage1() {
-	world = new CWorld(7000, 7000);
+	world = new CWorld(7000, 7000, 1);
 	world->getObjectsListFromFile(STAGE1_PATH);
 	world->setTileList(stage1_tiles);
 	bill = new CBill(BILL_START_X, BILL_START_Y);
 	world->getObjectList().push_back(bill);
-	/*for (int i = 0; i < 10; i++) {
-		CGrass* a = new CGrass(10 + i * 64, 300);
-		world->getObjectList().push_back(a);
-	}
-	CSoldier* a = new CSoldier(50, 350);
-	world->getObjectList().push_back(a);*/
 	
 	worldpart = new CWorldPart(world);
 	worldpart->Split(world);

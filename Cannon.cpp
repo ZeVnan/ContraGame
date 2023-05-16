@@ -2,7 +2,7 @@
 
 CCannon::CCannon() {}
 CCannon::CCannon(float x, float y) : CGameObject(x, y) {
-	isShooting = true;
+	isShooting = false;
 	isAppear = true;
 	this->state = CANNON_STATE_APPEAR;
 	timeLeft = CANNON_APPEAR_TIME;
@@ -41,6 +41,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			break;
 		}
 	}
+	UpdateBullet(dt, coObjects);
 }
 void CCannon::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -64,18 +65,25 @@ void CCannon::Render() {
 		break;
 	}
 	animations->Get(ani)->Render(x, y);
+	RenderBullet();
 }
 void CCannon::SetState(int state) {
 	switch (state) {
 	case CANNON_STATE_LEFT:
+		isShooting = true;
+		waveContainer.push_back(ShootNormalBullet(180));
 		break;
 	case CANNON_STATE_LEFT_60:
+		isShooting = true;
+		waveContainer.push_back(ShootNormalBullet(150));
 		break;
 	case CANNON_STATE_LEFT_30:
+		isShooting = true;
+		waveContainer.push_back(ShootNormalBullet(120));
 		break;
 	case CANNON_STATE_APPEAR:
 		isAppear = true;
-		isShooting = true;
+		isShooting = false;
 		break;
 	case CANNON_STATE_EXPLODE:
 		this->isExploded = true;
@@ -102,4 +110,40 @@ void CCannon::CollisionWith(LPCOLLISIONEVENT e) {
 
 	//Cannon explodes by Bill's bullets
 
+}
+
+vector<LPBULLET> CCannon::ShootNormalBullet(int angle) {
+	LPBULLETN bulletN = new CBulletN(x, y, angle, false);
+	vector<LPBULLET> temp;
+	temp.push_back(bulletN);
+	return temp;
+}
+
+void CCannon::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	for (int i = 0; i < waveContainer.size(); i++) {
+		if (waveContainer[i].size() > 0) {
+			for (int j = 0; j < waveContainer[i].size(); j++) {
+				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
+					delete waveContainer[i][j];
+					waveContainer[i].erase(waveContainer[i].begin() + j);
+				}
+				else
+					waveContainer[i][j]->Update(dt, coObjects);
+			}
+		}
+		if (waveContainer[i].size() == 0) {
+			waveContainer.erase(waveContainer.begin() + i);
+			waveLeft++;
+		}
+	}
+}
+
+void CCannon::RenderBullet()
+{
+	for (int i = 0; i < waveContainer.size(); i++) {
+		for (int j = 0; j < waveContainer[i].size(); j++) {
+			waveContainer[i][j]->Render();
+		}
+	}
 }

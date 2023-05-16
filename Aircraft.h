@@ -4,13 +4,14 @@
 #include "Animations.h"
 #include "debug.h"
 
-#define AIRCRAFT_SPEED_X 0.15f
-#define AIRCRAFT_SPEED_Y 0.15f
-
-#define AIRCRAFT_ACCEL_Y 0.008f
+#define AIRCRAFT_SPEED_X 0.3f
+#define AIRCRAFT_SPEED_Y 0.2f
+#define AIRCRAFT_GRAVITY -0.00075f
+#define AIRCRAFT_ACTIVE_RADIUS 300
 
 #define AIRCRAFT_STATE_NORMAL 0
 #define AIRCRAFT_STATE_EXPLODE 1
+#define AIRCRAFT_STATE_DROPITEM 2
 
 #define AIRCRAFT_ANI_NORMAL 13000
 #define AIRCRAFT_ANI_bAMMO 13001
@@ -25,17 +26,18 @@
 #define AIRCRAFT_BOX_WIDTH 50
 #define AIRCRAFT_BOX_HEIGHT 30
 
-#define AIRCRAFT_TIME 600
-
 class CAircraft : public CGameObject
 {
 private:
-	BOOLEAN isDead;
+	BOOLEAN isCollectible;
+	BOOLEAN isActivated;
 	float ay;
 	int ammo;
 	int timeleft;
+	int stage;
 public:
-	CAircraft(float x, float y, int ammo);
+	CAircraft(float x, float y, int ammo, int stage);
+	void watchBill();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
@@ -44,9 +46,17 @@ public:
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	void CollisionWithGrass(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
 	bool isCollidable() {
-		return !isExploded;
+		return isActivated;
+	}
+
+	bool IsCollectible() {
+		return isCollectible;
+	}
+	int getAmmonType() {
+		return ammo;
 	}
 };
 typedef CAircraft* LPAIRCRAFT;

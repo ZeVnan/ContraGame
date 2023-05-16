@@ -126,6 +126,7 @@ class CBill :public CGameObject
 	vector<vector<LPBULLET>> waveContainer;		//support bullet control
 	int bulletType;
 	int waveLeft;		//support bullet control
+	int bonusWave;		//support bullet control
 
 	int bulletMtime;	//support bullet type M control
 	float timeLeft;		//support swim begin
@@ -143,10 +144,13 @@ public:
 	bool isBlocking() { return false; }
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	//collision with terrain object
 	void CollisionWithGrass(LPCOLLISIONEVENT e);
 	void CollisionWithWater(LPCOLLISIONEVENT e);
 	void CollisionWithBridgePart(LPCOLLISIONEVENT e);
 	void CollisionWithBridge(LPCOLLISIONEVENT e);
+	//collision with enemy object
+	void CollisionWithAircraft(LPCOLLISIONEVENT e);
 
 	int CalculateAngle();
 	void AddBullet(BOOLEAN KeyState);

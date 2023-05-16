@@ -88,7 +88,9 @@ void CBullet::CollisionWithCannon(LPCOLLISIONEVENT e) {
 }
 
 void CBullet::CollisionWithAircraft(LPCOLLISIONEVENT e) {
-	if (friendly == false || (LPAIRCRAFT(e->dest_obj))->isCollidable() == false)
+	if (friendly == false || 
+		(LPAIRCRAFT(e->dest_obj))->IsCollectible() == true ||
+		(LPAIRCRAFT(e->dest_obj))->isCollidable() == false)
 		return;
 	(LPAIRCRAFT(e->dest_obj))->SetState(AIRCRAFT_STATE_EXPLODE);
 	e->src_obj->Delete();
