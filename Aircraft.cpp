@@ -22,12 +22,18 @@ CAircraft::CAircraft(float x, float y, int ammo, int stage) :CGameObject(x, y) {
 void CAircraft::watchBill() {
 	float x, y;
 	bill->GetPosition(x, y);
-	DebugOutTitle(L"billx = %f, x = %f", x, this->x);
-	if (x - this->x < AIRCRAFT_ACTIVE_RADIUS && stage == 1)
-		return;
-	if (y - this->y < AIRCRAFT_ACTIVE_RADIUS && stage == 3)
-		return;
-	isActivated = true;
+	if (isActivated == true) {
+		if (this->x - x >= AIRCRAFT_ACTIVE_RADIUS && stage == 1)
+			isDeleted = true;
+		if (this->y - y >= AIRCRAFT_ACTIVE_RADIUS && stage == 3)
+			isDeleted = true;
+	}
+	else {
+		if (x - this->x >= AIRCRAFT_ACTIVE_RADIUS && stage == 1)
+			isActivated = true;
+		if (y - this->y >= AIRCRAFT_ACTIVE_RADIUS && stage == 3)
+			isActivated = true;
+	}
 }
 void CAircraft::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	watchBill();
