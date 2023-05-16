@@ -4,6 +4,7 @@
 #include "Water.h"
 #include "BridgePart.h"
 #include "Bridge.h"
+#include "Aircraft.h"
 CBill::CBill(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
@@ -19,6 +20,7 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 	guny = y;
 	bulletType = BULLET_ANI_NORMAL;
 	waveLeft = BILL_WAVE_BULLET_NORMAL;
+	bonusWave = 0;
 
 	bulletMtime = 0;
 	timeLeft = 0;
@@ -456,12 +458,16 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 		CollisionWithWater(e);
 	}
 	if (dynamic_cast<LPBRIDGEPART>(e->dest_obj)) {
-		CollisionWithGrass(e);	//similar to grass
+		CollisionWithBridgePart(e);
 	}
 	if (dynamic_cast<LPBRIDGE>(e->dest_obj)) {
 		CollisionWithBridge(e);
 	}
+	if (dynamic_cast<LPAIRCRAFT>(e->dest_obj)) {
+		CollisionWithAircraft(e);
+	}
 }
+//collision with terrain object
 void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
 	if (e->normal_x != 0) {
 		if (isSwimming == true) {
@@ -546,6 +552,28 @@ void CBill::CollisionWithBridge(LPCOLLISIONEVENT e) {
 	if (e->normal_y != 0) {
 		((LPBRIDGE)e->dest_obj)->Explode();
 	}
+}
+//collision with enemy object
+void CBill::CollisionWithAircraft(LPCOLLISIONEVENT e) {
+	switch (dynamic_cast<LPAIRCRAFT>(e->dest_obj)->getAmmonType()) {
+	case AIRCRAFT_ANI_fAMMO:
+		this->SetBulletType(BULLET_ANI_FLAME);
+		break;
+	case AIRCRAFT_ANI_lAMMO:
+		this->SetBulletType(BULLET_ANI_LASER);
+		break;
+	case AIRCRAFT_ANI_mAMMO:
+		this->SetBulletType(BULLET_ANI_MACHINE);
+		break;
+	case AIRCRAFT_ANI_sAMMO:
+		this->SetBulletType(BULLET_ANI_SPREAD);
+		break;
+	case AIRCRAFT_ANI_rAMMO:
+		bonusWave++;
+		waveLeft++;
+		break;
+	}
+	e->dest_obj->Delete();
 }
 
 int CBill::CalculateAngle() {
@@ -702,6 +730,7 @@ void CBill::SetBulletType(int type) {
 		waveLeft = BILL_WAVE_BULLET_MACHINE;
 		break;
 	}
+	waveLeft += bonusWave;
 	waveLeft -= waveContainer.size();
 	this->bulletType = type;
 }

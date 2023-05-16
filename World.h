@@ -18,6 +18,7 @@ class CWorld
 private:
 	float width;
 	float height;
+	int stage;
 	vector<LPGAMEOBJECT> objectList;
 	vector<LPTILE> tileList;
 	vector<CWorldPart*> WPList;
@@ -35,7 +36,7 @@ private:
 	
 public:
 	CWorld();
-	CWorld(float width, float height);
+	CWorld(float width, float height, int stage);
 
 	float getWidth();
 	float getHeight();
