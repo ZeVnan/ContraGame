@@ -88,7 +88,7 @@
 #define BILL_NORMAL_SWIM_POSITION_ADJUST 17.0f
 #define BILL_WATER_TO_LAND_POSITION_ADJUST 7.0f;
 
-#define BILL_START_X 4000.0f
+#define BILL_START_X 100.0f
 #define BILL_START_Y 400.0f
 
 #define BILL_WAVE_BULLET_NORMAL 4
@@ -126,6 +126,7 @@ class CBill :public CGameObject
 	vector< vector<LPBULLET>>waveContainer;		//support bullet control
 	int bulletType;
 	int waveLeft;		//support bullet control
+	int bonusWave;		//support bullet control
 
 	int bulletMtime;	//support bullet type M control
 	float timeLeft;		//support swim begin
@@ -143,10 +144,13 @@ public:
 	bool isBlocking() { return false; }
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
+	//collision with terrain object
 	void CollisionWithGrass(LPCOLLISIONEVENT e);
 	void CollisionWithWater(LPCOLLISIONEVENT e);
 	void CollisionWithBridgePart(LPCOLLISIONEVENT e);
 	void CollisionWithBridge(LPCOLLISIONEVENT e);
+	//collision with enemy object
+	void CollisionWithAircraft(LPCOLLISIONEVENT e);
 
 	int CalculateAngle();
 	void AddBullet(BOOLEAN KeyState);

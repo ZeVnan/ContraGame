@@ -7,9 +7,10 @@ CWorld::CWorld() {}
 float CWorld::getHeight() { return this->height; }
 float CWorld::getWidth() { return this->width; }
 
-CWorld::CWorld(float width, float height) {
+CWorld::CWorld(float width, float height, int stage) {
 	this->width = width;
 	this->height = height;
+	this->stage = stage;
 }
 
 map<string, string> CWorld::getObjectProperties(xml_node node)
@@ -93,8 +94,8 @@ LPGAMEOBJECT CWorld::spawnAircraft(xml_node node)
 	//stof: String TO Float
 	x = stof(properties["X"]);
 	y = stof(properties["Y"]);
-
-	auto aircraft = new CAircraft(x, y, AIRCRAFT_ANI_sAMMO);
+	int bullet = rand() % 5 + 13002;	//random bullet type
+	auto aircraft = new CAircraft(x, y, bullet, this->stage);
 
 	return aircraft;
 }

@@ -2,7 +2,7 @@
 #include "Bullet.h"
 
 #define BULLET_F_RADIUS 15.0f
-#define BULLET_F_SPEED_R 0.4f
+#define BULLET_F_SPEED_R 0.8f
 
 #define BULLET_F_BOX_WIDTH 7
 #define BULLET_F_BOX_HEIGHT 7

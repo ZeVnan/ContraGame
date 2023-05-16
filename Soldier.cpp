@@ -22,7 +22,7 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vy += SOLDIER_GRAVITY * dt;
 	isOnPlatform = false;
 	this->SetState(SOLDIER_STATE_JUMP);
-	DebugOutTitle(L"timeleft = %f", this->timeleft);
+	//DebugOutTitle(L"timeleft = %f", this->timeleft);
 }
 void CSoldier::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
