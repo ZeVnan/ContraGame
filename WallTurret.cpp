@@ -5,6 +5,9 @@ CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 	this->state = WTURRET_STATE_APPEAR;
 	timeleft = WTURRET_TIME_APPEAR;
 	HP = 100;
+	gunx = x;
+	guny = y;
+	timeLeft = 0;
 }
 
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -19,6 +22,7 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (this->timeleft < 0)
 	{
+		AddBullet();
 		switch (this->state)
 		{
 		case WTURRET_STATE_APPEAR:
@@ -62,6 +66,7 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			break;
 		}
 	}
+	UpdateBullet(dt, coObjects);
 	//DebugOutTitle(L"state = %d, timeleft = %d, isDeleted = %d", this->state, this->timeleft, this->isDeleted);
 }
 void CWallTurret::Render()
@@ -114,6 +119,7 @@ void CWallTurret::Render()
 		break;
 	}
 	animations->Get(ani)->Render(x, y);
+	RenderBullet();
 }
 void CWallTurret::SetState(int state)
 {
@@ -166,6 +172,56 @@ void CWallTurret::SetState(int state)
 	CGameObject::SetState(state);
 }
 
+int CWallTurret::CalculateAngle() {
+	if (this->state == WTURRET_STATE_APPEAR) return 180;
+	if (this->state == WTURRET_STATE_LEFT30) return 120;
+	if (this->state == WTURRET_STATE_LEFT60) return 150;
+	if (this->state == WTURRET_STATE_LEFT90) return 180;
+	if (this->state == WTURRET_STATE_LEFT120) return 210;
+	if (this->state == WTURRET_STATE_LEFT150) return 240;
+	if (this->state == WTURRET_STATE_DOWN) return 270;
+	if (this->state == WTURRET_STATE_RIGHT150) return 300;
+	if (this->state == WTURRET_STATE_RIGHT120) return 330;
+	if (this->state == WTURRET_STATE_RIGHT90) return 0;
+	if (this->state == WTURRET_STATE_RIGHT60) return 30;
+	if (this->state == WTURRET_STATE_RIGHT30) return 60;
+	if (this->state == WTURRET_STATE_UP) return 90;
+}
+vector<LPBULLET> CWallTurret::ShootNormalBullet(int angle) {
+	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, false);
+	vector<LPBULLET> temp;
+	temp.push_back(bulletN);
+	return temp;
+}
+void CWallTurret::AddBullet() {
+	waveContainer.push_back(ShootNormalBullet(CalculateAngle()));
+}
+void CWallTurret::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	for (int i = 0; i < waveContainer.size(); i++) {
+		if (waveContainer[i].size() > 0) {
+			for (int j = 0; j < waveContainer[i].size(); j++) {
+				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
+					delete waveContainer[i][j];
+					waveContainer[i].erase(waveContainer[i].begin() + j);
+				}
+				else
+					waveContainer[i][j]->Update(dt, coObjects);
+			}
+		}
+		if (waveContainer[i].size() == 0) {
+			waveContainer.erase(waveContainer.begin() + i);
+			waveLeft++;
+		}
+	}
+}
+void CWallTurret::RenderBullet() {
+	for (int i = 0; i < waveContainer.size(); i++) {
+		for (int j = 0; j < waveContainer[i].size(); j++) {
+			waveContainer[i][j]->Render();
+		}
+	}
+}
+
 void CWallTurret::CreateBox(DWORD dt) {
 	bbox.left = (x - WTURRET_BOX_WIDTH / 2);
 	bbox.top = (y - WTURRET_BOX_HEIGHT / 2);
@@ -174,7 +230,6 @@ void CWallTurret::CreateBox(DWORD dt) {
 	x += 0;
 	y += 0;
 }
-
 void CWallTurret::NoCollision(DWORD dt) {
 	x += 0;
 	y += 0;

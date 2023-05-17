@@ -4,6 +4,8 @@
 #include "Animation.h"
 #include "Animations.h"
 
+#include "BulletN.h"
+
 #include "debug.h"
 
 //define state
@@ -52,6 +54,12 @@ class CWallTurret : public CGameObject
 private:
 	int timeleft;
 	int HP;
+	vector<vector<LPBULLET>> waveContainer;
+	float gunx;
+	float guny;	
+	int waveLeft;
+	int timeLeft;
+
 public:
 	CWallTurret(float x, float y);
 	void TakeDamage(int damage) {
@@ -67,7 +75,13 @@ public:
 	void CollisionWith(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
 	bool isCollidable() {
-		return !isExploded;
+		return !isExploded; 
 	}
+
+	int CalculateAngle();
+	vector<LPBULLET> ShootNormalBullet(int angle);
+	void AddBullet();
+	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void RenderBullet();
 };
 typedef CWallTurret* LPWALLTURRET;

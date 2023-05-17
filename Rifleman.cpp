@@ -24,6 +24,7 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		case RIFLEMAN_STATE_NORMAL:
 			this->SetState(RIFLEMAN_STATE_UP);
 			timeleft = RIFLEMAN_SWITCH_TIME;
+			AddBullet();
 			break;
 		case RIFLEMAN_STATE_UP:
 			this->SetState(RIFLEMAN_STATE_DOWN);
@@ -35,14 +36,12 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			break;
 		}
 	}
+	UpdateBullet(dt, coObjects);
 	//DebugOutTitle(L"timeleft = %f", this->timeleft);
 }
-
 void Rifleman::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
-	
-
 	if (isHiding) {
 		if (nx > 0) {
 			ani = RIFLEMAN_ANI_HIDE_RIGHT;
@@ -71,6 +70,8 @@ void Rifleman::Render() {
 			if (isShooting) {
 				if (ny == 1) {
 					ani = RIFLEMAN_ANI_AIM_UP_LEFT;
+					gunx += 10.0f;
+					guny += 15.0f;
 				}
 				if (ny == -1) {
 					ani = RIFLEMAN_ANI_AIM_DOWN_LEFT;
@@ -87,8 +88,8 @@ void Rifleman::Render() {
 		ani = EXPLOSION_1_ANI;
 	}
 	animations->Get(ani)->Render(x, y);
+	RenderBullet();
 }
-
 void Rifleman::SetState(int state) {
 	switch (state) {
 	case RIFLEMAN_STATE_NORMAL:
@@ -129,6 +130,44 @@ void Rifleman::SetState(int state) {
 	CGameObject::SetState(state);
 }
 
+int Rifleman::CalculateAngle() {
+	return 0;
+}
+vector<LPBULLET> Rifleman::ShootNormalBullet(int angle) {
+	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, false);
+	vector<LPBULLET> temp;
+	temp.push_back(bulletN);
+	return temp;
+}
+void Rifleman::AddBullet() {
+	waveContainer.push_back(ShootNormalBullet(CalculateAngle()));
+}
+void Rifleman::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	for (int i = 0; i < waveContainer.size(); i++) {
+		if (waveContainer[i].size() > 0) {
+			for (int j = 0; j < waveContainer[i].size(); j++) {
+				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
+					delete waveContainer[i][j];
+					waveContainer[i].erase(waveContainer[i].begin() + j);
+				}
+				else
+					waveContainer[i][j]->Update(dt, coObjects);
+			}
+		}
+		if (waveContainer[i].size() == 0) {
+			waveContainer.erase(waveContainer.begin() + i);
+			waveLeft++;
+		}
+	}
+}
+void Rifleman::RenderBullet() {
+	for (int i = 0; i < waveContainer.size(); i++) {
+		for (int j = 0; j < waveContainer[i].size(); j++) {
+			waveContainer[i][j]->Render();
+		}
+	}
+}
+
 void Rifleman::CreateBox(DWORD dt)
 {
 	if (isHiding)
@@ -150,13 +189,11 @@ void Rifleman::CreateBox(DWORD dt)
 		bbox.vpf_y = vy * dt;
 	}
 }
-
 void Rifleman::NoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
 }
-
 void Rifleman::CollisionWith(LPCOLLISIONEVENT e)
 {
 }
