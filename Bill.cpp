@@ -5,7 +5,10 @@
 #include "BridgePart.h"
 #include "Bridge.h"
 #include "Aircraft.h"
-CBill::CBill(float x, float y) :CGameObject(x, y) {
+
+#include "SampleKeyEventHandler.h"
+extern gameScreen gameControl;
+CBill::CBill(float x, float y, float maxx, float maxy, int stage) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
 	isSwimming = false;
@@ -16,14 +19,38 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 	ny = 0;
 	maxVx = 0.0f;
 	maxVy = 0.0f;
+	this->maxx = maxx;
+	this->maxy = maxy;
 	gunx = x;
 	guny = y;
+	this->stage = stage;
 	bulletType = BULLET_ANI_NORMAL;
 	waveLeft = BILL_WAVE_BULLET_NORMAL;
 	bonusWave = 0;
 
 	bulletMtime = 0;
 	timeLeft = 0;
+}
+void CBill::worldControl() {
+	switch (stage) {
+	case 1:
+		if (vx < 0 && x < 10)
+			x = 10;
+		if (vy < 10 && y < 50)
+			y = BILL_START_Y;
+		if (vx > 0 && x > maxx) {
+			gameControl = waiting3;
+		}
+		if (vy > 0 && y > maxy)
+			y = maxy;
+		if (x > 6496 && x < 6528) {
+			this->SetState(BILL_STATE_JUMP);
+		}
+		break;
+	case 3:
+
+		break;
+	}
 }
 void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	//don't change the order of this function
@@ -32,14 +59,7 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	vx = maxVx;
 	if (isOnPlatform == false && isSwimming == false)
 		vy += BILL_GRAVITY * dt;
-	if (vx < 0 && x < 10) 
-		x = 10;
-	if (vx > 0 && x > 6990) 
-		x = 6990;
-	if (vy > 0 && y > 470)
-		y = 470;
-	if (vy < 10 && y < 50)
-		y = BILL_START_Y;
+	worldControl();
 	if (bulletMtime > 0)
 		bulletMtime -= dt;
 	else

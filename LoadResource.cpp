@@ -783,7 +783,6 @@ void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(10803);
 	animations->Add(SCUBA_ANI_SHOOT_LEFT, ani);
 }
-
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_GRASS, TEXTURE_PATH_GRASS);
 	textures->Add(ID_TEX_FIRE, TEXTURE_PATH_FIRE);
@@ -875,4 +874,16 @@ void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a
 
 	LPTEXTURE tex_stage1 = textures->Get(ID_TEX_STAGE1_TILE);
 	a = Map::LoadFromFile(STAGE1_PATH, tex_stage1, sprites)->tileList;
+}
+
+void LoadScreenResources(CTextures*& textures, CSprites*& sprites) {
+	//3xxxx
+	textures->Add(ID_TEX_SCREEN_INTRO, SCREEN_INTRO_PATH);
+	textures->Add(ID_TEX_SCREEN_WAITING, SCREEN_WAITING_PATH);
+
+	LPTEXTURE texIntro = textures->Get(ID_TEX_SCREEN_INTRO);
+	LPTEXTURE texWaiting = textures->Get(ID_TEX_SCREEN_WAITING);
+
+	sprites->Add(30000, 0, 0, 256, 224, texIntro);
+	sprites->Add(30001, 0, 0, 256, 224, texWaiting);
 }

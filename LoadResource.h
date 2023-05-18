@@ -48,6 +48,9 @@
 
 #define ID_TEX_STAGE1_TILE 100
 
+#define ID_TEX_SCREEN_INTRO 200
+#define ID_TEX_SCREEN_WAITING 201
+
 #define TEXTURE_PATH_EXPLOSION L"Images\\Explosion.png"
 #define TEXTURE_PATH_BOX L"Images\\bbox.png"
 #define TEXTURE_PATH_BILL L"Images\\bill_animation.png"
@@ -68,6 +71,9 @@
 #define STAGE1_PATH "Map\\stage1.xml"
 #define STAGE1_TILE L"Map\\stage1.png"
 
+#define SCREEN_INTRO_PATH L"Images\\intro.png"
+#define SCREEN_WAITING_PATH L"Images\\BeginState.png"
+
 void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateFalconAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
@@ -78,4 +84,7 @@ void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
+
 void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a);
+
+void LoadScreenResources(CTextures*& textures, CSprites*& sprites);

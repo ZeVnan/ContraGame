@@ -88,7 +88,7 @@
 #define BILL_NORMAL_SWIM_POSITION_ADJUST 17.0f
 #define BILL_WATER_TO_LAND_POSITION_ADJUST 7.0f;
 
-#define BILL_START_X 100.0f
+#define BILL_START_X 6000.0f
 #define BILL_START_Y 400.0f
 
 #define BILL_WAVE_BULLET_NORMAL 4
@@ -120,8 +120,11 @@ class CBill :public CGameObject
 	int ny;					//normal:0, up:1, down:-1
 	float maxVx;
 	float maxVy;
+	float maxx;
+	float maxy;
 	float gunx;		
 	float guny;
+	int stage;
 
 	vector<vector<LPBULLET>> waveContainer;		//support bullet control
 	int bulletType;
@@ -130,8 +133,10 @@ class CBill :public CGameObject
 
 	int bulletMtime;	//support bullet type M control
 	float timeLeft;		//support swim begin
+
+	void worldControl();
 public:
-	CBill(float x, float y);
+	CBill(float x, float y, float maxx, float maxy, int stage);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
