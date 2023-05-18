@@ -20,6 +20,7 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		return;
 	}
 	if (timeleft < 0) {
+		AddBullet();
 		switch (this->state) {
 		case RIFLEMAN_STATE_NORMAL:
 			this->SetState(RIFLEMAN_STATE_UP);
@@ -88,28 +89,21 @@ void Rifleman::Render() {
 	RenderBullet();
 }
 void Rifleman::SetState(int state) {
-
-	AddBullet();
 	switch (state) {
 	case RIFLEMAN_STATE_NORMAL:
 		ny = 0;
-		isShooting = true;
 		break;
 	case RIFLEMAN_STATE_LEFT:
 		nx = -1;
-		isShooting = true;
 		break;
 	case RIFLEMAN_STATE_RIGHT:
 		nx = 1;
-		isShooting = true;
 		break;
 	case RIFLEMAN_STATE_UP:
 		ny = 1;
-		isShooting = true;
 		break;
 	case RIFLEMAN_STATE_DOWN:
 		ny = -1;
-		isShooting = true;
 		break;
 	case RIFLEMAN_STATE_HIDING:
 		isShooting = false;
