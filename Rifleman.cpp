@@ -20,11 +20,11 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		return;
 	}
 	if (timeleft < 0) {
+		AddBullet();
 		switch (this->state) {
 		case RIFLEMAN_STATE_NORMAL:
 			this->SetState(RIFLEMAN_STATE_UP);
 			timeleft = RIFLEMAN_SWITCH_TIME;
-			AddBullet();
 			break;
 		case RIFLEMAN_STATE_UP:
 			this->SetState(RIFLEMAN_STATE_DOWN);
@@ -114,7 +114,7 @@ void Rifleman::SetState(int state) {
 		isShooting = true;
 		break;
 	case RIFLEMAN_STATE_SHOOT_RELEASE:
-		isShooting = false;
+		isShooting = true;
 		break;
 	case RIFLEMAN_STATE_EXPOSE:
 		isHiding = false;
@@ -130,7 +130,22 @@ void Rifleman::SetState(int state) {
 }
 
 int Rifleman::CalculateAngle() {
-	return 0;
+	if (nx == 1) {
+		if (ny == 1)
+			return 45;
+		if (ny == -1)
+			return 315;
+		if (ny == 0)
+			return 0;
+	}
+	else {
+		if (ny == 1)
+			return 135;
+		if (ny == -1)
+			return 225;
+		if (ny == 0)
+			return 180;
+	}
 }
 vector<LPBULLET> Rifleman::ShootNormalBullet(int angle) {
 	LPBULLETN bulletN = new CBulletN(x, y, angle, false);
