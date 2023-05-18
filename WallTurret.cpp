@@ -7,7 +7,6 @@ CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 	HP = 100;
 	gunx = x;
 	guny = y;
-	timeLeft = 0;
 }
 
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -22,7 +21,6 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (this->timeleft < 0)
 	{
-		AddBullet();
 		switch (this->state)
 		{
 		case WTURRET_STATE_APPEAR:
@@ -188,7 +186,7 @@ int CWallTurret::CalculateAngle() {
 	if (this->state == WTURRET_STATE_UP) return 90;
 }
 vector<LPBULLET> CWallTurret::ShootNormalBullet(int angle) {
-	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, false);
+	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, false);  
 	vector<LPBULLET> temp;
 	temp.push_back(bulletN);
 	return temp;
