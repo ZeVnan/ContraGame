@@ -6,6 +6,7 @@
 #include "Soldier.h"
 #include "Aircraft.h"
 #include "Falcon.h"
+#include "Bill.h"
 
 CBullet::CBullet() {
 	this->type = -1;
@@ -69,6 +70,10 @@ void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 		CollisionWithSoldier(e);
 		return;
 	}
+	if (dynamic_cast<LPBILL>(e->dest_obj)) {
+		CollisionWithBill(e);
+		return;
+	}
 	x += bbox.vpf_x;
 	y += bbox.vpf_y;
 }
@@ -124,4 +129,20 @@ void CBullet::CollisionWithSoldier(LPCOLLISIONEVENT e) {
 		return;
 	(LPSOLDIER(e->dest_obj))->SetState(SOLDIER_STATE_EXPLODE);
 	e->src_obj->Delete();
+}
+void CBullet::CollisionWithBill(LPCOLLISIONEVENT e) {
+	if (friendly == true || (LPBILL(e->dest_obj))->IsDiving() == true)
+		return;
+	e->src_obj->Delete();
+	if (e->normal_x != 0) {
+		if (e->normal_x > 0) {
+			(LPBILL(e->dest_obj))->SetState(BILL_STATE_DYING_RIGHT);
+		}
+		else {
+			(LPBILL(e->dest_obj))->SetState(BILL_STATE_DYING_LEFT);
+		}
+	}
+	else if (e->normal_y != 0) {
+		(LPBILL(e->dest_obj))->SetState(BILL_STATE_DYING_RIGHT);
+	}
 }

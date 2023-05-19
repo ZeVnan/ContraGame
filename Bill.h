@@ -20,6 +20,8 @@
 
 #define BILL_TIME_SWIM_BEGIN 200
 
+#define BILL_TIME_DYING 800
+
 #define BILL_STATE_NORMAL 0
 
 #define BILL_STATE_RUN_RIGHT 10
@@ -41,8 +43,8 @@
 #define BILL_STATE_ON_LAND 62
 #define BILL_STATE_OFF_LAND 63
 
-#define BILL_STATE_DEAD 70
-
+#define BILL_STATE_DYING_RIGHT 70
+#define BILL_STATE_DYING_LEFT 71
 
 
 #pragma region
@@ -79,6 +81,9 @@
 #define BILL_ANI_SWIMMING_SHOOT_UPRIGHT 10064
 #define BILL_ANI_SWIMMING_SHOOT_UPLEFT 10065
 
+#define BILL_ANI_DYING_RIGHT 10070
+#define BILL_ANI_DYING_LEFT 10071
+
 #define BILL_LAY_HEIGHT_ADJUST -18.0f
 #define BILL_UP_HEIGHT_ADJUST 12.0f
 #define BILL_DIVE_HEIGHT_ADJUST -7.0f
@@ -108,6 +113,9 @@
 
 #define BILL_BOX_SWIM_WIDTH 36
 #define BILL_BOX_SWIM_HEIGHT 36
+
+#define BILL_BOX_DIE_WIDTH 66
+#define BILL_BOX_DIE_HEIGHT 22
 class CBill :public CGameObject
 {
 	BOOLEAN isLaying;
@@ -117,11 +125,15 @@ class CBill :public CGameObject
 	BOOLEAN isOnPlatform;	//support collision
 	BOOLEAN isDropping;		//support collision
 	BOOLEAN isJumping;		//support change bbox
+	BOOLEAN isDying;
 	int ny;					//normal:0, up:1, down:-1
 	float maxVx;
 	float maxVy;
+	float maxx;
+	float maxy;
 	float gunx;		
 	float guny;
+	int stage;
 
 	vector<vector<LPBULLET>> waveContainer;		//support bullet control
 	int bulletType;
@@ -130,8 +142,10 @@ class CBill :public CGameObject
 
 	int bulletMtime;	//support bullet type M control
 	float timeLeft;		//support swim begin
+
+	void worldControl();
 public:
-	CBill(float x, float y);
+	CBill(float x, float y, float maxx, float maxy, int stage);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
@@ -163,5 +177,8 @@ public:
 	void SetBulletType(int type);
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();
+
+	bool IsDiving() { return isDiving; }
 };
 
+typedef CBill* LPBILL;

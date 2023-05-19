@@ -89,6 +89,16 @@ void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	sprites->Add(10140, 148, 113, 168, 131, texBill);
 	//swimming shot upleft
 	sprites->Add(10141, sprites->Get(10140));
+	//dying right
+	sprites->Add(10150, 2, 107, 18, 131, texBill);
+	sprites->Add(10151, 19, 112, 42, 131, texBill);
+	sprites->Add(10152, 43, 107, 59, 131, texBill);
+	sprites->Add(10153, 60, 120, 93, 131, texBill);
+	//dying left
+	sprites->Add(10154, sprites->Get(10150));
+	sprites->Add(10155, sprites->Get(10151));
+	sprites->Add(10156, sprites->Get(10152));
+	sprites->Add(10157, sprites->Get(10153));
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);
@@ -226,6 +236,20 @@ void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	ani = new CAnimation(100);
 	ani->Add(10141);
 	animations->Add(BILL_ANI_SWIMMING_SHOOT_UPLEFT, ani);
+
+	ani = new CAnimation(200);
+	ani->Add(10150);
+	ani->Add(10151);
+	ani->Add(10152);
+	ani->Add(10153);
+	animations->Add(BILL_ANI_DYING_RIGHT, ani);
+
+	ani = new CAnimation(200);
+	ani->Add(10154);
+	ani->Add(10155);
+	ani->Add(10156);
+	ani->Add(10157);
+	animations->Add(BILL_ANI_DYING_LEFT, ani);
 }
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_BULLET, TEXTURE_PATH_BULLET);
@@ -783,7 +807,6 @@ void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(10803);
 	animations->Add(SCUBA_ANI_SHOOT_LEFT, ani);
 }
-
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_GRASS, TEXTURE_PATH_GRASS);
 	textures->Add(ID_TEX_FIRE, TEXTURE_PATH_FIRE);
@@ -875,4 +898,16 @@ void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a
 
 	LPTEXTURE tex_stage1 = textures->Get(ID_TEX_STAGE1_TILE);
 	a = Map::LoadFromFile(STAGE1_PATH, tex_stage1, sprites)->tileList;
+}
+
+void LoadScreenResources(CTextures*& textures, CSprites*& sprites) {
+	//3xxxx
+	textures->Add(ID_TEX_SCREEN_INTRO, SCREEN_INTRO_PATH);
+	textures->Add(ID_TEX_SCREEN_WAITING, SCREEN_WAITING_PATH);
+
+	LPTEXTURE texIntro = textures->Get(ID_TEX_SCREEN_INTRO);
+	LPTEXTURE texWaiting = textures->Get(ID_TEX_SCREEN_WAITING);
+
+	sprites->Add(30000, 0, 0, 256, 224, texIntro);
+	sprites->Add(30001, 0, 0, 256, 224, texWaiting);
 }

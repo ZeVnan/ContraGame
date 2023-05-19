@@ -6,7 +6,9 @@
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
 
-
+gameScreen gameControl;
+#define WAITING_TIME 3000
+int timeLeft = WAITING_TIME;
 
 CBill* bill = NULL;
 CSampleKeyHandler* keyHandler;
@@ -52,17 +54,21 @@ void LoadResources() {
 	CreateOtherAni(textures, sprites, animations);
 
 	CreateStageTile(textures, sprites, stage1_tiles);
+
+	LoadScreenResources(textures, sprites);
+
+	gameControl = intro;
 }void LoadStage1() {
-	world = new CWorld(7000, 7000, 1);
+	world = new CWorld(6656, 6656, 1);
 	world->getObjectsListFromFile(STAGE1_PATH);
 	world->setTileList(stage1_tiles);
-	bill = new CBill(BILL_START_X, BILL_START_Y);
+	bill = new CBill(BILL_START_X, BILL_START_Y, world->getWidth() - 20, 448, 1);
 	world->getObjectList().push_back(bill);
 	
 	worldpart = new CWorldPart(world);
 	worldpart->Split(world);
 
-	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), 470);
+	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), 448);
 }
 void LoadStage(int stage) {
 	ClearWorld();
@@ -79,17 +85,35 @@ void LoadStage(int stage) {
 */
 void Update(DWORD dt)
 {
+	switch (gameControl) {
+	case intro:
+		
+		break;
+	case waiting1:
+		if (timeLeft > 0) {
+			timeLeft -= dt;
+		}
+		else {
+			gameControl = stage1;
+			timeLeft = WAITING_TIME;
+			LoadStage(1);
+		}
+		break;
+	case stage1:
+		world->Update(dt);
+		world->ClearDeletedObjects();
 
-	world->Update(dt);
-	world->ClearDeletedObjects();
+		float x, y;
+		bill->GetPosition(x, y);
+		CGame::GetInstance()->GetCamera()->Update(x, y);
+		float cx, cy;
+		CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
+		DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
+		break;
+	case waiting3:
 
-	float x, y;
-	bill->GetPosition(x, y);
-	CGame::GetInstance()->GetCamera()->Update(x, y);
-	float cx, cy;
-	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-	//DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
-
+		break;
+	}
 }
 
 void Render()
@@ -108,8 +132,23 @@ void Render()
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-	world->DrawTile();
-	world->Render();
+	switch (gameControl) {
+	case intro:
+		CSprites::GetInstance()->Get(30000)->Draw(0, 0);
+		break;
+	case waiting1:
+		CSprites::GetInstance()->Get(30001)->Draw(0, 0);
+		break;
+	case stage1:
+		world->DrawTile();
+		world->Render();
+		break;
+	case waiting3:
+		ClearWorld();
+		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
+		CSprites::GetInstance()->Get(30001)->Draw(0, 0);
+		break;
+	}
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);
 }
@@ -217,7 +256,6 @@ int WINAPI WinMain(
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 1.5, SCREEN_HEIGHT * 1.5, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	LoadResources();
-	LoadStage(1);
 
 	Run();
 

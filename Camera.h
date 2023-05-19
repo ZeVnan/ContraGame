@@ -22,6 +22,10 @@ public:
 		x = this->x;
 		y = this->y;
 	}
+	void SetCamPos(float x, float y) {
+		this->x = x;
+		this->y = y;
+	}
 	void TranslateToCamCoord(float& x, float& y);
 	void TranslateToCamCoord2(float& x, float& y);
 	bool CheckWorldPart(LPWORLDPART part);

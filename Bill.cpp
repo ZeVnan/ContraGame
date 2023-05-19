@@ -5,7 +5,10 @@
 #include "BridgePart.h"
 #include "Bridge.h"
 #include "Aircraft.h"
-CBill::CBill(float x, float y) :CGameObject(x, y) {
+
+#include "SampleKeyEventHandler.h"
+extern gameScreen gameControl;
+CBill::CBill(float x, float y, float maxx, float maxy, int stage) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
 	isSwimming = false;
@@ -13,11 +16,15 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 	isOnPlatform = false;
 	isDropping = false;
 	isJumping = true;
+	isDying = false;
 	ny = 0;
 	maxVx = 0.0f;
 	maxVy = 0.0f;
+	this->maxx = maxx;
+	this->maxy = maxy;
 	gunx = x;
 	guny = y;
+	this->stage = stage;
 	bulletType = BULLET_ANI_NORMAL;
 	waveLeft = BILL_WAVE_BULLET_NORMAL;
 	bonusWave = 0;
@@ -25,21 +32,38 @@ CBill::CBill(float x, float y) :CGameObject(x, y) {
 	bulletMtime = 0;
 	timeLeft = 0;
 }
+void CBill::worldControl() {
+	switch (stage) {
+	case 1:
+		if (vx < 0 && x < 10)
+			x = 10;
+		if (vy < 10 && y < 50)
+			y = BILL_START_Y;
+		if (vx > 0 && x > maxx) {
+			gameControl = waiting3;
+		}
+		if (vy > 0 && y > maxy)
+			y = maxy;
+		if (x > 6496 && x < 6528) {
+			this->SetState(BILL_STATE_JUMP);
+		}
+		break;
+	case 3:
+
+		break;
+	}
+}
 void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	//don't change the order of this function
 	if (timeLeft > 0)
 		timeLeft -= dt;
+	if (isDying == true && timeLeft < 0) {
+		isDeleted = true;
+	}
 	vx = maxVx;
 	if (isOnPlatform == false && isSwimming == false)
 		vy += BILL_GRAVITY * dt;
-	if (vx < 0 && x < 10) 
-		x = 10;
-	if (vx > 0 && x > 6990) 
-		x = 6990;
-	if (vy > 0 && y > 470)
-		y = 470;
-	if (vy < 10 && y < 50)
-		y = BILL_START_Y;
+	worldControl();
 	if (bulletMtime > 0)
 		bulletMtime -= dt;
 	else
@@ -226,7 +250,14 @@ void CBill::Render(){
 			}
 		}
 	}
-	
+	if (isDying == true) {
+		if (state == BILL_STATE_DYING_LEFT) {
+			ani = BILL_ANI_DYING_LEFT;
+		}
+		else {
+			ani = BILL_ANI_DYING_RIGHT;
+		}
+	}
 	if (ani == -1) ani = BILL_ANI_NORMAL_RIGHT;
 
 	float d = 0;
@@ -340,11 +371,23 @@ void CBill::SetState(int state) {
 	case BILL_STATE_OFF_LAND:
 		isOnPlatform = false;
 		break;
+	case BILL_STATE_DYING_RIGHT:
+		isDying = true;
+		timeLeft = BILL_TIME_DYING;
+		maxVx = -BILL_RUN_SPEED;
+		break;
+	case BILL_STATE_DYING_LEFT:
+		isDying = true;
+		timeLeft = BILL_TIME_DYING;
+		maxVx = BILL_RUN_SPEED;
+		break;
 	}
 	CGameObject::SetState(state);
 }
 
 void CBill::KeyDown(int KeyCode) {
+	if (isDying == true)
+		return;
 	switch (KeyCode) {
 	case DIK_X:
 		this->SetState(BILL_STATE_JUMP);
@@ -371,6 +414,8 @@ void CBill::KeyDown(int KeyCode) {
 	}
 }
 void CBill::KeyUp(int KeyCode) {
+	if (isDying == true)
+		return;
 	switch (KeyCode) {
 	case DIK_Z:
 		this->SetState(BILL_STATE_SHOOT_RELEASE);
@@ -390,6 +435,8 @@ void CBill::KeyUp(int KeyCode) {
 	}
 }
 void CBill::KeyState(CGame* game) {
+	if (isDying == true)
+		return;
 	BOOLEAN normal = true;
 	if (game->IsKeyDown(DIK_Z)) {
 		AddBullet(true);
@@ -416,6 +463,13 @@ void CBill::KeyState(CGame* game) {
 }
 
 void CBill::CreateBox(DWORD dt) {
+	if (isDying == true) {
+		bbox.left = x - BILL_BOX_DIE_WIDTH / 2;
+		bbox.top = y - BILL_BOX_DIE_HEIGHT / 2;
+		bbox.right = x + BILL_BOX_DIE_WIDTH / 2;
+		bbox.bottom = y + BILL_BOX_DIE_HEIGHT / 2;
+	}
+	else
 	if (isSwimming == true) {
 		bbox.left = x - BILL_BOX_SWIM_WIDTH / 2;
 		bbox.top = y - BILL_BOX_SWIM_HEIGHT / 2;
