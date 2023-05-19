@@ -53,6 +53,7 @@ public:
 	void CollisionWithRifleman(LPCOLLISIONEVENT e);
 	void CollisionWithScubaSoldier(LPCOLLISIONEVENT e);
 	void CollisionWithSoldier(LPCOLLISIONEVENT e);
+	void CollisionWithBill(LPCOLLISIONEVENT e);
 	~CBullet() {
 
 	}

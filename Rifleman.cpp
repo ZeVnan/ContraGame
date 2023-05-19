@@ -20,7 +20,6 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		return;
 	}
 	if (timeleft < 0) {
-		AddBullet();
 		switch (this->state) {
 		case RIFLEMAN_STATE_NORMAL:
 			this->SetState(RIFLEMAN_STATE_UP);
@@ -37,6 +36,7 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			AddBullet();
 			break;
 		}
+		AddBullet();
 	}
 	UpdateBullet(dt, coObjects);
 }
