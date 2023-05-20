@@ -1,33 +1,47 @@
 #include "Falcon.h"
+#include "Grass.h"
+#include "Aircraft.h"
 
 CFalcon::CFalcon(float x, float y) :CGameObject(x, y) {
-	this->state = 0;
+	this->state = FALCON_STATE_CLOSE;
+	this->ammo = rand() % 5 + 16002;
 	timeleft = FALCON_CLOSE_TIME;
 	isExploded = false;
+	isCollectible = false;
+	ay = 0;
 }
 void CFalcon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	this->timeleft -= dt;
-	if (this->isExploded == true && this->timeleft < 0) {
-		isDeleted = true;
-		return;
-	}
-	if (this->timeleft < 0) {
-		switch (this->state) {
-		case FALCON_STATE_CLOSE:
-			this->SetState(FALCON_STATE_OPENING);
-			break;
-		case FALCON_STATE_OPENING:
-			this->SetState(FALCON_STATE_OPEN);
-			break;
-		case FALCON_STATE_OPEN:
-			this->SetState(FALCON_STATE_CLOSING);
-			break;
-		case FALCON_STATE_CLOSING:
-			this->SetState(FALCON_STATE_CLOSE);
-			break;
+	if (this->isExploded == false) {
+		this->timeleft -= dt;
+		if (this->timeleft < 0) {
+			switch (this->state) {
+			case FALCON_STATE_CLOSE:
+				this->SetState(FALCON_STATE_OPENING);
+				break;
+			case FALCON_STATE_OPENING:
+				this->SetState(FALCON_STATE_OPEN);
+				break;
+			case FALCON_STATE_OPEN:
+				this->SetState(FALCON_STATE_CLOSING);
+				break;
+			case FALCON_STATE_CLOSING:
+				this->SetState(FALCON_STATE_CLOSE);
+				break;
+			}
 		}
 	}
-	//DebugOutTitle(L"state = %d, timeleft = %d", this->state, this->timeleft);
+	else {
+		if (isCollectible == false) {
+			this->timeleft -= dt;
+			if (this->timeleft < 0) {
+				SetState(FALCON_STATE_DROPITEM);
+			}	
+		}
+		else {
+			CCollision::GetInstance()->Process(this, coObjects, dt);
+		}
+	}
+	DebugOutTitle(L"vy = %f, y = %f, ay = %f", vy, y, ay);
 }
 void CFalcon::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -46,8 +60,32 @@ void CFalcon::Render() {
 		ani = FALCON_ANI_CLOSING;
 		break;
 	}
-	if (isExploded) {
-		ani = EXPLOSION_2_ANI;
+	if (isExploded == true) {
+		if (isCollectible == false) {
+			ani = EXPLOSION_2_ANI;
+		}
+		else {
+			switch (ammo) {
+			case FALCON_bAMMO:
+				ani = AIRCRAFT_ANI_bAMMO;
+				break;
+			case FALCON_fAMMO:
+				ani = AIRCRAFT_ANI_fAMMO;
+				break;
+			case FALCON_lAMMO:
+				ani = AIRCRAFT_ANI_lAMMO;
+				break;
+			case FALCON_mAMMO:
+				ani = AIRCRAFT_ANI_mAMMO;
+				break;
+			case FALCON_rAMMO:
+				ani = AIRCRAFT_ANI_rAMMO;
+				break;
+			case FALCON_sAMMO:
+				ani = AIRCRAFT_ANI_sAMMO;
+				break;
+			}
+		}
 	}
 	animations->Get(ani)->Render(x, y);
 }
@@ -69,25 +107,47 @@ void CFalcon::SetState(int state) {
 		this->isExploded = true;
 		timeleft = TIME_EXPLODE;
 		break;
+	case FALCON_STATE_DROPITEM:
+		isCollectible = true;
+		ay = FALCON_GRAVITY;
+		vy = FALCON_SPEED_Y;
+		break;
 	}
 	CGameObject::SetState(state);
 }
 
 void CFalcon::CreateBox(DWORD dt) {
-	bbox.left = (x - FALCON_BOX_WIDTH / 2);
-	bbox.top = (y - FALCON_BOX_HEIGHT / 2);
-	bbox.right = (x + FALCON_BOX_WIDTH / 2);
-	bbox.bottom = (y + FALCON_BOX_HEIGHT / 2);
-	x += 0;
-	y += 0;
+	if (isCollectible == false) {
+		bbox.left = (x - FALCON_BOX_WIDTH / 2);
+		bbox.top = (y - FALCON_BOX_HEIGHT / 2);
+		bbox.right = (x + FALCON_BOX_WIDTH / 2);
+		bbox.bottom = (y + FALCON_BOX_HEIGHT / 2);
+	}
+	else {
+		bbox.left = (x - FALCON_ITEM_BOX_WIDTH / 2);
+		bbox.top = (y - FALCON_ITEM_BOX_HEIGHT / 2);
+		bbox.right = (x + FALCON_ITEM_BOX_WIDTH / 2);
+		bbox.bottom = (y + FALCON_ITEM_BOX_HEIGHT / 2);
+	}
+	bbox.vpf_x = vx * dt;
+	bbox.vpf_y = vy * dt;
 }
 
 void CFalcon::NoCollision(DWORD dt) {
-	x += 0;
-	y += 0;
+	vy += ay * dt;
+	x += vx * dt;
+	y += vy * dt;
 }
 void CFalcon::CollisionWith(LPCOLLISIONEVENT e) {
-
-	//Falcon explodes by Bill's bullets & drop bullet artifact
-
+	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
+		CollisionWithGrass(e);
+	}
+}
+void CFalcon::CollisionWithGrass(LPCOLLISIONEVENT e) {
+	if (e->normal_y < 0) {
+		this->y += bbox.vpf_y;
+	}
+	if (e->normal_y > 0) {
+		this->y += e->time * bbox.vpf_y;
+	}
 }

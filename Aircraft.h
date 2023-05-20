@@ -36,7 +36,7 @@ private:
 	int timeleft;
 	int stage;
 public:
-	CAircraft(float x, float y, int ammo, int stage);
+	CAircraft(float x, float y, int stage);
 	void watchBill();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
@@ -55,7 +55,7 @@ public:
 	bool IsCollectible() {
 		return isCollectible;
 	}
-	int getAmmonType() {
+	int getAmmoType() {
 		return ammo;
 	}
 };

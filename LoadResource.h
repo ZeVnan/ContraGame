@@ -50,6 +50,7 @@
 
 #define ID_TEX_SCREEN_INTRO 200
 #define ID_TEX_SCREEN_WAITING 201
+#define ID_TEX_SCREEN_GAMEOVER 202
 
 #define TEXTURE_PATH_EXPLOSION L"Images\\Explosion.png"
 #define TEXTURE_PATH_BOX L"Images\\bbox.png"
@@ -73,6 +74,7 @@
 
 #define SCREEN_INTRO_PATH L"Images\\intro.png"
 #define SCREEN_WAITING_PATH L"Images\\BeginState.png"
+#define SCREEN_GAMEOVER_PATH L"Images\\GameOver.png"
 
 void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);

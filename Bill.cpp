@@ -5,6 +5,7 @@
 #include "BridgePart.h"
 #include "Bridge.h"
 #include "Aircraft.h"
+#include "Falcon.h"
 
 #include "SampleKeyEventHandler.h"
 extern gameScreen gameControl;
@@ -31,14 +32,17 @@ CBill::CBill(float x, float y, float maxx, float maxy, int stage) :CGameObject(x
 
 	bulletMtime = 0;
 	timeLeft = 0;
+	lifeLeft = 4;
 }
 void CBill::worldControl() {
 	switch (stage) {
 	case 1:
 		if (vx < 0 && x < 10)
 			x = 10;
-		if (vy < 10 && y < 50)
-			y = BILL_START_Y;
+		if (vy < 0 && y < 50)
+		{
+			SetState(BILL_STATE_DYING_RIGHT);
+		}
 		if (vx > 0 && x > maxx) {
 			gameControl = waiting3;
 		}
@@ -46,6 +50,9 @@ void CBill::worldControl() {
 			y = maxy;
 		if (x > 6496 && x < 6528) {
 			this->SetState(BILL_STATE_JUMP);
+		}
+		if (lifeLeft <= 0) {
+			gameControl = gameover;
 		}
 		break;
 	case 3:
@@ -58,7 +65,13 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	if (timeLeft > 0)
 		timeLeft -= dt;
 	if (isDying == true && timeLeft < 0) {
-		isDeleted = true;
+		if (lifeLeft > 0) {
+			lifeLeft --;
+			y = BILL_START_Y;
+			x -= 200;
+			this->SetState(BILL_STATE_REVIVE);
+			vy += BILL_GRAVITY * dt;
+		}
 	}
 	vx = maxVx;
 	if (isOnPlatform == false && isSwimming == false)
@@ -72,7 +85,7 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	isDropping = false;
-	//DebugOutTitle(L"x = %f, y = %f", x, y);
+	//DebugOutTitle(L"life left = %d", lifeLeft);
 }
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
@@ -375,11 +388,35 @@ void CBill::SetState(int state) {
 		isDying = true;
 		timeLeft = BILL_TIME_DYING;
 		maxVx = -BILL_RUN_SPEED;
+		vy = BILL_JUMP_SPEED_Y;
 		break;
 	case BILL_STATE_DYING_LEFT:
 		isDying = true;
 		timeLeft = BILL_TIME_DYING;
 		maxVx = BILL_RUN_SPEED;
+		vy = BILL_JUMP_SPEED_Y;
+		break;
+	case BILL_STATE_REVIVE:
+		isLaying = false;
+		isShooting = false;
+		isSwimming = false;
+		isDiving = false;
+		isOnPlatform = false;
+		isDropping = false;
+		isJumping = true;
+		isDying = false;
+		ny = 0;
+		maxVx = 0.0f;
+		maxVy = 0.0f; 
+		gunx = x;
+		guny = y;
+		this->stage = stage;
+		bulletType = BULLET_ANI_NORMAL;
+		waveLeft = BILL_WAVE_BULLET_NORMAL;
+		bonusWave = 0;
+
+		bulletMtime = 0;
+		timeLeft = 0;
 		break;
 	}
 	CGameObject::SetState(state);
@@ -520,6 +557,9 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPAIRCRAFT>(e->dest_obj)) {
 		CollisionWithAircraft(e);
 	}
+	if (dynamic_cast<LPFALCON>(e->dest_obj)) {
+		CollisionWithFalcon(e);
+	}
 }
 //collision with terrain object
 void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
@@ -611,7 +651,7 @@ void CBill::CollisionWithBridge(LPCOLLISIONEVENT e) {
 void CBill::CollisionWithAircraft(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPAIRCRAFT>(e->dest_obj)->IsCollectible() == false)
 		return;
-	switch (dynamic_cast<LPAIRCRAFT>(e->dest_obj)->getAmmonType()) {
+	switch (dynamic_cast<LPAIRCRAFT>(e->dest_obj)->getAmmoType()) {
 	case AIRCRAFT_ANI_fAMMO:
 		this->SetBulletType(BULLET_ANI_FLAME);
 		break;
@@ -625,6 +665,29 @@ void CBill::CollisionWithAircraft(LPCOLLISIONEVENT e) {
 		this->SetBulletType(BULLET_ANI_SPREAD);
 		break;
 	case AIRCRAFT_ANI_rAMMO:
+		bonusWave++;
+		waveLeft++;
+		break;
+	}
+	e->dest_obj->Delete();
+}
+void CBill::CollisionWithFalcon(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<LPFALCON>(e->dest_obj)->IsCollectible() == false)
+		return;
+	switch (dynamic_cast<LPFALCON>(e->dest_obj)->getAmmoType()) {
+	case FALCON_fAMMO:
+		this->SetBulletType(BULLET_ANI_FLAME);
+		break;
+	case FALCON_lAMMO:
+		this->SetBulletType(BULLET_ANI_LASER);
+		break;
+	case FALCON_mAMMO:
+		this->SetBulletType(BULLET_ANI_MACHINE);
+		break;
+	case FALCON_sAMMO:
+		this->SetBulletType(BULLET_ANI_SPREAD);
+		break;
+	case FALCON_rAMMO:
 		bonusWave++;
 		waveLeft++;
 		break;

@@ -904,10 +904,13 @@ void LoadScreenResources(CTextures*& textures, CSprites*& sprites) {
 	//3xxxx
 	textures->Add(ID_TEX_SCREEN_INTRO, SCREEN_INTRO_PATH);
 	textures->Add(ID_TEX_SCREEN_WAITING, SCREEN_WAITING_PATH);
+	textures->Add(ID_TEX_SCREEN_GAMEOVER, SCREEN_GAMEOVER_PATH);
 
 	LPTEXTURE texIntro = textures->Get(ID_TEX_SCREEN_INTRO);
 	LPTEXTURE texWaiting = textures->Get(ID_TEX_SCREEN_WAITING);
+	LPTEXTURE texGameover = textures->Get(ID_TEX_SCREEN_GAMEOVER);
 
 	sprites->Add(30000, 0, 0, 256, 224, texIntro);
 	sprites->Add(30001, 0, 0, 256, 224, texWaiting);
+	sprites->Add(30002, 0, 0, 255, 224, texGameover);
 }
