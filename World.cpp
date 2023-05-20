@@ -94,8 +94,8 @@ LPGAMEOBJECT CWorld::spawnAircraft(xml_node node)
 	//stof: String TO Float
 	x = stof(properties["X"]);
 	y = stof(properties["Y"]);
-	int bullet = rand() % 5 + 13002;	//random bullet type
-	auto aircraft = new CAircraft(x, y, bullet, this->stage);
+	
+	auto aircraft = new CAircraft(x, y, this->stage);
 
 	return aircraft;
 }

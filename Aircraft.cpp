@@ -2,8 +2,8 @@
 #include "Bill.h"
 #include "Grass.h"
 extern CBill* bill;
-CAircraft::CAircraft(float x, float y, int ammo, int stage) :CGameObject(x, y) {
-	this->ammo = ammo;
+CAircraft::CAircraft(float x, float y, int stage) :CGameObject(x, y) {
+	this->ammo = rand() % 5 + 13002;
 	this->stage = stage;
 	isCollectible = false;
 	isExploded = false;
@@ -141,7 +141,7 @@ void CAircraft::CollisionWithGrass(LPCOLLISIONEVENT e) {
 	if (e->normal_y < 0) {
 		this->y += bbox.vpf_y;
 	}
-	if (e->normal_x > 0) {
+	if (e->normal_y > 0) {
 		this->y += e->time * bbox.vpf_y;
 	}
 }

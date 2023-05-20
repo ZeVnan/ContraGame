@@ -46,6 +46,7 @@
 #define BILL_STATE_DYING_RIGHT 70
 #define BILL_STATE_DYING_LEFT 71
 
+#define BILL_STATE_REVIVE 80
 
 #pragma region
 #define BILL_ANI_NORMAL_RIGHT 10000
@@ -143,6 +144,7 @@ class CBill :public CGameObject
 	int bulletMtime;	//support bullet type M control
 	float timeLeft;		//support swim begin
 
+	int lifeLeft;
 	void worldControl();
 public:
 	CBill(float x, float y, float maxx, float maxy, int stage);
@@ -165,6 +167,7 @@ public:
 	void CollisionWithBridge(LPCOLLISIONEVENT e);
 	//collision with enemy object
 	void CollisionWithAircraft(LPCOLLISIONEVENT e);
+	void CollisionWithFalcon(LPCOLLISIONEVENT e);
 
 	int CalculateAngle();
 	void AddBullet(BOOLEAN KeyState);

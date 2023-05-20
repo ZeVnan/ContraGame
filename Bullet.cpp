@@ -103,7 +103,7 @@ void CBullet::CollisionWithAircraft(LPCOLLISIONEVENT e) {
 
 void CBullet::CollisionWithFalcon(LPCOLLISIONEVENT e)
 {
-	if (friendly == false || (LPFALCON(e->dest_obj))->isCollidable() == false)
+	if (friendly == false || (LPFALCON(e->dest_obj))->GetState() != FALCON_STATE_OPEN)
 		return;
 	(LPFALCON(e->dest_obj))->SetState(FALCON_STATE_EXPLODE);
 	e->src_obj->Delete();

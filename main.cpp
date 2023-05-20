@@ -108,9 +108,12 @@ void Update(DWORD dt)
 		CGame::GetInstance()->GetCamera()->Update(x, y);
 		float cx, cy;
 		CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-		DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
+		//DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
 		break;
 	case waiting3:
+
+		break;
+	case gameover:
 
 		break;
 	}
@@ -147,6 +150,11 @@ void Render()
 		ClearWorld();
 		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
 		CSprites::GetInstance()->Get(30001)->Draw(0, 0);
+		break;
+	case gameover:
+		ClearWorld();
+		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
+		CSprites::GetInstance()->Get(30002)->Draw(0, 0);
 		break;
 	}
 	spriteHandler->End();
