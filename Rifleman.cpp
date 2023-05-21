@@ -10,7 +10,62 @@ Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	ny = 0;
 	nx = -1;
 	this->state = RIFLEMAN_STATE_NORMAL;
-	timeleft = RIFLEMAN_SWITCH_TIME;
+	timeleft = 0;
+}
+
+void Rifleman::WatchBill() {
+	float x, y;
+	bill->GetPosition(x, y);
+
+	float xx, yy;
+	this->GetPosition(xx, yy);
+
+	float tan = abs(xx - x) / abs(yy - y);// get angle's tan value
+	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
+	float checking_degree = 0;// from 0 to 360 base on fourth part of degree's circle COMPARE TO Ox
+
+	// calculate checking_degree
+	if (x > xx) {
+		if (y > yy) {
+			checking_degree = 90 - degree;
+		}
+		else {
+			checking_degree = 360 - degree;
+		}
+	}
+	else {
+		if (y > yy) {
+			checking_degree = 180 - degree;
+		}
+		else {
+			checking_degree = 270 - degree;
+		}
+	}
+	// check conditions
+	if ((checking_degree >= 0 && checking_degree <= 15) || (checking_degree >= 360 && checking_degree <= 345)) {
+		ny = 0;
+		nx = 1;
+	}
+	if (checking_degree >= 165 && checking_degree <= 195) {
+		ny = 0;
+		nx = -1;
+	}
+	if (checking_degree >= 195 && checking_degree <= 270) {
+		ny = -1;
+		nx = -1;
+	}
+	if (checking_degree >= 90 && checking_degree <= 175) {
+		ny = 1;
+		nx = -1;
+	}
+	if (checking_degree >= 15 && checking_degree <= 90) {
+		ny = 1;
+		nx = 1;
+	}
+	if (checking_degree >= 270 && checking_degree <= 345) {
+		ny = -1;
+		nx = 1;
+	}
 }
 
 void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
@@ -19,24 +74,10 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		isDeleted = true;
 		return;
 	}
+	WatchBill();
 	if (timeleft < 0) {
-		switch (this->state) {
-		case RIFLEMAN_STATE_NORMAL:
-			this->SetState(RIFLEMAN_STATE_UP);
-			timeleft = RIFLEMAN_SWITCH_TIME;
-			break;
-		case RIFLEMAN_STATE_UP:
-			this->SetState(RIFLEMAN_STATE_DOWN);
-			timeleft = RIFLEMAN_SWITCH_TIME;
-			AddBullet();
-			break;
-		case RIFLEMAN_STATE_DOWN:
-			this->SetState(RIFLEMAN_STATE_NORMAL);
-			timeleft = RIFLEMAN_SWITCH_TIME;
-			AddBullet();
-			break;
-		}
 		AddBullet();
+		timeleft = RIFLEMAN_SWITCH_TIME;
 	}
 	UpdateBullet(dt, coObjects);
 }
@@ -47,7 +88,7 @@ void Rifleman::Render() {
 		if (nx > 0) {
 			ani = RIFLEMAN_ANI_HIDE_RIGHT;
 		}
-		else {
+		else if (nx < 0) {
 			ani = RIFLEMAN_ANI_HIDE_LEFT;
 		}
 	}
@@ -64,8 +105,6 @@ void Rifleman::Render() {
 					ani = RIFLEMAN_ANI_SHOOT_RIGHT;
 				}
 			}
-			else
-				ani = RIFLEMAN_ANI_NORMAL_RIGHT;
 		}
 		else {
 			if (isShooting) {
@@ -79,8 +118,6 @@ void Rifleman::Render() {
 					ani = RIFLEMAN_ANI_SHOOT_LEFT;
 				}
 			}
-			else
-				ani = RIFLEMAN_ANI_NORMAL_LEFT;
 		}
 	}
 	if (isExploded) {
