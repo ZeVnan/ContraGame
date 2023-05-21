@@ -7,6 +7,9 @@
 #include <stdarg.h>
 #include <time.h>
 #include <stdlib.h>
+#include <cmath>
+
+#define M_PI 3.14159265358979323846
 
 #define _W(x)  __W(x)
 #define __W(x)  L##x

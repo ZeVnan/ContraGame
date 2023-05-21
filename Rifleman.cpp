@@ -20,29 +20,51 @@ void Rifleman::WatchBill() {
 	float xx, yy;
 	this->GetPosition(xx, yy);
 
+	float tan = abs(xx - x) / abs(yy - y);// get angle's tan value
+	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
+	float checking_degree = 0;// from 0 to 360 base on fourth part of degree's circle COMPARE TO Ox
+
+	// calculate checking_degree
 	if (x > xx) {
-		nx = 1;
 		if (y > yy) {
-			ny = 1;
+			checking_degree = 90 - degree;
 		}
-		else if (yy - y >= 10.0f) {
-			ny = -1;
-		}
-		else if (yy - y <= 10.0f){
-			ny = 0;
+		else {
+			checking_degree = 360 - degree;
 		}
 	}
 	else {
-		nx = -1;
 		if (y > yy) {
-			ny = 1;
+			checking_degree = 180 - degree;
 		}
-		else if (yy - y >= 10.0f) {
-			ny = -1;
+		else {
+			checking_degree = 270 - degree;
 		}
-		else if (yy - y <= 10.0f) {
-			ny = 0;
-		}
+	}
+	// check conditions
+	if ((checking_degree >= 0 && checking_degree <= 15) || (checking_degree >= 360 && checking_degree <= 345)) {
+		ny = 0;
+		nx = 1;
+	}
+	if (checking_degree >= 165 && checking_degree <= 195) {
+		ny = 0;
+		nx = -1;
+	}
+	if (checking_degree >= 195 && checking_degree <= 270) {
+		ny = -1;
+		nx = -1;
+	}
+	if (checking_degree >= 90 && checking_degree <= 175) {
+		ny = 1;
+		nx = -1;
+	}
+	if (checking_degree >= 15 && checking_degree <= 90) {
+		ny = 1;
+		nx = 1;
+	}
+	if (checking_degree >= 270 && checking_degree <= 345) {
+		ny = -1;
+		nx = 1;
 	}
 }
 
@@ -52,9 +74,8 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		isDeleted = true;
 		return;
 	}
-
+	WatchBill();
 	if (timeleft < 0) {
-		WatchBill();
 		AddBullet();
 		timeleft = RIFLEMAN_SWITCH_TIME;
 	}
