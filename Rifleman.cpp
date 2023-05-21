@@ -10,7 +10,40 @@ Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	ny = 0;
 	nx = -1;
 	this->state = RIFLEMAN_STATE_NORMAL;
-	timeleft = RIFLEMAN_SWITCH_TIME;
+	timeleft = 0;
+}
+
+void Rifleman::WatchBill() {
+	float x, y;
+	bill->GetPosition(x, y);
+
+	float xx, yy;
+	this->GetPosition(xx, yy);
+
+	if (x > xx) {
+		nx = 1;
+		if (y > yy) {
+			ny = 1;
+		}
+		else if (yy - y >= 10.0f) {
+			ny = -1;
+		}
+		else if (yy - y <= 10.0f){
+			ny = 0;
+		}
+	}
+	else {
+		nx = -1;
+		if (y > yy) {
+			ny = 1;
+		}
+		else if (yy - y >= 10.0f) {
+			ny = -1;
+		}
+		else if (yy - y <= 10.0f) {
+			ny = 0;
+		}
+	}
 }
 
 void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
@@ -19,24 +52,11 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		isDeleted = true;
 		return;
 	}
+
 	if (timeleft < 0) {
-		switch (this->state) {
-		case RIFLEMAN_STATE_NORMAL:
-			this->SetState(RIFLEMAN_STATE_UP);
-			timeleft = RIFLEMAN_SWITCH_TIME;
-			break;
-		case RIFLEMAN_STATE_UP:
-			this->SetState(RIFLEMAN_STATE_DOWN);
-			timeleft = RIFLEMAN_SWITCH_TIME;
-			AddBullet();
-			break;
-		case RIFLEMAN_STATE_DOWN:
-			this->SetState(RIFLEMAN_STATE_NORMAL);
-			timeleft = RIFLEMAN_SWITCH_TIME;
-			AddBullet();
-			break;
-		}
+		WatchBill();
 		AddBullet();
+		timeleft = RIFLEMAN_SWITCH_TIME;
 	}
 	UpdateBullet(dt, coObjects);
 }
@@ -47,7 +67,7 @@ void Rifleman::Render() {
 		if (nx > 0) {
 			ani = RIFLEMAN_ANI_HIDE_RIGHT;
 		}
-		else {
+		else if (nx < 0) {
 			ani = RIFLEMAN_ANI_HIDE_LEFT;
 		}
 	}
@@ -64,8 +84,6 @@ void Rifleman::Render() {
 					ani = RIFLEMAN_ANI_SHOOT_RIGHT;
 				}
 			}
-			else
-				ani = RIFLEMAN_ANI_NORMAL_RIGHT;
 		}
 		else {
 			if (isShooting) {
@@ -79,8 +97,6 @@ void Rifleman::Render() {
 					ani = RIFLEMAN_ANI_SHOOT_LEFT;
 				}
 			}
-			else
-				ani = RIFLEMAN_ANI_NORMAL_LEFT;
 		}
 	}
 	if (isExploded) {

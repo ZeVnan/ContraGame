@@ -7,6 +7,11 @@
 
 #include "debug.h"
 
+#include "Bill.h"
+
+extern CBill* bill;
+
+
 #define RIFLEMAN_START_X 180.0f
 #define RIFLEMAN_START_Y 10.0f
 #define RIFLEMAN_GRAVITY 0.0004f
@@ -51,7 +56,7 @@
 #define RIFLEMAN_ANI_EXPOSE_LEFT 15060
 #define RIFLEMAN_ANI_EXPOSE_RIGHT 15061
 
-#define RIFLEMAN_SWITCH_TIME 700
+#define RIFLEMAN_SWITCH_TIME 2000
 
 //Áp dụng được cho toàn bộ animation khi đứng của rifleman
 #define RIFLEMAN_BOX_NORMAL_HEIGHT	76
@@ -75,6 +80,7 @@ private:
 public:
 	Rifleman();
 	Rifleman(float x, float y);
+	void WatchBill();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
