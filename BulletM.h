@@ -2,8 +2,8 @@
 #include "Bullet.h"
 #define BULLET_M_TIME 70
 
-#define BULLET_M_BOX_WIDTH 4
-#define BULLET_M_BOX_HEIGHT 4
+#define BULLET_M_BOX_WIDTH 8
+#define BULLET_M_BOX_HEIGHT 8
 class CBulletM :public CBullet {
 private:
 	int lastBulletTime;

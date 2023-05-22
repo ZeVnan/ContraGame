@@ -25,17 +25,19 @@ enum eID
 {
 	BillID = 0,			// Main character.
 	BulletID = 1,
-	SoldierID = 2,		
-	AircraftID = 3,		
-	CannonID = 4,		
-	RiflemanID = 5,		
-	FalconID = 6,	
-	WallTurretID = 7,	
-	
+	SoldierID = 2,
+	AircraftID = 3,
+	CannonID = 4,
+	RiflemanID = 5,
+	FalconID = 6,
+	WallTurretID = 7,
+
 	WATER = 11,
-	LAND = 12,			
+	LAND = 12,
 	CREATOR = 13,
 	BRIDGE = 14,
+	BOSS1SHIELD = 18,
+	BOSS1GUN = 19,
 };
 
 enum eLandType

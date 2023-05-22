@@ -52,6 +52,7 @@ void LoadResources() {
 	CreateScubaAni(textures, sprites, animations);
 	CreateWTurretAni(textures, sprites, animations);
 	CreateOtherAni(textures, sprites, animations);
+	CreateBossAni(textures, sprites, animations);
 
 	CreateStageTile(textures, sprites, stage1_tiles);
 

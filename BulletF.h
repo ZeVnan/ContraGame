@@ -1,11 +1,11 @@
 #pragma once
 #include "Bullet.h"
 
-#define BULLET_F_RADIUS 15.0f
+#define BULLET_F_RADIUS 20.0f
 #define BULLET_F_SPEED_R 0.8f
 
-#define BULLET_F_BOX_WIDTH 7
-#define BULLET_F_BOX_HEIGHT 7
+#define BULLET_F_BOX_WIDTH 14
+#define BULLET_F_BOX_HEIGHT 14
 class CBulletF :public CBullet {
 private:
 	float degree;

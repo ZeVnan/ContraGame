@@ -60,6 +60,7 @@ void CBridgePart::SetState(int state) {
 		timeLeft = TIME_TO_EXPLODE * number;
 		break;
 	}
+	CGameObject::SetState(state);
 }
 void CBridgePart::CreateBox(DWORD dt) {
 	bbox.left = x - BRIDGEPART_WIDTH / 2;

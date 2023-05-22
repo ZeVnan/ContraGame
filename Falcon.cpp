@@ -41,7 +41,7 @@ void CFalcon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			CCollision::GetInstance()->Process(this, coObjects, dt);
 		}
 	}
-	DebugOutTitle(L"vy = %f, y = %f, ay = %f", vy, y, ay);
+	//DebugOutTitle(L"vy = %f, y = %f, ay = %f", vy, y, ay);
 }
 void CFalcon::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -118,10 +118,10 @@ void CFalcon::SetState(int state) {
 
 void CFalcon::CreateBox(DWORD dt) {
 	if (isCollectible == false) {
-		bbox.left = (x - FALCON_BOX_WIDTH / 2);
-		bbox.top = (y - FALCON_BOX_HEIGHT / 2);
-		bbox.right = (x + FALCON_BOX_WIDTH / 2);
-		bbox.bottom = (y + FALCON_BOX_HEIGHT / 2);
+		bbox.left = x - FALCON_BOX_WIDTH / 2;
+		bbox.top = y - FALCON_BOX_HEIGHT / 2;
+		bbox.right = x + FALCON_BOX_WIDTH / 2;
+		bbox.bottom = y + FALCON_BOX_HEIGHT / 2;
 	}
 	else {
 		bbox.left = (x - FALCON_ITEM_BOX_WIDTH / 2);

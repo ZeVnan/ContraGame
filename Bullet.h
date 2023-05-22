@@ -25,6 +25,8 @@
 #define BULLET_ANI_LASER_90 11045
 #define BULLET_ANI_LASER_270 11046
 
+#define BULLET_ANI_BOSS1 11050
+
 class CBullet :public CGameObject
 {
 protected:
@@ -54,6 +56,8 @@ public:
 	void CollisionWithScubaSoldier(LPCOLLISIONEVENT e);
 	void CollisionWithSoldier(LPCOLLISIONEVENT e);
 	void CollisionWithBill(LPCOLLISIONEVENT e);
+	void CollisionWithBoss1Shield(LPCOLLISIONEVENT e);
+	void CollisionWithBoss1Gun(LPCOLLISIONEVENT e);
 	~CBullet() {
 
 	}

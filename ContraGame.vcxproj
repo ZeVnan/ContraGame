@@ -141,9 +141,12 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Bill.cpp" />
+    <ClCompile Include="Boss1Gun.cpp" />
+    <ClCompile Include="Boss1Shield.cpp" />
     <ClCompile Include="Bridge.cpp" />
     <ClCompile Include="BridgePart.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletBoss1.cpp" />
     <ClCompile Include="BulletF.cpp" />
     <ClCompile Include="BulletL.cpp" />
     <ClCompile Include="BulletM.cpp" />
@@ -184,9 +187,12 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="Bill.h" />
+    <ClInclude Include="Boss1Gun.h" />
+    <ClInclude Include="Boss1Shield.h" />
     <ClInclude Include="Bridge.h" />
     <ClInclude Include="BridgePart.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletBoss1.h" />
     <ClInclude Include="BulletF.h" />
     <ClInclude Include="BulletL.h" />
     <ClInclude Include="BulletM.h" />
