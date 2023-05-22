@@ -172,7 +172,7 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect)
 	sprite.TextureIndex = 0;
 
 	// The color to apply to this sprite, full color applies white.
-	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.25f);
+	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 
 	//
 	// Build the rendering matrix based on sprite location 

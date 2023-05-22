@@ -8,6 +8,7 @@
 #include "Falcon.h"
 #include "Bill.h"
 #include "Boss1Shield.h"
+#include "Boss1Gun.h"
 
 CBullet::CBullet() {
 	this->type = -1;
@@ -36,7 +37,7 @@ void CBullet::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = this->type;
 	animations->Get(aniId)->Render(x, y);
-	RenderBox();
+	//RenderBox();
 }
 void CBullet::NoCollision(DWORD dt) {
 	x += vx * dt;
@@ -79,6 +80,10 @@ void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 		CollisionWithBoss1Shield(e);
 		return;
 	}
+	if (dynamic_cast<LPBOSS1GUN>(e->dest_obj)) {
+		CollisionWithBoss1Gun(e);
+		return;
+	}
 	x += bbox.vpf_x;
 	y += bbox.vpf_y;
 }
@@ -118,6 +123,12 @@ void CBullet::CollisionWithBoss1Shield(LPCOLLISIONEVENT e) {
 	if (friendly == false || (LPBOSS1SHIELD(e->dest_obj))->isCollidable() == false)
 		return;
 	(LPBOSS1SHIELD(e->dest_obj))->TakeDamage(this->damage);
+	e->src_obj->Delete();
+}
+void CBullet::CollisionWithBoss1Gun(LPCOLLISIONEVENT e) {
+	if (friendly == false || (LPBOSS1GUN(e->dest_obj))->isCollidable() == false)
+		return;
+	(LPBOSS1GUN(e->dest_obj))->TakeDamage(this->damage);
 	e->src_obj->Delete();
 }
 //human collision

@@ -146,6 +146,7 @@
     <ClCompile Include="Bridge.cpp" />
     <ClCompile Include="BridgePart.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletBoss1.cpp" />
     <ClCompile Include="BulletF.cpp" />
     <ClCompile Include="BulletL.cpp" />
     <ClCompile Include="BulletM.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Bridge.h" />
     <ClInclude Include="BridgePart.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletBoss1.h" />
     <ClInclude Include="BulletF.h" />
     <ClInclude Include="BulletL.h" />
     <ClInclude Include="BulletM.h" />

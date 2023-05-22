@@ -1,6 +1,6 @@
 #include "Bullet.h"
-#define BULLET_S_BOX_WIDTH 5
-#define BULLET_S_BOX_HEIGHT 5
+#define BULLET_S_BOX_WIDTH 10
+#define BULLET_S_BOX_HEIGHT 10
 class CBulletS:public CBullet {
 
 public:
