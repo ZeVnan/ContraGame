@@ -94,7 +94,7 @@
 #define BILL_NORMAL_SWIM_POSITION_ADJUST 17.0f
 #define BILL_WATER_TO_LAND_POSITION_ADJUST 7.0f;
 
-#define BILL_START_X 100.0f
+#define BILL_START_X 6000.0f
 #define BILL_START_Y 400.0f
 
 #define BILL_WAVE_BULLET_NORMAL 4
@@ -165,6 +165,7 @@ public:
 	void CollisionWithWater(LPCOLLISIONEVENT e);
 	void CollisionWithBridgePart(LPCOLLISIONEVENT e);
 	void CollisionWithBridge(LPCOLLISIONEVENT e);
+	void CollisionWithBoss1Shield(LPCOLLISIONEVENT e);
 	//collision with enemy object
 	void CollisionWithAircraft(LPCOLLISIONEVENT e);
 	void CollisionWithFalcon(LPCOLLISIONEVENT e);

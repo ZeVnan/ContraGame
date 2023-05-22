@@ -2,7 +2,11 @@
 #include "WorldPart.h"
 #include "Bill.h"
 
-CWorld::CWorld() {}
+CWorld::CWorld() {
+	width = 0;
+	height = 0;
+	stage = 0;
+}
 
 float CWorld::getHeight() { return this->height; }
 float CWorld::getWidth() { return this->width; }
@@ -182,6 +186,36 @@ LPGAMEOBJECT CWorld::spawnBridge(xml_node node)
 
 	return bridge;
 }
+LPGAMEOBJECT CWorld::spawnBoss1Shield(xml_node node) {
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto boss1shield = new CBoss1Shield(x, y);
+
+	return boss1shield;
+}
+LPGAMEOBJECT CWorld::spawnBoss1Gun(xml_node node) {
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto boss1gun = new CBoss1Gun(x, y);
+
+	return boss1gun;
+}
 LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 {
 	switch (id)
@@ -204,6 +238,10 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnWater(node);
 	case BRIDGE:
 		return spawnBridge(node);
+	case BOSS1SHIELD:
+		return spawnBoss1Shield(node);
+	case BOSS1GUN:
+		return spawnBoss1Gun(node);
 	default:
 		return nullptr;
 		break;

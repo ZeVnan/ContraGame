@@ -806,9 +806,15 @@
         <Elem Key="status" Value="1048576" />
       </Params>
     </Item>
-    <Item Id="18" Name="greatwall" X="6432" Y="384" Width="128" Height="320">
+    <Item Id="18" Name="bossshield" X="6456" Y="148" Width="128" Height="320">
       <ActiveBound X="6432" Y="384" Width="128" Height="320" />
     </Item>
+	  <Item Id="19" Name="bossgun" X="6468" Y="234" Width="128" Height="320">
+		  <ActiveBound X="6432" Y="384" Width="128" Height="320" />
+	  </Item>
+	  <Item Id="19" Name="bossgun" X="6436" Y="234" Width="128" Height="320">
+		  <ActiveBound X="6432" Y="384" Width="128" Height="320" />
+	  </Item>
     <Item Id="12" Name="land40" X="6496" Y="96" Width="192" Height="5">
       <ActiveBound X="6496" Y="96" Width="192" Height="5" />
       <Params>

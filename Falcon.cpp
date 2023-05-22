@@ -41,7 +41,7 @@ void CFalcon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			CCollision::GetInstance()->Process(this, coObjects, dt);
 		}
 	}
-	DebugOutTitle(L"vy = %f, y = %f, ay = %f", vy, y, ay);
+	//DebugOutTitle(L"vy = %f, y = %f, ay = %f", vy, y, ay);
 }
 void CFalcon::Render() {
 	CAnimations* animations = CAnimations::GetInstance();

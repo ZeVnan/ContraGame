@@ -6,6 +6,7 @@
 #include "Bridge.h"
 #include "Aircraft.h"
 #include "Falcon.h"
+#include "Boss1Shield.h"
 
 #include "SampleKeyEventHandler.h"
 extern gameScreen gameControl;
@@ -48,7 +49,7 @@ void CBill::worldControl() {
 		}
 		if (vy > 0 && y > maxy)
 			y = maxy;
-		if (x > 6496 && x < 6528) {
+		if (x > 6432 && x < 6464) {
 			this->SetState(BILL_STATE_JUMP);
 		}
 		if (lifeLeft <= 0) {
@@ -560,6 +561,9 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPFALCON>(e->dest_obj)) {
 		CollisionWithFalcon(e);
 	}
+	if (dynamic_cast<LPBOSS1SHIELD>(e->dest_obj)) {
+		CollisionWithBoss1Shield(e);
+	}
 }
 //collision with terrain object
 void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
@@ -645,6 +649,14 @@ void CBill::CollisionWithBridgePart(LPCOLLISIONEVENT e) {
 void CBill::CollisionWithBridge(LPCOLLISIONEVENT e) {
 	if (e->normal_y != 0) {
 		((LPBRIDGE)e->dest_obj)->Explode();
+	}
+}
+void CBill::CollisionWithBoss1Shield(LPCOLLISIONEVENT e) {
+	if (e->normal_x != 0) {
+		this->x += e->time * bbox.vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		this->y += e->time * bbox.vpf_y;
 	}
 }
 //collision with enemy object

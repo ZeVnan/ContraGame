@@ -892,6 +892,36 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(20034);
 	animations->Add(BRIDGEPART_ANI_DOWNEND, ani);
 }
+void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
+	//4xxxx
+	textures->Add(ID_TEX_BOSS1, TEXTURE_PATH_BOSS1);
+	//boss 1
+	LPTEXTURE texBoss1 = textures->Get(ID_TEX_BOSS1);
+	///shield
+	////normal
+	sprites->Add(40000, 0, 54, 23, 84, texBoss1);
+	sprites->Add(40001, 27, 54, 50, 84, texBoss1);
+	sprites->Add(40002, 54, 54, 77, 84, texBoss1);
+	////after explode
+	sprites->Add(40003, 0, 0, 108, 38, texBoss1);
+	///gun
+	sprites->Add(41000, 48, 42, 59, 48, texBoss1);
+	
+
+	LPANIMATION ani = new CAnimation(100);
+	ani->Add(40000);
+	ani->Add(40001);
+	ani->Add(40002);
+	animations->Add(BOSS1SHIELD_ANI_NORMAL, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(40003);
+	animations->Add(BOSS1SHIELD_ANI_AFTER_EXPLODE, ani);
+	
+	ani = new CAnimation(100);
+	ani->Add(41000);
+	animations->Add(BOSS1GUN_ANI_NORMAL, ani);
+}
 
 void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a) {
 	textures->Add(ID_TEX_STAGE1_TILE, STAGE1_TILE);
