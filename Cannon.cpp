@@ -18,12 +18,12 @@ void CCannon::WatchBill() {
 	bill->GetPosition(Bill_x, Bill_y);
 	float distance = sqrt((this->x - Bill_x) * (this->x - Bill_x) + (this->y - Bill_y) * (this->y - Bill_y));
 	if (isActivated == true) {
-		if (distance > CANNON_ACTIVE_RADIUS  /*|| this->x < Bill_x*/) {
+		if (distance > CANNON_ACTIVE_RADIUS  || this->x < Bill_x) {
 			isActivated = false;
 		}
 	}
 	else {
-		if (distance < CANNON_ACTIVE_RADIUS /*&& this->x >= Bill_x*/) {
+		if (distance < CANNON_ACTIVE_RADIUS && this->x >= Bill_x) {
 			isActivated = true;
 		}
 	}
@@ -51,7 +51,6 @@ int CCannon::CalculateBillAngle() {
 			res = 180 + res;
 		}
 	}
-	DebugOutTitle(L"%f", res);
 	if (y < this->y) { 
 		return CANNON_STATE_180;
 	}
@@ -98,7 +97,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 	else {
 		timeLeft = CANNON_RELOAD_TIME;
-		//AddBullet();
+		AddBullet();
 	}
 	UpdateBullet(dt, coObjects);
 }

@@ -67,52 +67,7 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	watchBill();
-	if (this->timeleft < 0)
-	{
-		switch (this->state)
-		{
-		case WTURRET_STATE_APPEAR:
-			this->SetState(WTURRET_STATE_LEFT30);
-			break;
-		case WTURRET_STATE_LEFT30:
-			this->SetState(WTURRET_STATE_LEFT60);
-			break;
-		case WTURRET_STATE_LEFT60:
-			this->SetState(WTURRET_STATE_LEFT90);
-			break;
-		case WTURRET_STATE_LEFT90:
-			this->SetState(WTURRET_STATE_LEFT120);
-			break;
-		case WTURRET_STATE_LEFT120:
-			this->SetState(WTURRET_STATE_LEFT150);
-			break;
-		case WTURRET_STATE_LEFT150:
-			this->SetState(WTURRET_STATE_DOWN);
-			break;
-		case WTURRET_STATE_RIGHT30:
-			this->SetState(WTURRET_STATE_UP);
-			break;
-		case WTURRET_STATE_RIGHT60:
-			this->SetState(WTURRET_STATE_RIGHT30);
-			break;
-		case WTURRET_STATE_RIGHT90:
-			this->SetState(WTURRET_STATE_RIGHT60);
-			break;
-		case WTURRET_STATE_RIGHT120:
-			this->SetState(WTURRET_STATE_RIGHT90);
-			break;
-		case WTURRET_STATE_RIGHT150:
-			this->SetState(WTURRET_STATE_RIGHT120);
-			break;
-		case WTURRET_STATE_UP:
-			this->SetState(WTURRET_STATE_LEFT30);
-			break;
-		case WTURRET_STATE_DOWN:
-			this->SetState(WTURRET_STATE_RIGHT150);
-			break;
-		}
-		//AddBullet();
-	}
+	AddBullet();
 	UpdateBullet(dt, coObjects);
 	//DebugOutTitle(L"state = %d, timeleft = %d, isDeleted = %d", this->state, this->timeleft, this->isDeleted);
 }
