@@ -82,7 +82,7 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 	WatchBill();
 	if (timeleft < 0) {
-		//AddBullet();
+		AddBullet();
 		timeleft = RIFLEMAN_RELOAD_TIME;
 	}
 	UpdateBullet(dt, coObjects);
