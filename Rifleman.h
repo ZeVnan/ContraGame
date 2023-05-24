@@ -14,7 +14,6 @@ extern CBill* bill;
 
 #define RIFLEMAN_START_X 180.0f
 #define RIFLEMAN_START_Y 10.0f
-#define RIFLEMAN_GRAVITY 0.0004f
 
 #pragma region
 #define RIFLEMAN_STATE_LEFT 0
@@ -56,7 +55,7 @@ extern CBill* bill;
 #define RIFLEMAN_ANI_EXPOSE_LEFT 15060
 #define RIFLEMAN_ANI_EXPOSE_RIGHT 15061
 
-#define RIFLEMAN_SWITCH_TIME 2000
+#define RIFLEMAN_RELOAD_TIME 2000
 
 //Áp dụng được cho toàn bộ animation khi đứng của rifleman
 #define RIFLEMAN_BOX_NORMAL_HEIGHT	76
@@ -78,7 +77,6 @@ private:
 	float timeleft;
 	int waveLeft;
 public:
-	Rifleman();
 	Rifleman(float x, float y);
 	void WatchBill();
 

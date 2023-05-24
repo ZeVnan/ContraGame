@@ -1,7 +1,5 @@
 #include "Rifleman.h"
 
-Rifleman::Rifleman() {}
-
 Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	isShooting = true;
 	isHiding = false;
@@ -11,6 +9,7 @@ Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	nx = -1;
 	this->state = RIFLEMAN_STATE_NORMAL;
 	timeleft = 0;
+	waveLeft = 1;
 }
 
 void Rifleman::WatchBill() {
@@ -43,29 +42,36 @@ void Rifleman::WatchBill() {
 	}
 	// check conditions
 	if ((checking_degree >= 0 && checking_degree <= 15) || (checking_degree >= 360 && checking_degree <= 345)) {
+		// 0 +-15
 		ny = 0;
 		nx = 1;
 	}
 	if (checking_degree >= 165 && checking_degree <= 195) {
+		//180 +- 15
 		ny = 0;
 		nx = -1;
 	}
-	if (checking_degree >= 195 && checking_degree <= 270) {
+	if (checking_degree >= 210 && checking_degree <= 240) {
+		//225 +- 15
 		ny = -1;
 		nx = -1;
 	}
-	if (checking_degree >= 90 && checking_degree <= 175) {
+	if (checking_degree >= 120 && checking_degree <= 150) {
+		//135 +- 15
 		ny = 1;
 		nx = -1;
 	}
-	if (checking_degree >= 15 && checking_degree <= 90) {
+	if (checking_degree >= 30 && checking_degree <= 60) {
+		//45 +- 15
 		ny = 1;
 		nx = 1;
 	}
-	if (checking_degree >= 270 && checking_degree <= 345) {
+	if (checking_degree >= 300 && checking_degree <= 330) {
+		//315 +- 15
 		ny = -1;
 		nx = 1;
 	}
+	//DebugOutTitle(L"c_degree = %f", checking_degree);
 }
 
 void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
@@ -76,8 +82,8 @@ void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 	WatchBill();
 	if (timeleft < 0) {
-		AddBullet();
-		timeleft = RIFLEMAN_SWITCH_TIME;
+		//AddBullet();
+		timeleft = RIFLEMAN_RELOAD_TIME;
 	}
 	UpdateBullet(dt, coObjects);
 }
