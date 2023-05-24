@@ -2,6 +2,7 @@
 
 CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 {
+	isActivated = false;
 	this->state = WTURRET_STATE_APPEAR;
 	timeLeft = WTURRET_TIME_APPEAR;
 	HP = 100;
@@ -15,6 +16,11 @@ void CWallTurret::watchBill() {
 
 	float xx, yy;
 	this->GetPosition(xx, yy);
+
+	float distance_to_Bill = sqrt((xx - x) * (xx - x) + (yy - y) * (yy - y));
+	if (distance_to_Bill <= WALLTURRET_ACTIVE_RADIUS) {
+		isActivated = true;
+	}
 
 	float tan = abs(xx - x) / abs(yy - y);// get angle's tan value
 	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
@@ -57,6 +63,7 @@ void CWallTurret::watchBill() {
 
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	watchBill();
 	if (this->HP <= 0 && this->isExploded == false) {
 		this->SetState(WTURRET_STATE_EXPLODE);
 	}
@@ -64,9 +71,6 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (this->isExploded == true && this->timeLeft < 0) {
 		isDeleted = true;
 		return;
-	}
-	if (this->isExploded == false) {
-		watchBill();
 	}
 	if (this->timeLeft < 0)
 	{

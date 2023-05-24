@@ -3,6 +3,7 @@
 Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	isShooting = true;
 	isHiding = false;
+	isActivated = false;
 	gunx = x;
 	guny = y;
 	ny = 0;
@@ -18,6 +19,11 @@ void Rifleman::WatchBill() {
 
 	float xx, yy;
 	this->GetPosition(xx, yy);
+
+	float distance_to_Bill = sqrt((xx - x) * (xx - x) + (yy - y) * (yy - y));
+	if (distance_to_Bill <= RIFLEMAN_ACTIVE_RADIUS) {
+		isActivated = true;
+	}
 
 	float tan = abs(xx - x) / abs(yy - y);// get angle's tan value
 	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
@@ -76,11 +82,13 @@ void Rifleman::WatchBill() {
 
 void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	timeleft -= dt;
+	WatchBill();
+	if (isActivated == false)
+		return;
 	if (this->isExploded == true && this->timeleft < 0) {
 		isDeleted = true;
 		return;
 	}
-	WatchBill();
 	if (timeleft < 0) {
 		AddBullet();
 		timeleft = RIFLEMAN_RELOAD_TIME;
