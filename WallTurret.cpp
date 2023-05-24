@@ -3,7 +3,7 @@
 CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 {
 	this->state = WTURRET_STATE_APPEAR;
-	timeleft = WTURRET_TIME_APPEAR;
+	timeLeft = WTURRET_TIME_APPEAR;
 	HP = 100;
 	gunx = x;
 	guny = y;
@@ -60,16 +60,21 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (this->HP <= 0 && this->isExploded == false) {
 		this->SetState(WTURRET_STATE_EXPLODE);
 	}
-	this->timeleft -= dt;
-	if (this->isExploded == true && this->timeleft < 0) {
+	this->timeLeft -= dt;
+	if (this->isExploded == true && this->timeLeft < 0) {
 		isDeleted = true;
 		return;
 	}
-
-	watchBill();
-	AddBullet();
+	if (this->isExploded == false) {
+		watchBill();
+	}
+	if (this->timeLeft < 0)
+	{
+		AddBullet();
+		this->timeLeft = WTURRET_TIME_RELOAD;
+	}
 	UpdateBullet(dt, coObjects);
-	//DebugOutTitle(L"state = %d, timeleft = %d, isDeleted = %d", this->state, this->timeleft, this->isDeleted);
+	DebugOutTitle(L"timeleft = %d", this->timeLeft);
 }
 void CWallTurret::Render()
 {
@@ -128,47 +133,35 @@ void CWallTurret::SetState(int state)
 	switch (state)
 	{
 	case WTURRET_STATE_APPEAR:
-		timeleft = WTURRET_TIME_APPEAR;
+		timeLeft = WTURRET_TIME_APPEAR;
 		break;
 	case WTURRET_STATE_LEFT30:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_LEFT60:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_LEFT90:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_LEFT120:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_LEFT150:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_DOWN:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT150:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT120:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT90:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT60:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_RIGHT30:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_UP:
-		timeleft = WTURRET_TIME_ROTATE;
 		break;
 	case WTURRET_STATE_EXPLODE:
 		this->isExploded = true;
-		timeleft = TIME_EXPLODE;
+		timeLeft = TIME_EXPLODE;
 		break;
 	}
 	CGameObject::SetState(state);

@@ -28,8 +28,8 @@ extern CBill* bill;
 #define WTURRET_STATE_EXPLODE	40
 
 //define temporary animation time
-#define WTURRET_TIME_APPEAR		700
-#define WTURRET_TIME_ROTATE		1500
+#define WTURRET_TIME_APPEAR		1000
+#define WTURRET_TIME_RELOAD		2000
 
 //define animation
 #define WTURRET_ANI_APPEAR		17000
@@ -55,7 +55,6 @@ extern CBill* bill;
 class CWallTurret : public CGameObject
 {
 private:
-	int timeleft;
 	int HP;
 	vector<vector<LPBULLET>> waveContainer;
 	float gunx;
