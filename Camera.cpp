@@ -1,26 +1,43 @@
 #include "Camera.h"
 #include "WorldPart.h"
-CCamera::CCamera(float worldWidth, float worldHeight) {
-	maxX = worldWidth - CAM_WIDTH / 2;
-	maxY = worldHeight - CAM_HEIGHT / 2;
-	minX = CAM_WIDTH / 2;
-	minY = CAM_HEIGHT / 2;
+CCamera::CCamera(float worldWidth, float worldHeight, int stage) {
+	this->stage = stage;
+	if (stage == 1) {
+		width = CAM_WIDTH_1;
+		height = CAM_HEIGHT_1;
+	}
+	else if (stage == 3) {
+		width = CAM_WIDTH_3;
+		height = CAM_HEIGHT_3;
+	}
+	else {
+		width = 500;
+		height = 450;
+	}
+	maxX = worldWidth - width / 2;
+	maxY = worldHeight - height / 2;
+	minX = width / 2;
+	minY = height / 2;
 }
 void CCamera::Update(float characterX, float characterY) {
 	this->x = characterX;
 	this->y = characterY;
+	if (characterX > this->minX)
+		this->minX = characterX;
+	if (characterY > this->minY)
+		this->minY = characterY;
+	if (stage == 3 && y > 3900) {
+		minY = 3900 + height / 2;
+	}
 	if (x < minX) x = minX;
 	if (x > maxX) x = maxX;
 	if (y < minY) y = minY;
 	if (y > maxY) y = maxY;
+	//DebugOutTitle(L"y = %f, minY = %f, stage = %d", y, minY, stage);
 }
 void CCamera::TranslateToCamCoord(float& x, float& y) {
-	x = x - (this->x - CAM_WIDTH / 2);
-	y = -y + (this->y + CAM_HEIGHT / 2);
-}
-void CCamera::TranslateToCamCoord2(float& x, float& y) {
-	x = x - (this->x - CAM_WIDTH / 2);
-	y = y + (this->y - CAM_HEIGHT / 2);
+	x = x - (this->x - width / 2);
+	y = -y + (this->y + height / 2);
 }
 bool CCamera::CheckWorldPart(LPWORLDPART part) {
 	float part_left = part->getX();
@@ -28,10 +45,10 @@ bool CCamera::CheckWorldPart(LPWORLDPART part) {
 	float part_right = part->getX() + part->getWidth();
 	float part_bottom = part->getY();
 
-	float cam_left = this->x - CAM_WIDTH / 2;
-	float cam_top = this->y + CAM_HEIGHT / 2;
-	float cam_right = this->x + CAM_WIDTH / 2;
-	float cam_bottom = this->y - CAM_HEIGHT / 2;
+	float cam_left = this->x - width / 2;
+	float cam_top = this->y + height / 2;
+	float cam_right = this->x + width / 2;
+	float cam_bottom = this->y - height / 2;
 
 	float OK_X = false, OK_Y = false;
 

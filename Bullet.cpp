@@ -27,9 +27,11 @@ CBullet::CBullet(float x, float y, int angle, bool friendly) : CBullet() {
 	maxVy = sin(radian) * BULLET_SPEED;
 }
 BOOLEAN CBullet::outOfScreen() {
-	float cx, cy;
+	float cx, cy, cw, ch;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-	if (x < (cx - CAM_WIDTH / 2) || x >(cx + CAM_WIDTH / 2) || y < (cy - CAM_HEIGHT / 2) || y >(cy + CAM_HEIGHT / 2))
+	cw = CGame::GetInstance()->GetCamera()->GetCamWidth();
+	ch = CGame::GetInstance()->GetCamera()->GetCamHeight();
+	if (x < (cx - cw / 2) || x >(cx + cw / 2) || y < (cy - ch / 2) || y > (cy + ch / 2))
 		return true;
 	return false;
 }
@@ -153,7 +155,7 @@ void CBullet::CollisionWithSoldier(LPCOLLISIONEVENT e) {
 	e->src_obj->Delete();
 }
 void CBullet::CollisionWithBill(LPCOLLISIONEVENT e) {
-	if (friendly == true || (LPBILL(e->dest_obj))->IsDiving() == true)
+	if (friendly == true || (LPBILL(e->dest_obj))->IsDiving() == true || (LPBILL(e->dest_obj))->IsVulnerable() == false)
 		return;
 	e->src_obj->Delete();
 	if (e->normal_x != 0) {
