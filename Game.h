@@ -43,7 +43,7 @@ class CGame
 
 	HINSTANCE hInstance;
 
-	CCamera* camera = new CCamera(1000, CAM_HEIGHT);
+	CCamera* camera = new CCamera(1000, 1000, 0);
 	ID3D10SamplerState* pPointSamplerState;
 
 public:

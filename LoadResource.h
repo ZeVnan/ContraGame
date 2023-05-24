@@ -53,6 +53,7 @@
 #define ID_TEX_BOSS1 30
 
 #define ID_TEX_STAGE1_TILE 100
+#define ID_TEX_STAGE3_TILE 101
 
 #define ID_TEX_SCREEN_INTRO 200
 #define ID_TEX_SCREEN_WAITING 201
@@ -78,6 +79,8 @@
 
 #define STAGE1_PATH "Map\\stage1.xml"
 #define STAGE1_TILE L"Map\\stage1.png"
+#define STAGE3_PATH "Map\\stage3.xml"
+#define STAGE3_TILE L"Map\\stage3.png"
 
 #define SCREEN_INTRO_PATH L"Images\\intro.png"
 #define SCREEN_WAITING_PATH L"Images\\BeginState.png"
@@ -95,6 +98,6 @@ void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& an
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 
-void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a);
+void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a, int stage);
 
 void LoadScreenResources(CTextures*& textures, CSprites*& sprites);

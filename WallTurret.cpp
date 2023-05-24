@@ -74,7 +74,7 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->timeLeft = WTURRET_TIME_RELOAD;
 	}
 	UpdateBullet(dt, coObjects);
-	DebugOutTitle(L"timeleft = %d", this->timeLeft);
+	//DebugOutTitle(L"timeleft = %d", this->timeLeft);
 }
 void CWallTurret::Render()
 {
