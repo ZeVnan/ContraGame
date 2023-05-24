@@ -69,7 +69,8 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	watchBill();
 	if (this->timeleft < 0)
 	{
-		switch (this->state)
+
+		/*switch (this->state)
 		{
 		case WTURRET_STATE_APPEAR:
 			this->SetState(WTURRET_STATE_LEFT30);
@@ -110,7 +111,7 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		case WTURRET_STATE_DOWN:
 			this->SetState(WTURRET_STATE_RIGHT150);
 			break;
-		}
+		}*/
 		//AddBullet();
 	}
 	UpdateBullet(dt, coObjects);
@@ -204,7 +205,7 @@ void CWallTurret::SetState(int state)
 		break;
 	case WTURRET_STATE_RIGHT60:
 		timeleft = WTURRET_TIME_ROTATE;
-		break;
+		break;	
 	case WTURRET_STATE_RIGHT30:
 		timeleft = WTURRET_TIME_ROTATE;
 		break;
