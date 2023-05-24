@@ -59,7 +59,7 @@ public:
 	void CollisionWith(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
 	bool isCollidable() {
-		return !isExploded;
+		return isAppear;
 	}
 	void WatchBill();
 	int CalculateBillAngle();

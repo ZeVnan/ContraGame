@@ -8,27 +8,27 @@ CCannon::CCannon(float x, float y) : CGameObject(x, y) {
 	isShooting = false;
 	isAppear = false;
 	isActivated = false;
-	this->state = CANNON_STATE_APPEAR;
+	isExploded = false;
 	timeLeft = CANNON_APPEAR_TIME;
 	HP = 100;
 	//DebugOutTitle(L"x = %f, y = %f", this->x, this->y);
 }
 
 void CCannon::WatchBill() {
-	float x, y;
-	bill->GetPosition(x, y);
+	float Bill_x, Bill_y;
+	bill->GetPosition(Bill_x, Bill_y);
+	float distance = sqrt((this->x - Bill_x) * (this->x - Bill_x) + (this->y - Bill_y) * (this->y - Bill_y));
 	if (isActivated == true) {
-		if (this->x - x < 0 || abs(this->x - x) >= CANNON_ACTIVE_RADIUS)
+		if (distance > CANNON_ACTIVE_RADIUS || this->x < Bill_x) {
 			isActivated = false;
-		if (abs(this->y - y) >= CANNON_ACTIVE_RADIUS)
-			isActivated = false;
+		}
 	}
 	else {
-		if (this->x - x <= CANNON_ACTIVE_RADIUS && this->x - x > 0 && abs(y - this->y) <= CANNON_ACTIVE_RADIUS)
+		if (distance < CANNON_ACTIVE_RADIUS && this->x >= Bill_x) {
 			isActivated = true;
+		}
 	}
-	//DebugOutTitle(L"isActivated = %d", isActivated);
-	//DebugOutTitle(L"x = %f, y = %f, xCannon = %f, yCannon = %f, xCannon - x = %f, isActivated = %f", x, y, this->x, this->y, this->x - x, isActivated);
+	//DebugOutTitle(L"Cannon_x = %f, Bill_x = %f, distance = %f, isActivated = %d", this->x, Bill_x, distance, isActivated);
 }
 
 int CCannon::CalculateBillAngle() {
@@ -37,7 +37,6 @@ int CCannon::CalculateBillAngle() {
 	bill->GetPosition(x, y);
 	float res = atan(abs(this->y - y) / abs(this->x - x)) * 180 / PI;
 	res = 180 - res;
-	//DebugOutTitle(L"test = %f", res);
 
 	if (y < this->y) { 
 		return CANNON_STATE_LEFT;
@@ -54,6 +53,7 @@ int CCannon::CalculateBillAngle() {
 }
 
 void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	
 	if (this->HP <= 0 && this->isExploded == false) {
 		this->SetState(CANNON_STATE_EXPLODE);
 	}
@@ -62,19 +62,23 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		return;
 	}
 	WatchBill();
-	
 	if (isActivated) {
 		if (!isExploded) {
-			this->SetState(CalculateBillAngle());
+			if (!isAppear) {
+				isAppear = true;
+				this->SetState(CANNON_STATE_APPEAR);
+			}
+			else {
+				this->SetState(CalculateBillAngle());
+			}
 		}
+		
 	}
 	else {
-		if (!isAppear) {
-			isAppear = true;
-		}
-		this->isShooting = false;
+		isShooting = false;
 		//return;
 	}
+	//DebugOutTitle(L"isAppear = %d", isAppear);
 	if (timeLeft > 0) {
 		timeLeft -= dt;
 	}
@@ -86,6 +90,9 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 }
 
 void CCannon::Render() {
+	if (isActivated == false && isAppear == false) {
+		return;
+	}
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
 
