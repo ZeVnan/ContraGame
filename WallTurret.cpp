@@ -111,7 +111,7 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			this->SetState(WTURRET_STATE_RIGHT150);
 			break;
 		}
-		AddBullet();
+		//AddBullet();
 	}
 	UpdateBullet(dt, coObjects);
 	//DebugOutTitle(L"state = %d, timeleft = %d, isDeleted = %d", this->state, this->timeleft, this->isDeleted);

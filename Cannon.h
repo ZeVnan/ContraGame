@@ -12,19 +12,19 @@
 #define CANNON_ACTIVE_RADIUS 200
 
 #define CANNON_APPEAR_TIME 600
-#define CANNON_SWITCH_TIME 2000
+#define CANNON_RELOAD_TIME 2000
 #define CANNON_WAVE_BULLET 3
 
-#define CANNON_STATE_LEFT 10
-#define CANNON_STATE_LEFT_60 20
-#define CANNON_STATE_LEFT_30 30
+#define CANNON_STATE_180 10
+#define CANNON_STATE_150 20
+#define CANNON_STATE_120 30
 #define CANNON_STATE_APPEAR 40
 #define CANNON_STATE_EXPLODE 50
 
 
-#define CANNON_ANI_LEFT 14000
-#define CANNON_ANI_LEFT_60 14001
-#define CANNON_ANI_LEFT_30 14002
+#define CANNON_ANI_180 14000
+#define CANNON_ANI_150 14001
+#define CANNON_ANI_120 14002
 #define CANNON_ANI_APPEAR 14003
 
 
@@ -43,7 +43,6 @@ private:
 	int waveLeft = CANNON_WAVE_BULLET;
 	int timeLeft;
 public:
-	CCannon();
 	CCannon(float x, float y);
 
 	void TakeDamage(int damage) {
