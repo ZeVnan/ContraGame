@@ -78,7 +78,7 @@ void LoadStage3() {
 	world = new CWorld(4455, 4455, 3);
 	//objects
 	world->getObjectsListFromFile(STAGE3_PATH);
-	bill = new CBill(85, 190, 480, world->getHeight() - 20, 3);
+	bill = new CBill(85, 1300, 480, world->getHeight() - 20, 3);//BILL
 	world->getObjectList().push_back(bill);
 	//tiles
 	CTextures* textures = CTextures::GetInstance();
