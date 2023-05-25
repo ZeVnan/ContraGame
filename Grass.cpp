@@ -4,7 +4,7 @@ CGrass::CGrass(float x, float y) :CGameObject(x, y) {
 
 }
 void CGrass::Render() {
-	//RenderBox();
+	RenderBox();
 }
 void CGrass::CreateBox(DWORD dt) {
 	bbox.left = x - GRASS_WIDTH / 2;

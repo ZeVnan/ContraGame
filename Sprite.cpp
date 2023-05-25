@@ -80,13 +80,19 @@ void CSprite::Draw(float x, float y)
 {
 	CGame* g = CGame::GetInstance();
 
-	float cx, cy;
+	float cx, cy, cw, ch;
 	cx = x;
 	cy = y;
 	g->GetCamera()->TranslateToCamCoord(cx, cy);
+	cw = g->GetCamera()->GetCamWidth();
+	ch = g->GetCamera()->GetCamHeight();
 	D3DXMatrixScaling(&this->matScaling, (FLOAT)getSpriteWidth() * 2, (FLOAT)getSpriteHeight() * 2, 2.0f);
 	D3DXMATRIX matTranslation;
-	D3DXMatrixTranslation(&matTranslation, cx, g->GetBackBufferHeight() - cy, 0.1f);
+	D3DXMatrixTranslation(
+		&matTranslation,
+		cx + (SCREEN_WIDTH - cw) / 2,
+		g->GetBackBufferHeight() - cy - (SCREEN_HEIGHT - ch) / 2,
+		0.1f);
 
 	this->sprite.matWorld = (this->matScaling *this->matRotation* matTranslation);
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
@@ -94,13 +100,19 @@ void CSprite::Draw(float x, float y)
 void CSprite::DrawTile(float x, float y) {
 	CGame* g = CGame::GetInstance();
 
-	float cx, cy;
+	float cx, cy, cw, ch;
 	cx = x;
 	cy = y;
-	g->GetCamera()->TranslateToCamCoord2(cx, cy);
+	g->GetCamera()->TranslateToCamCoord(cx, cy);
+	cw = g->GetCamera()->GetCamWidth();
+	ch = g->GetCamera()->GetCamHeight();
 	D3DXMatrixScaling(&this->matScaling, (FLOAT)getSpriteWidth(), (FLOAT)getSpriteHeight(), 1.0f);
 	D3DXMATRIX matTranslation;
-	D3DXMatrixTranslation(&matTranslation, cx, g->GetBackBufferHeight() - cy, 0.1f);
+	D3DXMatrixTranslation
+	(&matTranslation,
+		cx + (SCREEN_WIDTH - cw) / 2,
+		g->GetBackBufferHeight() - cy - (SCREEN_HEIGHT - ch) / 2,
+		0.1f);
 
 	this->sprite.matWorld = (this->matScaling * this->matRotation * matTranslation);
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);

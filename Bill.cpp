@@ -19,11 +19,14 @@ CBill::CBill(float x, float y, float maxx, float maxy, int stage) :CGameObject(x
 	isDropping = false;
 	isJumping = true;
 	isDying = false;
+	disableDrop = false;
+	isDead = false;
+	isVulnerable = true;
 	ny = 0;
 	maxVx = 0.0f;
 	maxVy = 0.0f;
-	this->maxx = maxx;
-	this->maxy = maxy;
+	this->maxX = maxx;
+	this->maxY = maxy;
 	gunx = x;
 	guny = y;
 	this->stage = stage;
@@ -34,21 +37,36 @@ CBill::CBill(float x, float y, float maxx, float maxy, int stage) :CGameObject(x
 	bulletMtime = 0;
 	timeLeft = 0;
 	lifeLeft = 4;
+
+	if (stage == 1) {
+		minX = 10;
+		minY = 50;
+	}
+	else{
+		minX = 10;
+		minY = 100;
+	}
 }
 void CBill::worldControl() {
+	//DebugOutTitle(L"minX = %f, minY = %f, maxX = %f, maxY = %f", minX, minY, maxX, maxY);
 	switch (stage) {
 	case 1:
-		if (vx < 0 && x < 10)
-			x = 10;
-		if (vy < 0 && y < 50)
+		if (vx < 0 && x < minX)
+			x = minX;
+		if (vy < 0 && y < minY)
 		{
-			SetState(BILL_STATE_DYING_RIGHT);
+			if (isDying == true) {
+				y = minY;
+			}
+			else {
+				SetState(BILL_STATE_DYING_RIGHT);
+			}
 		}
-		if (vx > 0 && x > maxx) {
+		if (vx > 0 && x > maxX) {
 			gameControl = waiting3;
 		}
-		if (vy > 0 && y > maxy)
-			y = maxy;
+		if (vy > 0 && y > maxY)
+			y = maxY;
 		if (x > 6432 && x < 6464) {
 			this->SetState(BILL_STATE_JUMP);
 		}
@@ -57,22 +75,73 @@ void CBill::worldControl() {
 		}
 		break;
 	case 3:
-
+		if (vx < 0 && x < minX)
+			x = minX;
+		if (vy < 0 && y < minY)
+		{
+			if (isDying == true) {
+				y = minY;
+			}
+			else {
+				SetState(BILL_STATE_DYING_RIGHT);
+			}
+		}
+		if (vx > 0 && x > maxX) {
+			x = maxX;
+		}
+		if (vy > 0 && y > maxY)
+			y = maxY;
+		if (lifeLeft <= 0) {
+			gameControl = gameover;
+		}
+		if (y >= 3900 || y <= 135) {
+			disableDrop = true;
+		}
+		else {
+			disableDrop = false;
+		}
 		break;
 	}
 }
 void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	//don't change the order of this function
-	if (timeLeft > 0)
+	if (timeLeft >= 0)
 		timeLeft -= dt;
 	if (isDying == true && timeLeft < 0) {
 		if (lifeLeft > 0) {
 			lifeLeft --;
-			y = BILL_START_Y;
-			x -= 200;
-			this->SetState(BILL_STATE_REVIVE);
-			vy += BILL_GRAVITY * dt;
+			isDying = false;
+			isDead = true;
+			timeLeft = 1000;
 		}
+		if (stage == 1) {
+			x = minX + 10;
+			y = maxY - 10;
+		}
+		else {
+			x = (maxX - minX) / 2;
+			y += 300;
+		}
+	}
+	if (isDead == true && timeLeft < 0) {
+		this->SetState(BILL_STATE_REVIVE);
+		isVulnerable = false;
+		timeLeft = 2000;
+		vy += BILL_GRAVITY * dt;
+		return;
+	}
+	if (isVulnerable == false && timeLeft < 0) {
+		isVulnerable = true;
+	}
+	if (stage == 1) {
+		float tempMinX = x - CAM_WIDTH_1 / 2;
+		if (tempMinX > minX)
+			minX = tempMinX;
+	}
+	else {
+		float tempMinY = y - CAM_HEIGHT_3 / 2;
+		if (tempMinY > minY)
+			minY = tempMinY;
 	}
 	vx = maxVx;
 	if (isOnPlatform == false && isSwimming == false)
@@ -86,11 +155,13 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	isDropping = false;
-	//DebugOutTitle(L"life left = %d", lifeLeft);
+	DebugOutTitle(L"lifeLeft = %d", lifeLeft);
 }
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
+	if (isDead == true)
+		return;
 	if (isSwimming == false) {
 		if (vy != 0) {
 			if (nx > 0) {
@@ -304,7 +375,7 @@ void CBill::SetState(int state) {
 		if (vy != 0)
 			break;
 		if (isSwimming == false) {
-			if (ny == -1) {
+			if (ny == -1 && disableDrop == false) {
 				if (vx != 0)
 					break;
 				isJumping = true;
@@ -406,6 +477,7 @@ void CBill::SetState(int state) {
 		isDropping = false;
 		isJumping = true;
 		isDying = false;
+		isDead = false;
 		ny = 0;
 		maxVx = 0.0f;
 		maxVy = 0.0f; 
