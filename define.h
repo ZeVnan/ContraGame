@@ -26,11 +26,12 @@ enum eID
 	BillID = 0,			// Main character.
 	BulletID = 1,
 	SoldierID = 2,
-	AircraftID = 3,
-	CannonID = 4,
-	RiflemanID = 5,
-	FalconID = 6,
-	WallTurretID = 7,
+	AircraftID = 3,//
+	CannonID = 4,//
+	RiflemanID = 5,//
+	FalconID = 6,//
+	WallTurretID = 7,//
+	ScubaSoldierID = 8,// newly created 5-25-2023 2:25PM
 
 	WATER = 11,
 	LAND = 12,

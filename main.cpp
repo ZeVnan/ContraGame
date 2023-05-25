@@ -61,7 +61,7 @@ void LoadResources() {
 	world = new CWorld(6656, 6656, 1);
 	//objects
 	world->getObjectsListFromFile(STAGE1_PATH);
-	bill = new CBill(100, 400, world->getWidth() -20, 448, 1);
+	bill = new CBill(100, 400, 1);
 	world->getObjectList().push_back(bill);
 	//tile
 	CTextures* textures = CTextures::GetInstance();
@@ -78,7 +78,7 @@ void LoadStage3() {
 	world = new CWorld(4455, 4455, 3);
 	//objects
 	world->getObjectsListFromFile(STAGE3_PATH);
-	bill = new CBill(85, 190, 480, world->getHeight() - 20, 3);
+	bill = new CBill(85, 190, 3);//BILL
 	world->getObjectList().push_back(bill);
 	//tiles
 	CTextures* textures = CTextures::GetInstance();
@@ -127,13 +127,6 @@ void Update(DWORD dt)
 	case stage1:
 		world->Update(dt);
 		world->ClearDeletedObjects();
-
-		float x, y;
-		bill->GetPosition(x, y);
-		CGame::GetInstance()->GetCamera()->Update(x, y);
-		float cx, cy;
-		CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-		//DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
 		break;
 	case waiting3:
 		if (timeLeft > 0) {
@@ -148,11 +141,6 @@ void Update(DWORD dt)
 	case stage3:
 		world->Update(dt);
 		world->ClearDeletedObjects();
-
-		bill->GetPosition(x, y);
-		CGame::GetInstance()->GetCamera()->Update(x, y);
-		CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
-		//DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
 	case gameover:
 
 		break;

@@ -14,6 +14,7 @@ extern CBill* bill;
 
 #define RIFLEMAN_START_X 180.0f
 #define RIFLEMAN_START_Y 10.0f
+#define RIFLEMAN_ACTIVE_RADIUS 300
 
 #pragma region
 #define RIFLEMAN_STATE_LEFT 0
@@ -70,6 +71,7 @@ class Rifleman : public CGameObject
 private:
 	BOOLEAN isShooting;
 	BOOLEAN isHiding;
+	BOOLEAN isActivated;
 	vector<vector<LPBULLET>> waveContainer;
 	float gunx;
 	float guny;

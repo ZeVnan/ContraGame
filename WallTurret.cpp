@@ -2,6 +2,7 @@
 
 CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 {
+	isActivated = false;
 	this->state = WTURRET_STATE_APPEAR;
 	timeLeft = WTURRET_TIME_APPEAR;
 	HP = 100;
@@ -10,11 +11,18 @@ CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 }
 
 void CWallTurret::watchBill() {
+	if (isExploded == true)
+		return;
 	float x, y;
 	bill->GetPosition(x, y);
 
 	float xx, yy;
 	this->GetPosition(xx, yy);
+
+	float distance_to_Bill = sqrt((xx - x) * (xx - x) + (yy - y) * (yy - y));
+	if (distance_to_Bill <= WALLTURRET_ACTIVE_RADIUS) {
+		isActivated = true;
+	}
 
 	float tan = abs(xx - x) / abs(yy - y);// get angle's tan value
 	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
@@ -40,18 +48,18 @@ void CWallTurret::watchBill() {
 
 	// set State follow Bill's position
 
-	if (checking_degree >= 355 || checking_degree <= 5) this->state = WTURRET_STATE_RIGHT90;
-	if (checking_degree >= 25 && checking_degree <= 35) this->state = WTURRET_STATE_RIGHT60;
-	if (checking_degree >= 55 && checking_degree <= 65) this->state = WTURRET_STATE_RIGHT30;
-	if (checking_degree >= 85 && checking_degree <= 95) this->state = WTURRET_STATE_UP;
-	if (checking_degree >= 115 && checking_degree <= 125) this->state = WTURRET_STATE_LEFT30;
-	if (checking_degree >= 145 && checking_degree <= 155) this->state = WTURRET_STATE_LEFT60;
-	if (checking_degree >= 175 && checking_degree <= 185) this->state = WTURRET_STATE_LEFT90;
-	if (checking_degree >= 205 && checking_degree <= 215) this->state = WTURRET_STATE_LEFT120;
-	if (checking_degree >= 235 && checking_degree <= 245) this->state = WTURRET_STATE_LEFT150;
-	if (checking_degree >= 265 && checking_degree <= 275) this->state = WTURRET_STATE_DOWN;
-	if (checking_degree >= 295 && checking_degree <= 305) this->state = WTURRET_STATE_RIGHT150;
-	if (checking_degree >= 325 && checking_degree <= 335) this->state = WTURRET_STATE_RIGHT120;
+	if (checking_degree >= 345 || checking_degree <= 15) this->state = WTURRET_STATE_RIGHT90;
+	else if (checking_degree >= 15 && checking_degree <= 45) this->state = WTURRET_STATE_RIGHT60;
+	else if (checking_degree >= 45 && checking_degree <= 75) this->state = WTURRET_STATE_RIGHT30;
+	else if (checking_degree >= 75 && checking_degree <= 105) this->state = WTURRET_STATE_UP;
+	else if (checking_degree >= 105 && checking_degree <= 135) this->state = WTURRET_STATE_LEFT30;
+	else if (checking_degree >= 135 && checking_degree <= 165) this->state = WTURRET_STATE_LEFT60;
+	else if (checking_degree >= 165 && checking_degree <= 195) this->state = WTURRET_STATE_LEFT90;
+	else if (checking_degree >= 195 && checking_degree <= 225) this->state = WTURRET_STATE_LEFT120;
+	else if (checking_degree >= 225 && checking_degree <= 255) this->state = WTURRET_STATE_LEFT150;
+	else if (checking_degree >= 255 && checking_degree <= 285) this->state = WTURRET_STATE_DOWN;
+	else if (checking_degree >= 285 && checking_degree <= 315) this->state = WTURRET_STATE_RIGHT150;
+	else if (checking_degree >= 315 && checking_degree <= 345) this->state = WTURRET_STATE_RIGHT120;
 
 }
 
@@ -65,16 +73,14 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isDeleted = true;
 		return;
 	}
-	if (this->isExploded == false) {
-		watchBill();
-	}
-	if (this->timeLeft < 0)
+	watchBill();
+	if (isExploded == false && this->timeLeft < 0)
 	{
 		AddBullet();
 		this->timeLeft = WTURRET_TIME_RELOAD;
 	}
 	UpdateBullet(dt, coObjects);
-	//DebugOutTitle(L"timeleft = %d", this->timeLeft);
+	//DebugOutTitle(L"timeleft = %d, state = %d", this->timeLeft, state);
 }
 void CWallTurret::Render()
 {
@@ -168,19 +174,48 @@ void CWallTurret::SetState(int state)
 }
 
 int CWallTurret::CalculateAngle() {
-	if (this->state == WTURRET_STATE_APPEAR) return 180;
-	else if (this->state == WTURRET_STATE_LEFT30) return 120;
-	else if (this->state == WTURRET_STATE_LEFT60) return 150;
-	else if (this->state == WTURRET_STATE_LEFT90) return 180;
-	else if (this->state == WTURRET_STATE_LEFT120) return 210;
-	else if (this->state == WTURRET_STATE_LEFT150) return 240;
-	else if (this->state == WTURRET_STATE_DOWN) return 270;
-	else if (this->state == WTURRET_STATE_RIGHT150) return 300;
-	else if (this->state == WTURRET_STATE_RIGHT120) return 330;
-	else if (this->state == WTURRET_STATE_RIGHT90) return 0;
-	else if (this->state == WTURRET_STATE_RIGHT60) return 30;
-	else if (this->state == WTURRET_STATE_RIGHT30) return 60;
-	else if (this->state == WTURRET_STATE_UP) return 90;
+
+	switch (this->state) {
+	case WTURRET_STATE_APPEAR:
+		return 180;
+		break;
+	case WTURRET_STATE_LEFT30:
+		return 120;
+		break;
+	case WTURRET_STATE_LEFT60:
+		return 150;
+		break;
+	case WTURRET_STATE_LEFT90:
+		return 180;
+		break;
+	case WTURRET_STATE_LEFT120:
+		return 210;
+		break;
+	case WTURRET_STATE_LEFT150:
+		return 240;
+		break;
+	case WTURRET_STATE_DOWN:
+		return 270;
+		break;
+	case WTURRET_STATE_RIGHT150:
+		return 300;
+		break;
+	case WTURRET_STATE_RIGHT120:
+		return 330;
+		break;
+	case WTURRET_STATE_RIGHT90:
+		return 0;
+		break;
+	case WTURRET_STATE_RIGHT60:
+		return 30;
+		break;
+	case WTURRET_STATE_RIGHT30:
+		return 60;
+		break;
+	case WTURRET_STATE_UP:
+		return 90;
+		break;
+	}
 }
 vector<LPBULLET> CWallTurret::ShootNormalBullet(int angle) {
 	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, false);

@@ -155,7 +155,10 @@ void CBullet::CollisionWithSoldier(LPCOLLISIONEVENT e) {
 	e->src_obj->Delete();
 }
 void CBullet::CollisionWithBill(LPCOLLISIONEVENT e) {
-	if (friendly == true || (LPBILL(e->dest_obj))->IsDiving() == true || (LPBILL(e->dest_obj))->IsVulnerable() == false)
+	if (friendly == true ||
+		(LPBILL(e->dest_obj))->IsDiving() == true ||
+		(LPBILL(e->dest_obj))->IsVulnerable() == false||
+		(LPBILL(e->dest_obj))->IsDead() == true)
 		return;
 	e->src_obj->Delete();
 	if (e->normal_x != 0) {
