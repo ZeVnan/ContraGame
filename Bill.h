@@ -94,9 +94,6 @@
 #define BILL_NORMAL_SWIM_POSITION_ADJUST 17.0f
 #define BILL_WATER_TO_LAND_POSITION_ADJUST 7.0f;
 
-#define BILL_START_X 100.0f
-#define BILL_START_Y 400.0f
-
 #define BILL_WAVE_BULLET_NORMAL 4
 #define BILL_WAVE_BULLET_LASER 1
 #define BILL_WAVE_BULLET_FLAME 4
@@ -127,11 +124,16 @@ class CBill :public CGameObject
 	BOOLEAN isDropping;		//support collision
 	BOOLEAN isJumping;		//support change bbox
 	BOOLEAN isDying;
+	BOOLEAN disableDrop;
+	BOOLEAN isDead;
+	BOOLEAN isVulnerable;
 	int ny;					//normal:0, up:1, down:-1
 	float maxVx;
 	float maxVy;
-	float maxx;
-	float maxy;
+	float maxX;
+	float maxY;
+	float minX;
+	float minY;
 	float gunx;		
 	float guny;
 	int stage;
@@ -146,6 +148,7 @@ class CBill :public CGameObject
 
 	int lifeLeft;
 	void worldControl();
+	
 public:
 	CBill(float x, float y, float maxx, float maxy, int stage);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
@@ -183,6 +186,7 @@ public:
 	void RenderBullet();
 
 	bool IsDiving() { return isDiving; }
+	bool IsVulnerable() { return isVulnerable; }
 };
 
 typedef CBill* LPBILL;

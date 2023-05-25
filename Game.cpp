@@ -182,7 +182,10 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect)
 	D3DXMATRIX matTranslation;
 
 	// Create the translation matrix
-	D3DXMatrixTranslation(&matTranslation, x, (backBufferHeight - y), 0.1f);
+	D3DXMatrixTranslation(&matTranslation,
+		x + (SCREEN_WIDTH - camera->GetCamWidth()) / 2,
+		backBufferHeight - y - (SCREEN_HEIGHT - camera->GetCamHeight()) / 2,
+		0.1f);
 
 	// Scale the sprite to its correct width and height because by default, DirectX draws it with width = height = 1.0f 
 	D3DXMATRIX matScaling;

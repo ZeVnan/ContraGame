@@ -63,8 +63,10 @@ BOOL CWorldPart::checkTile(LPTILE tile) {
 
 void CWorldPart::Split(LPWORLD world)
 {
-	
-	if ((width > CAM_WIDTH || height > CAM_HEIGHT) && this->objects.size() > 0)
+	float cw, ch;
+	cw = CGame::GetInstance()->GetCamera()->GetCamWidth();
+	ch = CGame::GetInstance()->GetCamera()->GetCamHeight();
+	if ((width > cw || height > ch) && this->objects.size() > 0)
 	{
 		this->firstPart = new CWorldPart(this->width / 2, this->height / 2, this->x, this->y);
 		this->secondPart = new CWorldPart(this->width / 2, this->height / 2, this->x, this->y + this->height / 2);
@@ -241,7 +243,10 @@ void CWorldPart::Render() {
 void CWorldPart::DrawTile() {
 	CSprites* sprites = CSprites::GetInstance();
 	for (int i = 0; i < tiles.size(); i++) {
-		sprites->Get(tiles[i]->getId())->DrawTile(tiles[i]->getY(), tiles[i]->getX());
+		if (tiles[i]->getY() == 4320) {
+			int a = 0;
+		}
+		sprites->Get(tiles[i]->getId())->DrawTile(tiles[i]->getX(), tiles[i]->getY());
 	}
 }
 void CWorldPart::GetOutOfPartObject(vector<LPGAMEOBJECT>& a) {

@@ -7,6 +7,9 @@
 #include "BulletN.h"
 
 #include "debug.h"
+#include "Bill.h"
+
+extern CBill* bill;
 
 //define state
 #define WTURRET_STATE_APPEAR	0
@@ -25,8 +28,8 @@
 #define WTURRET_STATE_EXPLODE	40
 
 //define temporary animation time
-#define WTURRET_TIME_APPEAR		700
-#define WTURRET_TIME_ROTATE		500
+#define WTURRET_TIME_APPEAR		1000
+#define WTURRET_TIME_RELOAD		2000
 
 //define animation
 #define WTURRET_ANI_APPEAR		17000
@@ -52,7 +55,6 @@
 class CWallTurret : public CGameObject
 {
 private:
-	int timeleft;
 	int HP;
 	vector<vector<LPBULLET>> waveContainer;
 	float gunx;
@@ -65,6 +67,8 @@ public:
 	void TakeDamage(int damage) {
 		this->HP -= damage;
 	}
+
+	void watchBill();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();

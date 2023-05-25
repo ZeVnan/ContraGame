@@ -495,19 +495,19 @@ void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	ani->Add(14000);
 	ani->Add(14001);
 	ani->Add(14002);
-	animations->Add(CANNON_ANI_LEFT, ani);
+	animations->Add(CANNON_ANI_180, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(14003);
 	ani->Add(14004);
 	ani->Add(14005);
-	animations->Add(CANNON_ANI_LEFT_60, ani);
+	animations->Add(CANNON_ANI_150, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(14006);
 	ani->Add(14007);
 	ani->Add(14008);
-	animations->Add(CANNON_ANI_LEFT_30, ani);
+	animations->Add(CANNON_ANI_120, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(14010);
@@ -929,11 +929,20 @@ void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	animations->Add(BOSS1GUN_ANI_NORMAL, ani);
 }
 
-void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a) {
+void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a, int stage) {
 	textures->Add(ID_TEX_STAGE1_TILE, STAGE1_TILE);
+	textures->Add(ID_TEX_STAGE3_TILE, STAGE3_TILE);
+	if (stage == 1) {
+		LPTEXTURE tex_stage1 = textures->Get(ID_TEX_STAGE1_TILE);
+		a = Map::LoadFromFile(STAGE1_PATH, tex_stage1, sprites)->tileList;
+	}
+	else {
+		LPTEXTURE tex_stage3 = textures->Get(ID_TEX_STAGE3_TILE);
+		a = Map::LoadFromFile(STAGE3_PATH, tex_stage3, sprites)->tileList;
+	}
+	
 
-	LPTEXTURE tex_stage1 = textures->Get(ID_TEX_STAGE1_TILE);
-	a = Map::LoadFromFile(STAGE1_PATH, tex_stage1, sprites)->tileList;
+	
 }
 
 void LoadScreenResources(CTextures*& textures, CSprites*& sprites) {
