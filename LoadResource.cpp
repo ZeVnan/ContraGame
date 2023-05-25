@@ -929,11 +929,20 @@ void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	animations->Add(BOSS1GUN_ANI_NORMAL, ani);
 }
 
-void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a) {
+void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a, int stage) {
 	textures->Add(ID_TEX_STAGE1_TILE, STAGE1_TILE);
+	textures->Add(ID_TEX_STAGE3_TILE, STAGE3_TILE);
+	if (stage == 1) {
+		LPTEXTURE tex_stage1 = textures->Get(ID_TEX_STAGE1_TILE);
+		a = Map::LoadFromFile(STAGE1_PATH, tex_stage1, sprites)->tileList;
+	}
+	else {
+		LPTEXTURE tex_stage3 = textures->Get(ID_TEX_STAGE3_TILE);
+		a = Map::LoadFromFile(STAGE3_PATH, tex_stage3, sprites)->tileList;
+	}
+	
 
-	LPTEXTURE tex_stage1 = textures->Get(ID_TEX_STAGE1_TILE);
-	a = Map::LoadFromFile(STAGE1_PATH, tex_stage1, sprites)->tileList;
+	
 }
 
 void LoadScreenResources(CTextures*& textures, CSprites*& sprites) {

@@ -4,7 +4,7 @@
 #define MAIN_WINDOW_TITLE L"Contra"
 #define WINDOW_ICON_PATH L"Images\\Contra.ico"
 
-#define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
+#define BACKGROUND_COLOR D3DXCOLOR(0.0f/255, 0.0f/255, 0.0f/255, 0.0f)
 
 gameScreen gameControl;
 #define WAITING_TIME 3000
@@ -16,7 +16,7 @@ CSampleKeyHandler* keyHandler;
 LPWORLD world = new CWorld(1000, 1000, 0);
 LPWORLDPART worldpart = new CWorldPart();
 
-vector<LPTILE> stage1_tiles;
+vector<LPTILE> stage_tiles;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -54,28 +54,52 @@ void LoadResources() {
 	CreateOtherAni(textures, sprites, animations);
 	CreateBossAni(textures, sprites, animations);
 
-	CreateStageTile(textures, sprites, stage1_tiles);
-
 	LoadScreenResources(textures, sprites);
 
-	gameControl = intro;
+	gameControl = waiting3;
 }void LoadStage1() {
 	world = new CWorld(6656, 6656, 1);
+	//objects
 	world->getObjectsListFromFile(STAGE1_PATH);
-	world->setTileList(stage1_tiles);
-	bill = new CBill(BILL_START_X, BILL_START_Y, world->getWidth() - 20, 448, 1);
+	bill = new CBill(100, 400, world->getWidth() -20, 448, 1);
 	world->getObjectList().push_back(bill);
-	
+	//tile
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+	CreateStageTile(textures, sprites, stage_tiles, 1);
+	world->setTileList(stage_tiles);
+	//spatial partition
 	worldpart = new CWorldPart(world);
 	worldpart->Split(world);
-
-	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), 448);
+	//camera set up
+	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), 448, 1);
 }
+void LoadStage3() {
+	world = new CWorld(4455, 4455, 3);
+	//objects
+	world->getObjectsListFromFile(STAGE3_PATH);
+	bill = new CBill(85, 190, 480, world->getHeight() - 20, 3);
+	world->getObjectList().push_back(bill);
+	//tiles
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+	CreateStageTile(textures, sprites, stage_tiles, 3);
+	world->setTileList(stage_tiles);
+	//spatial partition
+	worldpart = new CWorldPart(world);
+	worldpart->Split(world);
+	//camera set up
+	CGame::GetInstance()->GetCamera() = new CCamera(480, world->getHeight(), 3);
+}
+
 void LoadStage(int stage) {
 	ClearWorld();
 	switch (stage) {
 	case 1:
 		LoadStage1();
+		break;
+	case 3:
+		LoadStage3();
 		break;
 	}
 }
@@ -112,8 +136,23 @@ void Update(DWORD dt)
 		//DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
 		break;
 	case waiting3:
-
+		if (timeLeft > 0) {
+			timeLeft -= dt;
+		}
+		else {
+			gameControl = stage3;
+			timeLeft = WAITING_TIME;
+			LoadStage(3);
+		}
 		break;
+	case stage3:
+		world->Update(dt);
+		world->ClearDeletedObjects();
+
+		bill->GetPosition(x, y);
+		CGame::GetInstance()->GetCamera()->Update(x, y);
+		CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
+		//DebugOutTitle(L"cx = %f, cy = %f, x = %f, y = %f", cx, cy, x, y);
 	case gameover:
 
 		break;
@@ -151,6 +190,10 @@ void Render()
 		ClearWorld();
 		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
 		CSprites::GetInstance()->Get(30001)->Draw(0, 0);
+		break;
+	case stage3:
+		world->DrawTile();
+		world->Render();
 		break;
 	case gameover:
 		ClearWorld();
@@ -262,7 +305,7 @@ int WINAPI WinMain(
 	keyHandler = new CSampleKeyHandler();
 	game->InitKeyboard(keyHandler);
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 1.5, SCREEN_HEIGHT * 1.5, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 1.2, SCREEN_HEIGHT * 1.2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	LoadResources();
 

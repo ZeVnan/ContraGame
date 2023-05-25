@@ -83,8 +83,10 @@ void Rifleman::WatchBill() {
 void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	timeleft -= dt;
 	WatchBill();
-	if (isActivated == false)
+	if (isActivated == false) {
+		this->SetState(RIFLEMAN_STATE_HIDING);
 		return;
+	}
 	if (this->isExploded == true && this->timeleft < 0) {
 		isDeleted = true;
 		return;

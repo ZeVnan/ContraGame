@@ -90,7 +90,7 @@ Map* Map::LoadFromFile(string path, LPTEXTURE tex, CSprites* sprites) {
 	map->tileHeight = 32;
 	for (int i = 0; i < map->mapIndex.size(); i++) {
 		for (int j = 0; j < map->mapIndex[i].size(); j++) {
-			map->tileList.push_back(new Tile(map->mapIndex[i][j], i * 32, j * 32));
+			map->tileList.push_back(new Tile(map->mapIndex[i][j], j * 32, (map->mapIndex.size() - i) * 32));
 		}
 	}
 	return map;
