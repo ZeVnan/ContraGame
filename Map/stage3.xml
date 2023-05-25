@@ -1103,7 +1103,7 @@
         <Elem Key="type" Value="0" />
       </Params>
     </Item>
-    <Item Id="12" Name="land63" X="0" Y="84" Width="511" Height="5">
+    <Item Id="12" Name="land63" X="0" Y="84" Width="512" Height="5">
       <ActiveBound X="0" Y="84" Width="511" Height="5" />
       <Params>
         <Elem Key="physicBodyDirection" Value="1" />
