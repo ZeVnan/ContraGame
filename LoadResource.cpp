@@ -643,10 +643,11 @@ void CreateWTurretAni(CTextures*& textures, CSprites*& sprites, CAnimations*& an
 	textures->Add(ID_TEX_WTURRET, TEXTURE_PATH_WTURRET);
 	LPTEXTURE texWTurret = textures->Get(ID_TEX_WTURRET);
 	//id tex 17xxx
-	//turret appear
+	//turret close
 	sprites->Add(17000, 96, 64, 128, 96, texWTurret);
 	sprites->Add(17001, 128, 64, 160, 96, texWTurret);
 	sprites->Add(17002, 160, 64, 192, 96, texWTurret);
+	//turret appear
 	sprites->Add(17003, 96, 32, 128, 64, texWTurret);
 	sprites->Add(17004, 128, 32, 160, 64, texWTurret);
 	sprites->Add(17005, 160, 32, 192, 64, texWTurret);
@@ -701,14 +702,18 @@ void CreateWTurretAni(CTextures*& textures, CSprites*& sprites, CAnimations*& an
 	sprites->Add(17041, 160, 128, 192, 160, texWTurret);
 
 	LPANIMATION ani;
+
 	ani = new CAnimation(100);
-	ani->Add(17000);
-	ani->Add(17001);
-	ani->Add(17002);
 	ani->Add(17003);
 	ani->Add(17004);
 	ani->Add(17005);
 	animations->Add(WTURRET_ANI_APPEAR, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(17000);
+	ani->Add(17001);
+	ani->Add(17002);
+	animations->Add(WTURRET_ANI_CLOSE, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(17006);

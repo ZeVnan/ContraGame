@@ -1,7 +1,7 @@
 #include "Rifleman.h"
 
 Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
-	isShooting = true;
+	isShooting = false;
 	isHiding = false;
 	isActivated = false;
 	gunx = x;
@@ -14,36 +14,35 @@ Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 }
 
 void Rifleman::WatchBill() {
+
 	float x, y;
 	bill->GetPosition(x, y);
 
-	float xx, yy;
-	this->GetPosition(xx, yy);
-
-	float distance_to_Bill = sqrt((xx - x) * (xx - x) + (yy - y) * (yy - y));
+	float distance_to_Bill = sqrt((this->x - x) * (this->x - x) + (this->y - y) * (this->y - y));
 	if (distance_to_Bill <= RIFLEMAN_ACTIVE_RADIUS) {
+		isShooting = true;
 		isActivated = true;
 	}
 
-	float tan = abs(xx - x) / abs(yy - y);// get angle's tan value
+	float tan = abs(this->y - y) / abs(this->x - x);// get angle's tan value
 	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
 	float checking_degree = 0;// from 0 to 360 base on fourth part of degree's circle COMPARE TO Ox
 
 	// calculate checking_degree
-	if (x > xx) {
-		if (y > yy) {
-			checking_degree = 90 - degree;
+	if (x > this->x) {
+		if (y > this->y) {
+			checking_degree = degree;
 		}
 		else {
 			checking_degree = 360 - degree;
 		}
 	}
 	else {
-		if (y > yy) {
+		if (y > this->y) {
 			checking_degree = 180 - degree;
 		}
 		else {
-			checking_degree = 270 - degree;
+			checking_degree = 180 + degree;
 		}
 	}
 	// check conditions
@@ -82,19 +81,12 @@ void Rifleman::WatchBill() {
 
 void Rifleman::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	timeleft -= dt;
-	WatchBill();
-	if (isActivated == true) {
-		//do nothing
-	}
-	else {
-		isActivated = true;
-		this->SetState(RIFLEMAN_STATE_EXPOSE);
-	}
 	if (this->isExploded == true && this->timeleft < 0) {
 		isDeleted = true;
 		return;
 	}
-	if (timeleft < 0) {
+	WatchBill();
+	if (timeleft < 0 && isShooting == true) {
 		AddBullet();
 		timeleft = RIFLEMAN_RELOAD_TIME;
 	}
@@ -113,30 +105,28 @@ void Rifleman::Render() {
 	}
 	else {
 		if (nx > 0) {
-			if (isShooting) {
-				if (ny == 1) {
-					ani = RIFLEMAN_ANI_AIM_UP_RIGHT;
-				}
-				if (ny == -1) {
-					ani = RIFLEMAN_ANI_AIM_DOWN_RIGHT;
-				}
-				if (ny == 0) {
-					ani = RIFLEMAN_ANI_SHOOT_RIGHT;
-				}
+			if (ny == 1) {
+				ani = RIFLEMAN_ANI_AIM_UP_RIGHT;
 			}
+			if (ny == -1) {
+				ani = RIFLEMAN_ANI_AIM_DOWN_RIGHT;
+			}
+			if (ny == 0) {
+				ani = RIFLEMAN_ANI_SHOOT_RIGHT;
+			}
+
 		}
 		else {
-			if (isShooting) {
-				if (ny == 1) {
-					ani = RIFLEMAN_ANI_AIM_UP_LEFT;
-				}
-				if (ny == -1) {
-					ani = RIFLEMAN_ANI_AIM_DOWN_LEFT;
-				}
-				if (ny == 0) {
-					ani = RIFLEMAN_ANI_SHOOT_LEFT;
-				}
+			if (ny == 1) {
+				ani = RIFLEMAN_ANI_AIM_UP_LEFT;
 			}
+			if (ny == -1) {
+				ani = RIFLEMAN_ANI_AIM_DOWN_LEFT;
+			}
+			if (ny == 0) {
+				ani = RIFLEMAN_ANI_SHOOT_LEFT;
+			}
+
 		}
 	}
 	if (isExploded) {
