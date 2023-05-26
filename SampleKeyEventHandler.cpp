@@ -6,6 +6,7 @@
 #include "Bill.h"
 extern CBill* bill;
 extern gameScreen gameControl ;
+extern screenOption option;
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
@@ -14,10 +15,43 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	}
 	switch (KeyCode) {
 	case DIK_RETURN:
-		if (gameControl == intro) {
+		switch (gameControl)
+		{
+		case intro:
+			if (option == option1) {
+				gameControl = tutorial;
+			}
+			else {
+				gameControl = credit;
+			}
+			break;
+		case tutorial:
 			gameControl = waiting1;
+			break;
+		case gameover:
+			if (option == option1) {
+				
+			}
+			else {
+				gameControl = intro;
+			}
+			break;
+		case credit:
+			gameControl = intro;
+			break;
 		}
 		break;
+	case DIK_UP:
+		if (gameControl == intro || gameControl == gameover) {
+			if (option == option2)
+				option = option1;
+		}
+		break;
+	case DIK_DOWN:
+		if (gameControl == intro || gameControl == gameover) {
+			if (option == option1)
+				option = option2;
+		}
 	}
 }
 

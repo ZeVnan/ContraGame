@@ -7,6 +7,7 @@
 #define BACKGROUND_COLOR D3DXCOLOR(0.0f/255, 0.0f/255, 0.0f/255, 0.0f)
 
 gameScreen gameControl;
+screenOption option;
 #define WAITING_TIME 3000
 int timeLeft = WAITING_TIME;
 
@@ -56,7 +57,8 @@ void LoadResources() {
 
 	LoadScreenResources(textures, sprites);
 
-	gameControl = waiting3;
+	gameControl = gameover;
+	option = option1;
 }void LoadStage1() {
 	world = new CWorld(6656, 6656, 1);
 	//objects
@@ -114,6 +116,9 @@ void Update(DWORD dt)
 	case intro:
 		
 		break;
+	case tutorial:
+
+		break;
 	case waiting1:
 		if (timeLeft > 0) {
 			timeLeft -= dt;
@@ -144,7 +149,11 @@ void Update(DWORD dt)
 	case gameover:
 
 		break;
+	case credit:
+
+		break;
 	}
+	DebugOutTitle(L"gamecontrol = %d, option = %d", gameControl, option);
 }
 
 void Render()
@@ -165,9 +174,21 @@ void Render()
 
 	switch (gameControl) {
 	case intro:
+		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
 		CSprites::GetInstance()->Get(30000)->Draw(0, 0);
+		if (option == option1) {
+			CSprites::GetInstance()->Get(30006)->Draw(0, -60);
+		}
+		else {
+			CSprites::GetInstance()->Get(30006)->Draw(0, -85);
+		}
+		break;
+	case tutorial:
+		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
+		CSprites::GetInstance()->Get(30005)->Draw(0, 0);
 		break;
 	case waiting1:
+		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
 		CSprites::GetInstance()->Get(30001)->Draw(0, 0);
 		break;
 	case stage1:
@@ -177,7 +198,7 @@ void Render()
 	case waiting3:
 		ClearWorld();
 		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
-		CSprites::GetInstance()->Get(30001)->Draw(0, 0);
+		CSprites::GetInstance()->Get(30002)->Draw(0, 0);
 		break;
 	case stage3:
 		world->DrawTile();
@@ -186,7 +207,16 @@ void Render()
 	case gameover:
 		ClearWorld();
 		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
-		CSprites::GetInstance()->Get(30002)->Draw(0, 0);
+		CSprites::GetInstance()->Get(30003)->Draw(0, 0);
+		if (option == option1) {
+			CSprites::GetInstance()->Get(30006)->Draw(-50, -75);
+		}
+		else {
+			CSprites::GetInstance()->Get(30006)->Draw(-50, -105);
+		}
+		break;
+	case credit:
+		CSprites::GetInstance()->Get(30004)->Draw(0, 0);
 		break;
 	}
 	spriteHandler->End();
