@@ -148,9 +148,13 @@ class CBill :public CGameObject
 
 	int lifeLeft;
 	void worldControl();
+	void Die(DWORD dt);
+	void UpdateBorder();
+	void Move(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void BulletControl(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	
 public:
-	CBill(float x, float y, float maxx, float maxy, int stage);
+	CBill(float x, float y, int stage);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void SetState(int state);
@@ -187,6 +191,7 @@ public:
 
 	bool IsDiving() { return isDiving; }
 	bool IsVulnerable() { return isVulnerable; }
+	bool IsDead() { return isDead; }
 };
 
 typedef CBill* LPBILL;

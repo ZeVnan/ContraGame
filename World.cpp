@@ -135,6 +135,21 @@ LPGAMEOBJECT CWorld::spawnWallTurret(xml_node node)
 
 	return wallTurret;
 }
+LPGAMEOBJECT CWorld::spawnScubaSoldier(xml_node node) {
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto ScubaSoldier = new CScubaSoldier(x, y);
+
+	return ScubaSoldier;
+}
 LPGAMEOBJECT CWorld::spawnLand(xml_node node)
 {
 	auto properties = getObjectProperties(node);
@@ -232,6 +247,8 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnRifleman(node);
 	case WallTurretID:
 		return spawnWallTurret(node);
+	case ScubaSoldierID:
+		return spawnScubaSoldier(node);
 	case LAND:
 		return spawnLand(node);
 	case WATER:

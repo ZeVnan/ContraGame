@@ -5,6 +5,7 @@
 #include "Aircraft.h"
 #include "Cannon.h"
 #include "Rifleman.h"
+#include "ScubaSoldier.h"
 #include "Land.h"
 #include "Waters.h"
 #include "Bridge.h"
@@ -30,6 +31,7 @@ private:
 	LPGAMEOBJECT spawnWallTurret(xml_node node);
 	LPGAMEOBJECT spawnAircraft(xml_node node);
 	LPGAMEOBJECT spawnFalcon(xml_node node);
+	LPGAMEOBJECT spawnScubaSoldier(xml_node node);
 	LPGAMEOBJECT spawnLand(xml_node node);
 	LPGAMEOBJECT spawnWater(xml_node node);
 	LPGAMEOBJECT spawnBridge(xml_node node);

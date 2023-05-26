@@ -11,6 +11,8 @@
 
 extern CBill* bill;
 
+#define WALLTURRET_ACTIVE_RADIUS 300
+
 //define state
 #define WTURRET_STATE_APPEAR	0
 #define WTURRET_STATE_LEFT30	10
@@ -55,6 +57,7 @@ extern CBill* bill;
 class CWallTurret : public CGameObject
 {
 private:
+	BOOLEAN isActivated;
 	int HP;
 	vector<vector<LPBULLET>> waveContainer;
 	float gunx;

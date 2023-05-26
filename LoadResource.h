@@ -56,8 +56,12 @@
 #define ID_TEX_STAGE3_TILE 101
 
 #define ID_TEX_SCREEN_INTRO 200
-#define ID_TEX_SCREEN_WAITING 201
-#define ID_TEX_SCREEN_GAMEOVER 202
+#define ID_TEX_SCREEN_TUTORIAL 201
+#define ID_TEX_SCREEN_WAITING1 202
+#define ID_TEX_SCREEN_WAITING3 203
+#define ID_TEX_SCREEN_GAMEOVER 204
+#define ID_TEX_SCREEN_CREDIT 205
+#define ID_TEX_SCREEN_OPTION 206
 
 #define TEXTURE_PATH_EXPLOSION L"Images\\Explosion.png"
 #define TEXTURE_PATH_BOX L"Images\\bbox.png"
@@ -83,8 +87,12 @@
 #define STAGE3_TILE L"Map\\stage3.png"
 
 #define SCREEN_INTRO_PATH L"Images\\intro.png"
-#define SCREEN_WAITING_PATH L"Images\\BeginState.png"
+#define SCREEN_TUTORIAL_PATH L"Images\\Tutorial.png"
+#define SCREEN_WAITING1_PATH L"Images\\Stage1.png"
+#define SCREEN_WAITING3_PATH L"Images\\Stage3.png"
 #define SCREEN_GAMEOVER_PATH L"Images\\GameOver.png"
+#define SCREEN_CREDIT_PATH L"Images\\Credits.png"
+#define SCREEN_OPTION_PATH L"Images\\yellowfalcon.png"
 
 void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
