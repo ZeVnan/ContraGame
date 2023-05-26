@@ -11,7 +11,7 @@
 
 extern CBill* bill;
 
-#define WALLTURRET_ACTIVE_RADIUS 300
+#define WALLTURRET_ACTIVE_RADIUS 200
 
 //define state
 #define WTURRET_STATE_APPEAR	0

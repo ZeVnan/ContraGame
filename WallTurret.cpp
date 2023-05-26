@@ -18,9 +18,14 @@ void CWallTurret::watchBill() {
 
 	float distance_to_Bill = sqrt((this->x - x) * (this->x - x) + (this->y - y) * (this->y - y));
 	if (distance_to_Bill <= WALLTURRET_ACTIVE_RADIUS) {
+		this->SetState(WTURRET_STATE_APPEAR);
 		isActivated = true;
 		isShooting = true;
 		isClosing = false;
+	}
+
+	if (isClosing == true) {
+		return;
 	}
 
 	float tan = abs(this->y - y) / abs(this->x - x);// get angle's tan value
@@ -80,6 +85,7 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	UpdateBullet(dt, coObjects);
 	//DebugOutTitle(L"timeleft = %d, state = %d", this->timeLeft, state);
+
 }
 void CWallTurret::Render()
 {
