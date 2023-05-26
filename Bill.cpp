@@ -9,8 +9,9 @@
 #include "Boss1Shield.h"
 
 #include "SampleKeyEventHandler.h"
+#include "Game.h"
 extern gameScreen gameControl;
-CBill::CBill(float x, float y, float maxx, float maxy, int stage) :CGameObject(x, y) {
+CBill::CBill(float x, float y,  int stage) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
 	isSwimming = false;
@@ -25,11 +26,10 @@ CBill::CBill(float x, float y, float maxx, float maxy, int stage) :CGameObject(x
 	ny = 0;
 	maxVx = 0.0f;
 	maxVy = 0.0f;
-	this->maxX = maxx;
-	this->maxY = maxy;
 	gunx = x;
 	guny = y;
 	this->stage = stage;
+
 	bulletType = BULLET_ANI_NORMAL;
 	waveLeft = BILL_WAVE_BULLET_NORMAL;
 	bonusWave = 0;
@@ -41,17 +41,21 @@ CBill::CBill(float x, float y, float maxx, float maxy, int stage) :CGameObject(x
 	if (stage == 1) {
 		minX = 10;
 		minY = 50;
+		maxX = 6636;
+		maxY = 448;
 	}
 	else{
 		minX = 10;
 		minY = 100;
+		maxX = 480;
+		maxY = 4435;
 	}
 }
 void CBill::worldControl() {
 	//DebugOutTitle(L"minX = %f, minY = %f, maxX = %f, maxY = %f", minX, minY, maxX, maxY);
 	switch (stage) {
 	case 1:
-		if (vx < 0 && x < minX)
+		if (x < minX)
 			x = minX;
 		if (vy < 0 && y < minY)
 		{
@@ -75,7 +79,7 @@ void CBill::worldControl() {
 		}
 		break;
 	case 3:
-		if (vx < 0 && x < minX)
+		if (x < minX)
 			x = minX;
 		if (vy < 0 && y < minY)
 		{
@@ -103,36 +107,35 @@ void CBill::worldControl() {
 		break;
 	}
 }
-void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
-	//don't change the order of this function
-	if (timeLeft >= 0)
-		timeLeft -= dt;
-	if (isDying == true && timeLeft < 0) {
-		if (lifeLeft > 0) {
-			lifeLeft --;
-			isDying = false;
-			isDead = true;
-			timeLeft = 1000;
-		}
+void CBill::Die(DWORD dt) {
+	if (isDying == true && timeLeft < 0 && lifeLeft > 0) {
+		lifeLeft--;
+		isDying = false;
+		isDead = true;
+		timeLeft = 1000;
+		//set respawn position
 		if (stage == 1) {
 			x = minX + 10;
 			y = maxY - 10;
 		}
 		else {
 			x = (maxX - minX) / 2;
-			y += 300;
+			y = minY + 300;
 		}
 	}
 	if (isDead == true && timeLeft < 0) {
 		this->SetState(BILL_STATE_REVIVE);
 		isVulnerable = false;
 		timeLeft = 2000;
-		vy += BILL_GRAVITY * dt;
 		return;
 	}
 	if (isVulnerable == false && timeLeft < 0) {
 		isVulnerable = true;
 	}
+}
+void CBill::UpdateBorder() {
+	if (isDying == true || isDead == true)
+		return;
 	if (stage == 1) {
 		float tempMinX = x - CAM_WIDTH_1 / 2;
 		if (tempMinX > minX)
@@ -143,19 +146,34 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 		if (tempMinY > minY)
 			minY = tempMinY;
 	}
+	CGame::GetInstance()->GetCamera()->Update(x, y);
+}
+void CBill::Move(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
 	if (isOnPlatform == false && isSwimming == false)
 		vy += BILL_GRAVITY * dt;
-	worldControl();
+	isOnPlatform = false;
+	CCollision::GetInstance()->Process(this, coObjects, dt);
+	isDropping = false;
+}
+void CBill::BulletControl(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (bulletMtime > 0)
 		bulletMtime -= dt;
 	else
 		bulletMtime = 0;
 	UpdateBullet(dt, coObjects);
-	isOnPlatform = false;
-	CCollision::GetInstance()->Process(this, coObjects, dt);
-	isDropping = false;
-	DebugOutTitle(L"lifeLeft = %d", lifeLeft);
+}
+
+void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
+	//don't change the order of this function
+	if (timeLeft >= 0)
+		timeLeft -= dt;
+	Die(dt);
+	UpdateBorder();
+	worldControl();
+	BulletControl(dt, coObjects);
+	Move(dt, coObjects);
+	DebugOutTitle(L"lifeLeft = %d, x = %f, y = %f", lifeLeft, x, y);
 }
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();

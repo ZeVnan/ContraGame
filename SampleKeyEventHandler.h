@@ -4,11 +4,18 @@
 enum gameScreen
 {
 	intro = 0,
-	waiting1 = 1,
-	stage1 = 2,
-	waiting3 = 3,
-	stage3 = 4,
-	gameover = 5,
+	tutorial = 1,
+	waiting1 = 2,
+	stage1 = 3,
+	waiting3 = 4,
+	stage3 = 5,
+	gameover = 6,
+	credit = 7
+};
+enum screenOption
+{
+	option1 = 1,
+	option2 = 2,
 };
 class CSampleKeyHandler: public CKeyEventHandler
 {

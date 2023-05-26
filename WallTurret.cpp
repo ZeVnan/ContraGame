@@ -11,6 +11,8 @@ CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 }
 
 void CWallTurret::watchBill() {
+	if (isExploded == true)
+		return;
 	float x, y;
 	bill->GetPosition(x, y);
 
@@ -63,7 +65,6 @@ void CWallTurret::watchBill() {
 
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	watchBill();
 	if (this->HP <= 0 && this->isExploded == false) {
 		this->SetState(WTURRET_STATE_EXPLODE);
 	}
@@ -72,13 +73,14 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isDeleted = true;
 		return;
 	}
-	if (this->timeLeft < 0)
+	watchBill();
+	if (isExploded == false && this->timeLeft < 0)
 	{
 		AddBullet();
 		this->timeLeft = WTURRET_TIME_RELOAD;
 	}
 	UpdateBullet(dt, coObjects);
-	DebugOutTitle(L"timeleft = %d", this->timeLeft);
+	//DebugOutTitle(L"timeleft = %d, state = %d", this->timeLeft, state);
 }
 void CWallTurret::Render()
 {
