@@ -3,7 +3,9 @@
 CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 {
 	isActivated = false;
-	this->state = WTURRET_STATE_APPEAR;
+	isClosing = true;
+	isShooting = false;
+	this->state = WTURRET_STATE_CLOSE;
 	timeLeft = WTURRET_TIME_APPEAR;
 	HP = 100;
 	gunx = x;
@@ -11,38 +13,39 @@ CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 }
 
 void CWallTurret::watchBill() {
-	if (isExploded == true)
-		return;
 	float x, y;
 	bill->GetPosition(x, y);
 
-	float xx, yy;
-	this->GetPosition(xx, yy);
-
-	float distance_to_Bill = sqrt((xx - x) * (xx - x) + (yy - y) * (yy - y));
+	float distance_to_Bill = sqrt((this->x - x) * (this->x - x) + (this->y - y) * (this->y - y));
 	if (distance_to_Bill <= WALLTURRET_ACTIVE_RADIUS) {
-		isActivated = true;
+		if (this->state == WTURRET_STATE_CLOSE) {
+			this->SetState(WTURRET_STATE_APPEAR);
+		}
 	}
 
-	float tan = abs(xx - x) / abs(yy - y);// get angle's tan value
+	if (isClosing == true) {
+		return;
+	}
+
+	float tan = abs(this->y - y) / abs(this->x - x);// get angle's tan value
 	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
 	float checking_degree = 0;// from 0 to 360 base on fourth part of degree's circle COMPARE TO Ox
 
 	// calculate checking_degree
-	if (x > xx) {
-		if (y > yy) {
-			checking_degree = 90 - degree;
+	if (x > this->x) {
+		if (y > this->y) {
+			checking_degree = degree;
 		}
 		else {
 			checking_degree = 360 - degree;
 		}
 	}
 	else {
-		if (y > yy) {
+		if (y > this->y) {
 			checking_degree = 180 - degree;
 		}
 		else {
-			checking_degree = 270 - degree;
+			checking_degree = 180 + degree;
 		}
 	}
 
@@ -74,13 +77,14 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 	watchBill();
-	if (isExploded == false && this->timeLeft < 0)
+	if (this->timeLeft < 0 && isShooting == true)
 	{
 		AddBullet();
 		this->timeLeft = WTURRET_TIME_RELOAD;
 	}
 	UpdateBullet(dt, coObjects);
 	//DebugOutTitle(L"timeleft = %d, state = %d", this->timeLeft, state);
+
 }
 void CWallTurret::Render()
 {
@@ -88,6 +92,9 @@ void CWallTurret::Render()
 	int ani = -1;
 	switch (this->state)
 	{
+	case WTURRET_STATE_CLOSE:
+		ani = WTURRET_ANI_CLOSE;
+		break;
 	case WTURRET_STATE_APPEAR:
 		ani = WTURRET_ANI_APPEAR;
 		break;
@@ -138,7 +145,12 @@ void CWallTurret::SetState(int state)
 {
 	switch (state)
 	{
+	case WTURRET_ANI_CLOSE:
+		break;
 	case WTURRET_STATE_APPEAR:
+		isActivated = true;
+		isShooting = true;
+		isClosing = false;
 		timeLeft = WTURRET_TIME_APPEAR;
 		break;
 	case WTURRET_STATE_LEFT30:
@@ -176,9 +188,6 @@ void CWallTurret::SetState(int state)
 int CWallTurret::CalculateAngle() {
 
 	switch (this->state) {
-	case WTURRET_STATE_APPEAR:
-		return 180;
-		break;
 	case WTURRET_STATE_LEFT30:
 		return 120;
 		break;
@@ -253,6 +262,17 @@ void CWallTurret::RenderBullet() {
 }
 
 void CWallTurret::CreateBox(DWORD dt) {
+
+	if (isClosing == true) {
+		bbox.left = 0;
+		bbox.top = 0;
+		bbox.right = 0;
+		bbox.bottom = 0;
+		x += 0;
+		y += 0;
+		return;
+	}
+
 	bbox.left = (x - WTURRET_BOX_WIDTH / 2);
 	bbox.top = (y - WTURRET_BOX_HEIGHT / 2);
 	bbox.right = (x + WTURRET_BOX_WIDTH / 2);

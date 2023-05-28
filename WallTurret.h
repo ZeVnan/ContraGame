@@ -11,10 +11,11 @@
 
 extern CBill* bill;
 
-#define WALLTURRET_ACTIVE_RADIUS 300
+#define WALLTURRET_ACTIVE_RADIUS 200
 
 //define state
 #define WTURRET_STATE_APPEAR	0
+#define WTURRET_STATE_CLOSE		1
 #define WTURRET_STATE_LEFT30	10
 #define WTURRET_STATE_LEFT60	11
 #define WTURRET_STATE_LEFT90	12		
@@ -35,6 +36,7 @@ extern CBill* bill;
 
 //define animation
 #define WTURRET_ANI_APPEAR		17000
+#define WTURRET_ANI_CLOSE		17500
 
 #define WTURRET_ANI_LEFT30		17010
 #define WTURRET_ANI_LEFT60		17011
@@ -58,6 +60,8 @@ class CWallTurret : public CGameObject
 {
 private:
 	BOOLEAN isActivated;
+	BOOLEAN isClosing;
+	BOOLEAN isShooting;
 	int HP;
 	vector<vector<LPBULLET>> waveContainer;
 	float gunx;
