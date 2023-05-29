@@ -7,6 +7,7 @@
 #include "Aircraft.h"
 #include "Falcon.h"
 #include "Boss1Shield.h"
+#include "Boss3Mouth.h"
 
 #include "SampleKeyEventHandler.h"
 #include "Game.h"
@@ -173,7 +174,7 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	worldControl();
 	BulletControl(dt, coObjects);
 	Move(dt, coObjects);
-	DebugOutTitle(L"lifeLeft = %d, x = %f, y = %f", lifeLeft, x, y);
+	//DebugOutTitle(L"lifeLeft = %d, x = %f, y = %f", lifeLeft, x, y);
 }
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
@@ -654,6 +655,9 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPBOSS1SHIELD>(e->dest_obj)) {
 		CollisionWithBoss1Shield(e);
 	}
+	if (dynamic_cast<LPBOSS3MOUTH>(e->dest_obj)) {
+		CollisionWithBoss3Mouth(e);
+	}
 }
 //collision with terrain object
 void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
@@ -747,6 +751,11 @@ void CBill::CollisionWithBoss1Shield(LPCOLLISIONEVENT e) {
 	}
 	else if (e->normal_y != 0) {
 		this->y += e->time * bbox.vpf_y;
+	}
+}
+void CBill::CollisionWithBoss3Mouth(LPCOLLISIONEVENT e) {
+	if ((LPBOSS3MOUTH(e->dest_obj))->IsDead() == true) {
+		gameControl = credit;
 	}
 }
 //collision with enemy object

@@ -1,7 +1,7 @@
 ﻿#include "World.h"
 #include "WorldPart.h"
 #include "Bill.h"
-
+extern LPBILL bill;
 CWorld::CWorld() {
 	width = 0;
 	height = 0;
@@ -231,6 +231,21 @@ LPGAMEOBJECT CWorld::spawnBoss1Gun(xml_node node) {
 
 	return boss1gun;
 }
+LPGAMEOBJECT CWorld::spawnBoss3Mouth(xml_node node) {
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto boss3mouth = new CBoss3Mouth(x, y);
+
+	return boss3mouth;
+}
 LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 {
 	switch (id)
@@ -259,6 +274,8 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnBoss1Shield(node);
 	case BOSS1GUN:
 		return spawnBoss1Gun(node);
+	case BOSS3MOUTH:
+		return spawnBoss3Mouth(node);
 	default:
 		return nullptr;
 		break;
@@ -350,6 +367,7 @@ void CWorld::Render() {
 			WPList[i]->Render();
 		}
 	}
+	bill->Render();		//just make sure bill not be obscured by other objects
 }
 void CWorld::UpdateObjectContainer() {
 	vector<LPGAMEOBJECT> temp;

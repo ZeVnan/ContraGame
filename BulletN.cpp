@@ -8,10 +8,10 @@ CBulletN::CBulletN(float x, float y, int angle, bool friendly) :CBullet::CBullet
 		this->type = BULLET_ANI_NORMAL;
 	}
 	this->damage = 10;
-}
-void CBulletN::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
 	vy = maxVy;
+}
+void CBulletN::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 }
 void CBulletN::CreateBox(DWORD dt) {

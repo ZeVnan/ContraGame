@@ -4,9 +4,9 @@ CBulletBoss1::CBulletBoss1(float x, float y, int angle, bool friendly) :CBullet:
 	this->damage = 10;
 	ay = BULLET_BOSS1_GRAVITY;
 	vy = maxVy;
+	vx = maxVx;
 }
 void CBulletBoss1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	vx = maxVx;
 	vy += ay;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 }
