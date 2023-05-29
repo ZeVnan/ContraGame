@@ -18,6 +18,7 @@ void CWallTurret::watchBill() {
 
 	float distance_to_Bill = sqrt((this->x - x) * (this->x - x) + (this->y - y) * (this->y - y));
 	if (distance_to_Bill <= WALLTURRET_ACTIVE_RADIUS) {
+		isActivated = true;
 		if (this->state == WTURRET_STATE_CLOSE) {
 			this->SetState(WTURRET_STATE_APPEAR);
 		}
@@ -26,11 +27,10 @@ void CWallTurret::watchBill() {
 		}
 	}
 	else {
-		isShooting = false;
-		return;
+		isActivated = false;
 	}
 
-	if (isClosing == true) {
+	if (isClosing == true || isActivated == false || isExploded == true) {
 		return;
 	}
 
@@ -79,18 +79,20 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (this->HP <= 0 && this->isExploded == false) {
 		this->SetState(WTURRET_STATE_EXPLODE);
 	}
+	if (timeLeft >= 0)
+		this->timeLeft -= dt;
 	if (this->isExploded == true && this->timeLeft < 0) {
 		isDeleted = true;
 		return;
 	}
 	watchBill();
-	if (this->timeLeft < 0 && isShooting == true)
+	if (this->timeLeft < 0 && isShooting == true && isActivated == true && isExploded == false)
 	{
 		AddBullet();
 		this->timeLeft = WTURRET_TIME_RELOAD;
 	}
 	UpdateBullet(dt, coObjects);
-	//DebugOutTitle(L"timeleft = %d, state = %d", this->timeLeft, state);
+	DebugOutTitle(L"timeleft = %d, state = %d", this->timeLeft, state);
 
 }
 void CWallTurret::Render()
@@ -155,7 +157,6 @@ void CWallTurret::SetState(int state)
 	case WTURRET_ANI_CLOSE:
 		break;
 	case WTURRET_STATE_APPEAR:
-		isActivated = true;
 		isShooting = true;
 		isClosing = false;
 		timeLeft = WTURRET_TIME_APPEAR;

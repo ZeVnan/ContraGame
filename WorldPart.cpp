@@ -237,6 +237,8 @@ void CWorldPart::GetObjectToTempList(vector<LPGAMEOBJECT>& a) {
 }
 void CWorldPart::Render() {
 	for (int i = 0; i < objects.size(); i++) {
+		if (dynamic_cast<LPBILL>(objects[i]))
+			continue;				//just make sure bill not be obscured by other objects
 		objects[i]->Render();
 	}
 }

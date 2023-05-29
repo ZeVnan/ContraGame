@@ -17,6 +17,7 @@ enum screenOption
 	option1 = 1,
 	option2 = 2,
 };
+
 class CSampleKeyHandler: public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);

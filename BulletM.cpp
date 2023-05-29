@@ -2,10 +2,10 @@
 CBulletM::CBulletM(float x, float y, int angle, bool friendly) :CBullet::CBullet(x, y, angle, friendly) {
 	this->type = BULLET_ANI_MACHINE;
 	damage = 15;
-}
-void CBulletM::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
 	vy = maxVy;
+}
+void CBulletM::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 }
 void CBulletM::CreateBox(DWORD dt) {

@@ -7,6 +7,7 @@
 extern CBill* bill;
 extern gameScreen gameControl ;
 extern screenOption option;
+extern int playingAt;
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
@@ -30,7 +31,10 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 			break;
 		case gameover:
 			if (option == option1) {
-				
+				if (playingAt == 1)
+					gameControl = waiting1;
+				else
+					gameControl = waiting3;
 			}
 			else {
 				gameControl = intro;
