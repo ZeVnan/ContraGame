@@ -75,10 +75,10 @@ void CWallTurret::watchBill() {
 
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	this->timeLeft -= dt;
 	if (this->HP <= 0 && this->isExploded == false) {
 		this->SetState(WTURRET_STATE_EXPLODE);
 	}
-	this->timeLeft -= dt;
 	if (this->isExploded == true && this->timeLeft < 0) {
 		isDeleted = true;
 		return;
