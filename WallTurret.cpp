@@ -21,6 +21,13 @@ void CWallTurret::watchBill() {
 		if (this->state == WTURRET_STATE_CLOSE) {
 			this->SetState(WTURRET_STATE_APPEAR);
 		}
+		else {
+			isShooting = true;
+		}
+	}
+	else {
+		isShooting = false;
+		return;
 	}
 
 	if (isClosing == true) {
