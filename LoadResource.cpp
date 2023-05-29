@@ -259,66 +259,78 @@ void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	//normal bullet
 	sprites->Add(11000, 58, 42, 60, 44, texBullet);
 	//normal bullet (bill)
-	sprites->Add(11011, 64, 42, 66, 44, texBullet);
+	sprites->Add(11001, 64, 42, 66, 44, texBullet);
 	//laser bullet
-	sprites->Add(11001, 23, 39, 38, 44, texBullet);
-	sprites->Add(11005, sprites->Get(11001), 45);
-	sprites->Add(11006, sprites->Get(11001), 135);
-	sprites->Add(11007, sprites->Get(11001), 225);
-	sprites->Add(11008, sprites->Get(11001), 315);
-	sprites->Add(11009, sprites->Get(11001), 90);
-	sprites->Add(11010, sprites->Get(11001), 270);
+	sprites->Add(11010, 23, 39, 38, 44, texBullet);
+	sprites->Add(11011, sprites->Get(11010), 45);
+	sprites->Add(11012, sprites->Get(11010), 135);
+	sprites->Add(11013, sprites->Get(11010), 225);
+	sprites->Add(11014, sprites->Get(11010), 315);
+	sprites->Add(11015, sprites->Get(11010), 90);
 	//flame bullet
-	sprites->Add(11002, 41, 37, 48, 44, texBullet);
+	sprites->Add(11020, 41, 37, 48, 44, texBullet);
 	//spread bullet 
-	sprites->Add(11003, 61, 27, 66, 32, texBullet);
+	sprites->Add(11021, 61, 27, 66, 32, texBullet);
 	//machine bullet
-	sprites->Add(11004, 69, 28, 73, 32, texBullet);
+	sprites->Add(11022, 69, 28, 73, 32, texBullet);
 	//boss 1 bullet 
-	sprites->Add(11012, 50, 25, 57, 32, texBullet);
+	sprites->Add(11030, 50, 25, 57, 32, texBullet);
+	//boss 3 bullet
+	sprites->Add(11040, 0, 0, 15, 15, texBullet);
+	sprites->Add(11041, 19, 0, 34, 15, texBullet);
+	sprites->Add(11042, 37, 0, 52, 15, texBullet);
+	sprites->Add(11043, 55, 0, 70, 15, texBullet);
+
 	LPANIMATION ani;
 	ani = new CAnimation(100);
 	ani->Add(11000);
 	animations->Add(BULLET_ANI_NORMAL, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11011);
+	ani->Add(11001);
 	animations->Add(BULLET_ANI_NORMAL_BILL, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11001);
+	ani->Add(11010);
 	animations->Add(BULLET_ANI_LASER, ani);
 	ani = new CAnimation(100);
-	ani->Add(11005);
+	ani->Add(11011);
 	animations->Add(BULLET_ANI_LASER_45, ani);
 	ani = new CAnimation(100);
-	ani->Add(11006);
+	ani->Add(11012);
 	animations->Add(BULLET_ANI_LASER_135, ani);
 	ani = new CAnimation(100);
-	ani->Add(11007);
+	ani->Add(11013);
 	animations->Add(BULLET_ANI_LASER_225, ani);
 	ani = new CAnimation(100);
-	ani->Add(11008);
+	ani->Add(11014);
 	animations->Add(BULLET_ANI_LASER_315, ani);
 	ani = new CAnimation(100);
-	ani->Add(11009);
+	ani->Add(11015);
 	animations->Add(BULLET_ANI_LASER_90, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11002);
+	ani->Add(11020);
 	animations->Add(BULLET_ANI_FLAME, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11003);
+	ani->Add(11021);
 	animations->Add(BULLET_ANI_SPREAD, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11004);
+	ani->Add(11022);
 	animations->Add(BULLET_ANI_MACHINE, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(11012);
+	ani->Add(11030);
 	animations->Add(BULLET_ANI_BOSS1, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(11040);
+	ani->Add(11041);
+	ani->Add(11042);
+	ani->Add(11043);
+	animations->Add(BULLET_ANI_BOSS3, ani);
 }
 void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_SOLDIER, TEXTURE_PATH_SOLDIER);
@@ -906,8 +918,10 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	//4xxxx
 	textures->Add(ID_TEX_BOSS1, TEXTURE_PATH_BOSS1);
+	textures->Add(ID_TEX_BOSS3_MOUTH, TEXTURE_PATH_BOSS3_MOUTH);
 	//boss 1
 	LPTEXTURE texBoss1 = textures->Get(ID_TEX_BOSS1);
+	LPTEXTURE texBoss3Mouth = textures->Get(ID_TEX_BOSS3_MOUTH);
 	///shield
 	////normal
 	sprites->Add(40000, 0, 54, 23, 84, texBoss1);
@@ -917,7 +931,22 @@ void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	sprites->Add(40003, 0, 0, 108, 38, texBoss1);
 	///gun
 	sprites->Add(41000, 48, 42, 59, 48, texBoss1);
-	
+	//boss 3
+	///mouth
+	////opening
+	sprites->Add(42000, 6, 5, 101, 84, texBoss3Mouth);
+	sprites->Add(42001, 112, 5, 207, 84, texBoss3Mouth);
+	////open
+	sprites->Add(42010, 218, 5, 313, 84, texBoss3Mouth);
+	sprites->Add(42011, 324, 5, 419, 84, texBoss3Mouth);
+	sprites->Add(42012, 430, 5, 525, 84, texBoss3Mouth);
+	////close
+	sprites->Add(42020, 6, 96, 101, 175, texBoss3Mouth);
+	sprites->Add(42021, 112, 96, 207, 175, texBoss3Mouth);
+	sprites->Add(42022, 219, 96, 314, 175, texBoss3Mouth);
+	////moudler
+	sprites->Add(42030, 444, 96, 511, 180, texBoss3Mouth);
+
 
 	LPANIMATION ani = new CAnimation(100);
 	ani->Add(40000);
@@ -932,6 +961,28 @@ void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	ani = new CAnimation(100);
 	ani->Add(41000);
 	animations->Add(BOSS1GUN_ANI_NORMAL, ani);
+
+	//boss 3
+	ani = new CAnimation(100);
+	ani->Add(42000);
+	ani->Add(42001);
+	animations->Add(BOSS3MOUTH_ANI_OPENING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(42010);
+	ani->Add(42011);
+	ani->Add(42012);
+	animations->Add(BOSS3MOUTH_ANI_OPEN, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(42020);
+	ani->Add(42021);
+	ani->Add(42022);
+	animations->Add(BOSS3MOUTH_ANI_CLOSE, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(42030);
+	animations->Add(BOSS3MOUTH_ANI_MOUDLER, ani);
 }
 
 void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a, int stage) {

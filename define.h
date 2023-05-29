@@ -39,6 +39,7 @@ enum eID
 	BRIDGE = 14,
 	BOSS1SHIELD = 18,
 	BOSS1GUN = 19,
+	BOSS3MOUTH = 20,
 };
 
 enum eLandType

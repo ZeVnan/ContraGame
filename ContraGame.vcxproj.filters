@@ -128,6 +128,12 @@
     <ClCompile Include="BulletBoss1.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
+    <ClCompile Include="Boss3Mouth.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletBoss3.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
@@ -265,6 +271,12 @@
       <Filter>Game Object\Header</Filter>
     </ClInclude>
     <ClInclude Include="BulletBoss1.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss3Mouth.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletBoss3.h">
       <Filter>Game Object\Header</Filter>
     </ClInclude>
   </ItemGroup>

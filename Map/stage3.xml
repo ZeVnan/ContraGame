@@ -1330,5 +1330,11 @@
 				<Elem Key="mapType" Value="0" />
 			</Params>
 		</Item>
+		<Item Id="20" Name="boss3mouth" X="240" Y="4250" Width="32" Height="64">
+			<ActiveBound X="32" Y="3648" Width="32" Height="64" />
+			<Params>
+				<Elem Key="status" Value="0" />
+			</Params>
+		</Item>
 	</Objects>
 </Tilesmap>
