@@ -5,8 +5,8 @@
 CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
-	isOnPlatform = false;
-	this->SetState(SOLDIER_STATE_JUMP_RELEASE);
+	isOnPlatform = true;
+	this->SetState(SOLDIER_ANI_RUN_LEFT);
 	maxVx = SOLDIER_RUN_SPEED;
 	maxVy = 0.0f;
 	gunx = x;
