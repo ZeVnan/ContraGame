@@ -7,7 +7,7 @@
 #include "Bullet.h"
 
 
-#define SOLDIER_RUN_SPEED 0.1f
+#define SOLDIER_RUN_SPEED 0.2f
 #define SOLDIER_JUMP_SPEED_Y 0.2f
 #define SOLDIER_GRAVITY -0.00075f
 
@@ -45,12 +45,12 @@
 #define SOLDIER_ANI_DIE_LEFT 12040
 #define SOLDIER_ANI_DIE_RIGHT 12041
 
-#define SOLDIER_BOX_RUN_WIDTH	64
-#define SOLDIER_BOX_RUN_HEIGHT	128
-#define SOLDIER_BOX_SHOOT_WIDTH	96
-#define SOLDIER_BOX_SHOOT_HEIGHT	96
-#define SOLDIER_BOX_LAY_WIDTH	128
-#define SOLDIER_BOX_LAY_HEIGHT	60
+#define SOLDIER_BOX_RUN_WIDTH	32
+#define SOLDIER_BOX_RUN_HEIGHT	64
+#define SOLDIER_BOX_SHOOT_WIDTH	48
+#define SOLDIER_BOX_SHOOT_HEIGHT 48
+#define SOLDIER_BOX_LAY_WIDTH	64
+#define SOLDIER_BOX_LAY_HEIGHT	30
 
 class CSoldier: public CGameObject
 {
@@ -71,8 +71,8 @@ public:
 	void Render();
 	void SetState(int State);
 
-	void AddBullet();
-	void DelBullet();
+	/*void AddBullet();
+	void DelBullet();*/
 
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);

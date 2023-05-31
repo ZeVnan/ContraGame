@@ -42,8 +42,8 @@ map<string, string> CWorld::getObjectProperties(xml_node node)
 LPGAMEOBJECT CWorld::spawnSoldier(xml_node node)
 {
 	auto properties = getObjectProperties(node);
-	if (properties.size() == 0)
-		return nullptr;
+	/*if (properties.size() == 0)
+		return nullptr;*/
 
 	float x, y;
 

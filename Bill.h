@@ -148,7 +148,7 @@ class CBill :public CGameObject
 
 	int lifeLeft;
 	void worldControl();
-	void Die(DWORD dt);
+	void Die();
 	void UpdateBorder();
 	void Move(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void BulletControl(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
@@ -177,6 +177,7 @@ public:
 	//collision with enemy object
 	void CollisionWithAircraft(LPCOLLISIONEVENT e);
 	void CollisionWithFalcon(LPCOLLISIONEVENT e);
+	void CollisionWithSoldier(LPCOLLISIONEVENT e);
 
 	int CalculateAngle();
 	void AddBullet(BOOLEAN KeyState);
