@@ -698,12 +698,12 @@
 				<Elem Key="type" Value="1" />
 			</Params>
 		</Item>
-		<!--<Item Id="5" Name="rifleMan1" X="624" Y="110" Width="32" Height="64">
+		<Item Id="5" Name="rifleMan1" X="624" Y="110" Width="32" Height="64">
 			<ActiveBound X="624" Y="110" Width="32" Height="64" />
 			<Params>
 				<Elem Key="status" Value="0" />
 			</Params>
-		</Item>-->
+		</Item>
 		<Item Id="5" Name="rifleMan2" X="1280" Y="110" Width="32" Height="64">
 			<ActiveBound X="1280" Y="110" Width="32" Height="64" />
 		</Item>
