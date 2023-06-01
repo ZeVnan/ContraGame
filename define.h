@@ -40,6 +40,7 @@ enum eID
 	BOSS1SHIELD = 18,
 	BOSS1GUN = 19,
 	BOSS3MOUTH = 20,
+	BOSS3ARM = 22,
 };
 
 enum eLandType

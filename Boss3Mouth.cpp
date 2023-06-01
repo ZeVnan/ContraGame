@@ -122,8 +122,8 @@ void CBoss3Mouth::CollisionWith(LPCOLLISIONEVENT e) {
 }
 
 void CBoss3Mouth::AddBullet() {
-	int a = rand() % 9 + 14;
-	bullets.push_back(new CBulletBoss3(x, y, a * 15, false));
+	int a = rand() % 5 + 7;
+	bullets.push_back(new CBulletBoss3(x, y, a * 30, false));
 }
 void CBoss3Mouth::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	for (int i = 0; i < bullets.size(); i++) {

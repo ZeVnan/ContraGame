@@ -246,6 +246,22 @@ LPGAMEOBJECT CWorld::spawnBoss3Mouth(xml_node node) {
 
 	return boss3mouth;
 }
+LPGAMEOBJECT CWorld::spawnBoss3Arm(xml_node node) {
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y, angle;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+	angle = stof(properties["angle"]);
+
+	auto boss3arm = new CBoss3Arm(x, y, angle);
+
+	return boss3arm;
+}
 LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 {
 	switch (id)
@@ -276,6 +292,8 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnBoss1Gun(node);
 	case BOSS3MOUTH:
 		return spawnBoss3Mouth(node);
+	case BOSS3ARM:
+		return spawnBoss3Arm(node);
 	default:
 		return nullptr;
 		break;
@@ -367,7 +385,7 @@ void CWorld::Render() {
 			WPList[i]->Render();
 		}
 	}
-	bill->Render();		//just make sure bill not be obscured by other objects
+	bill->Render();		//just make sure bill will not be obscured by other objects
 }
 void CWorld::UpdateObjectContainer() {
 	vector<LPGAMEOBJECT> temp;
