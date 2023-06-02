@@ -2,7 +2,7 @@
 #include "Bill.h"
 extern CBill* bill;
 CBoss3Arm::CBoss3Arm(float x, float y, float startAngle) :CGameObject(x, y) {
-	HP = 200;
+	HP = 150;
 	timeLeft = BOSS3ARM_TIME_SWITCH;
 	vr = BOSS3ARM_SPEED_R;
 	state = BOSS3ARM_STATE_TURN_LEFT;
@@ -25,40 +25,53 @@ void CBoss3Arm::CalculatePosition(float& x, float& y, float angle, int number) {
 	y = this->y + sin(radian) * number * BOSS3ARM_RADIUS_BASE;
 }
 void CBoss3Arm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	for (int i = 1; i < parts.size(); i++) {
-		if (i == 1) {
-			float peri = parts[i].number * BOSS3ARM_RADIUS_BASE * 2 * 3.14159;
-			float move_angle = (vr * dt) / peri * 360;
-			parts[i].angle += move_angle;
-			CalculatePosition(parts[i].x, parts[i].y, parts[i].angle, parts[i].number);
+	if (isExploded == false) {
+		if (HP <= 0) {
+			SetState(BOSS3ARM_STATE_EXPLODE);
 		}
 		else {
-			if (parts[i - 1].angle - parts[i].angle > 15) {
-				parts[i].angle = parts[i - 1].angle - 15;
+			for (int i = 1; i < parts.size(); i++) {
+				if (i == 1) {
+					float peri = parts[i].number * BOSS3ARM_RADIUS_BASE * 2 * 3.14159;
+					float move_angle = (vr * dt) / peri * 360;
+					parts[i].angle += move_angle;
+					CalculatePosition(parts[i].x, parts[i].y, parts[i].angle, parts[i].number);
+				}
+				else {
+					if (parts[i - 1].angle - parts[i].angle > 15) {
+						parts[i].angle = parts[i - 1].angle - 15;
+					}
+					if (parts[i].angle - parts[i - 1].angle > 15) {
+						parts[i].angle = parts[i - 1].angle + 15;
+					}
+					CalculatePosition(parts[i].x, parts[i].y, parts[i].angle, parts[i].number);
+				}
 			}
-			if (parts[i].angle - parts[i - 1].angle > 15) {
-				parts[i].angle = parts[i - 1].angle + 15;
-			}
-			CalculatePosition(parts[i].x, parts[i].y, parts[i].angle, parts[i].number);
 		}
 	}
+	
 	if (timeLeft > 0) {
 		timeLeft -= dt;
 	}
 	else {
-		int a = rand() % 2;
-		if (a == 0) {
-			SetState(BOSS3ARM_STATE_TURN_LEFT);
+		if (isExploded == false) {
+			int a = rand() % 2;
+			if (a == 0) {
+				SetState(BOSS3ARM_STATE_TURN_LEFT);
+			}
+			else {
+				SetState(BOSS3ARM_STATE_TURN_RIGHT);
+			}
+			if (countToShoot == 0) {
+				AddBullet();
+				countToShoot = 3;
+			}
+			else {
+				countToShoot--;
+			}
 		}
 		else {
-			SetState(BOSS3ARM_STATE_TURN_RIGHT);
-		}
-		if (countToShoot == 0) {
-			AddBullet();
-			countToShoot = 3;
-		}
-		else {
-			countToShoot--;
+			isDeleted = true;
 		}
 	}
 	UpdateBullet(dt, coObjects);
@@ -66,6 +79,10 @@ void CBoss3Arm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 void CBoss3Arm::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	for (int i = 0; i < parts.size(); i++) {
+		if (isExploded == true) {
+			animations->Get(EXPLOSION_2_ANI)->Render(parts[i].x, parts[i].y);
+			continue;
+		}
 		if (parts[i].type == false) {
 			animations->Get(BOSS3ARM_ANI_ARM)->Render(parts[i].x, parts[i].y);
 		}
@@ -79,12 +96,17 @@ void CBoss3Arm::SetState(int state) {
 	switch (state) {
 	case BOSS3ARM_STATE_TURN_LEFT:
 		vr = BOSS3ARM_SPEED_R;
+		timeLeft = BOSS3ARM_TIME_SWITCH;
 		break;
 	case BOSS3ARM_STATE_TURN_RIGHT:
 		vr = -BOSS3ARM_SPEED_R;
+		timeLeft = BOSS3ARM_TIME_SWITCH;
 		break;
+	case BOSS3ARM_STATE_EXPLODE:
+		isExploded = true;
+		vr = 0;
+		timeLeft = TIME_EXPLODE;
 	}
-	timeLeft = BOSS3ARM_TIME_SWITCH;
 	CGameObject::SetState(state);
 }
 
@@ -93,7 +115,10 @@ void CBoss3Arm::CreateBox(DWORD dt) {
 	bbox.top = parts[4].y - BOSS3ARM_BOX_HEIGHT / 2;
 	bbox.right = parts[4].x + BOSS3ARM_BOX_WIDTH / 2;
 	bbox.bottom = parts[4].y + BOSS3ARM_BOX_HEIGHT / 2;
-
+	float vr_degree = parts[4].angle + 90;
+	float vr_rad = 3.14159 / 180 * vr_degree;
+	bbox.vpf_x = (cos(vr_rad) * vr * 4) * dt;
+	bbox.vpf_y = (sin(vr_rad) * vr * 4) * dt;
 }
 void CBoss3Arm::NoCollision(DWORD dt) {
 

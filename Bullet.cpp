@@ -10,6 +10,7 @@
 #include "Boss1Shield.h"
 #include "Boss1Gun.h"
 #include "Boss3Mouth.h"
+#include "Boss3Arm.h"
 
 CBullet::CBullet() {
 	this->type = -1;
@@ -91,6 +92,10 @@ void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 		CollisionWithBoss3Mouth(e);
 		return;
 	}
+	if (dynamic_cast<LPBOSS3ARM>(e->dest_obj)) {
+		CollisionWithBoss3Arm(e);
+		return;
+	}
 	x += bbox.vpf_x;
 	y += bbox.vpf_y;
 }
@@ -145,6 +150,12 @@ void CBullet::CollisionWithBoss3Mouth(LPCOLLISIONEVENT e) {
 		(LPBOSS3MOUTH(e->dest_obj))->IsExploded() == true)
 		return;
 	(LPBOSS3MOUTH(e->dest_obj))->TakeDamage(this->damage);
+	e->src_obj->Delete();
+}
+void CBullet::CollisionWithBoss3Arm(LPCOLLISIONEVENT e) {
+	if (friendly == false || (LPBOSS3ARM(e->dest_obj))->isCollidable() == false)
+		return;
+	(LPBOSS3ARM(e->dest_obj))->TakeDamage(this->damage);
 	e->src_obj->Delete();
 }
 //human collision

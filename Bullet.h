@@ -59,6 +59,7 @@ public:
 	void CollisionWithBoss1Shield(LPCOLLISIONEVENT e);
 	void CollisionWithBoss1Gun(LPCOLLISIONEVENT e);
 	void CollisionWithBoss3Mouth(LPCOLLISIONEVENT e);
+	void CollisionWithBoss3Arm(LPCOLLISIONEVENT e);
 	~CBullet() {
 
 	}
