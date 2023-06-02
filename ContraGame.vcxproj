@@ -143,6 +143,7 @@
     <ClCompile Include="Bill.cpp" />
     <ClCompile Include="Boss1Gun.cpp" />
     <ClCompile Include="Boss1Shield.cpp" />
+    <ClCompile Include="Boss3Arm.cpp" />
     <ClCompile Include="Boss3Mouth.cpp" />
     <ClCompile Include="Bridge.cpp" />
     <ClCompile Include="BridgePart.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Bill.h" />
     <ClInclude Include="Boss1Gun.h" />
     <ClInclude Include="Boss1Shield.h" />
+    <ClInclude Include="Boss3Arm.h" />
     <ClInclude Include="Boss3Mouth.h" />
     <ClInclude Include="Bridge.h" />
     <ClInclude Include="BridgePart.h" />

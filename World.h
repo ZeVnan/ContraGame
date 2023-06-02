@@ -12,6 +12,7 @@
 #include "Boss1Shield.h"
 #include "Boss1Gun.h"
 #include "Boss3Mouth.h"
+#include "Boss3Arm.h"
 
 #include "define.h"
 #include "Tile.h"
@@ -39,6 +40,7 @@ private:
 	LPGAMEOBJECT spawnBoss1Shield(xml_node node);
 	LPGAMEOBJECT spawnBoss1Gun(xml_node node);
 	LPGAMEOBJECT spawnBoss3Mouth(xml_node node);
+	LPGAMEOBJECT spawnBoss3Arm(xml_node node);
 
 	map<string, string> getObjectProperties(xml_node node);
 	

@@ -919,9 +919,11 @@ void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	//4xxxx
 	textures->Add(ID_TEX_BOSS1, TEXTURE_PATH_BOSS1);
 	textures->Add(ID_TEX_BOSS3_MOUTH, TEXTURE_PATH_BOSS3_MOUTH);
+	textures->Add(ID_TEX_STAGE3_ELEMENT, TEXTURE_PATH_STAGE3_ELEMENT);
 	//boss 1
 	LPTEXTURE texBoss1 = textures->Get(ID_TEX_BOSS1);
 	LPTEXTURE texBoss3Mouth = textures->Get(ID_TEX_BOSS3_MOUTH);
+	LPTEXTURE texStage3Elements = textures->Get(ID_TEX_STAGE3_ELEMENT);
 	///shield
 	////normal
 	sprites->Add(40000, 0, 54, 23, 84, texBoss1);
@@ -946,6 +948,10 @@ void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	sprites->Add(42022, 219, 96, 314, 175, texBoss3Mouth);
 	////moudler
 	sprites->Add(42030, 444, 96, 511, 180, texBoss3Mouth);
+	///arm
+	sprites->Add(43000, 86, 17, 101, 32, texStage3Elements);
+	///hand
+	sprites->Add(43001, 67, 17, 82, 32, texStage3Elements);
 
 
 	LPANIMATION ani = new CAnimation(100);
@@ -983,6 +989,14 @@ void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	ani = new CAnimation(100);
 	ani->Add(42030);
 	animations->Add(BOSS3MOUTH_ANI_MOUDLER, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(43000);
+	animations->Add(BOSS3ARM_ANI_ARM, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(43001);
+	animations->Add(BOSS3ARM_ANI_HAND, ani);
 }
 
 void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a, int stage) {
