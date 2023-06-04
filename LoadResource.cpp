@@ -818,15 +818,41 @@ void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(18003);
 	animations->Add(SCUBA_ANI_SHOOT_LEFT, ani);
 }
+void CreateRockFallAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations)
+{
+	textures->Add(ID_TEX_ROCKFALL, TEXTURE_PATH_ROCKFALL);
+	LPTEXTURE texRockFall = textures->Get(ID_TEX_ROCKFALL);
+	//id sprite 19xxx
+	//Rockfall normal
+	sprites->Add(19000, 5, 2, 28, 28, texRockFall);
+	//Rockfall fall
+	sprites->Add(19001, 35, 4, 61, 27, texRockFall);
+	sprites->Add(19002, 69, 2, 92, 28, texRockFall);
+	sprites->Add(19003, 99, 4, 125, 27, texRockFall);
+	
+	LPANIMATION ani;
+	ani = new CAnimation(100);
+	ani->Add(19000);
+	animations->Add(ROCKFALL_ANI_NORMAL, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(19001);
+	ani->Add(19002);
+	ani->Add(19003);
+	animations->Add(ROCKFALL_ANI_FALLING, ani);	
+}
+
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_GRASS, TEXTURE_PATH_GRASS);
 	textures->Add(ID_TEX_FIRE, TEXTURE_PATH_FIRE);
 	textures->Add(ID_TEX_BOX, TEXTURE_PATH_BOX);
 	textures->Add(ID_TEX_EXPLOSION, TEXTURE_PATH_EXPLOSION);
 	textures->Add(ID_TEX_BRIDGE, TEXTURE_PATH_BRIDGE);
+	textures->Add(ID_TEX_ROCKFLY, TEXTURE_PATH_ROCKFLY);
 
 	LPTEXTURE texGrass = textures->Get(ID_TEX_GRASS);
 	LPTEXTURE texFire = textures->Get(ID_TEX_FIRE);
+	LPTEXTURE texRockfly = textures->Get(ID_TEX_ROCKFLY);
 	LPTEXTURE texExplosion = textures->Get(ID_TEX_EXPLOSION);
 	LPTEXTURE texBridge = textures->Get(ID_TEX_BRIDGE);
 	//grass
@@ -834,6 +860,8 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	//fire
 	sprites->Add(20001, 0, 0, 16, 16, texFire);
 	sprites->Add(20002, 16, 0, 32, 16, texFire);
+	//rockfly
+	sprites->Add(20003, 3, 2, 36, 33, texRockfly);
 	//explosion type 1
 	sprites->Add(20010, 0, 0, 25, 32, texExplosion);
 	sprites->Add(20011, 164, 0, 189, 32, texExplosion);
@@ -864,6 +892,10 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(20001);
 	ani->Add(20002);
 	animations->Add(FIRE_ANI, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20003);
+	animations->Add(ROCKFLY_ANI, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(20010);

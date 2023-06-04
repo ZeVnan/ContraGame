@@ -172,6 +172,7 @@ public:
 	void CollisionWithWater(LPCOLLISIONEVENT e);
 	void CollisionWithBridgePart(LPCOLLISIONEVENT e);
 	void CollisionWithBridge(LPCOLLISIONEVENT e);
+	void CollisionWithRockFly(LPCOLLISIONEVENT e);
 	void CollisionWithBoss1Shield(LPCOLLISIONEVENT e);
 	//collision with enemy object
 	void CollisionWithAircraft(LPCOLLISIONEVENT e);

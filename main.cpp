@@ -52,12 +52,13 @@ void LoadResources() {
 	CreateFalconAni(textures, sprites, animations);
 	CreateScubaAni(textures, sprites, animations);
 	CreateWTurretAni(textures, sprites, animations);
+	CreateRockFallAni(textures, sprites, animations);
 	CreateOtherAni(textures, sprites, animations);
 	CreateBossAni(textures, sprites, animations);
 
 	LoadScreenResources(textures, sprites);
 
-	gameControl = gameover;
+	gameControl = waiting3;
 	option = option1;
 }void LoadStage1() {
 	world = new CWorld(6656, 6656, 1);
@@ -153,7 +154,7 @@ void Update(DWORD dt)
 
 		break;
 	}
-	DebugOutTitle(L"gamecontrol = %d, option = %d", gameControl, option);
+	//DebugOutTitle(L"gamecontrol = %d, option = %d", gameControl, option);
 }
 
 void Render()

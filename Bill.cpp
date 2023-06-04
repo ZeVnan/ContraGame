@@ -4,6 +4,7 @@
 #include "Water.h"
 #include "BridgePart.h"
 #include "Bridge.h"
+#include "RockFly.h"
 #include "Aircraft.h"
 #include "Falcon.h"
 #include "Boss1Shield.h"
@@ -173,7 +174,8 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	worldControl();
 	BulletControl(dt, coObjects);
 	Move(dt, coObjects);
-	DebugOutTitle(L"lifeLeft = %d, x = %f, y = %f", lifeLeft, x, y);
+	//DebugOutTitle(L"lifeLeft = %d, x = %f, y = %f", lifeLeft, x, y);
+	DebugOutTitle(L"vy = %f, isOnplatform = %d", vy, isOnPlatform);
 }
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
@@ -654,6 +656,9 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPBOSS1SHIELD>(e->dest_obj)) {
 		CollisionWithBoss1Shield(e);
 	}
+	if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
+		CollisionWithRockFly(e);
+	}
 }
 //collision with terrain object
 void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
@@ -739,6 +744,34 @@ void CBill::CollisionWithBridgePart(LPCOLLISIONEVENT e) {
 void CBill::CollisionWithBridge(LPCOLLISIONEVENT e) {
 	if (e->normal_y != 0) {
 		((LPBRIDGE)e->dest_obj)->Explode();
+	}
+}
+void CBill::CollisionWithRockFly(LPCOLLISIONEVENT e) {
+	if (e->normal_x != 0) {
+		this->x += bbox.vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		if (e->normal_y > 0) {
+			if (e->dest_obj->IsExploded() == true) {
+				this->y += bbox.vpf_y;
+				return;
+			}
+			if (isDropping == false) {
+				//support change bbox
+				if (isJumping == true) {
+					isJumping = false;
+					y += BILL_JUMP_NORMAL_POSITION_ADJUST;
+				}
+				this->y += e->time * bbox.vpf_y;
+				SetState(BILL_STATE_ON_LAND);
+			}
+			else {
+				this->y += bbox.vpf_y;
+			}
+		}
+		else {
+			this->y += bbox.vpf_y;
+		}
 	}
 }
 void CBill::CollisionWithBoss1Shield(LPCOLLISIONEVENT e) {

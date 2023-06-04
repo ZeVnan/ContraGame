@@ -167,6 +167,8 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="pugi\src\pugixml.cpp" />
     <ClCompile Include="Rifleman.cpp" />
+    <ClCompile Include="RockFall.cpp" />
+    <ClCompile Include="RockFly.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="ScubaSoldier.cpp" />
     <ClCompile Include="Soldier.cpp" />
@@ -217,6 +219,8 @@
     <ClInclude Include="pugi\src\pugixml.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rifleman.h" />
+    <ClInclude Include="RockFall.h" />
+    <ClInclude Include="RockFly.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="ScubaSoldier.h" />
     <ClInclude Include="Soldier.h" />

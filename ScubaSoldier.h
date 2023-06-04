@@ -3,9 +3,11 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "debug.h"
+#include "Bullet.h"
+#include "BulletN.h"
 
-#define SCUBA_HIDING_TIME 1000
-#define SCUBA_SHOOTING_TIME 1000
+#define SCUBA_HIDING_TIME 2000
+#define SCUBA_SHOOTING_TIME 2000
 
 #define SCUBA_STATE_HIDING 0
 #define SCUBA_STATE_SHOOTING 1
@@ -26,7 +28,11 @@ class CScubaSoldier : public CGameObject
 private:
 	BOOLEAN isHiding;
 	BOOLEAN isShooting;
+	BOOLEAN isActivated;
 	int timeleft;
+	
+	int waveLeft = 1;
+	vector<vector<LPBULLET>>waveContainer;
 public:
 	CScubaSoldier(float x, float y);
 
@@ -34,11 +40,17 @@ public:
 	void Render();
 	void SetState(int state);
 
+	void watchBill();
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
-	bool isCollidable() { return !isExploded; }
+	bool isCollidable() { return !isHiding; }
+
+	vector<LPBULLET> ShootNormalBullet(int angle);
+	void AddBullet();
+	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void RenderBullet();
 };
 typedef CScubaSoldier* LPSCUBA;
 
