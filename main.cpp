@@ -53,12 +53,13 @@ void LoadResources() {
 	CreateFalconAni(textures, sprites, animations);
 	CreateScubaAni(textures, sprites, animations);
 	CreateWTurretAni(textures, sprites, animations);
+	CreateRockFallAni(textures, sprites, animations);
 	CreateOtherAni(textures, sprites, animations);
 	CreateBossAni(textures, sprites, animations);
 
 	LoadScreenResources(textures, sprites);
 
-	gameControl = waiting1;
+	gameControl = waiting3;
 	option = option1;
 }void LoadStage1() {
 	world = new CWorld(6656, 6656, 1);
@@ -82,7 +83,7 @@ void LoadStage3() {
 	world = new CWorld(4455, 4455, 3);
 	//objects
 	world->getObjectsListFromFile(STAGE3_PATH);
-	bill = new CBill(85, 3900, 3);//BILL
+	bill = new CBill(85, 135, 3);//BILL
 	world->getObjectList().push_back(bill);
 	//tiles
 	CTextures* textures = CTextures::GetInstance();
@@ -94,7 +95,7 @@ void LoadStage3() {
 	worldpart->Split(world);
 	//camera set up
 	CGame::GetInstance()->GetCamera() = new CCamera(480, world->getHeight(), 3);
-	CGame::GetInstance()->GetCamera()->Update(85, 3900);
+	CGame::GetInstance()->GetCamera()->Update(85, 135);
 }
 
 void LoadStage(int stage) {

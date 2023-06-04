@@ -150,6 +150,41 @@ LPGAMEOBJECT CWorld::spawnScubaSoldier(xml_node node) {
 
 	return ScubaSoldier;
 }
+
+LPGAMEOBJECT CWorld::spawnRockFall(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto RockFall = new CRockFall(x, y);
+
+	return RockFall;
+}
+
+LPGAMEOBJECT CWorld::spawnRockFly(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto RockFly = new CRockFly(x, y);
+
+	return RockFly;
+}
+
 LPGAMEOBJECT CWorld::spawnLand(xml_node node)
 {
 	auto properties = getObjectProperties(node);
@@ -280,6 +315,10 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnWallTurret(node);
 	case ScubaSoldierID:
 		return spawnScubaSoldier(node);
+	case RockFallID:
+		return spawnRockFall(node);
+	case RockFlyID:
+		return spawnRockFly(node);
 	case LAND:
 		return spawnLand(node);
 	case WATER:

@@ -39,6 +39,9 @@ enum eID
 	BRIDGE = 14,
 	BOSS1SHIELD = 18,
 	BOSS1GUN = 19,
+
+	RockFlyID = 21,
+	RockFallID = 26,
 	BOSS3MOUTH = 20,
 	BOSS3ARM = 22,
 };
