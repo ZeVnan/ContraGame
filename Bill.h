@@ -127,6 +127,8 @@ class CBill :public CGameObject
 	BOOLEAN disableDrop;
 	BOOLEAN isDead;
 	BOOLEAN isVulnerable;
+	bool a;					//support render when invulnerable
+
 	int ny;					//normal:0, up:1, down:-1
 	float maxVx;
 	float maxVy;

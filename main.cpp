@@ -58,7 +58,7 @@ void LoadResources() {
 
 	LoadScreenResources(textures, sprites);
 
-	gameControl = waiting3;
+	gameControl = waiting1;
 	option = option1;
 }void LoadStage1() {
 	world = new CWorld(6656, 6656, 1);
