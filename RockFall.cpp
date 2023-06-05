@@ -5,9 +5,9 @@ extern CBill* bill;
 
 CRockFall::CRockFall(float x, float y) : CGameObject(x, y)
 {
-	isFalling = false;
 	isActivated = false;
-	timeLeft = ROCKFALL_READY_TIME;
+	turn = false;
+	state = ROCKFALL_STATE_NORMAL;
 	vy = 0;
 }
 
@@ -17,7 +17,7 @@ BOOLEAN CRockFall::outOfScreen()
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
 	cw = CGame::GetInstance()->GetCamera()->GetCamWidth();
 	ch = CGame::GetInstance()->GetCamera()->GetCamHeight();
-	if (x < (cx - cw / 2) || x >(cx + cw / 2) || y < (cy - ch / 2) || y >(cy + ch / 2))
+	if (x < (cx - cw / 2) || x >(cx + cw / 2) || y < (cy - ch / 2))
 		return true;
 	return false;
 }
@@ -39,23 +39,17 @@ void CRockFall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (!isActivated) {
 		return;
 	}
-	this->SetState(ROCKFALL_STATE_NORMAL);
-	if (timeLeft >= 0) {
-		timeLeft -= dt;
-	}
-	if(timeLeft < 0) {
-			this->SetState(ROCKFALL_STATE_FALLING);
-			vy += ROCKFALL_GRAVITY * dt;
-			y -= vy * dt;
-	}
+	this->SetState(ROCKFALL_STATE_FALLING);
+	vy += ROCKFALL_GRAVITY * dt;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
+	if (outOfScreen() == true && isActivated == true) {
+		isDeleted = true;
+	}
+	DebugOutTitle(L"vy = %f", vy);
 }
 
 void CRockFall::Render()
 {
-	if (!isActivated) {
-		return;
-	}
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
 
@@ -75,10 +69,8 @@ void CRockFall::SetState(int state)
 {
 	switch (state) {
 		case ROCKFALL_STATE_NORMAL:
-			vy = 0;
 			break;
 		case ROCKFALL_STATE_FALLING:
-			vy = ROCKFALL_SPEED_Y;
 			break;
 	}
 	CGameObject::SetState(state);
@@ -96,7 +88,6 @@ void CRockFall::CreateBox(DWORD dt)
 
 void CRockFall::NoCollision(DWORD dt)
 {
-	vy += ay * dt;
 	y += vy * dt;
 }
 
@@ -112,16 +103,18 @@ void CRockFall::CollisionWith(LPCOLLISIONEVENT e)
 
 void CRockFall::CollisionWithGrass(LPCOLLISIONEVENT e)
 {
-	e->src_obj->Delete();
-	//DebugOutTitle(L"Collision with grass");
-}
-
-void CRockFall::CollisionWithBill(LPCOLLISIONEVENT e)
-{
-	if ((LPBILL(e->dest_obj))->IsDiving() == true ||
-		(LPBILL(e->dest_obj))->IsVulnerable() == false ||
-		(LPBILL(e->dest_obj))->IsDead() == true)
-		return;
-	e->src_obj->Delete();
-	(LPBILL(e->dest_obj))->SetState(BILL_STATE_DYING_RIGHT);
+	if (e->normal_y < 0) {
+		
+	}
+	if (e->normal_y > 0) {
+		if (turn == false) {
+			vy = 0.2f;
+			this->y += e->time * bbox.vpf_y;
+			turn = true;
+		}
+		else {
+			this->y += bbox.vpf_y;
+			turn = false;
+		}
+	}
 }

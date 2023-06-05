@@ -27,7 +27,7 @@ void CCannon::WatchBill() {
 			isActivated = true;
 		}
 	}
-	DebugOutTitle(L"Cannon_x = %f, Bill_x = %f, Bill_y = %f,", this->x, Bill_x, Bill_y);
+	//DebugOutTitle(L"Cannon_x = %f, Bill_x = %f, Bill_y = %f,", this->x, Bill_x, Bill_y);
 }
 
 int CCannon::CalculateBillAngle() {

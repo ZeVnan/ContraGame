@@ -9,6 +9,8 @@
 #include "Bill.h"
 #include "Boss1Shield.h"
 #include "Boss1Gun.h"
+#include "Boss3Mouth.h"
+#include "Boss3Arm.h"
 
 CBullet::CBullet() {
 	this->type = -1;
@@ -86,6 +88,14 @@ void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
 		CollisionWithBoss1Gun(e);
 		return;
 	}
+	if (dynamic_cast<LPBOSS3MOUTH>(e->dest_obj)) {
+		CollisionWithBoss3Mouth(e);
+		return;
+	}
+	if (dynamic_cast<LPBOSS3ARM>(e->dest_obj)) {
+		CollisionWithBoss3Arm(e);
+		return;
+	}
 	x += bbox.vpf_x;
 	y += bbox.vpf_y;
 }
@@ -131,6 +141,21 @@ void CBullet::CollisionWithBoss1Gun(LPCOLLISIONEVENT e) {
 	if (friendly == false || (LPBOSS1GUN(e->dest_obj))->isCollidable() == false)
 		return;
 	(LPBOSS1GUN(e->dest_obj))->TakeDamage(this->damage);
+	e->src_obj->Delete();
+}
+void CBullet::CollisionWithBoss3Mouth(LPCOLLISIONEVENT e) {
+	if (friendly == false || 
+		(LPBOSS3MOUTH(e->dest_obj))->isCollidable() == false ||
+		(LPBOSS3MOUTH(e->dest_obj))->IsClosed() == true ||
+		(LPBOSS3MOUTH(e->dest_obj))->IsExploded() == true)
+		return;
+	(LPBOSS3MOUTH(e->dest_obj))->TakeDamage(this->damage);
+	e->src_obj->Delete();
+}
+void CBullet::CollisionWithBoss3Arm(LPCOLLISIONEVENT e) {
+	if (friendly == false || (LPBOSS3ARM(e->dest_obj))->isCollidable() == false)
+		return;
+	(LPBOSS3ARM(e->dest_obj))->TakeDamage(this->damage);
 	e->src_obj->Delete();
 }
 //human collision

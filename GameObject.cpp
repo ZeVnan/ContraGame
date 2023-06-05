@@ -25,7 +25,7 @@ void CGameObject::RenderBox() {
 	rect->right = bbox.right - bbox.left;
 	rect->bottom = bbox.bottom - bbox.top;
 
-	float cx = x, cy = y;
+	float cx = (bbox.right + bbox.left) / 2, cy = (bbox.bottom + bbox.top) / 2;
 	CGame::GetInstance()->GetCamera()->TranslateToCamCoord(cx, cy);
 	CGame::GetInstance()->Draw(cx, cy, texBox, rect);
 }

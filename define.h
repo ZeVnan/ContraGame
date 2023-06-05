@@ -42,6 +42,8 @@ enum eID
 
 	RockFlyID = 21,
 	RockFallID = 26,
+	BOSS3MOUTH = 20,
+	BOSS3ARM = 22,
 };
 
 enum eLandType

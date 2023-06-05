@@ -6,7 +6,7 @@
 
 #include "debug.h"
 
-#define BULLET_SPEED 0.1f;
+#define BULLET_SPEED 0.3f;
 
 #define BULLET_ANI_NORMAL 11000
 #define BULLET_ANI_NORMAL_BILL 11001
@@ -23,9 +23,9 @@
 #define BULLET_ANI_LASER_225 11043
 #define BULLET_ANI_LASER_315 11044
 #define BULLET_ANI_LASER_90 11045
-#define BULLET_ANI_LASER_270 11046
 
 #define BULLET_ANI_BOSS1 11050
+#define BULLET_ANI_BOSS3 11060
 
 class CBullet :public CGameObject
 {
@@ -58,6 +58,8 @@ public:
 	void CollisionWithBill(LPCOLLISIONEVENT e);
 	void CollisionWithBoss1Shield(LPCOLLISIONEVENT e);
 	void CollisionWithBoss1Gun(LPCOLLISIONEVENT e);
+	void CollisionWithBoss3Mouth(LPCOLLISIONEVENT e);
+	void CollisionWithBoss3Arm(LPCOLLISIONEVENT e);
 	~CBullet() {
 
 	}

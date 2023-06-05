@@ -39,7 +39,7 @@ void CRockFly::CreateBox(DWORD dt) {
 	else {
 		bbox.vpf_x = -vx * dt;
 	}
-	
+	bbox.vpf_x = 0;
 	bbox.vpf_y = 0;
-	
 }
+

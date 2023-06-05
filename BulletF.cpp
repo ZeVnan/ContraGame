@@ -8,10 +8,10 @@ CBulletF::CBulletF(float x, float y, int angle, bool friendly) : CBullet::CBulle
 	centerx = x;
 	centery = y;
 	damage = 15;
-}
-void CBulletF::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
 	vy = maxVy;
+}
+void CBulletF::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 }
 void CBulletF::NoCollision(DWORD dt) {

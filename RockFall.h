@@ -5,8 +5,7 @@
 #include "debug.h"
 
 #define ROCKFALL_SPEED_Y 0.2f
-#define ROCKFALL_GRAVITY -0.002f
-#define ROCKFALL_READY_TIME 2000
+#define ROCKFALL_GRAVITY -0.0005f
 #define ROCKFALL_ACTIVE_RADIUS 300
 
 #define ROCKFALL_STATE_NORMAL 0
@@ -21,10 +20,8 @@
 class CRockFall : public CGameObject
 {
 private:
-	BOOLEAN isFalling;
 	BOOLEAN isActivated;
-	int timeLeft;
-	float ay;
+	bool turn;
 public:
 	CRockFall(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

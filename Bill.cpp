@@ -8,6 +8,7 @@
 #include "Aircraft.h"
 #include "Falcon.h"
 #include "Boss1Shield.h"
+#include "Boss3Mouth.h"
 
 #include "SampleKeyEventHandler.h"
 #include "Game.h"
@@ -51,6 +52,7 @@ CBill::CBill(float x, float y,  int stage) :CGameObject(x, y) {
 		maxX = 480;
 		maxY = 4435;
 	}
+	a = false;
 }
 void CBill::worldControl() {
 	//DebugOutTitle(L"minX = %f, minY = %f, maxX = %f, maxY = %f", minX, minY, maxX, maxY);
@@ -151,7 +153,7 @@ void CBill::UpdateBorder() {
 }
 void CBill::Move(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx = maxVx;
-	if (isOnPlatform == false && isSwimming == false)
+	if (isOnPlatform == false && isSwimming == false && isDead == false)
 		vy += BILL_GRAVITY * dt;
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, coObjects, dt);
@@ -175,7 +177,7 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	BulletControl(dt, coObjects);
 	Move(dt, coObjects);
 	//DebugOutTitle(L"lifeLeft = %d, x = %f, y = %f", lifeLeft, x, y);
-	DebugOutTitle(L"vy = %f, isOnplatform = %d", vy, isOnPlatform);
+	//DebugOutTitle(L"vy = %f, isOnplatform = %d", vy, isOnPlatform);
 }
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
@@ -370,7 +372,18 @@ void CBill::Render(){
 		d = BILL_UP_HEIGHT_ADJUST;
 	if (ani == BILL_ANI_DIVING)
 		d = BILL_DIVE_HEIGHT_ADJUST;
-	animations->Get(ani)->Render(x, y + d);
+	if (isVulnerable == false) {
+		if (a == false) {
+			a = true;
+		}
+		else {
+			animations->Get(ani)->Render(x, y + d);
+			a = false;
+		}
+	}
+	else {
+		animations->Get(ani)->Render(x, y + d);
+	}
 	RenderBullet();
 }
 void CBill::SetState(int state) {
@@ -656,6 +669,9 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPBOSS1SHIELD>(e->dest_obj)) {
 		CollisionWithBoss1Shield(e);
 	}
+	if (dynamic_cast<LPBOSS3MOUTH>(e->dest_obj)) {
+		CollisionWithBoss3Mouth(e);
+	}
 	if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
 		CollisionWithRockFly(e);
 	}
@@ -752,10 +768,6 @@ void CBill::CollisionWithRockFly(LPCOLLISIONEVENT e) {
 	}
 	else if (e->normal_y != 0) {
 		if (e->normal_y > 0) {
-			if (e->dest_obj->IsExploded() == true) {
-				this->y += bbox.vpf_y;
-				return;
-			}
 			if (isDropping == false) {
 				//support change bbox
 				if (isJumping == true) {
@@ -780,6 +792,11 @@ void CBill::CollisionWithBoss1Shield(LPCOLLISIONEVENT e) {
 	}
 	else if (e->normal_y != 0) {
 		this->y += e->time * bbox.vpf_y;
+	}
+}
+void CBill::CollisionWithBoss3Mouth(LPCOLLISIONEVENT e) {
+	if ((LPBOSS3MOUTH(e->dest_obj))->IsDead() == true) {
+		gameControl = credit;
 	}
 }
 //collision with enemy object

@@ -8,6 +8,7 @@
 
 gameScreen gameControl;
 screenOption option;
+int playingAt;
 #define WAITING_TIME 3000
 int timeLeft = WAITING_TIME;
 
@@ -76,12 +77,13 @@ void LoadResources() {
 	worldpart->Split(world);
 	//camera set up
 	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), 448, 1);
+	CGame::GetInstance()->GetCamera()->Update(100, 400);
 }
 void LoadStage3() {
 	world = new CWorld(4455, 4455, 3);
 	//objects
 	world->getObjectsListFromFile(STAGE3_PATH);
-	bill = new CBill(85, 190, 3);//BILL
+	bill = new CBill(85, 135, 3);//BILL
 	world->getObjectList().push_back(bill);
 	//tiles
 	CTextures* textures = CTextures::GetInstance();
@@ -93,6 +95,7 @@ void LoadStage3() {
 	worldpart->Split(world);
 	//camera set up
 	CGame::GetInstance()->GetCamera() = new CCamera(480, world->getHeight(), 3);
+	CGame::GetInstance()->GetCamera()->Update(85, 135);
 }
 
 void LoadStage(int stage) {
@@ -129,6 +132,7 @@ void Update(DWORD dt)
 			timeLeft = WAITING_TIME;
 			LoadStage(1);
 		}
+		playingAt = 1;
 		break;
 	case stage1:
 		world->Update(dt);
@@ -143,6 +147,7 @@ void Update(DWORD dt)
 			timeLeft = WAITING_TIME;
 			LoadStage(3);
 		}
+		playingAt = 3;
 		break;
 	case stage3:
 		world->Update(dt);
@@ -217,6 +222,8 @@ void Render()
 		}
 		break;
 	case credit:
+		ClearWorld();
+		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
 		CSprites::GetInstance()->Get(30004)->Draw(0, 0);
 		break;
 	}

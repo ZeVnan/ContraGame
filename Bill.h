@@ -127,6 +127,8 @@ class CBill :public CGameObject
 	BOOLEAN disableDrop;
 	BOOLEAN isDead;
 	BOOLEAN isVulnerable;
+	bool a;					//support render when invulnerable
+
 	int ny;					//normal:0, up:1, down:-1
 	float maxVx;
 	float maxVy;
@@ -174,6 +176,7 @@ public:
 	void CollisionWithBridge(LPCOLLISIONEVENT e);
 	void CollisionWithRockFly(LPCOLLISIONEVENT e);
 	void CollisionWithBoss1Shield(LPCOLLISIONEVENT e);
+	void CollisionWithBoss3Mouth(LPCOLLISIONEVENT e);
 	//collision with enemy object
 	void CollisionWithAircraft(LPCOLLISIONEVENT e);
 	void CollisionWithFalcon(LPCOLLISIONEVENT e);
