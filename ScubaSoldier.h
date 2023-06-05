@@ -4,7 +4,7 @@
 #include "Animations.h"
 #include "debug.h"
 #include "Bullet.h"
-#include "BulletN.h"
+#include "BulletS.h"
 
 #define SCUBA_HIDING_TIME 2000
 #define SCUBA_SHOOTING_TIME 2000
@@ -45,9 +45,9 @@ public:
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
-	bool isCollidable() { return !isHiding; }
+	bool isCollidable() { return isShooting; }
 
-	vector<LPBULLET> ShootNormalBullet(int angle);
+	vector<LPBULLET> ShootSpreadBullet(int angle);
 	void AddBullet();
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void RenderBullet();

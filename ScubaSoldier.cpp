@@ -33,14 +33,24 @@ void CScubaSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else {
 		if (isActivated) {
-			if(!isHiding){
+			switch (state) {
+			case SCUBA_STATE_HIDING:
+				this->SetState(SCUBA_STATE_SHOOTING);
+				timeleft = SCUBA_SHOOTING_TIME;
+				break;
+			case SCUBA_STATE_SHOOTING:
+				this->SetState(SCUBA_STATE_HIDING);
+				timeleft = SCUBA_HIDING_TIME;
+				break;
+			}
+			/*if(!isHiding){
 				this->SetState(SCUBA_STATE_SHOOTING);
 				isHiding = true;
 			}
 			else {
 				this->SetState(SCUBA_STATE_HIDING);
 				isHiding = false;
-			}
+			}*/
 			AddBullet();
 		}
 		else {
@@ -48,7 +58,7 @@ void CScubaSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	UpdateBullet(dt, coObjects);
-	//DebugOutTitle(L"state = %d, timeleft = %d", this->state, this->timeleft);
+	
 }
 
 void CScubaSoldier::Render()
@@ -72,6 +82,7 @@ void CScubaSoldier::Render()
 		ani = EXPLOSION_1_ANI;
 	}
 	animations->Get(ani)->Render(x, y);
+	RenderBox();
 	RenderBullet();
 }
 
@@ -118,7 +129,7 @@ void CScubaSoldier::CreateBox(DWORD dt)
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}
-	
+	DebugOutTitle(L"isHiding = %d, isShooting = %d", isHiding, isShooting);
 }
 
 void CScubaSoldier::NoCollision(DWORD dt)
@@ -131,18 +142,24 @@ void CScubaSoldier::CollisionWith(LPCOLLISIONEVENT e)
 {
 }
 
-vector<LPBULLET> CScubaSoldier::ShootNormalBullet(int angle) {
-	LPBULLETN bulletN;
+
+vector<LPBULLET> CScubaSoldier::ShootSpreadBullet(int angle)
+{
+	LPBULLETS bulletS;
 	vector<LPBULLET> temp;
-	bulletN = new CBulletN(x, y, angle, false);
-	temp.push_back(bulletN);
+	bulletS = new CBulletS(x, y, angle, false);
+	temp.push_back(bulletS);
+	bulletS = new CBulletS(x, y, angle - 15, false);
+	temp.push_back(bulletS);
+	bulletS = new CBulletS(x, y, angle + 15, false);
+	temp.push_back(bulletS);
 	return temp;
 }
 
 void CScubaSoldier::AddBullet()
 {
 	if(this->state == SCUBA_STATE_SHOOTING)
-		waveContainer.push_back(ShootNormalBullet(90));
+		waveContainer.push_back(ShootSpreadBullet(90));
 }
 
 void CScubaSoldier::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

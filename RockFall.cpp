@@ -45,11 +45,13 @@ void CRockFall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (outOfScreen() == true && isActivated == true) {
 		isDeleted = true;
 	}
-	DebugOutTitle(L"vy = %f", vy);
 }
 
 void CRockFall::Render()
 {
+	if (!isActivated) {
+		return;
+	}
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
 
@@ -62,7 +64,6 @@ void CRockFall::Render()
 			break;
 	}
 	animations->Get(ani)->Render(x, y);
-	RenderBox();
 }
 
 void CRockFall::SetState(int state)
@@ -104,7 +105,7 @@ void CRockFall::CollisionWith(LPCOLLISIONEVENT e)
 void CRockFall::CollisionWithGrass(LPCOLLISIONEVENT e)
 {
 	if (e->normal_y < 0) {
-		
+
 	}
 	if (e->normal_y > 0) {
 		if (turn == false) {
@@ -117,4 +118,16 @@ void CRockFall::CollisionWithGrass(LPCOLLISIONEVENT e)
 			turn = false;
 		}
 	}
+}
+
+void CRockFall::CollisionWithBill(LPCOLLISIONEVENT e)
+{
+	if (e->normal_y < 0) {
+		return;
+	}
+	if ((LPBILL(e->dest_obj))->IsDiving() == true ||
+		(LPBILL(e->dest_obj))->IsVulnerable() == false ||
+		(LPBILL(e->dest_obj))->IsDead() == true)
+		return;
+	(LPBILL(e->dest_obj))->SetState(BILL_STATE_DYING_RIGHT);
 }
