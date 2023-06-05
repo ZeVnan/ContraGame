@@ -48,7 +48,7 @@ void CRockFall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			vy += ROCKFALL_GRAVITY * dt;
 			y -= vy * dt;
 	}
-	//CCollision::GetInstance()->Process(this, coObjects, dt);
+	CCollision::GetInstance()->Process(this, coObjects, dt);
 }
 
 void CRockFall::Render()
@@ -105,15 +105,23 @@ void CRockFall::CollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
 		CollisionWithGrass(e);
 	}
+	if (dynamic_cast<LPBILL>(e->dest_obj)) {
+		CollisionWithBill(e);
+	}
 }
 
 void CRockFall::CollisionWithGrass(LPCOLLISIONEVENT e)
 {
-	if (e->normal_y < 0) {
-		this->y -= bbox.vpf_y;
-	}
-	if (e->normal_y > 0) {
-		this->y -= e->time * bbox.vpf_y;
-	}
-	DebugOutTitle(L"Collision with grass");
+	e->src_obj->Delete();
+	//DebugOutTitle(L"Collision with grass");
+}
+
+void CRockFall::CollisionWithBill(LPCOLLISIONEVENT e)
+{
+	if ((LPBILL(e->dest_obj))->IsDiving() == true ||
+		(LPBILL(e->dest_obj))->IsVulnerable() == false ||
+		(LPBILL(e->dest_obj))->IsDead() == true)
+		return;
+	e->src_obj->Delete();
+	(LPBILL(e->dest_obj))->SetState(BILL_STATE_DYING_RIGHT);
 }

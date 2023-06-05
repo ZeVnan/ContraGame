@@ -131,7 +131,9 @@
     <ClCompile Include="RockFall.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
-    <ClCompile Include="RockFly.cpp" />
+    <ClCompile Include="RockFly.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />

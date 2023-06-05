@@ -43,13 +43,3 @@ void CRockFly::CreateBox(DWORD dt) {
 	bbox.vpf_y = 0;
 	
 }
-
-void CRockFly::NoCollision(DWORD dt) {
-	x += vx * dt;
-	y += 0;
-}
-
-void CRockFly::CollisionWith(LPCOLLISIONEVENT e) {
-
-}
-

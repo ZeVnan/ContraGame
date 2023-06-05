@@ -40,5 +40,6 @@ public:
 	bool isCollidable() { return true; }
 	void CollisionWith(LPCOLLISIONEVENT e);
 	void CollisionWithGrass(LPCOLLISIONEVENT e);
+	void CollisionWithBill(LPCOLLISIONEVENT e);
 };
 typedef CRockFall* LPROCKFALL;
