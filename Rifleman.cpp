@@ -233,18 +233,18 @@ void Rifleman::CreateBox(DWORD dt)
 	if (isHiding)
 	{
 		bbox.left = x - RIFLEMAN_BOX_HIDE_WIDTH / 2;
-		bbox.top = y - RIFLEMAN_BOX_HIDE_HEIGHT / 2;
+		bbox.top = y + RIFLEMAN_BOX_HIDE_HEIGHT / 2;
 		bbox.right = x + RIFLEMAN_BOX_HIDE_WIDTH / 2;
-		bbox.bottom = y + RIFLEMAN_BOX_HIDE_HEIGHT / 2;
+		bbox.bottom = y - RIFLEMAN_BOX_HIDE_HEIGHT / 2;
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}
 	else
 	{
 		bbox.left = x - RIFLEMAN_BOX_NORMAL_WIDTH / 2;
-		bbox.top = y - RIFLEMAN_BOX_NORMAL_HEIGHT / 2;
+		bbox.top = y + RIFLEMAN_BOX_NORMAL_HEIGHT / 2;
 		bbox.right = x + RIFLEMAN_BOX_NORMAL_WIDTH / 2;
-		bbox.bottom = y + RIFLEMAN_BOX_NORMAL_HEIGHT / 2;
+		bbox.bottom = y - RIFLEMAN_BOX_NORMAL_HEIGHT / 2;
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}

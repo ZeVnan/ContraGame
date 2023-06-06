@@ -112,9 +112,9 @@ void CBoss3Arm::SetState(int state) {
 
 void CBoss3Arm::CreateBox(DWORD dt) {
 	bbox.left = parts[4].x - BOSS3ARM_BOX_WIDTH / 2;
-	bbox.top = parts[4].y - BOSS3ARM_BOX_HEIGHT / 2;
+	bbox.top = parts[4].y + BOSS3ARM_BOX_HEIGHT / 2;
 	bbox.right = parts[4].x + BOSS3ARM_BOX_WIDTH / 2;
-	bbox.bottom = parts[4].y + BOSS3ARM_BOX_HEIGHT / 2;
+	bbox.bottom = parts[4].y - BOSS3ARM_BOX_HEIGHT / 2;
 	float vr_degree = parts[4].angle + 90;
 	float vr_rad = 3.14159 / 180 * vr_degree;
 	bbox.vpf_x = (cos(vr_rad) * vr * 4) * dt;

@@ -80,9 +80,9 @@ void CRockFall::SetState(int state)
 void CRockFall::CreateBox(DWORD dt)
 {
 	bbox.left = x - ROCKFALL_BBOX_WIDTH / 2;
-	bbox.top = y - ROCKFALL_BBOX_HEIGHT / 2;
+	bbox.top = y + ROCKFALL_BBOX_HEIGHT / 2;
 	bbox.right = x + ROCKFALL_BBOX_WIDTH / 2;
-	bbox.bottom = y + ROCKFALL_BBOX_HEIGHT / 2;
+	bbox.bottom = y - ROCKFALL_BBOX_HEIGHT / 2;
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;
 }

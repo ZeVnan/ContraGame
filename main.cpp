@@ -59,13 +59,13 @@ void LoadResources() {
 
 	LoadScreenResources(textures, sprites);
 
-	gameControl = waiting3;
+	gameControl = waiting1;
 	option = option1;
 }void LoadStage1() {
 	world = new CWorld(6656, 6656, 1);
 	//objects
 	world->getObjectsListFromFile(STAGE1_PATH);
-	bill = new CBill(100, 400, 1);
+	bill = new CBill(6000, 400, 1);
 	world->getObjectList().push_back(bill);
 	//tile
 	CTextures* textures = CTextures::GetInstance();
@@ -77,7 +77,7 @@ void LoadResources() {
 	worldpart->Split(world);
 	//camera set up
 	CGame::GetInstance()->GetCamera() = new CCamera(world->getWidth(), 448, 1);
-	CGame::GetInstance()->GetCamera()->Update(100, 400);
+	CGame::GetInstance()->GetCamera()->Update(6000, 400);
 }
 void LoadStage3() {
 	world = new CWorld(4455, 4455, 3);

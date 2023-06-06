@@ -23,7 +23,7 @@ void CGameObject::RenderBox() {
 	rect->left = 0;
 	rect->top = 0;
 	rect->right = bbox.right - bbox.left;
-	rect->bottom = bbox.bottom - bbox.top;
+	rect->bottom = bbox.top-bbox.bottom;
 
 	float cx = (bbox.right + bbox.left) / 2, cy = (bbox.bottom + bbox.top) / 2;
 	CGame::GetInstance()->GetCamera()->TranslateToCamCoord(cx, cy);

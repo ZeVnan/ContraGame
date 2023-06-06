@@ -30,9 +30,9 @@ void CRockFly::Render() {
 
 void CRockFly::CreateBox(DWORD dt) {
 	bbox.left = (x - ROCKFLY_BOX_WIDTH / 2);
-	bbox.top = (y - ROCKFLY_BOX_HEIGHT / 2);
+	bbox.top = (y + ROCKFLY_BOX_HEIGHT / 2);
 	bbox.right = (x + ROCKFLY_BOX_WIDTH / 2);
-	bbox.bottom = (y + ROCKFLY_BOX_HEIGHT / 2);
+	bbox.bottom = (y - ROCKFLY_BOX_HEIGHT / 2);
 	if (turn) {
 		bbox.vpf_x = vx * dt;
 	}

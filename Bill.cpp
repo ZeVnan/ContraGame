@@ -182,6 +182,14 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
+	//render life
+	float cx, cy, cw, ch;
+	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
+	cw = CGame::GetInstance()->GetCamera()->GetCamWidth();
+	ch = CGame::GetInstance()->GetCamera()->GetCamHeight();
+	for (int i = 0; i < lifeLeft; i++) {
+		animations->Get(LIFE_ANI)->Render(cx - cw / 2 + 20 + i * 30, cy + ch / 2 - 20);
+	}
 	if (isDead == true)
 		return;
 	if (isSwimming == false) {
@@ -554,6 +562,20 @@ void CBill::KeyDown(int KeyCode) {
 	case DIK_5:
 		this->SetBulletType(BULLET_ANI_MACHINE);
 		break;
+	case DIK_6:
+		bonusWave++;
+		waveLeft++;
+		break;
+	case DIK_R:
+		if (isVulnerable == true) {
+			isVulnerable = false;
+			timeLeft = 100000;
+		}
+		else {
+			isVulnerable = true;
+			timeLeft = 0;
+		}
+		break;
 	}
 }
 void CBill::KeyUp(int KeyCode) {
@@ -608,37 +630,37 @@ void CBill::KeyState(CGame* game) {
 void CBill::CreateBox(DWORD dt) {
 	if (isDying == true) {
 		bbox.left = x - BILL_BOX_DIE_WIDTH / 2;
-		bbox.top = y - BILL_BOX_DIE_HEIGHT / 2;
+		bbox.top = y + BILL_BOX_DIE_HEIGHT / 2;
 		bbox.right = x + BILL_BOX_DIE_WIDTH / 2;
-		bbox.bottom = y + BILL_BOX_DIE_HEIGHT / 2;
+		bbox.bottom = y - BILL_BOX_DIE_HEIGHT / 2;
 	}
 	else
 	if (isSwimming == true) {
 		bbox.left = x - BILL_BOX_SWIM_WIDTH / 2;
-		bbox.top = y - BILL_BOX_SWIM_HEIGHT / 2;
+		bbox.top = y + BILL_BOX_SWIM_HEIGHT / 2;
 		bbox.right = x + BILL_BOX_SWIM_WIDTH / 2;
-		bbox.bottom = y + BILL_BOX_SWIM_HEIGHT / 2;
+		bbox.bottom = y - BILL_BOX_SWIM_HEIGHT / 2;
 	}
 	else
 	if (isLaying == true) {
 		bbox.left = x - BILL_BOX_LAY_WIDTH / 2;
-		bbox.top = y - BILL_BOX_LAY_HEIGHT / 2;
+		bbox.top = y + BILL_BOX_LAY_HEIGHT / 2;
 		bbox.right = x + BILL_BOX_LAY_WIDTH / 2;
-		bbox.bottom = y + BILL_BOX_LAY_HEIGHT / 2;
+		bbox.bottom = y - BILL_BOX_LAY_HEIGHT / 2;
 	}
 	else
 	if (isJumping == true) {
 		bbox.left = x - BILL_BOX_JUMP_WIDTH / 2;
-		bbox.top = y - BILL_BOX_JUMP_HEIGHT / 2;
+		bbox.top = y + BILL_BOX_JUMP_HEIGHT / 2;
 		bbox.right = x + BILL_BOX_JUMP_WIDTH / 2;
-		bbox.bottom = y + BILL_BOX_JUMP_HEIGHT / 2;
+		bbox.bottom = y - BILL_BOX_JUMP_HEIGHT / 2;
 	}
 	else
 	{
 		bbox.left = x - BILL_BOX_NORMAL_WIDTH / 2;
-		bbox.top = y - BILL_BOX_NORMAL_HEIGHT / 2;
+		bbox.top = y + BILL_BOX_NORMAL_HEIGHT / 2;
 		bbox.right = x + BILL_BOX_NORMAL_WIDTH / 2;
-		bbox.bottom = y + BILL_BOX_NORMAL_HEIGHT / 2;
+		bbox.bottom = y - BILL_BOX_NORMAL_HEIGHT / 2;
 	}
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;
@@ -820,6 +842,9 @@ void CBill::CollisionWithAircraft(LPCOLLISIONEVENT e) {
 		bonusWave++;
 		waveLeft++;
 		break;
+	case AIRCRAFT_ANI_bAMMO:
+		isVulnerable = false;
+		timeLeft = 15000;
 	}
 	e->dest_obj->Delete();
 }

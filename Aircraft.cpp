@@ -3,7 +3,7 @@
 #include "Grass.h"
 extern CBill* bill;
 CAircraft::CAircraft(float x, float y, int stage) :CGameObject(x, y) {
-	this->ammo = rand() % 5 + 13002;
+	this->ammo = rand() % 6 + 13001;
 	this->stage = stage;
 	isCollectible = false;
 	isExploded = false;
@@ -36,11 +36,11 @@ void CAircraft::watchBill() {
 	}
 }
 void CAircraft::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	DebugOutTitle(L"vy = %f, y = %f", vy, y);
 	watchBill();
 	if (isActivated == false)
 		return;
 	if (isExploded == false) {
-		vy += ay * dt;
 		x += vx * dt;
 		y += vy * dt;
 		return;
@@ -49,14 +49,13 @@ void CAircraft::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (timeleft >= 0) {
 		this->timeleft -= dt;
 	}
-	if (this->timeleft < 0) {
+	if (this->timeleft < 0 && state != AIRCRAFT_STATE_DROPITEM) {
 		this->SetState(AIRCRAFT_STATE_DROPITEM);
 	}
 	if (isCollectible == false)	//update for collectible
 		return;
 
 	CCollision::GetInstance()->Process(this, coObjects, dt);
-	//DebugOutTitle(L"vy = %f, y = %f", vy, y);
 }
 void CAircraft::Render() {
 	if (isActivated == false) {
@@ -120,9 +119,9 @@ void CAircraft::SetState(int state) {
 
 void CAircraft::CreateBox(DWORD dt) {
 	bbox.left = (x - AIRCRAFT_BOX_WIDTH / 2);
-	bbox.top = (y - AIRCRAFT_BOX_HEIGHT / 2);
+	bbox.top = (y + AIRCRAFT_BOX_HEIGHT / 2);
 	bbox.right = (x + AIRCRAFT_BOX_WIDTH / 2);
-	bbox.bottom = (y + AIRCRAFT_BOX_HEIGHT / 2);
+	bbox.bottom = (y - AIRCRAFT_BOX_HEIGHT / 2);
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;
 }

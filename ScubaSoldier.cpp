@@ -22,7 +22,7 @@ void CScubaSoldier::watchBill()
 
 void CScubaSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	
+
 	watchBill();
 	if (this->isExploded == true && this->timeleft < 0) {
 		isDeleted = true;
@@ -58,7 +58,7 @@ void CScubaSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	UpdateBullet(dt, coObjects);
-	
+
 }
 
 void CScubaSoldier::Render()
@@ -68,7 +68,7 @@ void CScubaSoldier::Render()
 	}
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
-	switch(this->state)
+	switch (this->state)
 	{
 	case SCUBA_STATE_HIDING:
 		ani = SCUBA_ANI_HIDE_RIGHT;
@@ -82,7 +82,7 @@ void CScubaSoldier::Render()
 		ani = EXPLOSION_1_ANI;
 	}
 	animations->Get(ani)->Render(x, y);
-	RenderBox();
+	//RenderBox();
 	RenderBullet();
 }
 
@@ -114,22 +114,21 @@ void CScubaSoldier::CreateBox(DWORD dt)
 	if (isHiding)
 	{
 		bbox.left = x - SCUBA_BOX_HIDE_WIDTH / 2;
-		bbox.top = y - SCUBA_BOX_HIDE_HEIGHT / 2;
+		bbox.top = y + SCUBA_BOX_HIDE_HEIGHT / 2;
 		bbox.right = x + SCUBA_BOX_HIDE_WIDTH / 2;
-		bbox.bottom = y + SCUBA_BOX_HIDE_HEIGHT / 2;
+		bbox.bottom = y - SCUBA_BOX_HIDE_HEIGHT / 2;
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}
 	else
 	{
 		bbox.left = x - SCUBA_BOX_SHOOT_WIDTH / 2;
-		bbox.top = y - SCUBA_BOX_SHOOT_HEIGHT / 2;
+		bbox.top = y + SCUBA_BOX_SHOOT_HEIGHT / 2;
 		bbox.right = x + SCUBA_BOX_SHOOT_WIDTH / 2;
-		bbox.bottom = y + SCUBA_BOX_SHOOT_HEIGHT / 2;
+		bbox.bottom = y - SCUBA_BOX_SHOOT_HEIGHT / 2;
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}
-	DebugOutTitle(L"isHiding = %d, isShooting = %d", isHiding, isShooting);
 }
 
 void CScubaSoldier::NoCollision(DWORD dt)
@@ -158,7 +157,7 @@ vector<LPBULLET> CScubaSoldier::ShootSpreadBullet(int angle)
 
 void CScubaSoldier::AddBullet()
 {
-	if(this->state == SCUBA_STATE_SHOOTING)
+	if (this->state == SCUBA_STATE_SHOOTING)
 		waveContainer.push_back(ShootSpreadBullet(90));
 }
 
