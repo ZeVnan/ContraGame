@@ -6,9 +6,11 @@ CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
 	isOnPlatform = true;
-	this->state = SOLDIER_STATE_RUN_LEFT;
+	isDropping = false;
+	isJumping = false;
+	this->SetState(SOLDIER_STATE_RUN_LEFT);
 	maxVx = SOLDIER_RUN_SPEED;
-	maxVy = 0.0f;
+	maxVy = SOLDIER_GRAVITY;
 	gunx = x;
 	guny = y;
 }
@@ -18,13 +20,22 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		isDeleted = true;
 		return;
 	}
-	if (isOnPlatform == true) {
-		this->SetState(SOLDIER_STATE_RUN_LEFT);
+
+
+	vy += SOLDIER_GRAVITY * dt;
+	CCollision::GetInstance()->Process(this, coObjects, dt);
+
+	if (this->state == SOLDIER_STATE_RUN_LEFT) {
 		x += vx * dt;
 	}
-	if (this->state == SOLDIER_STATE_JUMP_RELEASE) {
+
+
+	/*if (this->state == SOLDIER_STATE_JUMP) {
+		vy = maxVy;
 		y += vy * dt;
-	}
+	}*/
+
+
 	//DebugOutTitle(L"timeleft = %f", this->timeleft);
 }
 void CSoldier::Render() {
@@ -76,6 +87,11 @@ void CSoldier::Render() {
 }
 void CSoldier::SetState(int State) {
 	switch (State) {
+	case SOLDIER_STATE_ON_LAND:
+		isOnPlatform = true;
+		isJumping = false;
+		vy = 0;
+		break;
 	case SOLDIER_STATE_RUN_RIGHT:
 		vx = SOLDIER_RUN_SPEED;
 		nx = 1;
@@ -84,6 +100,7 @@ void CSoldier::SetState(int State) {
 		}
 		break;
 	case SOLDIER_STATE_RUN_LEFT:
+		isOnPlatform = true;
 		vx = -SOLDIER_RUN_SPEED;
 		nx = -1;
 		if (isLaying == true) {
@@ -91,14 +108,16 @@ void CSoldier::SetState(int State) {
 		}
 		break;
 	case SOLDIER_STATE_JUMP:
+		isOnPlatform = false;
+		isDropping = true;
 		if (vy == 0) {
 			vy = -SOLDIER_JUMP_SPEED_Y;
 		}
 		break;
 	case SOLDIER_STATE_JUMP_RELEASE:
 		vy = -SOLDIER_GRAVITY;
-		/*if (vy < 0)
-			vy += SOLDIER_JUMP_SPEED_Y / 2;*/
+		if (vy < 0)
+			vy += SOLDIER_JUMP_SPEED_Y / 2;
 		break;
 	case SOLDIER_STATE_SHOOT:
 		isShooting = true;
@@ -116,6 +135,8 @@ void CSoldier::SetState(int State) {
 		isExploded = true;
 		isShooting = false;
 		isLaying = false;
+		isDropping = false;
+		isJumping = false;
 		timeleft = TIME_EXPLODE;
 		break;
 	}
@@ -151,21 +172,17 @@ void CSoldier::CreateBox(DWORD dt)
 		bbox.vpf_y = vy * dt;
 	}
 }
-
 void CSoldier::NoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
-	this->SetState(SOLDIER_STATE_JUMP_RELEASE);
 }
-
 void CSoldier::CollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
 		CollisionWithGrass(e);
 	}
 }
-
 void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 {
 	if (e->normal_x != 0) {
@@ -174,12 +191,23 @@ void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 	}
 	else if (e->normal_y != 0) {
 		if (e->normal_y > 0) {
-			this->y += e->time * this->GetBox().vpf_y;
-			vy = 0;
-			isOnPlatform = true;
-		}
-		else {
-			this->y += this->GetBox().vpf_y;
+			if (isDropping == false) {
+				//support change bbox
+				if (isJumping == true) {
+					isJumping = false;
+					y += 15.0f;
+
+					this->y += e->time * bbox.vpf_y;
+					SetState(SOLDIER_STATE_ON_LAND);
+				}
+				else {
+					vy = 0;
+					this->y += e->time * this->GetBox().vpf_y;
+				}
+			}
+			else {
+				this->y += this->GetBox().vpf_y;
+			}
 		}
 	}
 }

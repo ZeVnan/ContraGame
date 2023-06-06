@@ -7,7 +7,7 @@
 #include "Bullet.h"
 
 
-#define SOLDIER_RUN_SPEED 0.2f
+#define SOLDIER_RUN_SPEED 0.1f
 #define SOLDIER_JUMP_SPEED_Y 0.2f
 #define SOLDIER_GRAVITY -0.00075f
 
@@ -27,7 +27,9 @@
 #define SOLDIER_STATE_LAYDOWN 40
 #define SOLDIER_STATE_LAYDOWN_RELEASE 41
 
-#define SOLDIER_STATE_EXPLODE 50
+#define SOLDIER_STATE_ON_LAND 50
+
+#define SOLDIER_STATE_EXPLODE 60
 
 
 #define SOLDIER_ANI_RUN_LEFT 10200
@@ -58,6 +60,8 @@ private:
 	BOOLEAN isLaying;
 	BOOLEAN isShooting;
 	BOOLEAN isOnPlatform;
+	BOOLEAN isDropping;
+	BOOLEAN isJumping;
 	float maxVx;
 	float maxVy;
 	float gunx;
