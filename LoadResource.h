@@ -23,6 +23,8 @@
 #include "Grass.h"
 #include "Fire.h"
 #include "BridgePart.h"
+#include "RockFall.h"
+#include "RockFly.h"
 
 #include "Boss1Shield.h"
 #include "Boss1Gun.h"
@@ -47,10 +49,12 @@
 #define ID_TEX_FALCON 6
 #define ID_TEX_SCUBA 7
 #define ID_TEX_WTURRET 8
+#define ID_TEX_ROCKFALL 9
 
 #define ID_TEX_GRASS 20
 #define ID_TEX_FIRE 21
 #define ID_TEX_BRIDGE 22
+#define ID_TEX_ROCKFLY 23
 
 #define ID_TEX_BOSS1 30
 #define ID_TEX_BOSS3_MOUTH 31
@@ -82,6 +86,8 @@
 #define TEXTURE_PATH_RIFLEMAN L"Images\\rifleman.png"
 #define TEXTURE_PATH_GRASS L"Images\\grass.png"
 #define TEXTURE_PATH_FIRE L"Images\\fire.png"
+#define TEXTURE_PATH_ROCKFALL L"Images\\rockfall.png"
+#define TEXTURE_PATH_ROCKFLY L"Images\\stage3_elements.png"
 #define TEXTURE_PATH_BRIDGE L"Images\\bridge.png"
 #define TEXTURE_PATH_BOSS1 L"Images\\boss_stage1.png"
 #define TEXTURE_PATH_BOSS3_MOUTH L"Images\\boss_stage3.png"
@@ -109,6 +115,7 @@ void CreateAircraftAni(CTextures*& textures, CSprites*& sprites, CAnimations*& a
 void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
+void CreateRockFallAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 
