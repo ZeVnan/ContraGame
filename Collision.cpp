@@ -29,11 +29,11 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT src_obj, LPGAMEOBJECT dest_o
 	float normal_y = 0.0f;
 	//broad phasing
 	float bl = vpf_x > 0 ? src_box.left : src_box.left + vpf_x;
-	float bt = vpf_y > 0 ? src_box.top : src_box.top + vpf_y;
+	float bt = vpf_y > 0 ? src_box.top + vpf_y: src_box.top;
 	float br = vpf_x > 0 ? src_box.right + vpf_x : src_box.right;
-	float bb = vpf_y > 0 ? src_box.bottom + vpf_y : src_box.bottom;
+	float bb = vpf_y > 0 ? src_box.bottom: src_box.bottom + vpf_y;
 
-	if (br < dest_box.left || bl > dest_box.right || bb < dest_box.top || bt > dest_box.bottom) return NULL;
+	if (br < dest_box.left || bl > dest_box.right || bb > dest_box.top || bt < dest_box.bottom) return NULL;
 	//end broad phasing 
 	if (vpf_x == 0 && vpf_y == 0) return NULL;
 
@@ -47,12 +47,12 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT src_obj, LPGAMEOBJECT dest_o
 	}
 
 	if (vpf_y > 0) {
-		dy_entry = dest_box.top - src_box.bottom;
-		dy_exit = dest_box.bottom - src_box.top;
-	}
-	if (vpf_y < 0) {
 		dy_entry = dest_box.bottom - src_box.top;
 		dy_exit = dest_box.top - src_box.bottom;
+	}
+	if (vpf_y < 0) {
+		dy_entry = dest_box.top - src_box.bottom;
+		dy_exit = dest_box.bottom - src_box.top;
 	}
 
 	if (vpf_x == 0) {
@@ -96,7 +96,7 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT src_obj, LPGAMEOBJECT dest_o
 		vpf_y > 0 ? normal_y = -1.0f : normal_y = 1.0f;
 	}
 
-	return new CollisionEvent(time, normal_x, normal_y, vpf_x, vpf_x, src_obj, dest_obj);
+	return new CollisionEvent(time, normal_x, normal_y, vpf_x, vpf_y, src_obj, dest_obj);
 }
 vector<LPCOLLISIONEVENT> CCollision::Scan(LPGAMEOBJECT src_obj, vector<LPGAMEOBJECT>* dest_obj, DWORD dt) {
 	vector <LPCOLLISIONEVENT> temp;

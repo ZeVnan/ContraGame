@@ -38,6 +38,8 @@
 
 #include "Map.h"
 
+#define ID_TEX_ARROW -13
+#define ID_TEX_LIFE -12
 #define ID_TEX_EXPLOSION -11
 #define ID_TEX_BOX -10
 #define ID_TEX_BILL 0
@@ -92,6 +94,8 @@
 #define TEXTURE_PATH_BOSS1 L"Images\\boss_stage1.png"
 #define TEXTURE_PATH_BOSS3_MOUTH L"Images\\boss_stage3.png"
 #define TEXTURE_PATH_STAGE3_ELEMENT L"Images\\stage3_elements.png"
+#define TEXTURE_PATH_LIFE L"Images\\Life.png"
+#define TEXTURE_PATH_ARROW L"Images\\Arrow.png"
 
 #define STAGE1_PATH "Map\\stage1.xml"
 #define STAGE1_TILE L"Map\\stage1.png"

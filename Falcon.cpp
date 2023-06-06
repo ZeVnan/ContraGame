@@ -119,15 +119,15 @@ void CFalcon::SetState(int state) {
 void CFalcon::CreateBox(DWORD dt) {
 	if (isCollectible == false) {
 		bbox.left = x - FALCON_BOX_WIDTH / 2;
-		bbox.top = y - FALCON_BOX_HEIGHT / 2;
+		bbox.top = y + FALCON_BOX_HEIGHT / 2;
 		bbox.right = x + FALCON_BOX_WIDTH / 2;
-		bbox.bottom = y + FALCON_BOX_HEIGHT / 2;
+		bbox.bottom = y - FALCON_BOX_HEIGHT / 2;
 	}
 	else {
 		bbox.left = (x - FALCON_ITEM_BOX_WIDTH / 2);
-		bbox.top = (y - FALCON_ITEM_BOX_HEIGHT / 2);
+		bbox.top = (y + FALCON_ITEM_BOX_HEIGHT / 2);
 		bbox.right = (x + FALCON_ITEM_BOX_WIDTH / 2);
-		bbox.bottom = (y + FALCON_ITEM_BOX_HEIGHT / 2);
+		bbox.bottom = (y - FALCON_ITEM_BOX_HEIGHT / 2);
 	}
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;

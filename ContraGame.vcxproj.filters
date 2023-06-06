@@ -131,7 +131,6 @@
     <ClCompile Include="RockFall.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
-    <ClCompile Include="RockFly.cpp" />
     <ClCompile Include="Boss3Mouth.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
@@ -139,6 +138,9 @@
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
     <ClCompile Include="Boss3Arm.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="RockFly.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
   </ItemGroup>
@@ -284,6 +286,15 @@
       <Filter>Game Object\Header</Filter>
     </ClInclude>
     <ClInclude Include="RockFly.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletBoss3.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss3Mouth.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss3Arm.h">
       <Filter>Game Object\Header</Filter>
     </ClInclude>
   </ItemGroup>

@@ -175,11 +175,9 @@ void CCannon::SetState(int state) {
 
 void CCannon::CreateBox(DWORD dt) {
 	bbox.left = x - CANNON_BOX_WIDTH / 2;
-	bbox.top = y - CANNON_BOX_HEIGHT / 2;
+	bbox.top = y + CANNON_BOX_HEIGHT / 2;
 	bbox.right = x + CANNON_BOX_WIDTH / 2;
-	bbox.bottom = y + CANNON_BOX_HEIGHT / 2;
-	x += 0;
-	y += 0;
+	bbox.bottom = y - CANNON_BOX_HEIGHT / 2;
 }
 
 void CCannon::NoCollision(DWORD dt) {

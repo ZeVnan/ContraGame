@@ -68,6 +68,7 @@ void CSoldier::Render() {
 		ani = EXPLOSION_1_ANI;
 	}
 	animations->Get(ani)->Render(x, y);
+	RenderBox();
 }
 void CSoldier::SetState(int State) {
 	switch (State) {
@@ -121,27 +122,27 @@ void CSoldier::CreateBox(DWORD dt)
 	if (isShooting) 
 	{
 		bbox.left = x - SOLDIER_BOX_SHOOT_WIDTH / 2;
-		bbox.top = y - SOLDIER_BOX_SHOOT_HEIGHT / 2;
+		bbox.top = y + SOLDIER_BOX_SHOOT_HEIGHT / 2;
 		bbox.right = x + SOLDIER_BOX_SHOOT_WIDTH / 2;
-		bbox.bottom = y + SOLDIER_BOX_SHOOT_HEIGHT / 2;
+		bbox.bottom = y - SOLDIER_BOX_SHOOT_HEIGHT / 2;
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}
 	else if (isLaying)
 	{
 		bbox.left = x - SOLDIER_BOX_LAY_WIDTH / 2;
-		bbox.top = y - SOLDIER_BOX_LAY_HEIGHT / 2;
+		bbox.top = y + SOLDIER_BOX_LAY_HEIGHT / 2;
 		bbox.right = x + SOLDIER_BOX_LAY_WIDTH / 2;
-		bbox.bottom = y + SOLDIER_BOX_LAY_HEIGHT / 2;
+		bbox.bottom = y - SOLDIER_BOX_LAY_HEIGHT / 2;
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}
 	else
 	{
 		bbox.left = x - SOLDIER_BOX_RUN_WIDTH / 2;
-		bbox.top = y - SOLDIER_BOX_RUN_HEIGHT / 2;
+		bbox.top = y + SOLDIER_BOX_RUN_HEIGHT / 2;
 		bbox.right = x + SOLDIER_BOX_RUN_WIDTH / 2;
-		bbox.bottom = y + SOLDIER_BOX_RUN_HEIGHT / 2;
+		bbox.bottom = y - SOLDIER_BOX_RUN_HEIGHT / 2;
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}
