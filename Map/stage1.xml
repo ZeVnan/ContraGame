@@ -670,6 +670,15 @@
 				<Elem Key="type" Value="0" />
 			</Params>
 		</Item>
+		<!--The Trigger Box Place-->
+		<Item Id="200" Name="trigBox1" X="1000" Y="300" Width="16" Height="16">
+			<ActiveBound X="100" Y="100" Width="16" Height="32" />
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		
+		<!--The Trigger Box Place-->
 		<Item Id="11" Name="water1" X="0" Y="48" Width="584" Height="32">
 			<ActiveBound X="0" Y="48" Width="584" Height="32" />
 			<Params>

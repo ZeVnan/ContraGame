@@ -394,6 +394,7 @@ void CBill::Render(){
 		animations->Get(ani)->Render(x, y + d);
 	}
 	RenderBullet();
+	RenderBox();
 }
 void CBill::SetState(int state) {
 	switch (state) {
@@ -698,8 +699,7 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
 		CollisionWithRockFly(e);
 	}
-}
-	else if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
+	if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
 		CollisionWithSoldier(e);
 	}
 }

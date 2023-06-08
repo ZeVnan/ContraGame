@@ -21,9 +21,13 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		return;
 	}
 
-
-	vy += SOLDIER_GRAVITY * dt;
-	CCollision::GetInstance()->Process(this, coObjects, dt);
+	if (this->state == SOLDIER_STATE_EXPLODE) {
+		vy = 0;
+	}
+	else {
+		vy += SOLDIER_GRAVITY * dt;
+		CCollision::GetInstance()->Process(this, coObjects, dt);
+	}
 
 	if (this->state == SOLDIER_STATE_RUN_LEFT) {
 		x += vx * dt;
