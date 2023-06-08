@@ -14,6 +14,9 @@ private:
 public:
 	TriggerBox(float x, float y, int type);
 
+	bool isBlocking() { return false; }
+	int getType() { return type; }
+
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void CreateBox(DWORD dt);

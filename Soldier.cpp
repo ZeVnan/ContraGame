@@ -1,5 +1,4 @@
 #include "Soldier.h"
-#include "Grass.h"
 
 
 CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
@@ -32,12 +31,9 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (this->state == SOLDIER_STATE_RUN_LEFT) {
 		x += vx * dt;
 	}
-
-
-	/*if (this->state == SOLDIER_STATE_JUMP) {
-		vy = maxVy;
-		y += vy * dt;
-	}*/
+	else if (this->state == SOLDIER_STATE_JUMP) {
+		//this->SetState(SOLDIER_STATE_JUMP_RELEASE);
+	}
 
 
 	//DebugOutTitle(L"timeleft = %f", this->timeleft);
@@ -113,11 +109,9 @@ void CSoldier::SetState(int State) {
 		}
 		break;
 	case SOLDIER_STATE_JUMP:
+		vy = SOLDIER_JUMP_SPEED_Y;
 		isOnPlatform = false;
-		isDropping = true;
-		if (vy == 0) {
-			vy = -SOLDIER_JUMP_SPEED_Y;
-		}
+		isJumping = true;
 		break;
 	case SOLDIER_STATE_JUMP_RELEASE:
 		vy = -SOLDIER_GRAVITY;
@@ -132,6 +126,8 @@ void CSoldier::SetState(int State) {
 		break;
 	case SOLDIER_STATE_LAYDOWN:
 		isLaying = true;
+		vx = 0;
+		vy = 0;
 		break;
 	case SOLDIER_STATE_LAYDOWN_RELEASE:
 		isLaying = false;
@@ -187,6 +183,12 @@ void CSoldier::CollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
 		CollisionWithGrass(e);
 	}
+	else if (dynamic_cast<LPWATER>(e->dest_obj)) {
+		CollisionWithWater(e);
+	}
+	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)) {
+		CollisionWithTriggerBox(e);
+	}
 }
 void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 {
@@ -214,5 +216,19 @@ void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 				this->y += this->GetBox().vpf_y;
 			}
 		}
+	}
+}
+void CSoldier::CollisionWithWater(LPCOLLISIONEVENT e) {
+	this->SetState(SOLDIER_STATE_EXPLODE);
+}
+void CSoldier::CollisionWithTriggerBox(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 1) {
+		this->SetState(SOLDIER_STATE_JUMP);
+	}
+	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 2) {
+		this->SetState(SOLDIER_STATE_SHOOT);
+	}
+	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 3) {
+		this->SetState(SOLDIER_STATE_LAYDOWN);
 	}
 }

@@ -671,7 +671,7 @@
 			</Params>
 		</Item>
 		<!--The Trigger Box Place-->
-		<Item Id="200" Name="trigBox1" X="1000" Y="300" Width="16" Height="16">
+		<Item Id="200" Name="trigBox1" X="1790" Y="272" Width="16" Height="16">
 			<ActiveBound X="100" Y="100" Width="16" Height="32" />
 			<Params>
 				<Elem Key="type" Value="1" />
@@ -834,10 +834,10 @@
 		<Item Id="2" Name="soldier2" X="640" Y="293" Width="64" Height="64">
 			<ActiveBound X="640" Y="290" Width="64" Height="64" />
 		</Item>
-		<Item Id="2" Name="soldier3" X="704" Y="293" Width="64" Height="64">
+		<Item Id="2" Name="soldier3" X="784" Y="293" Width="64" Height="64">
 			<ActiveBound X="768" Y="290" Width="64" Height="64" />
 		</Item>
-		<Item Id="2" Name="soldier4" X="768" Y="293" Width="64" Height="64">
+		<Item Id="2" Name="soldier4" X="848" Y="293" Width="64" Height="64">
 			<ActiveBound X="768" Y="290" Width="64" Height="64" />
 		</Item>
 		<Item Id="2" Name="soldier5" X="2112" Y="293" Width="64" Height="64">

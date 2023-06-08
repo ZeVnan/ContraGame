@@ -5,10 +5,13 @@
 #include "debug.h"
 
 #include "Bullet.h"
+#include "Grass.h"
+#include "TriggerBox.h"
+#include "Water.h"
 
 
 #define SOLDIER_RUN_SPEED 0.1f
-#define SOLDIER_JUMP_SPEED_Y 0.2f
+#define SOLDIER_JUMP_SPEED_Y 0.4f
 #define SOLDIER_GRAVITY -0.00075f
 
 #define SOLDIER_START_X 20.0f
@@ -81,6 +84,8 @@ public:
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
 	void CollisionWithGrass(LPCOLLISIONEVENT e);
+	void CollisionWithWater(LPCOLLISIONEVENT e);
+	void CollisionWithTriggerBox(LPCOLLISIONEVENT e);
 
 	bool isBlocking() { return false; }
 	bool isCollidable() { return !isExploded; }
