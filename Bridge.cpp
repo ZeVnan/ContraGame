@@ -28,9 +28,9 @@ void CBridge::PushObjectToList(vector<LPGAMEOBJECT>& a) {
 
 void CBridge::CreateBox(DWORD dt) {
 	bbox.left = x - BRIDGEPART_WIDTH / 4;
-	bbox.top = y - BRIDGEPART_HEIGHT / 2;
+	bbox.top = y + BRIDGEPART_HEIGHT / 2;
 	bbox.right = x + BRIDGEPART_WIDTH * 0.75 + 3 * BRIDGEPART_WIDTH;
-	bbox.bottom = y + BRIDGEPART_HEIGHT / 2;
+	bbox.bottom = y - BRIDGEPART_HEIGHT / 2;
 	bbox.vpf_x = 0;
 	bbox.vpf_y = 0;
 }

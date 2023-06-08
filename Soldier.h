@@ -75,8 +75,7 @@ public:
 	void Render();
 	void SetState(int State);
 
-	/*void AddBullet();
-	void DelBullet();*/
+	void AddBullet();
 
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);

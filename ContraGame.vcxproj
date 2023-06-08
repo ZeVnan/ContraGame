@@ -143,6 +143,7 @@
     <ClCompile Include="Bill.cpp" />
     <ClCompile Include="Boss1Gun.cpp" />
     <ClCompile Include="Boss1Shield.cpp" />
+    <ClCompile Include="Boss3Arm.cpp" />
     <ClCompile Include="Boss3Mouth.cpp" />
     <ClCompile Include="Bridge.cpp" />
     <ClCompile Include="BridgePart.cpp" />
@@ -169,6 +170,8 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="pugi\src\pugixml.cpp" />
     <ClCompile Include="Rifleman.cpp" />
+    <ClCompile Include="RockFall.cpp" />
+    <ClCompile Include="RockFly.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="ScubaSoldier.cpp" />
     <ClCompile Include="Soldier.cpp" />
@@ -191,6 +194,7 @@
     <ClInclude Include="Bill.h" />
     <ClInclude Include="Boss1Gun.h" />
     <ClInclude Include="Boss1Shield.h" />
+    <ClInclude Include="Boss3Arm.h" />
     <ClInclude Include="Boss3Mouth.h" />
     <ClInclude Include="Bridge.h" />
     <ClInclude Include="BridgePart.h" />
@@ -221,6 +225,8 @@
     <ClInclude Include="pugi\src\pugixml.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rifleman.h" />
+    <ClInclude Include="RockFall.h" />
+    <ClInclude Include="RockFly.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="ScubaSoldier.h" />
     <ClInclude Include="Soldier.h" />

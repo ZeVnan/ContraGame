@@ -10,9 +10,9 @@ void CBulletBoss3::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 }
 void CBulletBoss3::CreateBox(DWORD dt) {
 	bbox.left = x - BULLET_BOSS3_BOX_WIDTH / 2;
-	bbox.top = y - BULLET_BOSS3_BOX_HEIGHT / 2;
+	bbox.top = y + BULLET_BOSS3_BOX_HEIGHT / 2;
 	bbox.right = x + BULLET_BOSS3_BOX_WIDTH / 2;
-	bbox.bottom = y + BULLET_BOSS3_BOX_HEIGHT / 2;
+	bbox.bottom = y - BULLET_BOSS3_BOX_HEIGHT / 2;
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;
 }

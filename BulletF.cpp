@@ -26,9 +26,9 @@ void CBulletF::NoCollision(DWORD dt) {
 }
 void CBulletF::CreateBox(DWORD dt) {
 	bbox.left = x - BULLET_F_BOX_WIDTH / 2;
-	bbox.top = y - BULLET_F_BOX_HEIGHT / 2;
+	bbox.top = y + BULLET_F_BOX_HEIGHT / 2;
 	bbox.right = x + BULLET_F_BOX_WIDTH / 2;
-	bbox.bottom = y + BULLET_F_BOX_HEIGHT / 2;
+	bbox.bottom = y - BULLET_F_BOX_HEIGHT / 2;
 	int vr_degree = degree + 90;
 	float vr_rad = 3.14159 / 180 * vr_degree;
 	bbox.vpf_x = (cos(vr_rad) * vr + vx) * dt;

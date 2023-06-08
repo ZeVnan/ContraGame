@@ -64,9 +64,9 @@ void CBridgePart::SetState(int state) {
 }
 void CBridgePart::CreateBox(DWORD dt) {
 	bbox.left = x - BRIDGEPART_WIDTH / 2;
-	bbox.top = y - BRIDGEPART_HEIGHT / 2;
+	bbox.top = y + BRIDGEPART_HEIGHT / 2;
 	bbox.right = x + BRIDGEPART_WIDTH / 2;
-	bbox.bottom = y + BRIDGEPART_HEIGHT / 2;
+	bbox.bottom = y - BRIDGEPART_HEIGHT / 2;
 	bbox.vpf_x = 0;
 	bbox.vpf_y = 0;
 }

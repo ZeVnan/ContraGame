@@ -63,9 +63,13 @@ void CBoss3Mouth::Render() {
 		ani = EXPLOSION_2_ANI;
 		break;
 	}
-	if (isDead == true)
+	if (isDead == true) {
 		ani = BOSS3MOUTH_ANI_MOUDLER;
+	}
 	animations->Get(ani)->Render(x, y);
+	if (isDead == true) {
+		animations->Get(ARROW_ANI)->Render(x, y + 50);
+	}
 	RenderBullet();
 	//RenderBox();
 }
@@ -101,15 +105,15 @@ void CBoss3Mouth::SetState(int state) {
 void CBoss3Mouth::CreateBox(DWORD dt) {
 	if (isDead == false) {
 		bbox.left = x - BOSS3MOUTH_BOX_NORMAL_WIDTH / 2;
-		bbox.top = y - 35 - BOSS3MOUTH_BOX_NORMAL_HEIGHT / 2;
+		bbox.top = y - 35 + BOSS3MOUTH_BOX_NORMAL_HEIGHT / 2;
 		bbox.right = x + BOSS3MOUTH_BOX_NORMAL_WIDTH / 2;
-		bbox.bottom = y - 35 + BOSS3MOUTH_BOX_NORMAL_HEIGHT / 2;
+		bbox.bottom = y - 35 - BOSS3MOUTH_BOX_NORMAL_HEIGHT / 2;
 	}
 	else {
 		bbox.left = x - BOSS3MOUTH_BOX_DEAD_WIDTH / 2;
-		bbox.top = y - BOSS3MOUTH_BOX_DEAD_HEIGHT / 2;
+		bbox.top = y + BOSS3MOUTH_BOX_DEAD_HEIGHT / 2;
 		bbox.right = x + BOSS3MOUTH_BOX_DEAD_WIDTH / 2;
-		bbox.bottom = y + BOSS3MOUTH_BOX_DEAD_HEIGHT / 2;
+		bbox.bottom = y - BOSS3MOUTH_BOX_DEAD_HEIGHT / 2;
 	}
 	bbox.vpf_x = 0;
 	bbox.vpf_y = 0;
@@ -122,8 +126,8 @@ void CBoss3Mouth::CollisionWith(LPCOLLISIONEVENT e) {
 }
 
 void CBoss3Mouth::AddBullet() {
-	int a = rand() % 9 + 14;
-	bullets.push_back(new CBulletBoss3(x, y, a * 15, false));
+	int a = rand() % 5 + 7;
+	bullets.push_back(new CBulletBoss3(x, y, a * 30, false));
 }
 void CBoss3Mouth::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	for (int i = 0; i < bullets.size(); i++) {

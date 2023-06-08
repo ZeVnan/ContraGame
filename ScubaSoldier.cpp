@@ -1,39 +1,74 @@
 #include "ScubaSoldier.h"
+#include "bill.h"
+extern CBill* bill;
 
 CScubaSoldier::CScubaSoldier(float x, float y) :CGameObject(x, y) {
-	this->state = SCUBA_STATE_HIDING;
+	this->SetState(SCUBA_STATE_HIDING);
 	timeleft = SCUBA_HIDING_TIME;
 	isHiding = true;
 	isShooting = false;
 }
 
+void CScubaSoldier::watchBill()
+{
+	float Bill_x, Bill_y;
+	bill->GetPosition(Bill_x, Bill_y);
+	if (!isActivated) {
+		if (Bill_y > this->y) {
+			isActivated = true;
+		}
+	}
+}
+
 void CScubaSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	this->timeleft -= dt;
+
+	watchBill();
 	if (this->isExploded == true && this->timeleft < 0) {
 		isDeleted = true;
 		return;
 	}
-	if (this->timeleft < 0) 
-	{
-		switch (this->state)
-		{
-		case SCUBA_STATE_HIDING:
-			this->SetState(SCUBA_STATE_SHOOTING);
-			break;
-		case SCUBA_STATE_SHOOTING:
-			this->SetState(SCUBA_STATE_HIDING);
-			break;
+	if (timeleft > 0) {
+		this->timeleft -= dt;
+	}
+	else {
+		if (isActivated) {
+			switch (state) {
+			case SCUBA_STATE_HIDING:
+				this->SetState(SCUBA_STATE_SHOOTING);
+				timeleft = SCUBA_SHOOTING_TIME;
+				break;
+			case SCUBA_STATE_SHOOTING:
+				this->SetState(SCUBA_STATE_HIDING);
+				timeleft = SCUBA_HIDING_TIME;
+				break;
+			}
+			/*if(!isHiding){
+				this->SetState(SCUBA_STATE_SHOOTING);
+				isHiding = true;
+			}
+			else {
+				this->SetState(SCUBA_STATE_HIDING);
+				isHiding = false;
+			}*/
+			AddBullet();
+		}
+		else {
+			return;
 		}
 	}
-	//DebugOutTitle(L"state = %d, timeleft = %d", this->state, this->timeleft);
+	UpdateBullet(dt, coObjects);
+
 }
 
 void CScubaSoldier::Render()
 {
+	if (!isActivated && !isHiding) {
+		return;
+	}
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
-	switch(this->state)
+	switch (this->state)
 	{
 	case SCUBA_STATE_HIDING:
 		ani = SCUBA_ANI_HIDE_RIGHT;
@@ -47,6 +82,8 @@ void CScubaSoldier::Render()
 		ani = EXPLOSION_1_ANI;
 	}
 	animations->Get(ani)->Render(x, y);
+	//RenderBox();
+	RenderBullet();
 }
 
 void CScubaSoldier::SetState(int state)
@@ -54,14 +91,14 @@ void CScubaSoldier::SetState(int state)
 	switch (state)
 	{
 	case SCUBA_STATE_HIDING:
+		timeleft = SCUBA_HIDING_TIME;
 		isHiding = true;
 		isShooting = false;
-		timeleft = SCUBA_HIDING_TIME;
 		break;
 	case SCUBA_STATE_SHOOTING:
+		timeleft = SCUBA_SHOOTING_TIME;
 		isShooting = true;
 		isHiding = false;
-		timeleft = SCUBA_SHOOTING_TIME;
 		break;
 	case SCUBA_STATE_EXPLODE:
 		isHiding = false;
@@ -77,22 +114,21 @@ void CScubaSoldier::CreateBox(DWORD dt)
 	if (isHiding)
 	{
 		bbox.left = x - SCUBA_BOX_HIDE_WIDTH / 2;
-		bbox.top = y - SCUBA_BOX_HIDE_HEIGHT / 2;
+		bbox.top = y + SCUBA_BOX_HIDE_HEIGHT / 2;
 		bbox.right = x + SCUBA_BOX_HIDE_WIDTH / 2;
-		bbox.bottom = y + SCUBA_BOX_HIDE_HEIGHT / 2;
+		bbox.bottom = y - SCUBA_BOX_HIDE_HEIGHT / 2;
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}
 	else
 	{
 		bbox.left = x - SCUBA_BOX_SHOOT_WIDTH / 2;
-		bbox.top = y - SCUBA_BOX_SHOOT_HEIGHT / 2;
+		bbox.top = y + SCUBA_BOX_SHOOT_HEIGHT / 2;
 		bbox.right = x + SCUBA_BOX_SHOOT_WIDTH / 2;
-		bbox.bottom = y + SCUBA_BOX_SHOOT_HEIGHT / 2;
+		bbox.bottom = y - SCUBA_BOX_SHOOT_HEIGHT / 2;
 		bbox.vpf_x = vx * dt;
 		bbox.vpf_y = vy * dt;
 	}
-	
 }
 
 void CScubaSoldier::NoCollision(DWORD dt)
@@ -103,4 +139,55 @@ void CScubaSoldier::NoCollision(DWORD dt)
 
 void CScubaSoldier::CollisionWith(LPCOLLISIONEVENT e)
 {
+}
+
+
+vector<LPBULLET> CScubaSoldier::ShootSpreadBullet(int angle)
+{
+	LPBULLETS bulletS;
+	vector<LPBULLET> temp;
+	bulletS = new CBulletS(x, y, angle, false);
+	temp.push_back(bulletS);
+	bulletS = new CBulletS(x, y, angle - 15, false);
+	temp.push_back(bulletS);
+	bulletS = new CBulletS(x, y, angle + 15, false);
+	temp.push_back(bulletS);
+	return temp;
+}
+
+void CScubaSoldier::AddBullet()
+{
+	if (this->state == SCUBA_STATE_SHOOTING)
+		waveContainer.push_back(ShootSpreadBullet(90));
+}
+
+void CScubaSoldier::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	for (int i = 0; i < waveContainer.size(); i++) {
+		if (waveContainer[i].size() > 0) {
+			for (int j = 0; j < waveContainer[i].size(); j++) {
+				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
+					delete waveContainer[i][j];
+					waveContainer[i].erase(waveContainer[i].begin() + j);
+				}
+				else
+					waveContainer[i][j]->Update(dt, coObjects);
+			}
+		}
+		if (waveContainer[i].size() == 0) {
+			waveContainer.erase(waveContainer.begin() + i);
+			waveLeft++;
+		}
+	}
+	//waveContainer.push_back(ShootNormalBullet(180));
+	CCollision::GetInstance()->Process(this, coObjects, dt);
+}
+
+void CScubaSoldier::RenderBullet()
+{
+	for (int i = 0; i < waveContainer.size(); i++) {
+		for (int j = 0; j < waveContainer[i].size(); j++) {
+			waveContainer[i][j]->Render();
+		}
+	}
 }

@@ -92,7 +92,7 @@ void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->timeLeft = WTURRET_TIME_RELOAD;
 	}
 	UpdateBullet(dt, coObjects);
-	DebugOutTitle(L"timeleft = %d, state = %d", this->timeLeft, state);
+	//DebugOutTitle(L"timeleft = %d, state = %d", this->timeLeft, state);
 
 }
 void CWallTurret::Render()
@@ -270,23 +270,10 @@ void CWallTurret::RenderBullet() {
 }
 
 void CWallTurret::CreateBox(DWORD dt) {
-
-	if (isClosing == true) {
-		bbox.left = 0;
-		bbox.top = 0;
-		bbox.right = 0;
-		bbox.bottom = 0;
-		x += 0;
-		y += 0;
-		return;
-	}
-
 	bbox.left = (x - WTURRET_BOX_WIDTH / 2);
-	bbox.top = (y - WTURRET_BOX_HEIGHT / 2);
+	bbox.top = (y + WTURRET_BOX_HEIGHT / 2);
 	bbox.right = (x + WTURRET_BOX_WIDTH / 2);
-	bbox.bottom = (y + WTURRET_BOX_HEIGHT / 2);
-	x += 0;
-	y += 0;
+	bbox.bottom = (y - WTURRET_BOX_HEIGHT / 2);
 }
 void CWallTurret::NoCollision(DWORD dt) {
 	x += 0;

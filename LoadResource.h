@@ -23,10 +23,13 @@
 #include "Grass.h"
 #include "Fire.h"
 #include "BridgePart.h"
+#include "RockFall.h"
+#include "RockFly.h"
 
 #include "Boss1Shield.h"
 #include "Boss1Gun.h"
 #include "Boss3Mouth.h"
+#include "Boss3Arm.h"
 
 #include "SampleKeyEventHandler.h"
 #include "Camera.h"
@@ -35,6 +38,8 @@
 
 #include "Map.h"
 
+#define ID_TEX_ARROW -13
+#define ID_TEX_LIFE -12
 #define ID_TEX_EXPLOSION -11
 #define ID_TEX_BOX -10
 #define ID_TEX_BILL 0
@@ -46,13 +51,16 @@
 #define ID_TEX_FALCON 6
 #define ID_TEX_SCUBA 7
 #define ID_TEX_WTURRET 8
+#define ID_TEX_ROCKFALL 9
 
 #define ID_TEX_GRASS 20
 #define ID_TEX_FIRE 21
 #define ID_TEX_BRIDGE 22
+#define ID_TEX_ROCKFLY 23
 
 #define ID_TEX_BOSS1 30
 #define ID_TEX_BOSS3_MOUTH 31
+#define ID_TEX_STAGE3_ELEMENT 32
 
 #define ID_TEX_STAGE1_TILE 100
 #define ID_TEX_STAGE3_TILE 101
@@ -80,9 +88,14 @@
 #define TEXTURE_PATH_RIFLEMAN L"Images\\rifleman.png"
 #define TEXTURE_PATH_GRASS L"Images\\grass.png"
 #define TEXTURE_PATH_FIRE L"Images\\fire.png"
+#define TEXTURE_PATH_ROCKFALL L"Images\\rockfall.png"
+#define TEXTURE_PATH_ROCKFLY L"Images\\stage3_elements.png"
 #define TEXTURE_PATH_BRIDGE L"Images\\bridge.png"
 #define TEXTURE_PATH_BOSS1 L"Images\\boss_stage1.png"
 #define TEXTURE_PATH_BOSS3_MOUTH L"Images\\boss_stage3.png"
+#define TEXTURE_PATH_STAGE3_ELEMENT L"Images\\stage3_elements.png"
+#define TEXTURE_PATH_LIFE L"Images\\Life.png"
+#define TEXTURE_PATH_ARROW L"Images\\Arrow.png"
 
 #define STAGE1_PATH "Map\\stage1.xml"
 #define STAGE1_TILE L"Map\\stage1.png"
@@ -106,6 +119,7 @@ void CreateAircraftAni(CTextures*& textures, CSprites*& sprites, CAnimations*& a
 void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateSoldierAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
+void CreateRockFallAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations);
 

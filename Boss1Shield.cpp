@@ -34,6 +34,8 @@ void CBoss1Shield::Render() {
 		}
 	}
 	animations->Get(ani)->Render(x + d, y);
+	if (state == BOSS1SHIELD_STATE_AFTER_EXPLODE)
+		animations->Get(ARROW_ANI)->Render(x + 160, y);
 	//RenderBox();
 }
 void CBoss1Shield::SetState(int state) {
@@ -53,9 +55,9 @@ void CBoss1Shield::SetState(int state) {
 }
 void CBoss1Shield::CreateBox(DWORD dt) {
 	bbox.left = x - BOSS1SHIELD_BOX_WIDTH / 2;
-	bbox.top = y - BOSS1SHIELD_BOX_HEIGHT / 2;
+	bbox.top = y + BOSS1SHIELD_BOX_HEIGHT / 2;
 	bbox.right = x + BOSS1SHIELD_BOX_WIDTH / 2;
-	bbox.bottom = y + BOSS1SHIELD_BOX_HEIGHT / 2;
+	bbox.bottom = y - BOSS1SHIELD_BOX_HEIGHT / 2;
 	bbox.vpf_x = 0;
 	bbox.vpf_y = 0;
 }

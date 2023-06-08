@@ -50,9 +50,9 @@ void CBoss1Gun::SetState(int state) {
 }
 void CBoss1Gun::CreateBox(DWORD dt) {
 	bbox.left = x - BOSS1GUN_BOX_WIDTH / 2;
-	bbox.top = y - BOSS1GUN_BOX_HEIGHT / 2;
+	bbox.top = y + BOSS1GUN_BOX_HEIGHT / 2;
 	bbox.right = x + BOSS1GUN_BOX_WIDTH / 2;
-	bbox.bottom = y + BOSS1GUN_BOX_HEIGHT / 2;
+	bbox.bottom = y - BOSS1GUN_BOX_HEIGHT / 2;
 	bbox.vpf_x = 0;
 	bbox.vpf_y = 0;
 }

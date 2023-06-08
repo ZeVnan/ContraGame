@@ -4,7 +4,9 @@
 void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	//10xxx
 	textures->Add(ID_TEX_BILL, TEXTURE_PATH_BILL);
+	textures->Add(ID_TEX_LIFE, TEXTURE_PATH_LIFE);
 	LPTEXTURE texBill = textures->Get(ID_TEX_BILL);
+	LPTEXTURE texLife = textures->Get(ID_TEX_LIFE);
 	//normal right
 	sprites->Add(10001, 1, 30, 25, 65, texBill);
 	sprites->Add(10002, 26, 30, 50, 65, texBill);
@@ -99,6 +101,8 @@ void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	sprites->Add(10155, sprites->Get(10151));
 	sprites->Add(10156, sprites->Get(10152));
 	sprites->Add(10157, sprites->Get(10153));
+	//life 
+	sprites->Add(10160, 12, 0, 21, 16, texLife);
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);
@@ -250,6 +254,10 @@ void CreateBillAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	ani->Add(10156);
 	ani->Add(10157);
 	animations->Add(BILL_ANI_DYING_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10160);
+	animations->Add(LIFE_ANI, ani);
 }
 void CreateBulletAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_BULLET, TEXTURE_PATH_BULLET);
@@ -830,22 +838,52 @@ void CreateScubaAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(18003);
 	animations->Add(SCUBA_ANI_SHOOT_LEFT, ani);
 }
+void CreateRockFallAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations)
+{
+	textures->Add(ID_TEX_ROCKFALL, TEXTURE_PATH_ROCKFALL);
+	LPTEXTURE texRockFall = textures->Get(ID_TEX_ROCKFALL);
+	//id sprite 19xxx
+	//Rockfall normal
+	sprites->Add(19000, 5, 2, 28, 28, texRockFall);
+	//Rockfall fall
+	sprites->Add(19001, 35, 4, 61, 27, texRockFall);
+	sprites->Add(19002, 69, 2, 92, 28, texRockFall);
+	sprites->Add(19003, 99, 4, 125, 27, texRockFall);
+	
+	LPANIMATION ani;
+	ani = new CAnimation(100);
+	ani->Add(19000);
+	animations->Add(ROCKFALL_ANI_NORMAL, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(19001);
+	ani->Add(19002);
+	ani->Add(19003);
+	animations->Add(ROCKFALL_ANI_FALLING, ani);	
+}
+
 void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	textures->Add(ID_TEX_GRASS, TEXTURE_PATH_GRASS);
 	textures->Add(ID_TEX_FIRE, TEXTURE_PATH_FIRE);
 	textures->Add(ID_TEX_BOX, TEXTURE_PATH_BOX);
 	textures->Add(ID_TEX_EXPLOSION, TEXTURE_PATH_EXPLOSION);
 	textures->Add(ID_TEX_BRIDGE, TEXTURE_PATH_BRIDGE);
+	textures->Add(ID_TEX_ROCKFLY, TEXTURE_PATH_ROCKFLY);
+	textures->Add(ID_TEX_ARROW, TEXTURE_PATH_ARROW);
 
 	LPTEXTURE texGrass = textures->Get(ID_TEX_GRASS);
 	LPTEXTURE texFire = textures->Get(ID_TEX_FIRE);
+	LPTEXTURE texRockfly = textures->Get(ID_TEX_ROCKFLY);
 	LPTEXTURE texExplosion = textures->Get(ID_TEX_EXPLOSION);
 	LPTEXTURE texBridge = textures->Get(ID_TEX_BRIDGE);
+	LPTEXTURE texArrow = textures->Get(ID_TEX_ARROW);
 	//grass
 	sprites->Add(20000, 0, 0, 32, 16, texGrass);
 	//fire
 	sprites->Add(20001, 0, 0, 16, 16, texFire);
 	sprites->Add(20002, 16, 0, 32, 16, texFire);
+	//rockfly
+	sprites->Add(20003, 3, 2, 36, 33, texRockfly);
 	//explosion type 1
 	sprites->Add(20010, 0, 0, 25, 32, texExplosion);
 	sprites->Add(20011, 164, 0, 189, 32, texExplosion);
@@ -866,6 +904,9 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	sprites->Add(20032, 16, 0, 32, 16, texBridge);	//downbegin
 	sprites->Add(20033, 16, 16, 32, 32, texBridge); //down
 	sprites->Add(20034, 32, 16, 48, 32, texBridge);	//downend
+	//arrow
+	sprites->Add(20040, 53, 29, 78, 55, texArrow);
+	sprites->Add(20041, 53, 34, 78, 60, texArrow);
 
 	LPANIMATION ani;
 	ani = new CAnimation(100);
@@ -876,6 +917,10 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani->Add(20001);
 	ani->Add(20002);
 	animations->Add(FIRE_ANI, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20003);
+	animations->Add(ROCKFLY_ANI, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(20010);
@@ -914,14 +959,21 @@ void CreateOtherAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anim
 	ani = new CAnimation(100);
 	ani->Add(20034);
 	animations->Add(BRIDGEPART_ANI_DOWNEND, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(20040);
+	ani->Add(20041);
+	animations->Add(ARROW_ANI, ani);
 }
 void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& animations) {
 	//4xxxx
 	textures->Add(ID_TEX_BOSS1, TEXTURE_PATH_BOSS1);
 	textures->Add(ID_TEX_BOSS3_MOUTH, TEXTURE_PATH_BOSS3_MOUTH);
+	textures->Add(ID_TEX_STAGE3_ELEMENT, TEXTURE_PATH_STAGE3_ELEMENT);
 	//boss 1
 	LPTEXTURE texBoss1 = textures->Get(ID_TEX_BOSS1);
 	LPTEXTURE texBoss3Mouth = textures->Get(ID_TEX_BOSS3_MOUTH);
+	LPTEXTURE texStage3Elements = textures->Get(ID_TEX_STAGE3_ELEMENT);
 	///shield
 	////normal
 	sprites->Add(40000, 0, 54, 23, 84, texBoss1);
@@ -946,6 +998,10 @@ void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	sprites->Add(42022, 219, 96, 314, 175, texBoss3Mouth);
 	////moudler
 	sprites->Add(42030, 444, 96, 511, 180, texBoss3Mouth);
+	///arm
+	sprites->Add(43000, 86, 17, 101, 32, texStage3Elements);
+	///hand
+	sprites->Add(43001, 67, 17, 82, 32, texStage3Elements);
 
 
 	LPANIMATION ani = new CAnimation(100);
@@ -983,6 +1039,14 @@ void CreateBossAni(CTextures*& textures, CSprites*& sprites, CAnimations*& anima
 	ani = new CAnimation(100);
 	ani->Add(42030);
 	animations->Add(BOSS3MOUTH_ANI_MOUDLER, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(43000);
+	animations->Add(BOSS3ARM_ANI_ARM, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(43001);
+	animations->Add(BOSS3ARM_ANI_HAND, ani);
 }
 
 void CreateStageTile(CTextures*& textures, CSprites*& sprites, vector<LPTILE>& a, int stage) {

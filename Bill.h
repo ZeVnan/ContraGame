@@ -85,6 +85,8 @@
 #define BILL_ANI_DYING_RIGHT 10070
 #define BILL_ANI_DYING_LEFT 10071
 
+#define LIFE_ANI 10080
+
 #define BILL_LAY_HEIGHT_ADJUST -18.0f
 #define BILL_UP_HEIGHT_ADJUST 12.0f
 #define BILL_DIVE_HEIGHT_ADJUST -7.0f
@@ -127,6 +129,8 @@ class CBill :public CGameObject
 	BOOLEAN disableDrop;
 	BOOLEAN isDead;
 	BOOLEAN isVulnerable;
+	bool a;					//support render when invulnerable
+
 	int ny;					//normal:0, up:1, down:-1
 	float maxVx;
 	float maxVy;
@@ -172,6 +176,7 @@ public:
 	void CollisionWithWater(LPCOLLISIONEVENT e);
 	void CollisionWithBridgePart(LPCOLLISIONEVENT e);
 	void CollisionWithBridge(LPCOLLISIONEVENT e);
+	void CollisionWithRockFly(LPCOLLISIONEVENT e);
 	void CollisionWithBoss1Shield(LPCOLLISIONEVENT e);
 	void CollisionWithBoss3Mouth(LPCOLLISIONEVENT e);
 	//collision with enemy object

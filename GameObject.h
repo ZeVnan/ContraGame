@@ -12,6 +12,7 @@ using namespace std;
 
 #define EXPLOSION_1_ANI 20002
 #define EXPLOSION_2_ANI 20003
+#define ARROW_ANI 20040
 
 #define TIME_EXPLODE	600
 class CGameObject
