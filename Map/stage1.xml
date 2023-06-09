@@ -670,15 +670,7 @@
 				<Elem Key="type" Value="0" />
 			</Params>
 		</Item>
-		<!--The Trigger Box Place-->
-		<Item Id="200" Name="trigBox1" X="1790" Y="272" Width="16" Height="16">
-			<ActiveBound X="100" Y="100" Width="16" Height="32" />
-			<Params>
-				<Elem Key="type" Value="1" />
-			</Params>
-		</Item>
-		
-		<!--The Trigger Box Place-->
+
 		<Item Id="11" Name="water1" X="0" Y="48" Width="584" Height="32">
 			<ActiveBound X="0" Y="48" Width="584" Height="32" />
 			<Params>
@@ -831,24 +823,68 @@
 				<Elem Key="type" Value="0" />
 			</Params>
 		</Item>
+		<!--The Trigger Box Place-->
+		<Item Id="200" Name="trigBox1" X="1790" Y="272" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox2" X="1790" Y="272" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox3" X="1790" Y="272" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<!--The Trigger Box Place-->
 		<Item Id="2" Name="soldier2" X="640" Y="293" Width="64" Height="64">
-			<ActiveBound X="640" Y="290" Width="64" Height="64" />
+			<ActiveBound X="640" Y="293" Width="64" Height="64" />
 		</Item>
-		<Item Id="2" Name="soldier3" X="784" Y="293" Width="64" Height="64">
-			<ActiveBound X="768" Y="290" Width="64" Height="64" />
+		<Item Id="2" Name="soldier3" X="1240" Y="293" Width="64" Height="64">
+			<ActiveBound X="1040" Y="293" Width="64" Height="64" />
 		</Item>
-		<Item Id="2" Name="soldier4" X="848" Y="293" Width="64" Height="64">
-			<ActiveBound X="768" Y="290" Width="64" Height="64" />
+
+		<Item Id="2" Name="soldier4" X="1740" Y="293" Width="64" Height="64">
+			<ActiveBound X="1440" Y="293" Width="64" Height="64" />
 		</Item>
+		<Item Id="2" Name="soldier4_1" X="1770" Y="293" Width="64" Height="64">
+			<ActiveBound X="1430" Y="293" Width="64" Height="64" />
+		</Item>
+		<Item Id="2" Name="soldier4_2" X="1800" Y="293" Width="64" Height="64">
+			<ActiveBound X="1460" Y="293" Width="64" Height="64" />
+		</Item>
+
 		<Item Id="2" Name="soldier5" X="2112" Y="293" Width="64" Height="64">
-			<ActiveBound X="640" Y="290" Width="64" Height="64" />
+			<ActiveBound X="2112" Y="293" Width="64" Height="64" />
 		</Item>
-		<Item Id="2" Name="soldier6" X="2178" Y="293" Width="64" Height="64">
-			<ActiveBound X="768" Y="290" Width="64" Height="64" />
+		<Item Id="2" Name="soldier5_1" X="2142" Y="293" Width="64" Height="64">
+			<ActiveBound X="2112" Y="293" Width="64" Height="64" />
 		</Item>
-		<Item Id="2" Name="soldier7" X="2242" Y="293" Width="64" Height="64">
-			<ActiveBound X="768" Y="290" Width="64" Height="64" />
+		<Item Id="2" Name="soldier5_2" X="2172" Y="293" Width="64" Height="64">
+			<ActiveBound X="2112" Y="293" Width="64" Height="64" />
 		</Item>
+
+		<Item Id="2" Name="soldier6" X="2500" Y="293" Width="64" Height="64"/>
+
+		<Item Id="2" Name="soldier7_" X="2700" Y="293" Width="64" Height="64"/>
+		<Item Id="2" Name="soldier7_1" X="2730" Y="293" Width="64" Height="64"/>
+		<Item Id="2" Name="soldier7_2" X="2760" Y="293" Width="64" Height="64"/>
+
+		<Item Id="2" Name="soldier8_" X="3279" Y="241" Width="64" Height="64"/>
+		<Item Id="2" Name="soldier8_1" X="3309" Y="241" Width="64" Height="64"/>
+		<Item Id="2" Name="soldier8_2" X="3339" Y="241" Width="64" Height="64"/>
+
+		<Item Id="2" Name="soldier9_" X="3763" Y="200" Width="64" Height="64"/>
+		<Item Id="2" Name="soldier9_1" X="3793" Y="200" Width="64" Height="64"/>
+		<Item Id="2" Name="soldier9_2" X="3823" Y="200" Width="64" Height="64"/>
+
+		<Item Id="2" Name="soldier10_" X="4497" Y="300" Width="64" Height="64"/>
+		<Item Id="2" Name="soldier10_1" X="4527" Y="300" Width="64" Height="64"/>
+		<Item Id="2" Name="soldier10_2" X="4557" Y="300" Width="64" Height="64"/>
+
 		<Item Id="13" Name="soldierCreator2" X="1152" Y="320" Width="64" Height="64">
 			<ActiveBound X="960" Y="320" Width="256" Height="64" />
 			<Params>

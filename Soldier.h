@@ -8,6 +8,8 @@
 #include "Grass.h"
 #include "TriggerBox.h"
 #include "Water.h"
+#include "BridgePart.h"
+#include "Bridge.h"
 
 
 #define SOLDIER_RUN_SPEED 0.1f
@@ -86,6 +88,7 @@ public:
 	void CollisionWithGrass(LPCOLLISIONEVENT e);
 	void CollisionWithWater(LPCOLLISIONEVENT e);
 	void CollisionWithTriggerBox(LPCOLLISIONEVENT e);
+	void CollisionWithBridge(LPCOLLISIONEVENT e);
 
 	bool isBlocking() { return false; }
 	bool isCollidable() { return !isExploded; }

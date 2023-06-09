@@ -13,6 +13,9 @@ CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	gunx = x;
 	guny = y;
 }
+
+
+
 void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	timeleft -= dt;
 	if (this->isExploded == true && this->timeleft < 0) {
@@ -30,9 +33,6 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 	if (this->state == SOLDIER_STATE_RUN_LEFT) {
 		x += vx * dt;
-	}
-	else if (this->state == SOLDIER_STATE_JUMP) {
-		//this->SetState(SOLDIER_STATE_JUMP_RELEASE);
 	}
 
 
@@ -189,6 +189,9 @@ void CSoldier::CollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)) {
 		CollisionWithTriggerBox(e);
 	}
+	else if (dynamic_cast<LPBRIDGEPART>(e->dest_obj)) {
+		CollisionWithBridge(e);
+	}
 }
 void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 {
@@ -230,5 +233,20 @@ void CSoldier::CollisionWithTriggerBox(LPCOLLISIONEVENT e) {
 	}
 	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 3) {
 		this->SetState(SOLDIER_STATE_LAYDOWN);
+	}
+}
+void CSoldier::CollisionWithBridge(LPCOLLISIONEVENT e) {
+	if (e->normal_x != 0) {
+		//this->x += e->time * this->GetBox().vpf_x;
+		this->x += this->GetBox().vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		if (e->normal_y > 0) {
+			vy = 0;
+			this->y += e->time * this->GetBox().vpf_y;
+		}
+		else {
+			this->y += this->GetBox().vpf_y;
+		}
 	}
 }
