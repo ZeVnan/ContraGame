@@ -877,20 +877,11 @@ void CBill::CollisionWithFalcon(LPCOLLISIONEVENT e) {
 	e->dest_obj->Delete();
 }
 void CBill::CollisionWithSoldier(LPCOLLISIONEVENT e) {
-	if (isDying == false && timeLeft < 0 && lifeLeft > 0) {
-		lifeLeft--;
-		isDying = true;
-		isDead = true;
-		//timeLeft = 1000;
-		//set respawn position
-		if (stage == 1) {
-			x = minX + 10;
-			y = maxY - 10;
-		}
-		else {
-			x = (maxX - minX) / 2;
-			y = minY + 300;
-		}
+	if (nx == 1) {
+		this->SetState(BILL_STATE_DYING_RIGHT);
+	}
+	else {
+		this->SetState(BILL_STATE_DYING_LEFT);
 	}
 	LPSOLDIER(e->dest_obj)->SetState(SOLDIER_STATE_EXPLODE);
 }
