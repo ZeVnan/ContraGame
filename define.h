@@ -35,7 +35,6 @@ enum eID
 
 	WATER = 11,
 	LAND = 12,
-	CREATOR = 13,
 	BRIDGE = 14,
 	BOSS1SHIELD = 18,
 	BOSS1GUN = 19,
@@ -44,6 +43,8 @@ enum eID
 	RockFallID = 26,
 	BOSS3MOUTH = 20,
 	BOSS3ARM = 22,
+
+	generator = 23,
 };
 
 enum eLandType

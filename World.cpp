@@ -297,6 +297,23 @@ LPGAMEOBJECT CWorld::spawnBoss3Arm(xml_node node) {
 
 	return boss3arm;
 }
+LPGAMEOBJECT CWorld::spawnGenerator(xml_node node) {
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+	int type;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+	type = stof(properties["type"]);
+
+	auto generator = new CObjectGenerator(x, y, type);
+
+	return generator;
+}
 LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 {
 	switch (id)
@@ -333,6 +350,8 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnBoss3Mouth(node);
 	case BOSS3ARM:
 		return spawnBoss3Arm(node);
+	case generator:
+		return spawnGenerator(node);
 	default:
 		return nullptr;
 		break;

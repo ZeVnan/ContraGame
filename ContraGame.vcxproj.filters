@@ -143,6 +143,10 @@
     <ClCompile Include="RockFly.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="ObjectGenerator.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
@@ -295,6 +299,10 @@
       <Filter>Game Object\Header</Filter>
     </ClInclude>
     <ClInclude Include="Boss3Arm.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="ObjectGenerator.h">
       <Filter>Game Object\Header</Filter>
     </ClInclude>
   </ItemGroup>

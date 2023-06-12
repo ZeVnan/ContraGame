@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include <vector>
 #include "Tile.h"
-
+#include "ObjectGenerator.h"
 
 class CWorldPart
 {
