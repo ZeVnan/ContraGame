@@ -13,7 +13,7 @@
 #include "BulletN.h"
 #include "BulletM.h"
 
-#define BILL_RUN_SPEED 0.3f
+#define BILL_RUN_SPEED 0.15f
 #define BILL_JUMP_SPEED_Y 0.4f
 
 #define BILL_GRAVITY -0.00075f
