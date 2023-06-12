@@ -143,6 +143,9 @@
     <ClCompile Include="RockFly.cpp">
       <Filter>Game Object\Source File</Filter>
     </ClCompile>
+    <ClCompile Include="TriggerBox.cpp">
+      <Filter>Game Object\Source File</Filter>
+    </ClCompile>
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="ObjectGenerator.cpp">
       <Filter>Game Object\Source File</Filter>
@@ -299,6 +302,9 @@
       <Filter>Game Object\Header</Filter>
     </ClInclude>
     <ClInclude Include="Boss3Arm.h">
+      <Filter>Game Object\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerBox.h">
       <Filter>Game Object\Header</Filter>
     </ClInclude>
     <ClInclude Include="Audio.h" />

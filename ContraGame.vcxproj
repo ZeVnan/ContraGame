@@ -182,6 +182,7 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileSet.cpp" />
+    <ClCompile Include="TriggerBox.cpp" />
     <ClCompile Include="WallTurret.cpp" />
     <ClCompile Include="Water.cpp" />
     <ClCompile Include="Waters.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileSet.h" />
+    <ClInclude Include="TriggerBox.h" />
     <ClInclude Include="WallTurret.h" />
     <ClInclude Include="Water.h" />
     <ClInclude Include="Waters.h" />

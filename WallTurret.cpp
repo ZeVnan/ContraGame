@@ -22,6 +22,9 @@ void CWallTurret::watchBill() {
 		if (this->state == WTURRET_STATE_CLOSE) {
 			this->SetState(WTURRET_STATE_APPEAR);
 		}
+		else {
+			isShooting = true;
+		}
 	}
 	else {
 		isActivated = false;
@@ -72,6 +75,7 @@ void CWallTurret::watchBill() {
 
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	this->timeLeft -= dt;
 	if (this->HP <= 0 && this->isExploded == false) {
 		this->SetState(WTURRET_STATE_EXPLODE);
 	}

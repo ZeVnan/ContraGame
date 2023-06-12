@@ -44,6 +44,8 @@ enum eID
 	BOSS3MOUTH = 20,
 	BOSS3ARM = 22,
 
+	TriggerBoxID = 200,
+
 	generator = 23,
 };
 
