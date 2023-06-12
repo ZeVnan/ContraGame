@@ -9,6 +9,7 @@
 #include "Falcon.h"
 #include "Boss1Shield.h"
 #include "Boss3Mouth.h"
+#include "Soldier.h"
 
 #include "SampleKeyEventHandler.h"
 #include "Game.h"
@@ -110,7 +111,7 @@ void CBill::worldControl() {
 		break;
 	}
 }
-void CBill::Die(DWORD dt) {
+void CBill::Die() {
 	if (isDying == true && timeLeft < 0 && lifeLeft > 0) {
 		lifeLeft--;
 		isDying = false;
@@ -171,7 +172,7 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	//don't change the order of this function
 	if (timeLeft >= 0)
 		timeLeft -= dt;
-	Die(dt);
+	Die();
 	UpdateBorder();
 	worldControl();
 	BulletControl(dt, coObjects);
@@ -393,6 +394,7 @@ void CBill::Render(){
 		animations->Get(ani)->Render(x, y + d);
 	}
 	RenderBullet();
+	RenderBox();
 }
 void CBill::SetState(int state) {
 	switch (state) {
@@ -673,29 +675,32 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
 		CollisionWithGrass(e);
 	}
-	if (dynamic_cast<LPWATER>(e->dest_obj)) {
+	else if (dynamic_cast<LPWATER>(e->dest_obj)) {
 		CollisionWithWater(e);
 	}
-	if (dynamic_cast<LPBRIDGEPART>(e->dest_obj)) {
+	else if (dynamic_cast<LPBRIDGEPART>(e->dest_obj)) {
 		CollisionWithBridgePart(e);
 	}
-	if (dynamic_cast<LPBRIDGE>(e->dest_obj)) {
+	else if (dynamic_cast<LPBRIDGE>(e->dest_obj)) {
 		CollisionWithBridge(e);
 	}
-	if (dynamic_cast<LPAIRCRAFT>(e->dest_obj)) {
+	else if (dynamic_cast<LPAIRCRAFT>(e->dest_obj)) {
 		CollisionWithAircraft(e);
 	}
-	if (dynamic_cast<LPFALCON>(e->dest_obj)) {
+	else if (dynamic_cast<LPFALCON>(e->dest_obj)) {
 		CollisionWithFalcon(e);
 	}
-	if (dynamic_cast<LPBOSS1SHIELD>(e->dest_obj)) {
+	else if (dynamic_cast<LPBOSS1SHIELD>(e->dest_obj)) {
 		CollisionWithBoss1Shield(e);
 	}
-	if (dynamic_cast<LPBOSS3MOUTH>(e->dest_obj)) {
+	else if (dynamic_cast<LPBOSS3MOUTH>(e->dest_obj)) {
 		CollisionWithBoss3Mouth(e);
 	}
 	if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
 		CollisionWithRockFly(e);
+	}
+	if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
+		CollisionWithSoldier(e);
 	}
 }
 //collision with terrain object
@@ -871,6 +876,15 @@ void CBill::CollisionWithFalcon(LPCOLLISIONEVENT e) {
 	}
 	e->dest_obj->Delete();
 }
+void CBill::CollisionWithSoldier(LPCOLLISIONEVENT e) {
+	if (nx == 1) {
+		this->SetState(BILL_STATE_DYING_RIGHT);
+	}
+	else {
+		this->SetState(BILL_STATE_DYING_LEFT);
+	}
+	LPSOLDIER(e->dest_obj)->SetState(SOLDIER_STATE_EXPLODE);
+}
 
 int CBill::CalculateAngle() {
 	if (vx > 0) {
@@ -960,6 +974,7 @@ void CBill::AddBullet(BOOLEAN KeyState) {
 		}
 	}
 }
+
 vector<LPBULLET> CBill::ShootSpreadBullet(int angle) {
 	LPBULLETS bulletS;
 	vector<LPBULLET> temp;

@@ -5,10 +5,15 @@
 #include "debug.h"
 
 #include "Bullet.h"
+#include "Grass.h"
+#include "TriggerBox.h"
+#include "Water.h"
+#include "BridgePart.h"
+#include "Bridge.h"
 
 
 #define SOLDIER_RUN_SPEED 0.1f
-#define SOLDIER_JUMP_SPEED_Y 0.2f
+#define SOLDIER_JUMP_SPEED_Y 0.4f
 #define SOLDIER_GRAVITY -0.00075f
 
 #define SOLDIER_START_X 20.0f
@@ -27,7 +32,9 @@
 #define SOLDIER_STATE_LAYDOWN 40
 #define SOLDIER_STATE_LAYDOWN_RELEASE 41
 
-#define SOLDIER_STATE_EXPLODE 50
+#define SOLDIER_STATE_ON_LAND 50
+
+#define SOLDIER_STATE_EXPLODE 60
 
 
 #define SOLDIER_ANI_RUN_LEFT 10200
@@ -48,9 +55,9 @@
 #define SOLDIER_BOX_RUN_WIDTH	32
 #define SOLDIER_BOX_RUN_HEIGHT	64
 #define SOLDIER_BOX_SHOOT_WIDTH	48
-#define SOLDIER_BOX_SHOOT_HEIGHT 64
+#define SOLDIER_BOX_SHOOT_HEIGHT 48
 #define SOLDIER_BOX_LAY_WIDTH	64
-#define SOLDIER_BOX_LAY_HEIGHT	64
+#define SOLDIER_BOX_LAY_HEIGHT	30
 
 class CSoldier: public CGameObject
 {
@@ -58,6 +65,8 @@ private:
 	BOOLEAN isLaying;
 	BOOLEAN isShooting;
 	BOOLEAN isOnPlatform;
+	BOOLEAN isDropping;
+	BOOLEAN isJumping;
 	float maxVx;
 	float maxVy;
 	float gunx;
@@ -77,6 +86,9 @@ public:
 	void NoCollision(DWORD dt);
 	void CollisionWith(LPCOLLISIONEVENT e);
 	void CollisionWithGrass(LPCOLLISIONEVENT e);
+	void CollisionWithWater(LPCOLLISIONEVENT e);
+	void CollisionWithTriggerBox(LPCOLLISIONEVENT e);
+	void CollisionWithBridge(LPCOLLISIONEVENT e);
 
 	bool isBlocking() { return false; }
 	bool isCollidable() { return !isExploded; }

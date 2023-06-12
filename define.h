@@ -44,6 +44,8 @@ enum eID
 	RockFallID = 26,
 	BOSS3MOUTH = 20,
 	BOSS3ARM = 22,
+
+	TriggerBoxID = 200,
 };
 
 enum eLandType

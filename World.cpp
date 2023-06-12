@@ -1,6 +1,8 @@
 ﻿#include "World.h"
 #include "WorldPart.h"
 #include "Bill.h"
+
+
 extern LPBILL bill;
 CWorld::CWorld() {
 	width = 0;
@@ -42,8 +44,8 @@ map<string, string> CWorld::getObjectProperties(xml_node node)
 LPGAMEOBJECT CWorld::spawnSoldier(xml_node node)
 {
 	auto properties = getObjectProperties(node);
-	if (properties.size() == 0)
-		return nullptr;
+	/*if (properties.size() == 0)
+		return nullptr;*/
 
 	float x, y;
 
@@ -150,7 +152,6 @@ LPGAMEOBJECT CWorld::spawnScubaSoldier(xml_node node) {
 
 	return ScubaSoldier;
 }
-
 LPGAMEOBJECT CWorld::spawnRockFall(xml_node node)
 {
 	auto properties = getObjectProperties(node);
@@ -167,7 +168,6 @@ LPGAMEOBJECT CWorld::spawnRockFall(xml_node node)
 
 	return RockFall;
 }
-
 LPGAMEOBJECT CWorld::spawnRockFly(xml_node node)
 {
 	auto properties = getObjectProperties(node);
@@ -184,7 +184,23 @@ LPGAMEOBJECT CWorld::spawnRockFly(xml_node node)
 
 	return RockFly;
 }
+LPGAMEOBJECT CWorld::spawnTriggerBox(xml_node node) {
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
 
+	float x, y;
+	int _type;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+	_type = stoi(properties["type"]);
+
+	LPTRIGGERBOX tb = new TriggerBox(x, y, _type);
+
+	return tb;
+}
 LPGAMEOBJECT CWorld::spawnLand(xml_node node)
 {
 	auto properties = getObjectProperties(node);
@@ -319,6 +335,8 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnRockFall(node);
 	case RockFlyID:
 		return spawnRockFly(node);
+	case TriggerBoxID:
+		return spawnTriggerBox(node);
 	case LAND:
 		return spawnLand(node);
 	case WATER:

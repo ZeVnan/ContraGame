@@ -8,6 +8,7 @@
 #include "ScubaSoldier.h"
 #include "RockFall.h"
 #include "RockFly.h"
+#include "TriggerBox.h"
 #include "Land.h"
 #include "Waters.h"
 #include "Bridge.h"
@@ -29,6 +30,7 @@ private:
 	vector<LPGAMEOBJECT> objectList;
 	vector<LPTILE> tileList;
 	vector<CWorldPart*> WPList;
+
 	LPGAMEOBJECT spawnRifleman(xml_node node);
 	LPGAMEOBJECT spawnSoldier(xml_node node);
 	LPGAMEOBJECT spawnCannon(xml_node node);
@@ -38,6 +40,7 @@ private:
 	LPGAMEOBJECT spawnScubaSoldier(xml_node node);
 	LPGAMEOBJECT spawnRockFall(xml_node node);
 	LPGAMEOBJECT spawnRockFly(xml_node node);
+	LPGAMEOBJECT spawnTriggerBox(xml_node node);
 	LPGAMEOBJECT spawnLand(xml_node node);
 	LPGAMEOBJECT spawnWater(xml_node node);
 	LPGAMEOBJECT spawnBridge(xml_node node);
