@@ -59,7 +59,7 @@ void LoadResources() {
 
 	LoadScreenResources(textures, sprites);
 
-	gameControl = intro;
+	gameControl = waiting3;
 	option = option1;
 }void LoadStage1() {
 	world = new CWorld(6656, 6656, 1);
@@ -118,7 +118,7 @@ void Update(DWORD dt)
 {
 	switch (gameControl) {
 	case intro:
-		
+
 		break;
 	case tutorial:
 

@@ -35,7 +35,6 @@ enum eID
 
 	WATER = 11,
 	LAND = 12,
-	CREATOR = 13,
 	BRIDGE = 14,
 	BOSS1SHIELD = 18,
 	BOSS1GUN = 19,
@@ -46,6 +45,8 @@ enum eID
 	BOSS3ARM = 22,
 
 	TriggerBoxID = 200,
+
+	generator = 23,
 };
 
 enum eLandType

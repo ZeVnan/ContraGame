@@ -84,7 +84,7 @@ void CSoldier::Render() {
 	}
 
 	animations->Get(ani)->Render(x, y);
-	RenderBox();
+	//RenderBox();
 }
 void CSoldier::SetState(int State) {
 	switch (State) {

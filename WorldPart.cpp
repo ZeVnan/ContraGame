@@ -152,16 +152,25 @@ void CWorldPart::Split(LPWORLD world)
 				{
 					// Object belongs to both firstPart and secondPart
 					firstPart->objects.push_back(this->objects[i]);
+					if (dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])) {
+						dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])->setParent(firstPart);
+					}
 				}
 				else if (fourthPart->checkObj(this->objects[i]) && !isCenterObject)
 				{
 					// Object belongs to both firstPart and fourthPart
 					firstPart->objects.push_back(this->objects[i]);
+					if (dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])) {
+						dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])->setParent(firstPart);
+					}
 				}
 				else
 				{
 					// Object belongs only to firstPart
 					firstPart->objects.push_back(this->objects[i]);
+					if (dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])) {
+						dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])->setParent(firstPart);
+					}
 				}
 			}
 			else if (secondPart->checkObj(this->objects[i]))
@@ -170,11 +179,17 @@ void CWorldPart::Split(LPWORLD world)
 				{
 					// Object belongs to both secondPart and thirdPart
 					secondPart->objects.push_back(this->objects[i]);
+					if (dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])) {
+						dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])->setParent(secondPart);
+					}
 				}
 				else
 				{
 					// Object belongs only to secondPart
 					secondPart->objects.push_back(this->objects[i]);
+					if (dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])) {
+						dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])->setParent(secondPart);
+					}
 				}
 			}
 			else if (thirdPart->checkObj(this->objects[i]))
@@ -183,11 +198,17 @@ void CWorldPart::Split(LPWORLD world)
 				{
 					// Object belongs only to firstPart
 					firstPart->objects.push_back(this->objects[i]);
+					if (dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])) {
+						dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])->setParent(firstPart);
+					}
 				}
 				else
 				{
 					// Object belongs only to thirdPart
 					thirdPart->objects.push_back(this->objects[i]);
+					if (dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])) {
+						dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])->setParent(thirdPart);
+					}
 				}
 			}
 			else if (fourthPart->checkObj(this->objects[i]))
@@ -196,11 +217,17 @@ void CWorldPart::Split(LPWORLD world)
 				{
 					// Object belongs only to firstPart
 					firstPart->objects.push_back(this->objects[i]);
+					if (dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])) {
+						dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])->setParent(firstPart);
+					}
 				}
 				else
 				{
 					// Object belongs only to fourthPart
 					fourthPart->objects.push_back(this->objects[i]);
+					if (dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])) {
+						dynamic_cast<LPOBJECTGENERATOR>(this->objects[i])->setParent(fourthPart);
+					}
 				}
 			}
 		}

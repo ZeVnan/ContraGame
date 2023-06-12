@@ -394,7 +394,7 @@ void CBill::Render(){
 		animations->Get(ani)->Render(x, y + d);
 	}
 	RenderBullet();
-	RenderBox();
+	//RenderBox();
 }
 void CBill::SetState(int state) {
 	switch (state) {
