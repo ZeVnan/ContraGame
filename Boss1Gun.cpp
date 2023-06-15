@@ -1,4 +1,5 @@
 #include "Boss1Gun.h"
+extern int score;
 CBoss1Gun::CBoss1Gun(float x, float y) :CGameObject(x, y) {
 	HP = 300;
 	timeLeft = 0;
@@ -32,7 +33,7 @@ void CBoss1Gun::Render() {
 		ani = EXPLOSION_2_ANI;
 	}
 	animations->Get(ani)->Render(x, y);
-	RenderBox();
+	//RenderBox();
 	RenderBullet();
 }
 
@@ -44,6 +45,7 @@ void CBoss1Gun::SetState(int state) {
 	case BOSS1GUN_STATE_EXPLODE:
 		isExploded = true;
 		timeLeft = 3 * TIME_EXPLODE;
+		score += 50;
 		break;
 	}
 	CGameObject::SetState(state);

@@ -2,6 +2,7 @@
 #include "Bill.h"
 #include "Grass.h"
 extern CBill* bill;
+extern int score;
 CAircraft::CAircraft(float x, float y, int stage) :CGameObject(x, y) {
 	this->ammo = rand() % 6 + 13001;
 	this->stage = stage;
@@ -104,6 +105,7 @@ void CAircraft::SetState(int state) {
 	case AIRCRAFT_STATE_EXPLODE:
 		isExploded = true;
 		timeleft = TIME_EXPLODE;
+		score += 10;
 		break;
 	case AIRCRAFT_STATE_DROPITEM:
 		isCollectible = true;

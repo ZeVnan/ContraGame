@@ -1,5 +1,5 @@
 #include "Rifleman.h"
-
+extern int score;
 Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	isShooting = false;
 	isHiding = false;
@@ -170,6 +170,7 @@ void Rifleman::SetState(int state) {
 		isHiding = false;
 		isExploded = true;
 		timeleft = TIME_EXPLODE;
+		score += 30;
 		break;
 	}
 	CGameObject::SetState(state);

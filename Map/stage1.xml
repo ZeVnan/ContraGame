@@ -847,6 +847,7 @@
 			<ActiveBound X="1040" Y="293" Width="64" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 
@@ -854,6 +855,7 @@
 			<ActiveBound X="1440" Y="293" Width="64" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 
@@ -861,6 +863,7 @@
 			<ActiveBound X="2112" Y="293" Width="64" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 
@@ -869,85 +872,98 @@
 		<Item Id="23" Name="soldiergenerator04" X="2700" Y="293" Width="64" Height="64">
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 
 		<Item Id="23" Name="soldiergenerator05" X="3279" Y="241" Width="64" Height="64">
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 
 		<Item Id="23" Name="soldiergenerator06" X="3763" Y="200" Width="64" Height="64">
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 
 		<Item Id="23" Name="soldiergenerator07" X="4497" Y="300" Width="64" Height="64">
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>	
 
 		<Item Id="23" Name="soldiergenerator08" X="1152" Y="320" Width="64" Height="64">
-			<ActiveBound X="960" Y="320" Width="256" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="soldiergenerator09" X="1536" Y="320" Width="64" Height="64">
 			<ActiveBound X="1344" Y="320" Width="256" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="soldiergenerator10" X="2048" Y="320" Width="64" Height="64">
 			<ActiveBound X="1792" Y="320" Width="320" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="soldiergenerator11" X="2880" Y="128" Width="64" Height="64">
 			<ActiveBound X="2816" Y="128" Width="128" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="soldiergenerator12" X="2880" Y="384" Width="64" Height="64">
 			<ActiveBound X="2688" Y="384" Width="256" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="soldiergenerator13" X="3580" Y="256" Width="64" Height="64">
 			<ActiveBound X="3200" Y="256" Width="444" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="soldiergenerator14" X="3712" Y="384" Width="64" Height="64">
 			<ActiveBound X="3456" Y="384" Width="320" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="soldiergenerator15" X="4284" Y="384" Width="64" Height="64">
 			<ActiveBound X="3840" Y="384" Width="508" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="soldiergenerator16" X="5056" Y="384" Width="64" Height="64">
 			<ActiveBound X="4800" Y="384" Width="320" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="soldiergenerator16" X="6144" Y="320" Width="64" Height="64">
 			<ActiveBound X="5888" Y="320" Width="320" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
+				<Elem Key="stage" Value="1" />
 			</Params>
 		</Item>	
 	</Objects>

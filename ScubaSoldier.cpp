@@ -1,7 +1,7 @@
 #include "ScubaSoldier.h"
 #include "bill.h"
 extern CBill* bill;
-
+extern int score;
 CScubaSoldier::CScubaSoldier(float x, float y) :CGameObject(x, y) {
 	this->SetState(SCUBA_STATE_HIDING);
 	timeleft = SCUBA_HIDING_TIME;
@@ -104,6 +104,7 @@ void CScubaSoldier::SetState(int state)
 		isHiding = false;
 		isExploded = true;
 		timeleft = TIME_EXPLODE;
+		score += 30;
 		break;
 	}
 	CGameObject::SetState(state);

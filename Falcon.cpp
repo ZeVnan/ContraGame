@@ -1,7 +1,7 @@
 #include "Falcon.h"
 #include "Grass.h"
 #include "Aircraft.h"
-
+extern int score;
 CFalcon::CFalcon(float x, float y) :CGameObject(x, y) {
 	this->state = FALCON_STATE_CLOSE;
 	this->ammo = rand() % 5 + 16002;
@@ -106,6 +106,7 @@ void CFalcon::SetState(int state) {
 	case FALCON_STATE_EXPLODE:
 		this->isExploded = true;
 		timeleft = TIME_EXPLODE;
+		score += 10;
 		break;
 	case FALCON_STATE_DROPITEM:
 		isCollectible = true;

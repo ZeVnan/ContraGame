@@ -2,7 +2,7 @@
 #include "Bill.h"
 
 extern CBill* bill;
-
+extern int score;
 CCannon::CCannon(float x, float y) : CGameObject(x, y) {
 	isShooting = false;
 	isAppear = false;
@@ -168,6 +168,7 @@ void CCannon::SetState(int state) {
 	case CANNON_STATE_EXPLODE:
 		this->isExploded = true;
 		timeLeft = TIME_EXPLODE;
+		score += 40;
 		break;
 	}
 	CGameObject::SetState(state);

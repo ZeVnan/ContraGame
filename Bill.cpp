@@ -14,6 +14,7 @@
 #include "SampleKeyEventHandler.h"
 #include "Game.h"
 extern gameScreen gameControl;
+extern int score;
 CBill::CBill(float x, float y,  int stage) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
@@ -80,6 +81,7 @@ void CBill::worldControl() {
 		}
 		if (lifeLeft <= 0) {
 			gameControl = gameover;
+			score = 0;
 		}
 		break;
 	case 3:
@@ -189,6 +191,17 @@ void CBill::Render(){
 	for (int i = 0; i < lifeLeft; i++) {
 		animations->Get(LIFE_ANI)->Render(cx - cw / 2 + 20 + i * 30, cy + ch / 2 - 20);
 	}
+	//render score
+	int temp = score;
+	vector<int> v;
+	while (temp != 0) {
+		v.push_back(temp % 10);
+		temp /= 10;
+	}
+	for (int i = v.size() - 1; i >= 0; i--) {
+		CSprites::GetInstance()->Get(v[i] + 30010)->Draw(cx + cw / 2 - 40 - i * 20, cy + ch / 2 - 20);
+	}
+	//render bill
 	if (isDead == true)
 		return;
 	if (isSwimming == false) {

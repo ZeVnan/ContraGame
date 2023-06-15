@@ -1,7 +1,7 @@
 #include "Soldier.h"
 #include "Bill.h"
 extern LPBILL bill;
-
+extern int score;
 CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
@@ -138,6 +138,7 @@ void CSoldier::SetState(int State) {
 		isLaying = false;
 		isJumping = false;
 		timeleft = TIME_EXPLODE;
+		score += 30;
 		break;
 	}
 	CGameObject::SetState(State);

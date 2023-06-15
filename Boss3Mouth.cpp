@@ -1,4 +1,5 @@
 #include "Boss3Mouth.h"
+extern int score;
 CBoss3Mouth::CBoss3Mouth(float x, float y) : CGameObject(x, y) {
 	HP = 500;
 	timeLeft = BOSS3MOUTH_TIME_CLOSE;
@@ -93,6 +94,7 @@ void CBoss3Mouth::SetState(int state) {
 	case BOSS3MOUTH_STATE_EXPLODE:
 		isExploded = true;
 		timeLeft = TIME_EXPLODE * 3;
+		score += 100;
 		break;
 	case BOSS3MOUTH_STATE_DEAD:
 		isDead = true;
