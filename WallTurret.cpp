@@ -1,5 +1,5 @@
 #include "WallTurret.h"
-
+extern int score;
 CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 {
 	isActivated = false;
@@ -145,6 +145,7 @@ void CWallTurret::Render()
 		break;
 	case WTURRET_STATE_EXPLODE:
 		ani = EXPLOSION_2_ANI;
+		score += 40;
 		break;
 	}
 	animations->Get(ani)->Render(x, y);

@@ -1071,6 +1071,7 @@ void LoadScreenResources(CTextures*& textures, CSprites*& sprites) {
 	textures->Add(ID_TEX_SCREEN_CREDIT, SCREEN_CREDIT_PATH);
 	textures->Add(ID_TEX_SCREEN_TUTORIAL, SCREEN_TUTORIAL_PATH);
 	textures->Add(ID_TEX_SCREEN_OPTION, SCREEN_OPTION_PATH);
+	textures->Add(ID_TEX_FONT, TEXTURE_PATH_FONT);
 
 	LPTEXTURE texIntro = textures->Get(ID_TEX_SCREEN_INTRO);
 	LPTEXTURE texWaiting1 = textures->Get(ID_TEX_SCREEN_WAITING1);
@@ -1079,6 +1080,7 @@ void LoadScreenResources(CTextures*& textures, CSprites*& sprites) {
 	LPTEXTURE texCredit = textures->Get(ID_TEX_SCREEN_CREDIT);
 	LPTEXTURE texTutorial = textures->Get(ID_TEX_SCREEN_TUTORIAL);
 	LPTEXTURE texOption = textures->Get(ID_TEX_SCREEN_OPTION);
+	LPTEXTURE texFont = textures->Get(ID_TEX_FONT);
 
 
 	sprites->Add(30000, 0, 0, 256, 224, texIntro);
@@ -1088,4 +1090,15 @@ void LoadScreenResources(CTextures*& textures, CSprites*& sprites) {
 	sprites->Add(30004, 0, 0, 256, 224, texCredit);
 	sprites->Add(30005, 0, 0, 256, 224, texTutorial);
 	sprites->Add(30006, 0, 0, 18, 14, texOption);
+
+	sprites->Add(30010, 16, 32, 22, 38, texFont);
+	sprites->Add(30011, 24, 32, 30, 38, texFont);
+	sprites->Add(30012, 32, 32, 38, 38, texFont);
+	sprites->Add(30013, 40, 32, 46, 38, texFont);
+	sprites->Add(30014, 0, 40, 6, 46, texFont);
+	sprites->Add(30015, 8, 40, 14, 46, texFont);
+	sprites->Add(30016, 16, 40, 22, 46, texFont);
+	sprites->Add(30017, 24, 40, 30, 46, texFont);
+	sprites->Add(30018, 32, 40, 38, 46, texFont);
+	sprites->Add(30019, 40, 40, 46, 46, texFont);
 }

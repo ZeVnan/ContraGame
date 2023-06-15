@@ -1,42 +1,47 @@
 #include "Soldier.h"
-
-
+#include "Bill.h"
+extern LPBILL bill;
+extern int score;
 CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	isLaying = false;
 	isShooting = false;
 	isOnPlatform = true;
-	isDropping = false;
 	isJumping = false;
-	this->SetState(SOLDIER_STATE_RUN_LEFT);
-	maxVx = SOLDIER_RUN_SPEED;
-	maxVy = SOLDIER_GRAVITY;
+	isActivated = false;
 	gunx = x;
 	guny = y;
+	timeleft = 0;
 }
 
-
+void CSoldier::watchBill() {
+	float x, y;
+	bill->GetPosition(x, y);
+	float distance = sqrt(pow(x - this->x, 2) + pow(y - this->y, 2));
+	if (distance < SOLDIER_ACTIVE_RADIUS && isActivated == false) {
+		if (x < this->x) {
+			SetState(SOLDIER_STATE_RUN_LEFT);
+		}
+		else {
+			SetState(SOLDIER_STATE_RUN_RIGHT);
+		}
+		isActivated = true;
+	}
+}
 
 void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	timeleft -= dt;
-	if (this->isExploded == true && this->timeleft < 0) {
-		isDeleted = true;
-		return;
+	watchBill();
+	if (timeleft > 0) {
+		timeleft -= dt;
 	}
-
-	if (this->state == SOLDIER_STATE_EXPLODE) {
-		vy = 0;
+	if (this->isExploded == true) {
+		if (this->timeleft < 0)
+			isDeleted = true;
+			return;
 	}
 	else {
 		vy += SOLDIER_GRAVITY * dt;
 		CCollision::GetInstance()->Process(this, coObjects, dt);
 	}
-
-	if (this->state == SOLDIER_STATE_RUN_LEFT) {
-		x += vx * dt;
-	}
-
-
-	//DebugOutTitle(L"timeleft = %f", this->timeleft);
 }
 void CSoldier::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -113,11 +118,6 @@ void CSoldier::SetState(int State) {
 		isOnPlatform = false;
 		isJumping = true;
 		break;
-	case SOLDIER_STATE_JUMP_RELEASE:
-		vy = -SOLDIER_GRAVITY;
-		if (vy < 0)
-			vy += SOLDIER_JUMP_SPEED_Y / 2;
-		break;
 	case SOLDIER_STATE_SHOOT:
 		isShooting = true;
 		break;
@@ -136,9 +136,9 @@ void CSoldier::SetState(int State) {
 		isExploded = true;
 		isShooting = false;
 		isLaying = false;
-		isDropping = false;
 		isJumping = false;
 		timeleft = TIME_EXPLODE;
+		score += 30;
 		break;
 	}
 	CGameObject::SetState(State);
@@ -152,8 +152,6 @@ void CSoldier::CreateBox(DWORD dt)
 		bbox.top = y + SOLDIER_BOX_SHOOT_HEIGHT / 2;
 		bbox.right = x + SOLDIER_BOX_SHOOT_WIDTH / 2;
 		bbox.bottom = y - SOLDIER_BOX_SHOOT_HEIGHT / 2;
-		bbox.vpf_x = vx * dt;
-		bbox.vpf_y = vy * dt;
 	}
 	else if (isLaying)
 	{
@@ -161,17 +159,15 @@ void CSoldier::CreateBox(DWORD dt)
 		bbox.top = y + SOLDIER_BOX_LAY_HEIGHT / 2;
 		bbox.right = x + SOLDIER_BOX_LAY_WIDTH / 2;
 		bbox.bottom = y - SOLDIER_BOX_LAY_HEIGHT / 2;
-		bbox.vpf_x = vx * dt;
-		bbox.vpf_y = vy * dt;
 	}
 	else {
 		bbox.left = x - SOLDIER_BOX_RUN_WIDTH / 2;
 		bbox.top = y + SOLDIER_BOX_RUN_HEIGHT / 2;
 		bbox.right = x + SOLDIER_BOX_RUN_WIDTH / 2;
 		bbox.bottom = y - SOLDIER_BOX_RUN_HEIGHT / 2;
-		bbox.vpf_x = vx * dt;
-		bbox.vpf_y = vy * dt;
 	}
+	bbox.vpf_x = vx * dt;
+	bbox.vpf_y = vy * dt;
 }
 void CSoldier::NoCollision(DWORD dt)
 {
@@ -196,28 +192,15 @@ void CSoldier::CollisionWith(LPCOLLISIONEVENT e)
 void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 {
 	if (e->normal_x != 0) {
-		//this->x += e->time * this->GetBox().vpf_x;
-		this->x += this->GetBox().vpf_x;
+		this->x += bbox.vpf_x;
 	}
 	else if (e->normal_y != 0) {
 		if (e->normal_y > 0) {
-			if (isDropping == false) {
-				//support change bbox
-				if (isJumping == true) {
-					isJumping = false;
-					y += 15.0f;
-
-					this->y += e->time * bbox.vpf_y;
-					SetState(SOLDIER_STATE_ON_LAND);
-				}
-				else {
-					vy = 0;
-					this->y += e->time * this->GetBox().vpf_y;
-				}
-			}
-			else {
-				this->y += this->GetBox().vpf_y;
-			}
+			SetState(SOLDIER_STATE_ON_LAND);
+			this->y += e->time * bbox.vpf_y;
+		}
+		else {
+			this->y += bbox.vpf_y;
 		}
 	}
 }
@@ -237,12 +220,11 @@ void CSoldier::CollisionWithTriggerBox(LPCOLLISIONEVENT e) {
 }
 void CSoldier::CollisionWithBridge(LPCOLLISIONEVENT e) {
 	if (e->normal_x != 0) {
-		//this->x += e->time * this->GetBox().vpf_x;
 		this->x += this->GetBox().vpf_x;
 	}
 	else if (e->normal_y != 0) {
 		if (e->normal_y > 0) {
-			vy = 0;
+			SetState(SOLDIER_STATE_ON_LAND);
 			this->y += e->time * this->GetBox().vpf_y;
 		}
 		else {

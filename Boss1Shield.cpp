@@ -1,4 +1,5 @@
 #include "Boss1Shield.h"
+extern int score;
 CBoss1Shield::CBoss1Shield(float x, float y) :CGameObject(x, y) {
 	HP = 500;
 	timeLeft = 0;
@@ -46,6 +47,7 @@ void CBoss1Shield::SetState(int state) {
 	case BOSS1SHIELD_STATE_EXPLODE:
 		isExploded = true;
 		timeLeft = 3 * TIME_EXPLODE;
+		score += 100;
 		break;
 	case BOSS1SHIELD_STATE_AFTER_EXPLODE:
 

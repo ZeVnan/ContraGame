@@ -11,6 +11,7 @@ screenOption option;
 int playingAt;
 #define WAITING_TIME 3000
 int timeLeft = WAITING_TIME;
+int score = 0, highscore;
 
 CBill* bill = NULL;
 CSampleKeyHandler* keyHandler;
@@ -59,9 +60,14 @@ void LoadResources() {
 
 	LoadScreenResources(textures, sprites);
 
-	gameControl = waiting3;
+	gameControl = intro;
 	option = option1;
-}void LoadStage1() {
+	ifstream ofs;
+	ofs.open(HIGHSCORE_PATH);
+	ofs >> highscore;
+	ofs.close();
+}
+void LoadStage1() {
 	world = new CWorld(6656, 6656, 1);
 	//objects
 	world->getObjectsListFromFile(STAGE1_PATH);
@@ -124,6 +130,13 @@ void Update(DWORD dt)
 
 		break;
 	case waiting1:
+		if (score > highscore) {
+			highscore = score;
+			ofstream ofs;
+			ofs.open(HIGHSCORE_PATH, std::ofstream::out | std::ofstream::trunc);
+			ofs << highscore;
+			ofs.close();
+		}
 		if (timeLeft > 0) {
 			timeLeft -= dt;
 		}
@@ -131,14 +144,21 @@ void Update(DWORD dt)
 			gameControl = stage1;
 			timeLeft = WAITING_TIME;
 			LoadStage(1);
+			playingAt = 1;
 		}
-		playingAt = 1;
 		break;
 	case stage1:
 		world->Update(dt);
 		world->ClearDeletedObjects();
 		break;
 	case waiting3:
+		if (score > highscore) {
+			highscore = score;
+			ofstream ofs;
+			ofs.open(HIGHSCORE_PATH, std::ofstream::out | std::ofstream::trunc);
+			ofs << highscore;
+			ofs.close();
+		}
 		if (timeLeft > 0) {
 			timeLeft -= dt;
 		}
@@ -146,8 +166,8 @@ void Update(DWORD dt)
 			gameControl = stage3;
 			timeLeft = WAITING_TIME;
 			LoadStage(3);
+			playingAt = 3;
 		}
-		playingAt = 3;
 		break;
 	case stage3:
 		world->Update(dt);
@@ -159,7 +179,7 @@ void Update(DWORD dt)
 
 		break;
 	}
-	//DebugOutTitle(L"gamecontrol = %d, option = %d", gameControl, option);
+	//DebugOutTitle(L"score = %d, highscore = %d", score, highscore);
 }
 
 void Render()
@@ -177,7 +197,12 @@ void Render()
 
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
-
+	int temp = highscore;
+	vector<int> v;
+	while (temp != 0) {
+		v.push_back(temp % 10);
+		temp /= 10;
+	}
 	switch (gameControl) {
 	case intro:
 		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
@@ -196,6 +221,9 @@ void Render()
 	case waiting1:
 		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
 		CSprites::GetInstance()->Get(30001)->Draw(0, 0);
+		for (int i = v.size()-1; i >=0 ; i--) {
+			CSprites::GetInstance()->Get(v[i] + 30010)->Draw(100 - i * 20, 90);
+		}
 		break;
 	case stage1:
 		world->DrawTile();
@@ -205,6 +233,9 @@ void Render()
 		ClearWorld();
 		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
 		CSprites::GetInstance()->Get(30002)->Draw(0, 0);
+		for (int i = v.size() - 1; i >= 0; i--) {
+			CSprites::GetInstance()->Get(v[i] + 30010)->Draw(100 - i * 20, 90);
+		}
 		break;
 	case stage3:
 		world->DrawTile();

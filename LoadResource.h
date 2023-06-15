@@ -1,5 +1,7 @@
 #pragma once
 #include <windows.h>
+#include <fstream>
+#include <iostream>
 
 #include "debug.h"
 #include "Game.h"
@@ -38,6 +40,8 @@
 
 #include "Map.h"
 
+#define HIGHSCORE_PATH "Images\\highscore.txt"
+
 #define ID_TEX_ARROW -13
 #define ID_TEX_LIFE -12
 #define ID_TEX_EXPLOSION -11
@@ -72,6 +76,7 @@
 #define ID_TEX_SCREEN_GAMEOVER 204
 #define ID_TEX_SCREEN_CREDIT 205
 #define ID_TEX_SCREEN_OPTION 206
+#define ID_TEX_FONT 207
 
 #define TEXTURE_PATH_EXPLOSION L"Images\\Explosion.png"
 #define TEXTURE_PATH_BOX L"Images\\bbox.png"
@@ -96,6 +101,7 @@
 #define TEXTURE_PATH_STAGE3_ELEMENT L"Images\\stage3_elements.png"
 #define TEXTURE_PATH_LIFE L"Images\\Life.png"
 #define TEXTURE_PATH_ARROW L"Images\\Arrow.png"
+#define TEXTURE_PATH_FONT L"Fonts\\fontFull.png"
 
 #define STAGE1_PATH "Map\\stage1.xml"
 #define STAGE1_TILE L"Map\\stage1.png"

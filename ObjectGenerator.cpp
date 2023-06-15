@@ -3,8 +3,9 @@
 #include "RockFall.h"
 #include "Soldier.h"
 
-CObjectGenerator::CObjectGenerator(float x, float y, int type) :CGameObject(x, y){
+CObjectGenerator::CObjectGenerator(float x, float y, int type, int stage) :CGameObject(x, y){
 	this->type = type;
+	this->stage = stage;
 	parent = NULL;
 }
 void CObjectGenerator::AddObject() {
@@ -27,7 +28,7 @@ bool CObjectGenerator::InScreen() {
 	return false;
 }
 void CObjectGenerator::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	if (InScreen() == true && type == 2)
+	if (InScreen() == true && type == 2 && stage == 1)
 		return;
 	if (timeLeft > 0) {
 		timeLeft -= dt;

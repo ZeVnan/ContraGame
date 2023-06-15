@@ -1,6 +1,7 @@
 #include "Boss3Arm.h"
 #include "Bill.h"
 extern CBill* bill;
+extern int score;
 CBoss3Arm::CBoss3Arm(float x, float y, float startAngle) :CGameObject(x, y) {
 	HP = 150;
 	timeLeft = BOSS3ARM_TIME_SWITCH;
@@ -106,6 +107,8 @@ void CBoss3Arm::SetState(int state) {
 		isExploded = true;
 		vr = 0;
 		timeLeft = TIME_EXPLODE;
+		score += 50;
+		break;
 	}
 	CGameObject::SetState(state);
 }
