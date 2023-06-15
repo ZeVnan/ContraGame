@@ -177,8 +177,6 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	worldControl();
 	BulletControl(dt, coObjects);
 	Move(dt, coObjects);
-	//DebugOutTitle(L"lifeLeft = %d, x = %f, y = %f", lifeLeft, x, y);
-	//DebugOutTitle(L"vy = %f, isOnplatform = %d", vy, isOnPlatform);
 }
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
@@ -877,13 +875,16 @@ void CBill::CollisionWithFalcon(LPCOLLISIONEVENT e) {
 	e->dest_obj->Delete();
 }
 void CBill::CollisionWithSoldier(LPCOLLISIONEVENT e) {
-	if (nx == 1) {
+	if (dynamic_cast<LPSOLDIER>(e->dest_obj)->IsExploded() == true)
+		return;
+	if (isVulnerable == false)
+		return;
+	if (e->normal_x > 0) {
 		this->SetState(BILL_STATE_DYING_RIGHT);
 	}
 	else {
 		this->SetState(BILL_STATE_DYING_LEFT);
 	}
-	LPSOLDIER(e->dest_obj)->SetState(SOLDIER_STATE_EXPLODE);
 }
 
 int CBill::CalculateAngle() {

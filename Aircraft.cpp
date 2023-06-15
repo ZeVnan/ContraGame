@@ -36,7 +36,7 @@ void CAircraft::watchBill() {
 	}
 }
 void CAircraft::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	DebugOutTitle(L"vy = %f, y = %f", vy, y);
+	//DebugOutTitle(L"vy = %f, y = %f", vy, y);
 	watchBill();
 	if (isActivated == false)
 		return;

@@ -15,6 +15,7 @@
 #define SOLDIER_RUN_SPEED 0.1f
 #define SOLDIER_JUMP_SPEED_Y 0.4f
 #define SOLDIER_GRAVITY -0.00075f
+#define SOLDIER_ACTIVE_RADIUS 400
 
 #define SOLDIER_START_X 20.0f
 #define SOLDIER_START_Y 10.0f
@@ -55,9 +56,9 @@
 #define SOLDIER_BOX_RUN_WIDTH	32
 #define SOLDIER_BOX_RUN_HEIGHT	64
 #define SOLDIER_BOX_SHOOT_WIDTH	48
-#define SOLDIER_BOX_SHOOT_HEIGHT 48
+#define SOLDIER_BOX_SHOOT_HEIGHT 64
 #define SOLDIER_BOX_LAY_WIDTH	64
-#define SOLDIER_BOX_LAY_HEIGHT	30
+#define SOLDIER_BOX_LAY_HEIGHT	32
 
 class CSoldier: public CGameObject
 {
@@ -65,17 +66,15 @@ private:
 	BOOLEAN isLaying;
 	BOOLEAN isShooting;
 	BOOLEAN isOnPlatform;
-	BOOLEAN isDropping;
 	BOOLEAN isJumping;
-	float maxVx;
-	float maxVy;
+	bool isActivated;
 	float gunx;
 	float guny;
 	vector<LPBULLET> bullets;
 	int timeleft;
 public:
 	CSoldier(float x, float y);
-
+	void watchBill();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int State);
