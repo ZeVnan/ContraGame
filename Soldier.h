@@ -4,7 +4,7 @@
 #include "Animations.h"
 #include "debug.h"
 
-#include "Bullet.h"
+#include "BulletN.h"
 #include "Grass.h"
 #include "TriggerBox.h"
 #include "Water.h"
@@ -25,7 +25,7 @@
 #define SOLDIER_STATE_RUN_LEFT 11
 
 #define SOLDIER_STATE_JUMP 20
-#define SOLDIER_STATE_JUMP_RELEASE 21
+#define SOLDIER_STATE_DROP 21
 
 #define SOLDIER_STATE_SHOOT 30
 #define SOLDIER_STATE_SHOOT_RELEASE 31
@@ -55,10 +55,6 @@
 
 #define SOLDIER_BOX_RUN_WIDTH	32
 #define SOLDIER_BOX_RUN_HEIGHT	64
-#define SOLDIER_BOX_SHOOT_WIDTH	48
-#define SOLDIER_BOX_SHOOT_HEIGHT 64
-#define SOLDIER_BOX_LAY_WIDTH	64
-#define SOLDIER_BOX_LAY_HEIGHT	32
 
 class CSoldier: public CGameObject
 {
@@ -68,6 +64,7 @@ private:
 	BOOLEAN isOnPlatform;
 	BOOLEAN isJumping;
 	bool isActivated;
+	bool isDropping;
 	float gunx;
 	float guny;
 	vector<LPBULLET> bullets;
@@ -80,6 +77,8 @@ public:
 	void SetState(int State);
 
 	void AddBullet();
+	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void RenderBullet();
 
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
