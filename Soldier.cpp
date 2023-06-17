@@ -8,6 +8,7 @@ CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	isOnPlatform = true;
 	isJumping = false;
 	isActivated = false;
+	isDropping = false;
 	gunx = x;
 	guny = y;
 	timeleft = 0;
@@ -17,7 +18,7 @@ void CSoldier::watchBill() {
 	float x, y;
 	bill->GetPosition(x, y);
 	float distance = sqrt(pow(x - this->x, 2) + pow(y - this->y, 2));
-	if (distance < SOLDIER_ACTIVE_RADIUS && isActivated == false) {
+	if (distance < SOLDIER_ACTIVE_RADIUS) {
 		if (x < this->x) {
 			SetState(SOLDIER_STATE_RUN_LEFT);
 		}
@@ -29,7 +30,8 @@ void CSoldier::watchBill() {
 }
 
 void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	watchBill();
+	if (isActivated == false)
+		watchBill();
 	if (timeleft > 0) {
 		timeleft -= dt;
 	}
@@ -39,9 +41,18 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			return;
 	}
 	else {
+		if (isShooting == true && timeleft < 0) {
+			SetState(SOLDIER_STATE_SHOOT_RELEASE);
+			if (nx > 0)
+				SetState(SOLDIER_STATE_RUN_RIGHT);
+			else
+				SetState(SOLDIER_STATE_RUN_LEFT);
+		}
 		vy += SOLDIER_GRAVITY * dt;
 		CCollision::GetInstance()->Process(this, coObjects, dt);
+		isDropping = false;
 	}
+	UpdateBullet(dt, coObjects);
 }
 void CSoldier::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -89,6 +100,7 @@ void CSoldier::Render() {
 	}
 
 	animations->Get(ani)->Render(x, y);
+	RenderBullet();
 	//RenderBox();
 }
 void CSoldier::SetState(int State) {
@@ -118,8 +130,14 @@ void CSoldier::SetState(int State) {
 		isOnPlatform = false;
 		isJumping = true;
 		break;
+	case SOLDIER_STATE_DROP:
+		isDropping = true;
+		break;
 	case SOLDIER_STATE_SHOOT:
 		isShooting = true;
+		vx = 0;
+		timeleft = 1000;
+		AddBullet();
 		break;
 	case SOLDIER_STATE_SHOOT_RELEASE:
 		isShooting = false;
@@ -146,26 +164,10 @@ void CSoldier::SetState(int State) {
 
 void CSoldier::CreateBox(DWORD dt)
 {
-	if (isShooting)
-	{
-		bbox.left = x - SOLDIER_BOX_SHOOT_WIDTH / 2;
-		bbox.top = y + SOLDIER_BOX_SHOOT_HEIGHT / 2;
-		bbox.right = x + SOLDIER_BOX_SHOOT_WIDTH / 2;
-		bbox.bottom = y - SOLDIER_BOX_SHOOT_HEIGHT / 2;
-	}
-	else if (isLaying)
-	{
-		bbox.left = x - SOLDIER_BOX_LAY_WIDTH / 2;
-		bbox.top = y + SOLDIER_BOX_LAY_HEIGHT / 2;
-		bbox.right = x + SOLDIER_BOX_LAY_WIDTH / 2;
-		bbox.bottom = y - SOLDIER_BOX_LAY_HEIGHT / 2;
-	}
-	else {
-		bbox.left = x - SOLDIER_BOX_RUN_WIDTH / 2;
-		bbox.top = y + SOLDIER_BOX_RUN_HEIGHT / 2;
-		bbox.right = x + SOLDIER_BOX_RUN_WIDTH / 2;
-		bbox.bottom = y - SOLDIER_BOX_RUN_HEIGHT / 2;
-	}
+	bbox.left = x - SOLDIER_BOX_RUN_WIDTH / 2;
+	bbox.top = y + SOLDIER_BOX_RUN_HEIGHT / 2;
+	bbox.right = x + SOLDIER_BOX_RUN_WIDTH / 2;
+	bbox.bottom = y - SOLDIER_BOX_RUN_HEIGHT / 2;
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = vy * dt;
 }
@@ -196,8 +198,13 @@ void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 	}
 	else if (e->normal_y != 0) {
 		if (e->normal_y > 0) {
-			SetState(SOLDIER_STATE_ON_LAND);
-			this->y += e->time * bbox.vpf_y;
+			if (isDropping == true) {
+				SetState(SOLDIER_STATE_ON_LAND);
+				this->y += e->time * bbox.vpf_y;
+			}
+			else {
+				this->y += bbox.vpf_y;
+			}
 		}
 		else {
 			this->y += bbox.vpf_y;
@@ -215,7 +222,7 @@ void CSoldier::CollisionWithTriggerBox(LPCOLLISIONEVENT e) {
 		this->SetState(SOLDIER_STATE_SHOOT);
 	}
 	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 3) {
-		this->SetState(SOLDIER_STATE_LAYDOWN);
+		this->SetState(SOLDIER_STATE_DROP);
 	}
 }
 void CSoldier::CollisionWithBridge(LPCOLLISIONEVENT e) {
@@ -230,5 +237,30 @@ void CSoldier::CollisionWithBridge(LPCOLLISIONEVENT e) {
 		else {
 			this->y += this->GetBox().vpf_y;
 		}
+	}
+}
+
+void CSoldier::AddBullet() {
+	if (nx > 0) {
+		bullets.push_back(new CBulletN(x, y, 0, false));
+	}
+	else {
+		bullets.push_back(new CBulletN(x, y, 180, false));
+	}
+}
+void CSoldier::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	for (int i = 0; i < bullets.size(); i++) {
+		if (bullets[i]->outOfScreen() || bullets[i]->IsDeleted()) {
+			delete bullets[i];
+			bullets.erase(bullets.begin() + i);
+		}
+		else {
+			bullets[i]->Update(dt, coObjects);
+		}
+	}
+}
+void CSoldier::RenderBullet() {
+	for (int i = 0; i < bullets.size(); i++) {
+		bullets[i]->Render();
 	}
 }
