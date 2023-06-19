@@ -1158,6 +1158,118 @@
 				<Elem Key="type" Value="0" />
 			</Params>
 		</Item>
+		<!--The Trigger Box Place-->
+		<Item Id="200" Name="trigBox1" X="110" Y="500" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox2" X="230" Y="620" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox3" X="50" Y="690" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox4" X="365" Y="690" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox5" X="370" Y="750" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox6" X="105" Y="750" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox7" X="235" Y="980" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox8" X="300" Y="1005" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox9" X="110" Y="1170" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox10" X="220" Y="1330" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="3" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox11" X="375" Y="1750" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox12" X="300" Y="2090" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox13" X="170" Y="2160" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox14" X="370" Y="2830" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox15" X="300" Y="2960" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox16" X="45" Y="3000" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox17" X="170" Y="3090" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox18" X="305" Y="3630" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox19" X="50" Y="3700" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox20" X="250" Y="3760" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox21" X="300" Y="560" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox22" X="310" Y="2830" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<!--The Trigger Box Place-->
 		<Item Id="34" Name="shadowbeast" X="256" Y="4124" Width="33" Height="34">
 			<ActiveBound X="256" Y="4124" Width="33" Height="34" />
 		</Item>
