@@ -1194,11 +1194,6 @@
 				<Elem Key="type" Value="1" />
 			</Params>
 		</Item>
-		<Item Id="200" Name="trigBox8" X="300" Y="1005" Width="16" Height="16">
-			<Params>
-				<Elem Key="type" Value="1" />
-			</Params>
-		</Item>
 		<Item Id="200" Name="trigBox9" X="110" Y="1170" Width="16" Height="16">
 			<Params>
 				<Elem Key="type" Value="1" />
@@ -1219,7 +1214,7 @@
 				<Elem Key="type" Value="1" />
 			</Params>
 		</Item>
-		<Item Id="200" Name="trigBox13" X="170" Y="2160" Width="16" Height="16">
+		<Item Id="200" Name="trigBox13" X="235" Y="2118" Width="16" Height="16">
 			<Params>
 				<Elem Key="type" Value="1" />
 			</Params>
@@ -1229,17 +1224,17 @@
 				<Elem Key="type" Value="1" />
 			</Params>
 		</Item>
-		<Item Id="200" Name="trigBox15" X="300" Y="2960" Width="16" Height="16">
+		<Item Id="200" Name="trigBox15" X="300" Y="2985" Width="16" Height="16">
 			<Params>
 				<Elem Key="type" Value="1" />
 			</Params>
 		</Item>
-		<Item Id="200" Name="trigBox16" X="45" Y="3000" Width="16" Height="16">
+		<Item Id="200" Name="trigBox16" X="45" Y="3015" Width="16" Height="16">
 			<Params>
 				<Elem Key="type" Value="1" />
 			</Params>
 		</Item>
-		<Item Id="200" Name="trigBox17" X="170" Y="3090" Width="16" Height="16">
+		<Item Id="200" Name="trigBox17" X="170" Y="3110" Width="16" Height="16">
 			<Params>
 				<Elem Key="type" Value="1" />
 			</Params>
@@ -1267,6 +1262,76 @@
 		<Item Id="200" Name="trigBox22" X="310" Y="2830" Width="16" Height="16">
 			<Params>
 				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox23" X="115" Y="1095" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="2" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox24" X="365" Y="1095" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="2" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox25" X="335" Y="486" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="2" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox26" X="250" Y="1095" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="3" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox27" X="365" Y="2020" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox28" X="50" Y="2115" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox29" X="240" Y="1287" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="1" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox30" X="385" Y="1703" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="2" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox31" X="425" Y="3655" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="2" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox32" X="425" Y="3784" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="2" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox32" X="425" Y="3784" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="2" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox33" X="270" Y="3880" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="3" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox34" X="120" Y="3880" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="2" />
+			</Params>
+		</Item>
+		<Item Id="200" Name="trigBox35" X="420" Y="3880" Width="16" Height="16">
+			<Params>
+				<Elem Key="type" Value="2" />
 			</Params>
 		</Item>
 		<!--The Trigger Box Place-->
@@ -1306,7 +1371,7 @@
 				<Elem Key="stage" Value="3" />
 			</Params>
 		</Item>
-		<Item Id="23" Name="soldiergenerator03" X="480" Y="1024" Width="64" Height="64">
+		<Item Id="23" Name="soldiergenerator03" X="480" Y="1030" Width="64" Height="64">
 			<ActiveBound X="3456" Y="384" Width="320" Height="64" />
 			<Params>
 				<Elem Key="type" Value="2" />
@@ -1405,7 +1470,7 @@
 				<Elem Key="stage" Value="3" />
 			</Params>
 		</Item>
-		<Item Id="23" Name="soldiergenerator15" X="480" Y="3622" Width="32" Height="32">
+		<Item Id="23" Name="soldiergenerator15" X="480" Y="3655" Width="32" Height="32">
 			<ActiveBound X="480" Y="3648" Width="32" Height="32" />
 			<Params>
 				<Elem Key="type" Value="2" />

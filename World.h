@@ -8,6 +8,7 @@
 #include "ScubaSoldier.h"
 #include "RockFall.h"
 #include "RockFly.h"
+#include "Fire.h"
 #include "TriggerBox.h"
 #include "Land.h"
 #include "Waters.h"
@@ -41,6 +42,7 @@ private:
 	LPGAMEOBJECT spawnScubaSoldier(xml_node node);
 	LPGAMEOBJECT spawnRockFall(xml_node node);
 	LPGAMEOBJECT spawnRockFly(xml_node node);
+	LPGAMEOBJECT spawnFire(xml_node node);
 	LPGAMEOBJECT spawnTriggerBox(xml_node node);
 	LPGAMEOBJECT spawnLand(xml_node node);
 	LPGAMEOBJECT spawnWater(xml_node node);

@@ -179,6 +179,8 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	worldControl();
 	BulletControl(dt, coObjects);
 	Move(dt, coObjects);
+	isVulnerable = false;
+	DebugOutTitle(L"x = %f, y = %f", x, y);
 }
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
@@ -710,9 +712,9 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
 		CollisionWithRockFly(e);
 	}
-	if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
+	/*if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
 		CollisionWithSoldier(e);
-	}
+	}*/
 }
 //collision with terrain object
 void CBill::CollisionWithGrass(LPCOLLISIONEVENT e) {
