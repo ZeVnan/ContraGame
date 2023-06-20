@@ -198,7 +198,7 @@ void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 	}
 	else if (e->normal_y != 0) {
 		if (e->normal_y > 0) {
-			if (isDropping == true) {
+			if (isDropping == false) {
 				SetState(SOLDIER_STATE_ON_LAND);
 				this->y += e->time * bbox.vpf_y;
 			}
