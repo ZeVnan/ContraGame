@@ -1,5 +1,11 @@
 #include "Soldier.h"
 #include "Bill.h"
+#include "Grass.h"
+#include "TriggerBox.h"
+#include "Water.h"
+#include "BridgePart.h"
+#include "Bridge.h"
+#include "RockFly.h"
 extern LPBILL bill;
 extern int score;
 CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
@@ -12,12 +18,13 @@ CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	gunx = x;
 	guny = y;
 	timeleft = 0;
+	nx = -1;
 }
 
 void CSoldier::watchBill() {
 	float x, y;
 	bill->GetPosition(x, y);
-	float distance = sqrt(pow(x - this->x, 2) + pow(y - this->y, 2));
+	float distance = (float)sqrt(pow(x - this->x, 2) + pow(y - this->y, 2));
 	if (distance < SOLDIER_ACTIVE_RADIUS) {
 		if (x < this->x) {
 			SetState(SOLDIER_STATE_RUN_LEFT);
@@ -36,12 +43,13 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		timeleft -= dt;
 	}
 	if (this->isExploded == true) {
-		if (this->timeleft < 0)
+		if (this->timeleft <= 0) {
 			isDeleted = true;
 			return;
+		}	
 	}
 	else {
-		if (isShooting == true && timeleft < 0) {
+		if (isShooting == true && timeleft <= 0) {
 			SetState(SOLDIER_STATE_SHOOT_RELEASE);
 			if (nx > 0)
 				SetState(SOLDIER_STATE_RUN_RIGHT);
@@ -118,7 +126,6 @@ void CSoldier::SetState(int State) {
 		}
 		break;
 	case SOLDIER_STATE_RUN_LEFT:
-		isOnPlatform = true;
 		vx = -SOLDIER_RUN_SPEED;
 		nx = -1;
 		if (isLaying == true) {
@@ -136,8 +143,7 @@ void CSoldier::SetState(int State) {
 	case SOLDIER_STATE_SHOOT:
 		isShooting = true;
 		vx = 0;
-		timeleft = 1000;
-		AddBullet();
+		timeleft = 500;
 		break;
 	case SOLDIER_STATE_SHOOT_RELEASE:
 		isShooting = false;
@@ -190,9 +196,31 @@ void CSoldier::CollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<LPBRIDGEPART>(e->dest_obj)) {
 		CollisionWithBridge(e);
 	}
+	else if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
+		CollisionWithRockFly(e);
+	}
 }
 void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 {
+	if (e->normal_x != 0) {
+		this->x += bbox.vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		if (e->normal_y > 0) {
+			if (isDropping == false) {
+				SetState(SOLDIER_STATE_ON_LAND);
+				this->y += e->time * bbox.vpf_y;
+			}
+			else {
+				this->y += bbox.vpf_y;
+			}
+		}
+		else {
+			this->y += bbox.vpf_y;
+		}
+	}
+}
+void CSoldier::CollisionWithRockFly(LPCOLLISIONEVENT e) {
 	if (e->normal_x != 0) {
 		this->x += bbox.vpf_x;
 	}
@@ -220,6 +248,7 @@ void CSoldier::CollisionWithTriggerBox(LPCOLLISIONEVENT e) {
 	}
 	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 2) {
 		this->SetState(SOLDIER_STATE_SHOOT);
+		AddBullet();
 	}
 	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 3) {
 		this->SetState(SOLDIER_STATE_DROP);

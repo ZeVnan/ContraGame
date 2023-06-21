@@ -8,7 +8,7 @@ CBoss3Arm::CBoss3Arm(float x, float y, float startAngle) :CGameObject(x, y) {
 	vr = BOSS3ARM_SPEED_R;
 	state = BOSS3ARM_STATE_TURN_LEFT;
 	countToShoot = 3;
-	float radian = 3.14159 / 180 * startAngle;
+	float radian = 3.14159f / 180 * startAngle;
 	for (int i = 0; i < 5; i++) {
 		Boss3ArmPart temp;
 		temp.x = x + cos(radian) * i * BOSS3ARM_RADIUS_BASE;
@@ -21,7 +21,7 @@ CBoss3Arm::CBoss3Arm(float x, float y, float startAngle) :CGameObject(x, y) {
 	}
 }
 void CBoss3Arm::CalculatePosition(float& x, float& y, float angle, int number) {
-	float radian = 3.14159 / 180 * angle;
+	float radian = 3.14159f / 180 * angle;
 	x = this->x + cos(radian) * number * BOSS3ARM_RADIUS_BASE;
 	y = this->y + sin(radian) * number * BOSS3ARM_RADIUS_BASE;
 }
@@ -33,7 +33,7 @@ void CBoss3Arm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		else {
 			for (int i = 1; i < parts.size(); i++) {
 				if (i == 1) {
-					float peri = parts[i].number * BOSS3ARM_RADIUS_BASE * 2 * 3.14159;
+					float peri = parts[i].number * BOSS3ARM_RADIUS_BASE * 2 * 3.14159f;
 					float move_angle = (vr * dt) / peri * 360;
 					parts[i].angle += move_angle;
 					CalculatePosition(parts[i].x, parts[i].y, parts[i].angle, parts[i].number);
@@ -119,7 +119,7 @@ void CBoss3Arm::CreateBox(DWORD dt) {
 	bbox.right = parts[4].x + BOSS3ARM_BOX_WIDTH / 2;
 	bbox.bottom = parts[4].y - BOSS3ARM_BOX_HEIGHT / 2;
 	float vr_degree = parts[4].angle + 90;
-	float vr_rad = 3.14159 / 180 * vr_degree;
+	float vr_rad = 3.14159f / 180 * vr_degree;
 	bbox.vpf_x = (cos(vr_rad) * vr * 4) * dt;
 	bbox.vpf_y = (sin(vr_rad) * vr * 4) * dt;
 }
@@ -133,7 +133,7 @@ void CBoss3Arm::CollisionWith(LPCOLLISIONEVENT e) {
 void CBoss3Arm::AddBullet() {
 	float bill_x, bill_y;
 	bill->GetPosition(bill_x, bill_y);
-	float angle = atan(abs(parts[4].y - bill_y) / abs(parts[4].x - bill_x)) * 180 / 3.14159;
+	float angle = atan(abs(parts[4].y - bill_y) / abs(parts[4].x - bill_x)) * 180 / 3.14159f;
 	if (bill_x >= parts[4].x) {
 		if (bill_y >= parts[4].y) {
 			//not change

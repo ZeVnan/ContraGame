@@ -11,7 +11,7 @@ CRockFall::CRockFall(float x, float y) : CGameObject(x, y)
 	vy = 0;
 }
 
-BOOLEAN CRockFall::outOfScreen()
+bool CRockFall::outOfScreen()
 {
 	float cx, cy, cw, ch;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
@@ -97,9 +97,6 @@ void CRockFall::CollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<LPGRASS>(e->dest_obj)) {
 		CollisionWithGrass(e);
 	}
-	if (dynamic_cast<LPBILL>(e->dest_obj)) {
-		CollisionWithBill(e);
-	}
 }
 
 void CRockFall::CollisionWithGrass(LPCOLLISIONEVENT e)
@@ -118,16 +115,4 @@ void CRockFall::CollisionWithGrass(LPCOLLISIONEVENT e)
 			turn = false;
 		}
 	}
-}
-
-void CRockFall::CollisionWithBill(LPCOLLISIONEVENT e)
-{
-	if (e->normal_y < 0) {
-		return;
-	}
-	if ((LPBILL(e->dest_obj))->IsDiving() == true ||
-		(LPBILL(e->dest_obj))->IsVulnerable() == false ||
-		(LPBILL(e->dest_obj))->IsDead() == true)
-		return;
-	(LPBILL(e->dest_obj))->SetState(BILL_STATE_DYING_RIGHT);
 }

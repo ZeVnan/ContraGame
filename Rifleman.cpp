@@ -1,14 +1,15 @@
 #include "Rifleman.h"
+#include "Bill.h"
 extern int score;
+extern CBill* bill;
 Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	isShooting = false;
-	isHiding = false;
-	isActivated = false;
+	isHiding = true;
 	gunx = x;
 	guny = y;
 	ny = 0;
 	nx = -1;
-	this->state = RIFLEMAN_STATE_NORMAL;
+	this->state = RIFLEMAN_STATE_HIDE;
 	timeleft = 0;
 	waveLeft = 1;
 }
@@ -19,13 +20,20 @@ void Rifleman::WatchBill() {
 	bill->GetPosition(x, y);
 
 	float distance_to_Bill = sqrt((this->x - x) * (this->x - x) + (this->y - y) * (this->y - y));
-	if (distance_to_Bill <= RIFLEMAN_ACTIVE_RADIUS) {
-		isShooting = true;
-		isActivated = true;
+	if (isHiding == true) {
+		if (distance_to_Bill <= RIFLEMAN_ACTIVE_RADIUS) {
+			SetState(RIFLEMAN_STATE_EXPOSE);
+		}
 	}
+	else {
+		if (distance_to_Bill > RIFLEMAN_ACTIVE_RADIUS) {
+			SetState(RIFLEMAN_STATE_HIDE);
+		}
+	}
+	
 
 	float tan = abs(this->y - y) / abs(this->x - x);// get angle's tan value
-	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
+	float degree = atan(tan) * 180.0f / 3.14159f;// transfer to angle degree
 	float checking_degree = 0;// from 0 to 360 base on fourth part of degree's circle COMPARE TO Ox
 
 	// calculate checking_degree
@@ -50,31 +58,37 @@ void Rifleman::WatchBill() {
 		// 0 +-15
 		ny = 0;
 		nx = 1;
+		angle = 0;
 	}
 	if (checking_degree >= 165 && checking_degree <= 195) {
 		//180 +- 15
 		ny = 0;
 		nx = -1;
+		angle = 180;
 	}
 	if (checking_degree >= 210 && checking_degree <= 240) {
 		//225 +- 15
 		ny = -1;
 		nx = -1;
+		angle = 225;
 	}
 	if (checking_degree >= 120 && checking_degree <= 150) {
 		//135 +- 15
 		ny = 1;
 		nx = -1;
+		angle = 135;
 	}
 	if (checking_degree >= 30 && checking_degree <= 60) {
 		//45 +- 15
 		ny = 1;
 		nx = 1;
+		angle = 45;
 	}
 	if (checking_degree >= 300 && checking_degree <= 330) {
 		//315 +- 15
 		ny = -1;
 		nx = 1;
+		angle = 315;
 	}
 	//DebugOutTitle(L"c_degree = %f", checking_degree);
 }
@@ -134,36 +148,17 @@ void Rifleman::Render() {
 	}
 	animations->Get(ani)->Render(x, y);
 	RenderBullet();
+	//RenderBox();
 }
 void Rifleman::SetState(int state) {
 	switch (state) {
-	case RIFLEMAN_STATE_NORMAL:
-		ny = 0;
-		break;
-	case RIFLEMAN_STATE_LEFT:
-		nx = -1;
-		break;
-	case RIFLEMAN_STATE_RIGHT:
-		nx = 1;
-		break;
-	case RIFLEMAN_STATE_UP:
-		ny = 1;
-		break;
-	case RIFLEMAN_STATE_DOWN:
-		ny = -1;
-		break;
-	case RIFLEMAN_STATE_HIDING:
+	case RIFLEMAN_STATE_HIDE:
 		isShooting = false;
 		isHiding = true;
 		break;
-	case RIFLEMAN_STATE_SHOOT:
-		isShooting = true;
-		break;
-	case RIFLEMAN_STATE_SHOOT_RELEASE:
-		isShooting = true;
-		break;
 	case RIFLEMAN_STATE_EXPOSE:
 		isHiding = false;
+		isShooting = true;
 		break;
 	case RIFLEMAN_STATE_EXPLODE:
 		isShooting = false;
@@ -175,57 +170,27 @@ void Rifleman::SetState(int state) {
 	}
 	CGameObject::SetState(state);
 }
-
-int Rifleman::CalculateAngle() {
-	if (nx == 1) {
-		if (ny == 1)
-			return 45;
-		if (ny == -1)
-			return 315;
-		if (ny == 0)
-			return 0;
-	}
-	else {
-		if (ny == 1)
-			return 135;
-		if (ny == -1)
-			return 225;
-		if (ny == 0)
-			return 180;
-	}
-}
-vector<LPBULLET> Rifleman::ShootNormalBullet(int angle) {
+LPBULLET Rifleman::ShootNormalBullet(float angle) {
 	LPBULLETN bulletN = new CBulletN(x, y, angle, false);
-	vector<LPBULLET> temp;
-	temp.push_back(bulletN);
-	return temp;
+	return bulletN;
 }
 void Rifleman::AddBullet() {
-	waveContainer.push_back(ShootNormalBullet(CalculateAngle()));
+	bullets.push_back(ShootNormalBullet(angle));
 }
 void Rifleman::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	for (int i = 0; i < waveContainer.size(); i++) {
-		if (waveContainer[i].size() > 0) {
-			for (int j = 0; j < waveContainer[i].size(); j++) {
-				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
-					delete waveContainer[i][j];
-					waveContainer[i].erase(waveContainer[i].begin() + j);
-				}
-				else
-					waveContainer[i][j]->Update(dt, coObjects);
-			}
+	for (int i = 0; i < bullets.size(); i++) {
+		if (bullets[i]->outOfScreen() || bullets[i]->IsDeleted()) {
+			delete bullets[i];
+			bullets.erase(bullets.begin() + i);
 		}
-		if (waveContainer[i].size() == 0) {
-			waveContainer.erase(waveContainer.begin() + i);
-			waveLeft++;
+		else {
+			bullets[i]->Update(dt, coObjects);
 		}
 	}
 }
 void Rifleman::RenderBullet() {
-	for (int i = 0; i < waveContainer.size(); i++) {
-		for (int j = 0; j < waveContainer[i].size(); j++) {
-			waveContainer[i][j]->Render();
-		}
+	for (int i = 0; i < bullets.size(); i++) {
+		bullets[i]->Render();
 	}
 }
 
@@ -237,8 +202,6 @@ void Rifleman::CreateBox(DWORD dt)
 		bbox.top = y + RIFLEMAN_BOX_HIDE_HEIGHT / 2;
 		bbox.right = x + RIFLEMAN_BOX_HIDE_WIDTH / 2;
 		bbox.bottom = y - RIFLEMAN_BOX_HIDE_HEIGHT / 2;
-		bbox.vpf_x = vx * dt;
-		bbox.vpf_y = vy * dt;
 	}
 	else
 	{
@@ -246,9 +209,9 @@ void Rifleman::CreateBox(DWORD dt)
 		bbox.top = y + RIFLEMAN_BOX_NORMAL_HEIGHT / 2;
 		bbox.right = x + RIFLEMAN_BOX_NORMAL_WIDTH / 2;
 		bbox.bottom = y - RIFLEMAN_BOX_NORMAL_HEIGHT / 2;
-		bbox.vpf_x = vx * dt;
-		bbox.vpf_y = vy * dt;
 	}
+	bbox.vpf_x = vx * dt;
+	bbox.vpf_y = vy * dt;
 }
 void Rifleman::NoCollision(DWORD dt)
 {

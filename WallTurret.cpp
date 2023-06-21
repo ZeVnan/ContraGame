@@ -35,7 +35,7 @@ void CWallTurret::watchBill() {
 	}
 
 	float tan = abs(this->y - y) / abs(this->x - x);// get angle's tan value
-	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
+	float degree = atan(tan) * 180.0f / 3.14159f;// transfer to angle degree
 	float checking_degree = 0;// from 0 to 360 base on fourth part of degree's circle COMPARE TO Ox
 
 	// calculate checking_degree
@@ -199,74 +199,53 @@ int CWallTurret::CalculateAngle() {
 	switch (this->state) {
 	case WTURRET_STATE_LEFT30:
 		return 120;
-		break;
 	case WTURRET_STATE_LEFT60:
 		return 150;
-		break;
 	case WTURRET_STATE_LEFT90:
 		return 180;
-		break;
 	case WTURRET_STATE_LEFT120:
 		return 210;
-		break;
 	case WTURRET_STATE_LEFT150:
 		return 240;
-		break;
 	case WTURRET_STATE_DOWN:
 		return 270;
-		break;
 	case WTURRET_STATE_RIGHT150:
 		return 300;
-		break;
 	case WTURRET_STATE_RIGHT120:
 		return 330;
-		break;
 	case WTURRET_STATE_RIGHT90:
 		return 0;
-		break;
 	case WTURRET_STATE_RIGHT60:
 		return 30;
-		break;
 	case WTURRET_STATE_RIGHT30:
 		return 60;
-		break;
 	case WTURRET_STATE_UP:
 		return 90;
-		break;
+	default:
+		return 0;
 	}
 }
-vector<LPBULLET> CWallTurret::ShootNormalBullet(int angle) {
+LPBULLET CWallTurret::ShootNormalBullet(float angle) {
 	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, false);
-	vector<LPBULLET> temp;
-	temp.push_back(bulletN);
-	return temp;
+	return bulletN;
 }
 void CWallTurret::AddBullet() {
-	waveContainer.push_back(ShootNormalBullet(CalculateAngle()));
+	bullets.push_back(ShootNormalBullet((float)CalculateAngle()));
 }
 void CWallTurret::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	for (int i = 0; i < waveContainer.size(); i++) {
-		if (waveContainer[i].size() > 0) {
-			for (int j = 0; j < waveContainer[i].size(); j++) {
-				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
-					delete waveContainer[i][j];
-					waveContainer[i].erase(waveContainer[i].begin() + j);
-				}
-				else
-					waveContainer[i][j]->Update(dt, coObjects);
-			}
+	for (int i = 0; i < bullets.size(); i++) {
+		if (bullets[i]->outOfScreen() || bullets[i]->IsDeleted()) {
+			delete bullets[i];
+			bullets.erase(bullets.begin() + i);
 		}
-		if (waveContainer[i].size() == 0) {
-			waveContainer.erase(waveContainer.begin() + i);
-			waveLeft++;
+		else {
+			bullets[i]->Update(dt, coObjects);
 		}
 	}
 }
 void CWallTurret::RenderBullet() {
-	for (int i = 0; i < waveContainer.size(); i++) {
-		for (int j = 0; j < waveContainer[i].size(); j++) {
-			waveContainer[i][j]->Render();
-		}
+	for (int i = 0; i < bullets.size(); i++) {
+		bullets[i]->Render();
 	}
 }
 

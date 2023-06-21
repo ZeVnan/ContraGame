@@ -23,9 +23,7 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 
 	void CreateBox(DWORD dt);
-	void NoCollision(DWORD dt);
-	void CollisionWith(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
 	bool isCollidable() { return !isExploded; }
 };
-
+typedef CFire* LPFIRE;

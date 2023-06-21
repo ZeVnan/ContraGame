@@ -563,7 +563,7 @@ void CreateRiflemanAni(CTextures*& textures, CSprites*& sprites, CAnimations*& a
 	//aim_down-right
 	sprites->Add(15041, sprites->Get(15040));
 	//hide-left
-	sprites->Add(15050, 118, 0, 125, 38, riflemanTex);
+	sprites->Add(15050, 118, 32, 125, 38, riflemanTex);
 	//hide-right
 	sprites->Add(15051, sprites->Get(15050));
 	//expose-left

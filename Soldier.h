@@ -5,17 +5,12 @@
 #include "debug.h"
 
 #include "BulletN.h"
-#include "Grass.h"
-#include "TriggerBox.h"
-#include "Water.h"
-#include "BridgePart.h"
-#include "Bridge.h"
 
 
 #define SOLDIER_RUN_SPEED 0.1f
 #define SOLDIER_JUMP_SPEED_Y 0.4f
 #define SOLDIER_GRAVITY -0.00075f
-#define SOLDIER_ACTIVE_RADIUS 400
+#define SOLDIER_ACTIVE_RADIUS 600
 
 #define SOLDIER_START_X 20.0f
 #define SOLDIER_START_Y 10.0f
@@ -59,10 +54,10 @@
 class CSoldier: public CGameObject
 {
 private:
-	BOOLEAN isLaying;
-	BOOLEAN isShooting;
-	BOOLEAN isOnPlatform;
-	BOOLEAN isJumping;
+	bool isLaying;
+	bool isShooting;
+	bool isOnPlatform;
+	bool isJumping;
 	bool isActivated;
 	bool isDropping;
 	float gunx;
@@ -87,6 +82,7 @@ public:
 	void CollisionWithWater(LPCOLLISIONEVENT e);
 	void CollisionWithTriggerBox(LPCOLLISIONEVENT e);
 	void CollisionWithBridge(LPCOLLISIONEVENT e);
+	void CollisionWithRockFly(LPCOLLISIONEVENT e);
 
 	bool isBlocking() { return false; }
 	bool isCollidable() { return !isExploded; }

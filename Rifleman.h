@@ -7,32 +7,15 @@
 
 #include "debug.h"
 
-#include "Bill.h"
-
-extern CBill* bill;
-
-
 #define RIFLEMAN_START_X 180.0f
 #define RIFLEMAN_START_Y 10.0f
-#define RIFLEMAN_ACTIVE_RADIUS 300
+#define RIFLEMAN_ACTIVE_RADIUS 250
 
 #pragma region
-#define RIFLEMAN_STATE_LEFT 0
-#define RIFLEMAN_STATE_RIGHT 1
+#define RIFLEMAN_STATE_EXPOSE 0
+#define RIFLEMAN_STATE_HIDE 1
 
-#define RIFLEMAN_STATE_UP 10
-#define RIFLEMAN_STATE_DOWN 11
-#define RIFLEMAN_STATE_NORMAL 12
-
-#define RIFLEMAN_STATE_HIDING 20
-
-#define RIFLEMAN_STATE_SHOOT 30
-#define RIFLEMAN_STATE_SHOOT_RELEASE 31
-
-#define RIFLEMAN_STATE_EXPOSE 40
-#define RIFLEMAN_STATE_REHIDE 41
-
-#define RIFLEMAN_STATE_EXPLODE 50
+#define RIFLEMAN_STATE_EXPLODE 10
 
 #pragma region
 #define RIFLEMAN_ANI_NORMAL_LEFT 15000
@@ -69,15 +52,15 @@ extern CBill* bill;
 class Rifleman : public CGameObject
 {
 private:
-	BOOLEAN isShooting;
-	BOOLEAN isHiding;
-	BOOLEAN isActivated;
-	vector<vector<LPBULLET>> waveContainer;
+	bool isShooting;
+	bool isHiding;
+	vector<LPBULLET> bullets;
 	float gunx;
 	float guny;
 	int ny; // down - -1, normal - 0, up - 1
 	float timeleft;
 	int waveLeft;
+	float angle;
 public:
 	Rifleman(float x, float y);
 	void WatchBill();
@@ -91,9 +74,9 @@ public:
 	void CollisionWith(LPCOLLISIONEVENT e);
 	bool isBlocking() { return false; }
 	bool isCollidable() { return !isExploded; }
+	bool IsHiding() { return isHiding; }
 
-	int CalculateAngle();
-	vector<LPBULLET> ShootNormalBullet(int angle);
+	LPBULLET ShootNormalBullet(float angle);
 	void AddBullet();
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();

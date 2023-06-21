@@ -18,7 +18,7 @@ void CRockFly::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		
 	}
 	else {
-		turn = ~turn;
+		turn = !turn;
 		timeLeft = ROCKFLY_FLY_TIME;
 	}
 }

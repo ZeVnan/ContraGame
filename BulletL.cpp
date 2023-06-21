@@ -1,6 +1,6 @@
 #include "BulletL.h"
 
-CBulletL::CBulletL(float x, float y, int angle, int turn, bool friendly) : CBullet::CBullet(x, y, angle, friendly) {
+CBulletL::CBulletL(float x, float y, float angle, int turn, bool friendly) : CBullet::CBullet(x, y, angle, friendly) {
 	type = BULLET_ANI_LASER;
 	waitTime = turn * BULLET_L_WAITTIME;
 	this->angle = angle;
@@ -20,7 +20,7 @@ void CBulletL::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 void CBulletL::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
-	switch (angle) {
+	switch ((int)angle) {
 	case 45:
 		aniId = BULLET_ANI_LASER_45;
 		break;

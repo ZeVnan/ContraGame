@@ -15,9 +15,9 @@ class CBulletL:public CBullet
 {
 private:
 	int waitTime;
-	int angle;
+	float angle;
 public:
-	CBulletL(float x, float y, int angle, int turn, bool friendly);
+	CBulletL(float x, float y, float angle, int turn, bool friendly);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void Render();
 	void CreateBox(DWORD dt);

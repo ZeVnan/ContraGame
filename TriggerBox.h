@@ -8,7 +8,7 @@
 class TriggerBox : public CGameObject
 {
 private:
-	int type;// 1-nhảy 2-bắn 3-nằm
+	int type;// 1-jump 2-drop 3-shoot
 
 
 public:

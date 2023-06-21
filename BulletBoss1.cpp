@@ -1,5 +1,5 @@
 #include "BulletBoss1.h"
-CBulletBoss1::CBulletBoss1(float x, float y, int angle, bool friendly) :CBullet::CBullet(x, y, angle, friendly) {
+CBulletBoss1::CBulletBoss1(float x, float y, float angle, bool friendly) :CBullet::CBullet(x, y, angle, friendly) {
 	this->type = BULLET_ANI_BOSS1;
 	this->damage = 10;
 	ay = BULLET_BOSS1_GRAVITY;

@@ -1,8 +1,8 @@
 #include "BulletF.h"
 
-CBulletF::CBulletF(float x, float y, int angle, bool friendly) : CBullet::CBullet(x, y, angle, friendly) {
+CBulletF::CBulletF(float x, float y, float angle, bool friendly) : CBullet::CBullet(x, y, angle, friendly) {
 	type = BULLET_ANI_FLAME;
-	parameter = 2 * BULLET_F_RADIUS * 3.14159;
+	parameter = 2 * BULLET_F_RADIUS * 3.14159f;
 	vr = BULLET_F_SPEED_R;
 	degree = 0;
 	centerx = x;
@@ -18,7 +18,7 @@ void CBulletF::NoCollision(DWORD dt) {
 	degree += (vr * dt) / parameter * 360;
 	if (degree >= 360)
 		degree -= 360;
-	float rad = 3.14159 / 180 * degree; 
+	float rad = 3.14159f / 180 * degree; 
 	centerx += vx * dt;
 	centery += vy * dt;
 	x = centerx + cos(rad) * BULLET_F_RADIUS;
@@ -29,8 +29,8 @@ void CBulletF::CreateBox(DWORD dt) {
 	bbox.top = y + BULLET_F_BOX_HEIGHT / 2;
 	bbox.right = x + BULLET_F_BOX_WIDTH / 2;
 	bbox.bottom = y - BULLET_F_BOX_HEIGHT / 2;
-	int vr_degree = degree + 90;
-	float vr_rad = 3.14159 / 180 * vr_degree;
+	float vr_degree = degree + 90.0f;
+	float vr_rad = 3.14159f / 180 * vr_degree;
 	bbox.vpf_x = (cos(vr_rad) * vr + vx) * dt;
 	bbox.vpf_y = (sin(vr_rad) * vr + vy) * dt;
 }

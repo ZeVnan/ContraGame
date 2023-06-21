@@ -19,16 +19,16 @@ CBullet::CBullet() {
 	friendly = true;
 	damage = 0;
 }
-CBullet::CBullet(float x, float y, int angle, bool friendly) : CBullet() {
+CBullet::CBullet(float x, float y, float angle, bool friendly) : CBullet() {
 	this->x = x;
 	this->y = y;
 	this->friendly = friendly;
-	float radian = 3.14159 / 180 * angle;
+	float radian = 3.14159f / 180 * angle;
 
 	maxVx = cos(radian) * BULLET_SPEED;
 	maxVy = sin(radian) * BULLET_SPEED;
 }
-BOOLEAN CBullet::outOfScreen() {
+bool CBullet::outOfScreen() {
 	float cx, cy, cw, ch;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
 	cw = CGame::GetInstance()->GetCamera()->GetCamWidth();
@@ -48,6 +48,8 @@ void CBullet::NoCollision(DWORD dt) {
 	y += vy * dt;
 }
 void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
+	if (isDeleted == true)
+		return;
 	if (dynamic_cast<LPWALLTURRET>(e->dest_obj)) {
 		CollisionWithWallTurret(e);
 		return;
@@ -160,7 +162,8 @@ void CBullet::CollisionWithBoss3Arm(LPCOLLISIONEVENT e) {
 }
 //human collision
 void CBullet::CollisionWithRifleman(LPCOLLISIONEVENT e) {
-	if (friendly == false || (LPRIFLEMAN(e->dest_obj))->isCollidable() == false)
+	if (friendly == false || (LPRIFLEMAN(e->dest_obj))->isCollidable() == false
+		|| (LPRIFLEMAN(e->dest_obj))->IsHiding() == true)
 		return;
 	(LPRIFLEMAN(e->dest_obj))->SetState(RIFLEMAN_STATE_EXPLODE);
 	e->src_obj->Delete();
@@ -174,7 +177,7 @@ void CBullet::CollisionWithScubaSoldier(LPCOLLISIONEVENT e) {
 }
 
 void CBullet::CollisionWithSoldier(LPCOLLISIONEVENT e) {
-	if (friendly == false || (LPSOLDIER(e->dest_obj))->isCollidable() == false)
+	if (friendly == false || (LPSOLDIER(e->dest_obj))->isCollidable() == false) 
 		return;
 	(LPSOLDIER(e->dest_obj))->SetState(SOLDIER_STATE_EXPLODE);
 	e->src_obj->Delete();
@@ -183,7 +186,8 @@ void CBullet::CollisionWithBill(LPCOLLISIONEVENT e) {
 	if (friendly == true ||
 		(LPBILL(e->dest_obj))->IsDiving() == true ||
 		(LPBILL(e->dest_obj))->IsVulnerable() == false||
-		(LPBILL(e->dest_obj))->IsDead() == true)
+		(LPBILL(e->dest_obj))->IsDead() == true ||
+		(LPBILL(e->dest_obj))->IsDying() == true)
 		return;
 	e->src_obj->Delete();
 	if (e->normal_x != 0) {

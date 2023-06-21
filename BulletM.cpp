@@ -1,5 +1,5 @@
 #include "BulletM.h"
-CBulletM::CBulletM(float x, float y, int angle, bool friendly) :CBullet::CBullet(x, y, angle, friendly) {
+CBulletM::CBulletM(float x, float y, float angle, bool friendly) :CBullet::CBullet(x, y, angle, friendly) {
 	this->type = BULLET_ANI_MACHINE;
 	damage = 15;
 	vx = maxVx;

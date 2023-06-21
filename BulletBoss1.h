@@ -9,7 +9,7 @@ class CBulletBoss1 :public CBullet {
 private:
 	float ay;
 public:
-	CBulletBoss1(float x, float y, int angle, bool friendly);
+	CBulletBoss1(float x, float y, float angle, bool friendly);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void CreateBox(DWORD dt);
 

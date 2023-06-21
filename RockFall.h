@@ -20,7 +20,7 @@
 class CRockFall : public CGameObject
 {
 private:
-	BOOLEAN isActivated;
+	bool isActivated;
 	bool turn;
 public:
 	CRockFall(float x, float y);
@@ -28,7 +28,7 @@ public:
 	void Render();
 	void SetState(int state);
 	
-	BOOLEAN outOfScreen();
+	bool outOfScreen();
 	void watchBill();
 
 	void CreateBox(DWORD dt);
@@ -37,6 +37,5 @@ public:
 	bool isCollidable() { return true; }
 	void CollisionWith(LPCOLLISIONEVENT e);
 	void CollisionWithGrass(LPCOLLISIONEVENT e);
-	void CollisionWithBill(LPCOLLISIONEVENT e);
 };
 typedef CRockFall* LPROCKFALL;

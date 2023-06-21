@@ -15,7 +15,7 @@
 class CRockFly :public CGameObject
 {
 private:
-	BOOLEAN turn;
+	bool turn;
 	int timeLeft;
 public:
 	CRockFly(float x, float y);

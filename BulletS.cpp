@@ -1,5 +1,5 @@
 #include "BulletS.h"
-CBulletS::CBulletS(float x, float y, int angle, bool friendly):CBullet(x, y, angle, friendly) {
+CBulletS::CBulletS(float x, float y, float angle, bool friendly):CBullet(x, y, angle, friendly) {
 	this->type = BULLET_ANI_SPREAD;
 	damage = 15;
 	vx = maxVx;

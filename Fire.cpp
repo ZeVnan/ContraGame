@@ -33,12 +33,3 @@ void CFire::CreateBox(DWORD dt) {
 	bbox.vpf_x = vx * dt;
 	bbox.vpf_y = 0;
 }
-void CFire::NoCollision(DWORD dt) {
-	x += vx * dt;
-	y += 0;
-}
-void CFire::CollisionWith(LPCOLLISIONEVENT e) {
-
-	//kill Bill
-
-}
