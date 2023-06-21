@@ -60,7 +60,7 @@ void LoadResources() {
 
 	LoadScreenResources(textures, sprites);
 
-	gameControl = waiting3;
+	gameControl = intro;
 	option = option1;
 	ifstream ofs;
 	ofs.open(HIGHSCORE_PATH);

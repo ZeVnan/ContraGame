@@ -63,7 +63,7 @@ private:
 	bool isClosing;
 	bool isShooting;
 	int HP;
-	vector<vector<LPBULLET>> waveContainer;
+	vector<LPBULLET> bullets;
 	float gunx;
 	float guny;	
 	int timeLeft;
@@ -89,7 +89,7 @@ public:
 	}
 
 	int CalculateAngle();
-	vector<LPBULLET> ShootNormalBullet(float angle);
+	LPBULLET ShootNormalBullet(float angle);
 	void AddBullet();
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();

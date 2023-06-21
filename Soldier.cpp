@@ -18,6 +18,7 @@ CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	gunx = x;
 	guny = y;
 	timeleft = 0;
+	nx = -1;
 }
 
 void CSoldier::watchBill() {
@@ -42,12 +43,13 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		timeleft -= dt;
 	}
 	if (this->isExploded == true) {
-		if (this->timeleft < 0)
+		if (this->timeleft <= 0) {
 			isDeleted = true;
 			return;
+		}	
 	}
 	else {
-		if (isShooting == true && timeleft < 0) {
+		if (isShooting == true && timeleft <= 0) {
 			SetState(SOLDIER_STATE_SHOOT_RELEASE);
 			if (nx > 0)
 				SetState(SOLDIER_STATE_RUN_RIGHT);
@@ -124,7 +126,6 @@ void CSoldier::SetState(int State) {
 		}
 		break;
 	case SOLDIER_STATE_RUN_LEFT:
-		isOnPlatform = true;
 		vx = -SOLDIER_RUN_SPEED;
 		nx = -1;
 		if (isLaying == true) {
@@ -142,8 +143,7 @@ void CSoldier::SetState(int State) {
 	case SOLDIER_STATE_SHOOT:
 		isShooting = true;
 		vx = 0;
-		timeleft = 1000;
-		AddBullet();
+		timeleft = 500;
 		break;
 	case SOLDIER_STATE_SHOOT_RELEASE:
 		isShooting = false;
@@ -248,6 +248,7 @@ void CSoldier::CollisionWithTriggerBox(LPCOLLISIONEVENT e) {
 	}
 	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 2) {
 		this->SetState(SOLDIER_STATE_SHOOT);
+		AddBullet();
 	}
 	else if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 3) {
 		this->SetState(SOLDIER_STATE_DROP);

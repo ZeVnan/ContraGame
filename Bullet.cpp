@@ -48,6 +48,8 @@ void CBullet::NoCollision(DWORD dt) {
 	y += vy * dt;
 }
 void CBullet::CollisionWith(LPCOLLISIONEVENT e) {
+	if (isDeleted == true)
+		return;
 	if (dynamic_cast<LPWALLTURRET>(e->dest_obj)) {
 		CollisionWithWallTurret(e);
 		return;
@@ -160,7 +162,8 @@ void CBullet::CollisionWithBoss3Arm(LPCOLLISIONEVENT e) {
 }
 //human collision
 void CBullet::CollisionWithRifleman(LPCOLLISIONEVENT e) {
-	if (friendly == false || (LPRIFLEMAN(e->dest_obj))->isCollidable() == false)
+	if (friendly == false || (LPRIFLEMAN(e->dest_obj))->isCollidable() == false
+		|| (LPRIFLEMAN(e->dest_obj))->IsHiding() == true)
 		return;
 	(LPRIFLEMAN(e->dest_obj))->SetState(RIFLEMAN_STATE_EXPLODE);
 	e->src_obj->Delete();
@@ -174,7 +177,7 @@ void CBullet::CollisionWithScubaSoldier(LPCOLLISIONEVENT e) {
 }
 
 void CBullet::CollisionWithSoldier(LPCOLLISIONEVENT e) {
-	if (friendly == false || (LPSOLDIER(e->dest_obj))->isCollidable() == false)
+	if (friendly == false || (LPSOLDIER(e->dest_obj))->isCollidable() == false) 
 		return;
 	(LPSOLDIER(e->dest_obj))->SetState(SOLDIER_STATE_EXPLODE);
 	e->src_obj->Delete();

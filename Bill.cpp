@@ -191,7 +191,7 @@ void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
 	RenderBullet();
-	RenderBox();
+	//RenderBox();
 	//render life
 	float cx, cy, cw, ch;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
@@ -1126,8 +1126,9 @@ void CBill::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 					delete waveContainer[i][j];
 					waveContainer[i].erase(waveContainer[i].begin() + j);
 				}
-				else
+				else {
 					waveContainer[i][j]->Update(dt, coObjects);
+				}
 			}
 		}
 		if (waveContainer[i].size() == 0) {

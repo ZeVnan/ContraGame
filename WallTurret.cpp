@@ -225,37 +225,27 @@ int CWallTurret::CalculateAngle() {
 		return 0;
 	}
 }
-vector<LPBULLET> CWallTurret::ShootNormalBullet(float angle) {
+LPBULLET CWallTurret::ShootNormalBullet(float angle) {
 	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, false);
-	vector<LPBULLET> temp;
-	temp.push_back(bulletN);
-	return temp;
+	return bulletN;
 }
 void CWallTurret::AddBullet() {
-	waveContainer.push_back(ShootNormalBullet((float)CalculateAngle()));
+	bullets.push_back(ShootNormalBullet((float)CalculateAngle()));
 }
 void CWallTurret::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	for (int i = 0; i < waveContainer.size(); i++) {
-		if (waveContainer[i].size() > 0) {
-			for (int j = 0; j < waveContainer[i].size(); j++) {
-				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
-					delete waveContainer[i][j];
-					waveContainer[i].erase(waveContainer[i].begin() + j);
-				}
-				else
-					waveContainer[i][j]->Update(dt, coObjects);
-			}
+	for (int i = 0; i < bullets.size(); i++) {
+		if (bullets[i]->outOfScreen() || bullets[i]->IsDeleted()) {
+			delete bullets[i];
+			bullets.erase(bullets.begin() + i);
 		}
-		if (waveContainer[i].size() == 0) {
-			waveContainer.erase(waveContainer.begin() + i);
+		else {
+			bullets[i]->Update(dt, coObjects);
 		}
 	}
 }
 void CWallTurret::RenderBullet() {
-	for (int i = 0; i < waveContainer.size(); i++) {
-		for (int j = 0; j < waveContainer[i].size(); j++) {
-			waveContainer[i][j]->Render();
-		}
+	for (int i = 0; i < bullets.size(); i++) {
+		bullets[i]->Render();
 	}
 }
 

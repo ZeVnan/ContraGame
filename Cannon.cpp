@@ -18,12 +18,12 @@ void CCannon::WatchBill() {
 	bill->GetPosition(Bill_x, Bill_y);
 	float distance = sqrt((this->x - Bill_x) * (this->x - Bill_x) + (this->y - Bill_y) * (this->y - Bill_y));
 	if (isActivated == true) {
-		if (distance > CANNON_ACTIVE_RADIUS  || this->x < Bill_x) {
+		if (distance > CANNON_ACTIVE_RADIUS  || this->x < Bill_x || this->y > Bill_y) {
 			isActivated = false;
 		}
 	}
 	else {
-		if (distance < CANNON_ACTIVE_RADIUS && this->x >= Bill_x) {
+		if (distance < CANNON_ACTIVE_RADIUS && this->x >= Bill_x && this->y <= Bill_y) {
 			isActivated = true;
 		}
 	}
@@ -88,23 +88,24 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 	else {
 		isShooting = false;
-		//return;
 	}
 	if (timeLeft > 0) {
 		timeLeft -= dt;
 	}
 	else {
 		if (waveLeft > 0) {
-			timeLeft = CANNON_SHOOT_TIME;
+			timeLeft = CANNON_SHOOT_TIME; 
+			waveLeft--;
+			AddBullet();
 		}
 		else {
 			timeLeft = CANNON_RELOAD_TIME;
 			waveLeft = CANNON_WAVE_BULLET;
 		}
-		waveLeft--;
-		AddBullet();
 	}
+	CCollision::GetInstance()->Process(this, coObjects, dt);
 	UpdateBullet(dt, coObjects);
+	DebugOutTitle(L"timeLeft = %d", timeLeft);
 }
 
 void CCannon::Render() {
@@ -190,66 +191,42 @@ void CCannon::CollisionWith(LPCOLLISIONEVENT e) {
 
 }
 
-vector<LPBULLET> CCannon::ShootNormalBullet(float angle) {
+LPBULLET CCannon::ShootNormalBullet(float angle) {
 	LPBULLETN bulletN;
-	vector<LPBULLET> temp;
 	bulletN = new CBulletN(x, y, angle, false);
-	temp.push_back(bulletN);
-	return temp;
+	return bulletN;
 }
 
 void CCannon::AddBullet() {
-	int timeleft = 0;
-	if (waveLeft > 0) {
-		if (this->state == CANNON_STATE_180 && isShooting == true) {
-			waveContainer.push_back(ShootNormalBullet(180));
+	if (isShooting == true) {
+		if (this->state == CANNON_STATE_180) {
+			bullets.push_back(ShootNormalBullet(180));
 		}
-		else if (this->state == CANNON_STATE_150 && isShooting == true) {
-			waveContainer.push_back(ShootNormalBullet(150));
+		else if (this->state == CANNON_STATE_150) {
+			bullets.push_back(ShootNormalBullet(150));
 		}
-		else if (this->state == CANNON_STATE_120 && isShooting == true) {
-			waveContainer.push_back(ShootNormalBullet(120));
-		}
-		else {
-			return;
+		else if (this->state == CANNON_STATE_120) {
+			bullets.push_back(ShootNormalBullet(120));
 		}
 	}
-	else {
-		waveLeft = CANNON_WAVE_BULLET;
-	}
-	if (isShooting) {
-		waveLeft--;
-	}
-	//isShooting = false;
 }
 
 void CCannon::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	for (int i = 0; i < waveContainer.size(); i++) {
-		if (waveContainer[i].size() > 0) {
-			for (int j = 0; j < waveContainer[i].size(); j++) {
-				if (waveContainer[i][j]->outOfScreen() || waveContainer[i][j]->IsDeleted()) {
-					delete waveContainer[i][j];
-					waveContainer[i].erase(waveContainer[i].begin() + j);
-				}
-				else
-					waveContainer[i][j]->Update(dt, coObjects);
-			}
+	for (int i = 0; i < (int)bullets.size(); i++) {
+		if (bullets[i]->outOfScreen() || bullets[i]->IsDeleted()) {
+			delete bullets[i];
+			bullets.erase(bullets.begin() + i);
 		}
-		if (waveContainer[i].size() == 0) {
-			waveContainer.erase(waveContainer.begin() + i);
-			waveLeft++;
+		else {
+			bullets[i]->Update(dt, coObjects);
 		}
 	}
-	//waveContainer.push_back(ShootNormalBullet(180));
-	CCollision::GetInstance()->Process(this, coObjects, dt);
 }
 
 void CCannon::RenderBullet()
 {
-	for (int i = 0; i < waveContainer.size(); i++) {
-		for (int j = 0; j < waveContainer[i].size(); j++) {
-			waveContainer[i][j]->Render();
-		}
+	for (int i = 0; i < (int) bullets.size(); i++) {
+		bullets[i]->Render();
 	}
 }

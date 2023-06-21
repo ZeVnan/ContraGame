@@ -9,7 +9,7 @@
 #include "debug.h"
 #define CANNON_START_X 250
 #define CANNON_START_Y 150
-#define CANNON_ACTIVE_RADIUS 200
+#define CANNON_ACTIVE_RADIUS 250
 
 #define CANNON_APPEAR_TIME 600
 #define CANNON_RELOAD_TIME 2000
@@ -40,7 +40,7 @@ private:
 	bool isActivated;
 	int HP;
 
-	vector< vector<LPBULLET>>waveContainer;
+	vector<LPBULLET> bullets;
 	int waveLeft = CANNON_WAVE_BULLET;
 	int timeLeft;
 public:
@@ -64,7 +64,7 @@ public:
 	void WatchBill();
 	int CalculateBillAngle();
 	void AddBullet();
-	vector<LPBULLET> ShootNormalBullet(float angle);
+	LPBULLET ShootNormalBullet(float angle);
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();
 };

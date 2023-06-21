@@ -40,6 +40,7 @@ enum eID
 	BOSS1GUN = 19,
 
 	RockFlyID = 21,
+	FireID = 25,
 	RockFallID = 26,
 	BOSS3MOUTH = 20,
 	BOSS3ARM = 22,
