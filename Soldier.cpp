@@ -15,6 +15,7 @@ CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 	isJumping = false;
 	isActivated = false;
 	isDropping = false;
+	isInScreenYet = false;
 	gunx = x;
 	guny = y;
 	timeleft = 0;
@@ -36,9 +37,24 @@ void CSoldier::watchBill() {
 	}
 }
 
+bool CSoldier::OutOfScreen() {
+	float cx, cy, cw, ch;
+	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
+	cw = CGame::GetInstance()->GetCamera()->GetCamWidth();
+	ch = CGame::GetInstance()->GetCamera()->GetCamHeight();
+	if (x < (cx - cw / 2) || x >(cx + cw / 2) || y < (cy - ch / 2))
+		return true;
+	isInScreenYet = true;
+	return false;
+}
+
 void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (isActivated == false)
 		watchBill();
+	if (OutOfScreen() == true && isActivated == true && isInScreenYet == true) {
+		isDeleted = true;
+		return;
+	}
 	if (timeleft > 0) {
 		timeleft -= dt;
 	}

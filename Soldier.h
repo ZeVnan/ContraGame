@@ -10,7 +10,7 @@
 #define SOLDIER_RUN_SPEED 0.1f
 #define SOLDIER_JUMP_SPEED_Y 0.4f
 #define SOLDIER_GRAVITY -0.00075f
-#define SOLDIER_ACTIVE_RADIUS 600
+#define SOLDIER_ACTIVE_RADIUS 400
 
 #define SOLDIER_START_X 20.0f
 #define SOLDIER_START_Y 10.0f
@@ -60,6 +60,7 @@ private:
 	bool isJumping;
 	bool isActivated;
 	bool isDropping;
+	bool isInScreenYet;
 	float gunx;
 	float guny;
 	vector<LPBULLET> bullets;
@@ -74,6 +75,7 @@ public:
 	void AddBullet();
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();
+	bool OutOfScreen();
 
 	void CreateBox(DWORD dt);
 	void NoCollision(DWORD dt);
