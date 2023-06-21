@@ -23,4 +23,4 @@ public:
 	bool isBlocking() { return false; }
 	bool isCollidable() { return !isExploded; }
 };
-
+typedef CFire* LPFIRE;

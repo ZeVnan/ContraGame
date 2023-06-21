@@ -38,10 +38,10 @@ protected:
 public:
 	int getType() { return type; }
 	CBullet();
-	CBullet(float x, float y, int angle, bool friendly);
+	CBullet(float x, float y, float angle, bool friendly);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) = 0;
 	void Render();
-	BOOLEAN outOfScreen();
+	bool outOfScreen();
 
 	bool isBlocking() {
 		return false;

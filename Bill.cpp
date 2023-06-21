@@ -10,6 +10,10 @@
 #include "Boss1Shield.h"
 #include "Boss3Mouth.h"
 #include "Soldier.h"
+#include "Rifleman.h"
+#include "ScubaSoldier.h"
+#include "RockFall.h"
+#include "Fire.h"
 
 #include "SampleKeyEventHandler.h"
 #include "Game.h"
@@ -40,6 +44,7 @@ CBill::CBill(float x, float y,  int stage) :CGameObject(x, y) {
 
 	bulletMtime = 0;
 	timeLeft = 0;
+	invulnerableTime = 0;
 	lifeLeft = 4;
 
 	if (stage == 1) {
@@ -132,10 +137,10 @@ void CBill::Die() {
 	if (isDead == true && timeLeft < 0) {
 		this->SetState(BILL_STATE_REVIVE);
 		isVulnerable = false;
-		timeLeft = 2000;
+		invulnerableTime = 3000;
 		return;
 	}
-	if (isVulnerable == false && timeLeft < 0) {
+	if (isVulnerable == false && invulnerableTime < 0) {
 		isVulnerable = true;
 	}
 }
@@ -174,6 +179,8 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 	//don't change the order of this function
 	if (timeLeft >= 0)
 		timeLeft -= dt;
+	if (invulnerableTime >= 0)
+		invulnerableTime -= dt;
 	Die();
 	UpdateBorder();
 	worldControl();
@@ -183,6 +190,8 @@ void CBill::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects){
 void CBill::Render(){
 	CAnimations* animations = CAnimations::GetInstance();
 	int ani = -1;
+	RenderBullet();
+	RenderBox();
 	//render life
 	float cx, cy, cw, ch;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
@@ -198,7 +207,7 @@ void CBill::Render(){
 		v.push_back(temp % 10);
 		temp /= 10;
 	}
-	for (int i = v.size() - 1; i >= 0; i--) {
+	for (int i = (int)v.size() - 1; i >= 0; i--) {
 		CSprites::GetInstance()->Get(v[i] + 30010)->Draw(cx + cw / 2 - 40 - i * 20, cy + ch / 2 - 20);
 	}
 	//render bill
@@ -404,8 +413,6 @@ void CBill::Render(){
 	else {
 		animations->Get(ani)->Render(x, y + d);
 	}
-	RenderBullet();
-	//RenderBox();
 }
 void CBill::SetState(int state) {
 	switch (state) {
@@ -582,11 +589,11 @@ void CBill::KeyDown(int KeyCode) {
 	case DIK_R:
 		if (isVulnerable == true) {
 			isVulnerable = false;
-			timeLeft = 100000;
+			invulnerableTime = 100000;
 		}
 		else {
 			isVulnerable = true;
-			timeLeft = 0;
+			invulnerableTime = 0;
 		}
 		break;
 	}
@@ -615,7 +622,7 @@ void CBill::KeyUp(int KeyCode) {
 void CBill::KeyState(CGame* game) {
 	if (isDying == true)
 		return;
-	BOOLEAN normal = true;
+	bool normal = true;
 	if (game->IsKeyDown(DIK_Z)) {
 		AddBullet(true);
 	}
@@ -707,11 +714,23 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	else if (dynamic_cast<LPBOSS3MOUTH>(e->dest_obj)) {
 		CollisionWithBoss3Mouth(e);
 	}
-	if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
+	else if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
 		CollisionWithRockFly(e);
 	}
-	if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
+	else if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
 		CollisionWithSoldier(e);
+	}
+	else if (dynamic_cast<LPROCKFALL>(e->dest_obj)) {
+		CollisionWithRockFall(e);
+	}
+	else if (dynamic_cast<LPRIFLEMAN>(e->dest_obj)) {
+		CollisionWithRockFall(e);
+	}
+	else if (dynamic_cast<LPSCUBA>(e->dest_obj)) {
+		CollisionWithRockFall(e);
+	}
+	else if (dynamic_cast<LPFIRE>(e->dest_obj)) {
+		CollisionWithRockFall(e);
 	}
 }
 //collision with terrain object
@@ -890,17 +909,56 @@ void CBill::CollisionWithFalcon(LPCOLLISIONEVENT e) {
 void CBill::CollisionWithSoldier(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<LPSOLDIER>(e->dest_obj)->IsExploded() == true)
 		return;
-	if (isVulnerable == false)
+	if (isVulnerable == false || isDying == true || isDead == true)
 		return;
 	if (e->normal_x > 0) {
-		this->SetState(BILL_STATE_DYING_RIGHT);
+		this->SetState(BILL_STATE_DYING_LEFT);
 	}
 	else {
+		this->SetState(BILL_STATE_DYING_RIGHT);
+	}
+}
+void CBill::CollisionWithRockFall(LPCOLLISIONEVENT e) {
+	if (isVulnerable == false || isDying == true || isDead == true)
+		return;
+	this->SetState(BILL_STATE_DYING_RIGHT);
+}
+void CBill::CollisionWithRifleman(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<LPRIFLEMAN>(e->dest_obj)->IsExploded() == true)
+		return;
+	if (isVulnerable == false || isDying == true || isDead == true)
+		return;
+	if (e->normal_x > 0) {
 		this->SetState(BILL_STATE_DYING_LEFT);
+	}
+	else {
+		this->SetState(BILL_STATE_DYING_RIGHT);
+	}
+}
+void CBill::CollisionWithScubaSoldier(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<LPSCUBA>(e->dest_obj)->IsExploded() == true)
+		return;
+	if (isVulnerable == false || isDying == true || isDead == true)
+		return;
+	if (e->normal_x > 0) {
+		this->SetState(BILL_STATE_DYING_LEFT);
+	}
+	else {
+		this->SetState(BILL_STATE_DYING_RIGHT);
+	}
+}
+void CBill::CollisionWithFire(LPCOLLISIONEVENT e) {
+	if (isVulnerable == false || isDying == true || isDead == true)
+		return;
+	if (e->normal_x > 0) {
+		this->SetState(BILL_STATE_DYING_LEFT);
+	}
+	else {
+		this->SetState(BILL_STATE_DYING_RIGHT);
 	}
 }
 
-int CBill::CalculateAngle() {
+float CBill::CalculateAngle() {
 	if (vx > 0) {
 		if (ny == 1)
 			return 45;
@@ -938,8 +996,9 @@ int CBill::CalculateAngle() {
 			}
 		}
 	}
+	return 0;
 }
-void CBill::AddBullet(BOOLEAN KeyState) {
+void CBill::AddBullet(bool KeyState) {
 	if (isDiving == true)
 		return;
 	if (KeyState == true) {
@@ -951,7 +1010,7 @@ void CBill::AddBullet(BOOLEAN KeyState) {
 	}
 	else {
 		if (waveLeft > 0) {
-			int fired = false;
+			bool fired = false;
 			switch (bulletType) {
 			case BULLET_ANI_SPREAD:
 				waveContainer.push_back(ShootSpreadBullet(CalculateAngle()));
@@ -989,7 +1048,7 @@ void CBill::AddBullet(BOOLEAN KeyState) {
 	}
 }
 
-vector<LPBULLET> CBill::ShootSpreadBullet(int angle) {
+vector<LPBULLET> CBill::ShootSpreadBullet(float angle) {
 	LPBULLETS bulletS;
 	vector<LPBULLET> temp;
 	bulletS = new CBulletS(gunx, guny, angle, true);
@@ -1004,7 +1063,7 @@ vector<LPBULLET> CBill::ShootSpreadBullet(int angle) {
 	temp.push_back(bulletS);
 	return temp;
 }
-vector<LPBULLET> CBill::ShootLaserBullet(int angle) {
+vector<LPBULLET> CBill::ShootLaserBullet(float angle) {
 	LPBULLETL bulletL;
 	vector<LPBULLET> temp;
 	bulletL = new CBulletL(gunx, guny, angle, 1, true);
@@ -1017,20 +1076,20 @@ vector<LPBULLET> CBill::ShootLaserBullet(int angle) {
 	temp.push_back(bulletL);
 	return temp;
 }
-vector<LPBULLET> CBill::ShootFlameBullet(int angle) {
+vector<LPBULLET> CBill::ShootFlameBullet(float angle) {
 	LPBULLETF bulletF;
 	vector<LPBULLET> temp;
 	bulletF = new CBulletF(gunx, guny, angle, true);
 	temp.push_back(bulletF);
 	return temp;
 }
-vector<LPBULLET> CBill::ShootNormalBullet(int angle) {
+vector<LPBULLET> CBill::ShootNormalBullet(float angle) {
 	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, true);
 	vector<LPBULLET> temp;
 	temp.push_back(bulletN);
 	return temp;
 }
-vector<LPBULLET> CBill::ShootMachineBullet(int angle) {
+vector<LPBULLET> CBill::ShootMachineBullet(float angle) {
 	LPBULLETM bulletM = new CBulletM(gunx, guny, angle, true);
 	vector <LPBULLET> temp;
 	temp.push_back(bulletM);
@@ -1056,7 +1115,7 @@ void CBill::SetBulletType(int type) {
 		break;
 	}
 	waveLeft += bonusWave;
-	waveLeft -= waveContainer.size();
+	waveLeft -= (int)waveContainer.size();
 	this->bulletType = type;
 }
 void CBill::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {

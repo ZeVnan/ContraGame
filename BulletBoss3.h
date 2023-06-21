@@ -5,7 +5,7 @@
 class CBulletBoss3 : public CBullet
 {
 public:
-	CBulletBoss3(float x, float y, int angle, bool friendly);
+	CBulletBoss3(float x, float y, float angle, bool friendly);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void CreateBox(DWORD dt);
 };

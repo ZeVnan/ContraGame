@@ -324,8 +324,8 @@ LPGAMEOBJECT CWorld::spawnGenerator(xml_node node) {
 	//stof: String TO Float
 	x = stof(properties["X"]);
 	y = stof(properties["Y"]);
-	type = stof(properties["type"]);
-	stage = stof(properties["stage"]);
+	type = stoi(properties["type"]);
+	stage = stoi(properties["stage"]);
 
 	auto generator = new CObjectGenerator(x, y, type, stage);
 

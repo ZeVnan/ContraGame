@@ -60,7 +60,7 @@ void LoadResources() {
 
 	LoadScreenResources(textures, sprites);
 
-	gameControl = intro;
+	gameControl = waiting3;
 	option = option1;
 	ifstream ofs;
 	ofs.open(HIGHSCORE_PATH);
@@ -221,8 +221,8 @@ void Render()
 	case waiting1:
 		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
 		CSprites::GetInstance()->Get(30001)->Draw(0, 0);
-		for (int i = v.size()-1; i >=0 ; i--) {
-			CSprites::GetInstance()->Get(v[i] + 30010)->Draw(100 - i * 20, 90);
+		for (int i = (int)v.size()-1; i >=0 ; i--) {
+			CSprites::GetInstance()->Get(v[i] + 30010)->Draw(100 - (float)i * 20, 90);
 		}
 		break;
 	case stage1:
@@ -233,8 +233,8 @@ void Render()
 		ClearWorld();
 		CGame::GetInstance()->GetCamera()->SetCamPos(0, 0);
 		CSprites::GetInstance()->Get(30002)->Draw(0, 0);
-		for (int i = v.size() - 1; i >= 0; i--) {
-			CSprites::GetInstance()->Get(v[i] + 30010)->Draw(100 - i * 20, 90);
+		for (int i = (int)v.size() - 1; i >= 0; i--) {
+			CSprites::GetInstance()->Get(v[i] + 30010)->Draw(100 - (float)i * 20, 90);
 		}
 		break;
 	case stage3:
@@ -362,7 +362,7 @@ int WINAPI WinMain(
 	keyHandler = new CSampleKeyHandler();
 	game->InitKeyboard(keyHandler);
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 1.2, SCREEN_HEIGHT * 1.2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, int(SCREEN_WIDTH * 1.2), int(SCREEN_HEIGHT * 1.2), SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	LoadResources();
 

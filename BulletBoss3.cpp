@@ -1,5 +1,5 @@
 #include "BulletBoss3.h"
-CBulletBoss3::CBulletBoss3(float x, float y, int angle, bool friendly) : CBullet(x, y, angle, friendly) {
+CBulletBoss3::CBulletBoss3(float x, float y, float angle, bool friendly) : CBullet(x, y, angle, friendly) {
 	this->type = BULLET_ANI_BOSS3;
 	damage = 10;
 	vx = maxVx;

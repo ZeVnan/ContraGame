@@ -59,14 +59,13 @@ extern CBill* bill;
 class CWallTurret : public CGameObject
 {
 private:
-	BOOLEAN isActivated;
-	BOOLEAN isClosing;
-	BOOLEAN isShooting;
+	bool isActivated;
+	bool isClosing;
+	bool isShooting;
 	int HP;
 	vector<vector<LPBULLET>> waveContainer;
 	float gunx;
 	float guny;	
-	int waveLeft;
 	int timeLeft;
 
 public:
@@ -90,7 +89,7 @@ public:
 	}
 
 	int CalculateAngle();
-	vector<LPBULLET> ShootNormalBullet(int angle);
+	vector<LPBULLET> ShootNormalBullet(float angle);
 	void AddBullet();
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();

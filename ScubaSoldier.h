@@ -26,9 +26,9 @@
 class CScubaSoldier : public CGameObject
 {
 private:
-	BOOLEAN isHiding;
-	BOOLEAN isShooting;
-	BOOLEAN isActivated;
+	bool isHiding;
+	bool isShooting;
+	bool isActivated;
 	int timeleft;
 	
 	int waveLeft = 1;
@@ -47,7 +47,7 @@ public:
 	bool isBlocking() { return false; }
 	bool isCollidable() { return isShooting; }
 
-	vector<LPBULLET> ShootSpreadBullet(int angle);
+	vector<LPBULLET> ShootSpreadBullet(float angle);
 	void AddBullet();
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void RenderBullet();

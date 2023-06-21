@@ -1,5 +1,11 @@
 #include "Soldier.h"
 #include "Bill.h"
+#include "Grass.h"
+#include "TriggerBox.h"
+#include "Water.h"
+#include "BridgePart.h"
+#include "Bridge.h"
+#include "RockFly.h"
 extern LPBILL bill;
 extern int score;
 CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
@@ -17,7 +23,7 @@ CSoldier::CSoldier(float x, float y) :CGameObject(x, y) {
 void CSoldier::watchBill() {
 	float x, y;
 	bill->GetPosition(x, y);
-	float distance = sqrt(pow(x - this->x, 2) + pow(y - this->y, 2));
+	float distance = (float)sqrt(pow(x - this->x, 2) + pow(y - this->y, 2));
 	if (distance < SOLDIER_ACTIVE_RADIUS) {
 		if (x < this->x) {
 			SetState(SOLDIER_STATE_RUN_LEFT);
@@ -190,9 +196,31 @@ void CSoldier::CollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<LPBRIDGEPART>(e->dest_obj)) {
 		CollisionWithBridge(e);
 	}
+	else if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
+		CollisionWithRockFly(e);
+	}
 }
 void CSoldier::CollisionWithGrass(LPCOLLISIONEVENT e)
 {
+	if (e->normal_x != 0) {
+		this->x += bbox.vpf_x;
+	}
+	else if (e->normal_y != 0) {
+		if (e->normal_y > 0) {
+			if (isDropping == false) {
+				SetState(SOLDIER_STATE_ON_LAND);
+				this->y += e->time * bbox.vpf_y;
+			}
+			else {
+				this->y += bbox.vpf_y;
+			}
+		}
+		else {
+			this->y += bbox.vpf_y;
+		}
+	}
+}
+void CSoldier::CollisionWithRockFly(LPCOLLISIONEVENT e) {
 	if (e->normal_x != 0) {
 		this->x += bbox.vpf_x;
 	}

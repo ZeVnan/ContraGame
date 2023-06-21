@@ -14,7 +14,7 @@ private:
 	float centerx;
 	float centery;
 public:
-	CBulletF(float x, float y, int angle, bool friendly);
+	CBulletF(float x, float y, float angle, bool friendly);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void NoCollision(DWORD dt);
 	void CreateBox(DWORD dt);

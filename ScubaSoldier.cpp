@@ -143,7 +143,7 @@ void CScubaSoldier::CollisionWith(LPCOLLISIONEVENT e)
 }
 
 
-vector<LPBULLET> CScubaSoldier::ShootSpreadBullet(int angle)
+vector<LPBULLET> CScubaSoldier::ShootSpreadBullet(float angle)
 {
 	LPBULLETS bulletS;
 	vector<LPBULLET> temp;

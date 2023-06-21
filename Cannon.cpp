@@ -31,7 +31,7 @@ void CCannon::WatchBill() {
 }
 
 int CCannon::CalculateBillAngle() {
-	const float PI = 3.14159265;
+	const float PI = 3.14159f;
 	float x, y;
 	bill->GetPosition(x, y);
 	float res = atan(abs(this->y - y) / abs(this->x - x)) * 180 / PI;
@@ -190,7 +190,7 @@ void CCannon::CollisionWith(LPCOLLISIONEVENT e) {
 
 }
 
-vector<LPBULLET> CCannon::ShootNormalBullet(int angle) {
+vector<LPBULLET> CCannon::ShootNormalBullet(float angle) {
 	LPBULLETN bulletN;
 	vector<LPBULLET> temp;
 	bulletN = new CBulletN(x, y, angle, false);

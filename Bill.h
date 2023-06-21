@@ -118,17 +118,17 @@
 #define BILL_BOX_DIE_HEIGHT 22
 class CBill :public CGameObject
 {
-	BOOLEAN isLaying;
-	BOOLEAN isShooting;
-	BOOLEAN isSwimming;
-	BOOLEAN isDiving;
-	BOOLEAN isOnPlatform;	//support collision
-	BOOLEAN isDropping;		//support collision
-	BOOLEAN isJumping;		//support change bbox
-	BOOLEAN isDying;
-	BOOLEAN disableDrop;
-	BOOLEAN isDead;
-	BOOLEAN isVulnerable;
+	bool isLaying;
+	bool isShooting;
+	bool isSwimming;
+	bool isDiving;
+	bool isOnPlatform;	//support collision
+	bool isDropping;		//support collision
+	bool isJumping;		//support change bbox
+	bool isDying;
+	bool disableDrop;
+	bool isDead;
+	bool isVulnerable;
 	bool a;					//support render when invulnerable
 
 	int ny;					//normal:0, up:1, down:-1
@@ -148,7 +148,8 @@ class CBill :public CGameObject
 	int bonusWave;		//support bullet control
 
 	int bulletMtime;	//support bullet type M control
-	float timeLeft;		//support swim begin
+	int timeLeft;		
+	int invulnerableTime;
 
 	int lifeLeft;
 	void worldControl();
@@ -183,14 +184,18 @@ public:
 	void CollisionWithAircraft(LPCOLLISIONEVENT e);
 	void CollisionWithFalcon(LPCOLLISIONEVENT e);
 	void CollisionWithSoldier(LPCOLLISIONEVENT e);
+	void CollisionWithRockFall(LPCOLLISIONEVENT e);
+	void CollisionWithRifleman(LPCOLLISIONEVENT e);
+	void CollisionWithScubaSoldier(LPCOLLISIONEVENT e);
+	void CollisionWithFire(LPCOLLISIONEVENT e);
 
-	int CalculateAngle();
-	void AddBullet(BOOLEAN KeyState);
-	vector<LPBULLET> ShootSpreadBullet(int angle);
-	vector<LPBULLET> ShootMachineBullet(int angle);
-	vector<LPBULLET> ShootFlameBullet(int angle);
-	vector<LPBULLET> ShootLaserBullet(int angle);
-	vector<LPBULLET> ShootNormalBullet(int angle);
+	float CalculateAngle();
+	void AddBullet(bool KeyState);
+	vector<LPBULLET> ShootSpreadBullet(float angle);
+	vector<LPBULLET> ShootMachineBullet(float angle);
+	vector<LPBULLET> ShootFlameBullet(float angle);
+	vector<LPBULLET> ShootLaserBullet(float angle);
+	vector<LPBULLET> ShootNormalBullet(float angle);
 
 	void SetBulletType(int type);
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
@@ -199,6 +204,7 @@ public:
 	bool IsDiving() { return isDiving; }
 	bool IsVulnerable() { return isVulnerable; }
 	bool IsDead() { return isDead; }
+	bool IsDying() { return isDying; }
 };
 
 typedef CBill* LPBILL;

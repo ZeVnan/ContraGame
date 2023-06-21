@@ -29,8 +29,8 @@
 class CAircraft : public CGameObject
 {
 private:
-	BOOLEAN isCollectible;
-	BOOLEAN isActivated;
+	bool isCollectible;
+	bool isActivated;
 	float ay;
 	int ammo;
 	int timeleft;

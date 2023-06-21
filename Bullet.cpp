@@ -19,16 +19,16 @@ CBullet::CBullet() {
 	friendly = true;
 	damage = 0;
 }
-CBullet::CBullet(float x, float y, int angle, bool friendly) : CBullet() {
+CBullet::CBullet(float x, float y, float angle, bool friendly) : CBullet() {
 	this->x = x;
 	this->y = y;
 	this->friendly = friendly;
-	float radian = 3.14159 / 180 * angle;
+	float radian = 3.14159f / 180 * angle;
 
 	maxVx = cos(radian) * BULLET_SPEED;
 	maxVy = sin(radian) * BULLET_SPEED;
 }
-BOOLEAN CBullet::outOfScreen() {
+bool CBullet::outOfScreen() {
 	float cx, cy, cw, ch;
 	CGame::GetInstance()->GetCamera()->GetCamPos(cx, cy);
 	cw = CGame::GetInstance()->GetCamera()->GetCamWidth();
@@ -183,7 +183,8 @@ void CBullet::CollisionWithBill(LPCOLLISIONEVENT e) {
 	if (friendly == true ||
 		(LPBILL(e->dest_obj))->IsDiving() == true ||
 		(LPBILL(e->dest_obj))->IsVulnerable() == false||
-		(LPBILL(e->dest_obj))->IsDead() == true)
+		(LPBILL(e->dest_obj))->IsDead() == true ||
+		(LPBILL(e->dest_obj))->IsDying() == true)
 		return;
 	e->src_obj->Delete();
 	if (e->normal_x != 0) {

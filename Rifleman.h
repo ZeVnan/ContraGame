@@ -7,11 +7,6 @@
 
 #include "debug.h"
 
-#include "Bill.h"
-
-extern CBill* bill;
-
-
 #define RIFLEMAN_START_X 180.0f
 #define RIFLEMAN_START_Y 10.0f
 #define RIFLEMAN_ACTIVE_RADIUS 300
@@ -69,9 +64,9 @@ extern CBill* bill;
 class Rifleman : public CGameObject
 {
 private:
-	BOOLEAN isShooting;
-	BOOLEAN isHiding;
-	BOOLEAN isActivated;
+	bool isShooting;
+	bool isHiding;
+	bool isActivated;
 	vector<vector<LPBULLET>> waveContainer;
 	float gunx;
 	float guny;
@@ -93,7 +88,7 @@ public:
 	bool isCollidable() { return !isExploded; }
 
 	int CalculateAngle();
-	vector<LPBULLET> ShootNormalBullet(int angle);
+	vector<LPBULLET> ShootNormalBullet(float angle);
 	void AddBullet();
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();

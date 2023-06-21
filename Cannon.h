@@ -35,9 +35,9 @@
 class CCannon : public CGameObject
 {
 private:
-	BOOLEAN isShooting;
-	BOOLEAN isAppear; //hoat dong nhu isHiding
-	BOOLEAN isActivated;
+	bool isShooting;
+	bool isAppear; //hoat dong nhu isHiding
+	bool isActivated;
 	int HP;
 
 	vector< vector<LPBULLET>>waveContainer;
@@ -64,7 +64,7 @@ public:
 	void WatchBill();
 	int CalculateBillAngle();
 	void AddBullet();
-	vector<LPBULLET> ShootNormalBullet(int angle);
+	vector<LPBULLET> ShootNormalBullet(float angle);
 	void UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void RenderBullet();
 };

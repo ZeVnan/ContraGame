@@ -9,7 +9,7 @@ private:
 	int lastBulletTime;
 public:
 	DWORD shootTime;
-	CBulletM(float x, float y, int angle, bool friendly);
+	CBulletM(float x, float y, float angle, bool friendly);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void CreateBox(DWORD dt);
 };

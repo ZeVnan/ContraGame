@@ -1,5 +1,7 @@
 #include "Rifleman.h"
+#include "Bill.h"
 extern int score;
+extern CBill* bill;
 Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
 	isShooting = false;
 	isHiding = false;
@@ -25,7 +27,7 @@ void Rifleman::WatchBill() {
 	}
 
 	float tan = abs(this->y - y) / abs(this->x - x);// get angle's tan value
-	float degree = atan(tan) * 180.0 / M_PI;// transfer to angle degree
+	float degree = atan(tan) * 180.0f / 3.14159f;// transfer to angle degree
 	float checking_degree = 0;// from 0 to 360 base on fourth part of degree's circle COMPARE TO Ox
 
 	// calculate checking_degree
@@ -193,15 +195,16 @@ int Rifleman::CalculateAngle() {
 		if (ny == 0)
 			return 180;
 	}
+	return 0;
 }
-vector<LPBULLET> Rifleman::ShootNormalBullet(int angle) {
+vector<LPBULLET> Rifleman::ShootNormalBullet(float angle) {
 	LPBULLETN bulletN = new CBulletN(x, y, angle, false);
 	vector<LPBULLET> temp;
 	temp.push_back(bulletN);
 	return temp;
 }
 void Rifleman::AddBullet() {
-	waveContainer.push_back(ShootNormalBullet(CalculateAngle()));
+	waveContainer.push_back(ShootNormalBullet((float)CalculateAngle()));
 }
 void Rifleman::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	for (int i = 0; i < waveContainer.size(); i++) {
