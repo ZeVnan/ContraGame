@@ -184,6 +184,22 @@ LPGAMEOBJECT CWorld::spawnRockFly(xml_node node)
 
 	return RockFly;
 }
+LPGAMEOBJECT CWorld::spawnFire(xml_node node)
+{
+	auto properties = getObjectProperties(node);
+	if (properties.size() == 0)
+		return nullptr;
+
+	float x, y;
+
+	//stof: String TO Float
+	x = stof(properties["X"]);
+	y = stof(properties["Y"]);
+
+	auto Fire = new CFire(x, y);
+
+	return Fire;
+}
 LPGAMEOBJECT CWorld::spawnTriggerBox(xml_node node) {
 	auto properties = getObjectProperties(node);
 	if (properties.size() == 0)
@@ -353,6 +369,8 @@ LPGAMEOBJECT CWorld::getObjectById(xml_node node, eID id)
 		return spawnRockFall(node);
 	case RockFlyID:
 		return spawnRockFly(node);
+	case FireID:
+		return spawnFire(node);
 	case TriggerBoxID:
 		return spawnTriggerBox(node);
 	case LAND:
