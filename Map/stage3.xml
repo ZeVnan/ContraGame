@@ -567,7 +567,7 @@
 		<Item Id="5" Name="rifleman01" X="32" Y="3628" Width="32" Height="64">
 			<ActiveBound X="32" Y="3648" Width="32" Height="64" />
 			<Params>
-				<Elem Key="status" Value="0" />
+				<Elem Key="onBush" Value="0" />
 			</Params>
 		</Item>
 		<Item Id="21" Name="rockfly01" X="256" Y="3136" Width="64" Height="64">
@@ -643,7 +643,7 @@
 		<Item Id="5" Name="rifleman02" X="416" Y="1104" Width="32" Height="64">
 			<ActiveBound X="416" Y="1120" Width="32" Height="64" />
 			<Params>
-				<Elem Key="status" Value="0" />
+				<Elem Key="onBush" Value="0" />
 			</Params>
 		</Item>
 		<Item Id="23" Name="rockfallgenerator01" X="272" Y="944" Width="64" Height="64">

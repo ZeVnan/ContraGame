@@ -54,6 +54,7 @@ class Rifleman : public CGameObject
 private:
 	bool isShooting;
 	bool isHiding;
+	bool isOnBush;
 	vector<LPBULLET> bullets;
 	float gunx;
 	float guny;
@@ -62,7 +63,7 @@ private:
 	int waveLeft;
 	float angle;
 public:
-	Rifleman(float x, float y);
+	Rifleman(float x, float y, bool isOnBush);
 	void WatchBill();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);

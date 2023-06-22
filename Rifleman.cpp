@@ -2,16 +2,24 @@
 #include "Bill.h"
 extern int score;
 extern CBill* bill;
-Rifleman::Rifleman(float x, float y) : CGameObject(x, y) {
-	isShooting = false;
-	isHiding = true;
+Rifleman::Rifleman(float x, float y, bool isOnBush) : CGameObject(x, y) {
+	if (isOnBush == true) {
+		isHiding = true;
+		isShooting = false;
+	}
+	else {
+		isHiding = false;
+		isShooting = true;
+	}
 	gunx = x;
 	guny = y;
 	ny = 0;
 	nx = -1;
+	angle = 180;
 	this->state = RIFLEMAN_STATE_HIDE;
 	timeleft = 0;
 	waveLeft = 1;
+	this->isOnBush = isOnBush;
 }
 
 void Rifleman::WatchBill() {
@@ -20,14 +28,16 @@ void Rifleman::WatchBill() {
 	bill->GetPosition(x, y);
 
 	float distance_to_Bill = sqrt((this->x - x) * (this->x - x) + (this->y - y) * (this->y - y));
-	if (isHiding == true) {
-		if (distance_to_Bill <= RIFLEMAN_ACTIVE_RADIUS) {
-			SetState(RIFLEMAN_STATE_EXPOSE);
+	if (isOnBush == true) {
+		if (isHiding == true) {
+			if (distance_to_Bill <= RIFLEMAN_ACTIVE_RADIUS) {
+				SetState(RIFLEMAN_STATE_EXPOSE);
+			}
 		}
-	}
-	else {
-		if (distance_to_Bill > RIFLEMAN_ACTIVE_RADIUS) {
-			SetState(RIFLEMAN_STATE_HIDE);
+		else {
+			if (distance_to_Bill > RIFLEMAN_ACTIVE_RADIUS) {
+				SetState(RIFLEMAN_STATE_HIDE);
+			}
 		}
 	}
 	

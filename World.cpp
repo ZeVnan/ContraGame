@@ -64,12 +64,14 @@ LPGAMEOBJECT CWorld::spawnRifleman(xml_node node)
 		return nullptr;
 
 	float x, y;
+	bool onBush;
 
 	//stof: String TO Float
 	x = stof(properties["X"]);
 	y = stof(properties["Y"]);
+	onBush = (bool)stoi(properties["onBush"]);
 
-	auto rifleman = new Rifleman(x, y);
+	auto rifleman = new Rifleman(x, y, onBush);
 
 	return rifleman;
 }
