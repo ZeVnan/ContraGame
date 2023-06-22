@@ -702,11 +702,14 @@
 		<Item Id="5" Name="rifleMan1" X="624" Y="110" Width="32" Height="64">
 			<ActiveBound X="624" Y="110" Width="32" Height="64" />
 			<Params>
-				<Elem Key="status" Value="0" />
+				<Elem Key="onBush" Value="0" />
 			</Params>
 		</Item>
 		<Item Id="5" Name="rifleMan2" X="1280" Y="110" Width="32" Height="64">
 			<ActiveBound X="1280" Y="110" Width="32" Height="64" />
+			<Params>
+				<Elem Key="onBush" Value="0" />
+			</Params>
 		</Item>
 		<Item Id="7" Name="wallTurret1" X="2511" Y="177" Width="64" Height="64">
 			<ActiveBound X="2496" Y="192" Width="64" Height="64" />
@@ -725,6 +728,9 @@
 		</Item>
 		<Item Id="5" Name="rifleMan3" X="4751" Y="235" Width="32" Height="64">
 			<ActiveBound X="4736" Y="236" Width="32" Height="64" />
+			<Params>
+				<Elem Key="onBush" Value="0" />
+			</Params>
 		</Item>
 		<Item Id="4" Name="cannon4" X="5519" Y="243" Width="64" Height="64">
 			<ActiveBound X="5504" Y="256" Width="64" Height="64" />
@@ -741,8 +747,11 @@
 				<Elem Key="type" Value="5" />
 			</Params>
 		</Item>
-		<Item Id="5" Name="rifleMan4" X="2496" Y="300" Width="32" Height="64">
+		<Item Id="5" Name="rifleman4" X="2496" Y="300" Width="32" Height="64">
 			<ActiveBound X="2496" Y="300" Width="32" Height="64" />
+			<Params>
+				<Elem Key="onBush" Value="1" />
+			</Params>
 		</Item>
 		<Item Id="3" Name="airCraft1" X="480" Y="384" Width="64" Height="32">
 			<ActiveBound X="480" Y="384" Width="1200" Height="200" />
@@ -798,13 +807,13 @@
 		<Item Id="5" Name="rifleMan5" X="2688" Y="300" Width="32" Height="54">
 			<ActiveBound X="2688" Y="300" Width="32" Height="64" />
 			<Params>
-				<Elem Key="status" Value="1048576" />
+				<Elem Key="onBush" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="5" Name="rifleMan6" X="3072" Y="363" Width="32" Height="54">
 			<ActiveBound X="3072" Y="354" Width="32" Height="64" />
 			<Params>
-				<Elem Key="status" Value="1048576" />
+				<Elem Key="onBush" Value="1" />
 			</Params>
 		</Item>
 		<Item Id="18" Name="bossshield" X="6456" Y="148" Width="128" Height="320">

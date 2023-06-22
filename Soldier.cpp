@@ -26,7 +26,7 @@ void CSoldier::watchBill() {
 	float x, y;
 	bill->GetPosition(x, y);
 	float distance = (float)sqrt(pow(x - this->x, 2) + pow(y - this->y, 2));
-	if (distance < SOLDIER_ACTIVE_RADIUS) {
+	if (distance <= SOLDIER_ACTIVE_RADIUS) {
 		if (x < this->x) {
 			SetState(SOLDIER_STATE_RUN_LEFT);
 		}
@@ -259,6 +259,8 @@ void CSoldier::CollisionWithWater(LPCOLLISIONEVENT e) {
 	this->SetState(SOLDIER_STATE_EXPLODE);
 }
 void CSoldier::CollisionWithTriggerBox(LPCOLLISIONEVENT e) {
+	if (OutOfScreen() == true)
+		return;
 	if (dynamic_cast<LPTRIGGERBOX>(e->dest_obj)->getType() == 1) {
 		this->SetState(SOLDIER_STATE_JUMP);
 	}

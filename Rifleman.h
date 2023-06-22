@@ -9,7 +9,7 @@
 
 #define RIFLEMAN_START_X 180.0f
 #define RIFLEMAN_START_Y 10.0f
-#define RIFLEMAN_ACTIVE_RADIUS 250
+#define RIFLEMAN_ACTIVE_RADIUS 300
 
 #pragma region
 #define RIFLEMAN_STATE_EXPOSE 0
@@ -54,6 +54,7 @@ class Rifleman : public CGameObject
 private:
 	bool isShooting;
 	bool isHiding;
+	bool isOnBush;
 	vector<LPBULLET> bullets;
 	float gunx;
 	float guny;
@@ -62,7 +63,7 @@ private:
 	int waveLeft;
 	float angle;
 public:
-	Rifleman(float x, float y);
+	Rifleman(float x, float y, bool isOnBush);
 	void WatchBill();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
