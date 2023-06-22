@@ -289,10 +289,10 @@ void CSoldier::CollisionWithBridge(LPCOLLISIONEVENT e) {
 
 void CSoldier::AddBullet() {
 	if (nx > 0) {
-		bullets.push_back(new CBulletN(x, y, 0, false));
+		bullets.push_back(new CBulletN(x - 5, y + 18, 0, false));
 	}
 	else {
-		bullets.push_back(new CBulletN(x, y, 180, false));
+		bullets.push_back(new CBulletN(x + 5, y + 18, 180, false));
 	}
 }
 void CSoldier::UpdateBullet(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {

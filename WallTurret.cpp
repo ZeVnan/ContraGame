@@ -58,19 +58,66 @@ void CWallTurret::watchBill() {
 
 	// set State follow Bill's position
 
-	if (checking_degree >= 345 || checking_degree <= 15) this->state = WTURRET_STATE_RIGHT90;
-	else if (checking_degree >= 15 && checking_degree <= 45) this->state = WTURRET_STATE_RIGHT60;
-	else if (checking_degree >= 45 && checking_degree <= 75) this->state = WTURRET_STATE_RIGHT30;
-	else if (checking_degree >= 75 && checking_degree <= 105) this->state = WTURRET_STATE_UP;
-	else if (checking_degree >= 105 && checking_degree <= 135) this->state = WTURRET_STATE_LEFT30;
-	else if (checking_degree >= 135 && checking_degree <= 165) this->state = WTURRET_STATE_LEFT60;
-	else if (checking_degree >= 165 && checking_degree <= 195) this->state = WTURRET_STATE_LEFT90;
-	else if (checking_degree >= 195 && checking_degree <= 225) this->state = WTURRET_STATE_LEFT120;
-	else if (checking_degree >= 225 && checking_degree <= 255) this->state = WTURRET_STATE_LEFT150;
-	else if (checking_degree >= 255 && checking_degree <= 285) this->state = WTURRET_STATE_DOWN;
-	else if (checking_degree >= 285 && checking_degree <= 315) this->state = WTURRET_STATE_RIGHT150;
-	else if (checking_degree >= 315 && checking_degree <= 345) this->state = WTURRET_STATE_RIGHT120;
-
+	if (checking_degree >= 345 || checking_degree <= 15) {
+		this->state = WTURRET_STATE_RIGHT90;
+		gunx = this->x + 16;
+		guny = this->y;
+	}
+	else if (checking_degree >= 15 && checking_degree <= 45) {
+		this->state = WTURRET_STATE_RIGHT60;
+		gunx = this->x + 18;
+		guny = this->y + 13;
+	}
+	else if (checking_degree >= 45 && checking_degree <= 75) {
+		this->state = WTURRET_STATE_RIGHT30;
+		gunx = this->x + 11;
+		guny = this->y + 18;
+	}
+	else if (checking_degree >= 75 && checking_degree <= 105) {
+		this->state = WTURRET_STATE_UP;
+		gunx = this->x;
+		guny = this->y + 16;
+	}
+	else if (checking_degree >= 105 && checking_degree <= 135) {
+		this->state = WTURRET_STATE_LEFT30;
+		gunx = this->x - 11;
+		guny = this->y + 18;
+	}
+	else if (checking_degree >= 135 && checking_degree <= 165) {
+		this->state = WTURRET_STATE_LEFT60;
+		gunx = this->x - 18;
+		guny = this->y + 13;
+	}
+	else if (checking_degree >= 165 && checking_degree <= 195) {
+		this->state = WTURRET_STATE_LEFT90;
+		gunx = this->x - 16;
+		guny = this->y;
+	}
+	else if (checking_degree >= 195 && checking_degree <= 225) {
+		this->state = WTURRET_STATE_LEFT120;
+		gunx = this->x - 18;
+		guny = this->y - 13;
+	}
+	else if (checking_degree >= 225 && checking_degree <= 255) {
+		this->state = WTURRET_STATE_LEFT150;
+		gunx = this->x - 11;
+		guny = this->y - 18;
+	}
+	else if (checking_degree >= 255 && checking_degree <= 285) {
+		this->state = WTURRET_STATE_DOWN;
+		gunx = this->x;
+		guny = this->y - 16;
+	}
+	else if (checking_degree >= 285 && checking_degree <= 315) {
+		this->state = WTURRET_STATE_RIGHT150;
+		gunx = this->x + 11;
+		guny = this->y - 18;
+	}
+	else if (checking_degree >= 315 && checking_degree <= 345) {
+		this->state = WTURRET_STATE_RIGHT120;
+		gunx = this->x + 18;
+		guny = this->y - 13;
+	}
 }
 
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

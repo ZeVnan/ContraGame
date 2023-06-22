@@ -4,6 +4,9 @@
 extern CBill* bill;
 extern int score;
 CCannon::CCannon(float x, float y) : CGameObject(x, y) {
+	gunx = x;
+	guny = y;
+
 	isShooting = false;
 	isAppear = false;
 	isActivated = false;
@@ -52,15 +55,23 @@ int CCannon::CalculateBillAngle() {
 		}
 	}
 	if (y < this->y) { 
+		gunx = this->x - 20;
+		guny = this->y;
 		return CANNON_STATE_180;
 	}
 	if (abs(180 - res) < abs(150 - res)) {
+		gunx = this->x - 20;
+		guny = this->y;
 		return CANNON_STATE_180;
 	}
 	else if (abs(150 - res) < abs(120 - res)) {
+		gunx = this->x - 18;
+		guny = this->y + 10;
 		return CANNON_STATE_150;
 	}
 	else {
+		gunx = this->x - 10;
+		guny = this->y + 20;
 		return CANNON_STATE_120;
 	}
 }
@@ -105,7 +116,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	UpdateBullet(dt, coObjects);
-	DebugOutTitle(L"timeLeft = %d", timeLeft);
+	//DebugOutTitle(L"timeLeft = %d", timeLeft);
 }
 
 void CCannon::Render() {
@@ -193,12 +204,14 @@ void CCannon::CollisionWith(LPCOLLISIONEVENT e) {
 
 LPBULLET CCannon::ShootNormalBullet(float angle) {
 	LPBULLETN bulletN;
-	bulletN = new CBulletN(x, y, angle, false);
+	bulletN = new CBulletN(gunx, guny, angle, false);
 	return bulletN;
 }
 
 void CCannon::AddBullet() {
+
 	if (isShooting == true) {
+		DebugOutTitle(L"state: %d", this->state);
 		if (this->state == CANNON_STATE_180) {
 			bullets.push_back(ShootNormalBullet(180));
 		}
