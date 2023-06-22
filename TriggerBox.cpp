@@ -6,7 +6,7 @@ TriggerBox::TriggerBox(float x, float y, int type) :CGameObject(x, y) {
 }
 
 void TriggerBox::Render() {
-	RenderBox();
+	//RenderBox();
 }
 
 void TriggerBox::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
