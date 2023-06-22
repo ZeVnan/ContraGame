@@ -4,9 +4,8 @@ CWallTurret::CWallTurret(float x, float y) :CGameObject(x, y)
 {
 	isActivated = false;
 	isClosing = true;
-	isShooting = false;
 	this->state = WTURRET_STATE_CLOSE;
-	timeLeft = WTURRET_TIME_APPEAR;
+	timeLeft = 0;
 	HP = 100;
 	gunx = x;
 	guny = y;
@@ -22,9 +21,6 @@ void CWallTurret::watchBill() {
 		if (this->state == WTURRET_STATE_CLOSE) {
 			this->SetState(WTURRET_STATE_APPEAR);
 		}
-		else {
-			isShooting = true;
-		}
 	}
 	else {
 		isActivated = false;
@@ -33,7 +29,9 @@ void CWallTurret::watchBill() {
 	if (isClosing == true || isActivated == false || isExploded == true) {
 		return;
 	}
-
+	if (state == WTURRET_STATE_APPEAR && timeLeft > 0) {
+		return;
+	}
 	float tan = abs(this->y - y) / abs(this->x - x);// get angle's tan value
 	float degree = atan(tan) * 180.0f / 3.14159f;// transfer to angle degree
 	float checking_degree = 0;// from 0 to 360 base on fourth part of degree's circle COMPARE TO Ox
@@ -122,18 +120,17 @@ void CWallTurret::watchBill() {
 
 void CWallTurret::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	this->timeLeft -= dt;
 	if (this->HP <= 0 && this->isExploded == false) {
 		this->SetState(WTURRET_STATE_EXPLODE);
 	}
-	if (timeLeft >= 0)
+	if (timeLeft > 0)
 		this->timeLeft -= dt;
-	if (this->isExploded == true && this->timeLeft < 0) {
+	if (this->isExploded == true && this->timeLeft <= 0) {
 		isDeleted = true;
 		return;
 	}
 	watchBill();
-	if (this->timeLeft < 0 && isShooting == true && isActivated == true && isExploded == false)
+	if (this->timeLeft <= 0 && isActivated == true && isExploded == false)
 	{
 		AddBullet();
 		this->timeLeft = WTURRET_TIME_RELOAD;
@@ -205,7 +202,6 @@ void CWallTurret::SetState(int state)
 	case WTURRET_ANI_CLOSE:
 		break;
 	case WTURRET_STATE_APPEAR:
-		isShooting = true;
 		isClosing = false;
 		timeLeft = WTURRET_TIME_APPEAR;
 		break;

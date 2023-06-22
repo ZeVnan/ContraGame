@@ -529,7 +529,7 @@ void CreateCannonAni(CTextures*& textures, CSprites*& sprites, CAnimations*& ani
 	ani->Add(14008);
 	animations->Add(CANNON_ANI_120, ani);
 
-	ani = new CAnimation(100);
+	ani = new CAnimation(50);
 	ani->Add(14010);
 	ani->Add(14011);
 	ani->Add(14012);

@@ -12,6 +12,7 @@ CCannon::CCannon(float x, float y) : CGameObject(x, y) {
 	isActivated = false;
 	isExploded = false;
 	timeLeft = CANNON_APPEAR_TIME;
+	angle = 180;
 	HP = 100;
 	//DebugOutTitle(L"x = %f, y = %f", this->x, this->y);
 }
@@ -21,12 +22,12 @@ void CCannon::WatchBill() {
 	bill->GetPosition(Bill_x, Bill_y);
 	float distance = sqrt((this->x - Bill_x) * (this->x - Bill_x) + (this->y - Bill_y) * (this->y - Bill_y));
 	if (isActivated == true) {
-		if (distance > CANNON_ACTIVE_RADIUS  || this->x < Bill_x || this->y > Bill_y) {
+		if (distance > CANNON_ACTIVE_RADIUS  || this->x < Bill_x) {
 			isActivated = false;
 		}
 	}
 	else {
-		if (distance < CANNON_ACTIVE_RADIUS && this->x >= Bill_x && this->y <= Bill_y) {
+		if (distance < CANNON_ACTIVE_RADIUS && this->x >= Bill_x) {
 			isActivated = true;
 		}
 	}
@@ -54,30 +55,34 @@ int CCannon::CalculateBillAngle() {
 			res = 180 + res;
 		}
 	}
-	if (y < this->y) { 
-		gunx = this->x - 20;
-		guny = this->y;
-		return CANNON_STATE_180;
-	}
-	if (abs(180 - res) < abs(150 - res)) {
-		gunx = this->x - 20;
-		guny = this->y;
-		return CANNON_STATE_180;
-	}
-	else if (abs(150 - res) < abs(120 - res)) {
-		gunx = this->x - 18;
-		guny = this->y + 10;
-		return CANNON_STATE_150;
-	}
-	else {
+	//DebugOutTitle(L"%f", res);
+	if (110 <= res && res <= 130) {
+		angle = 120;
 		gunx = this->x - 10;
 		guny = this->y + 20;
 		return CANNON_STATE_120;
 	}
+	else if (140 <= res && res <= 160) {
+		angle = 150;
+		gunx = this->x - 18;
+		guny = this->y + 10;
+		return CANNON_STATE_150;
+	}
+	else if (170 <= res && res <= 190) {
+		angle = 180;
+		gunx = this->x - 20;
+		guny = this->y;
+		return CANNON_STATE_180;
+	}
+	else {
+		angle = -1;
+		gunx = this->x - 20;
+		guny = this->y;
+		return CANNON_STATE_180;
+	}
 }
 
 void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	int shootTime = CANNON_SHOOT_TIME;
 	if (this->HP <= 0 && this->isExploded == false) {
 		this->SetState(CANNON_STATE_EXPLODE);
 	}
@@ -89,11 +94,11 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (isActivated) {
 		if (!isExploded) {
 			if (!isAppear) {
-				isAppear = true;
 				this->SetState(CANNON_STATE_APPEAR);
 			}
-			else {
+			else if (timeLeft <= 0 || state != CANNON_STATE_APPEAR) {
 				this->SetState(CalculateBillAngle());
+				isShooting = true;
 			}
 		}
 	}
@@ -103,7 +108,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (timeLeft > 0) {
 		timeLeft -= dt;
 	}
-	else {
+	if (timeLeft <= 0 && state != CANNON_STATE_APPEAR && state != CANNON_STATE_EXPLODE) {
 		if (waveLeft > 0) {
 			timeLeft = CANNON_SHOOT_TIME; 
 			waveLeft--;
@@ -116,7 +121,7 @@ void CCannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 	CCollision::GetInstance()->Process(this, coObjects, dt);
 	UpdateBullet(dt, coObjects);
-	//DebugOutTitle(L"timeLeft = %d", timeLeft);
+	DebugOutTitle(L"%d", timeLeft);
 }
 
 void CCannon::Render() {
@@ -150,32 +155,15 @@ void CCannon::Render() {
 void CCannon::SetState(int state) {
 	switch (state) {
 	case CANNON_STATE_180:
-		if (isActivated) {
-			isShooting = true;
-		}
-		else {
-			isShooting = false;
-		}
 		break;
 	case CANNON_STATE_150:
-		if (isActivated) {
-			isShooting = true;
-		}
-		else {
-			isShooting = false;
-		}
 		break;
 	case CANNON_STATE_120:
-		if (isActivated) {
-			isShooting = true;
-		}
-		else {
-			isShooting = false;
-		}
 		break;
 	case CANNON_STATE_APPEAR:
 		isAppear = true;
 		isShooting = false;
+		timeLeft = CANNON_APPEAR_TIME;
 		break;
 	case CANNON_STATE_EXPLODE:
 		this->isExploded = true;
@@ -209,16 +197,14 @@ LPBULLET CCannon::ShootNormalBullet(float angle) {
 }
 
 void CCannon::AddBullet() {
-
 	if (isShooting == true) {
-		DebugOutTitle(L"state: %d", this->state);
-		if (this->state == CANNON_STATE_180) {
+		if (angle == 180) {
 			bullets.push_back(ShootNormalBullet(180));
 		}
-		else if (this->state == CANNON_STATE_150) {
+		else if (angle == 150) {
 			bullets.push_back(ShootNormalBullet(150));
 		}
-		else if (this->state == CANNON_STATE_120) {
+		else if (angle == 120) {
 			bullets.push_back(ShootNormalBullet(120));
 		}
 	}
