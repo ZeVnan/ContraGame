@@ -11,7 +11,7 @@
 
 extern CBill* bill;
 
-#define WALLTURRET_ACTIVE_RADIUS 300
+#define WALLTURRET_ACTIVE_RADIUS 250
 
 //define state
 #define WTURRET_STATE_APPEAR	0
@@ -31,7 +31,7 @@ extern CBill* bill;
 #define WTURRET_STATE_EXPLODE	40
 
 //define temporary animation time
-#define WTURRET_TIME_APPEAR		1000
+#define WTURRET_TIME_APPEAR		600
 #define WTURRET_TIME_RELOAD		2000
 
 //define animation
@@ -61,7 +61,6 @@ class CWallTurret : public CGameObject
 private:
 	bool isActivated;
 	bool isClosing;
-	bool isShooting;
 	int HP;
 	vector<LPBULLET> bullets;
 	float gunx;
