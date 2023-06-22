@@ -35,6 +35,7 @@
 class CCannon : public CGameObject
 {
 private:
+	float gunx, guny;
 	bool isShooting;
 	bool isAppear; //hoat dong nhu isHiding
 	bool isActivated;

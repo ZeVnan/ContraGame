@@ -147,11 +147,11 @@ vector<LPBULLET> CScubaSoldier::ShootSpreadBullet(float angle)
 {
 	LPBULLETS bulletS;
 	vector<LPBULLET> temp;
-	bulletS = new CBulletS(x, y, angle, false);
+	bulletS = new CBulletS(x, y + 20, angle, false);
 	temp.push_back(bulletS);
-	bulletS = new CBulletS(x, y, angle - 15, false);
+	bulletS = new CBulletS(x, y + 20, angle - 15, false);
 	temp.push_back(bulletS);
-	bulletS = new CBulletS(x, y, angle + 15, false);
+	bulletS = new CBulletS(x, y + 20, angle + 15, false);
 	temp.push_back(bulletS);
 	return temp;
 }
