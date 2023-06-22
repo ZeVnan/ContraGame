@@ -2,12 +2,15 @@
 #include "WorldPart.h"
 #include "RockFall.h"
 #include "Soldier.h"
+#include "Bill.h"
+extern LPBILL bill;
 
 CObjectGenerator::CObjectGenerator(float x, float y, int type, int stage) :CGameObject(x, y){
 	this->type = type;
 	this->stage = stage;
 	parent = NULL;
 	timeLeft = 0;
+	isActivated = false;
 }
 void CObjectGenerator::AddObject() {
 	if (type == 1) {
@@ -30,6 +33,17 @@ bool CObjectGenerator::InScreen() {
 		return true;
 	return false;
 }
+void CObjectGenerator::watchBill() {
+	float x, y;
+	bill->GetPosition(x, y);
+	float distance = (float)sqrt(pow(x - this->x, 2) + pow(y - this->y, 2));
+	if (distance <= OBJ_GENERATOR_ACTIVE_RADIUS) {
+		isActivated = true;
+	}
+	else {
+		isActivated = false;
+	}
+}
 void CObjectGenerator::UpdateObjects() {
 	for (int i = 0; i < objects.size(); i++) {
 		if (objects[i] == NULL) {
@@ -43,16 +57,17 @@ void CObjectGenerator::UpdateObjects() {
 	}
 }
 void CObjectGenerator::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	watchBill();
 	UpdateObjects();
 	if (InScreen() == true && type == 2 && stage == 1)
 		return;
-	if (objects.size() >= 3)
+	if (objects.size() >= 3 || isActivated == false)
 		return;
 	if (timeLeft > 0) {
 		timeLeft -= dt;
 	}
 	else {
-		timeLeft = WAIT_TIME;
+		timeLeft = OBJ_GENERATOR_WAIT_TIME;
 		AddObject();
 	}
 }
