@@ -30,7 +30,7 @@ private:
 	bool isShooting;
 	bool isActivated;
 	int timeleft;
-	
+
 	int waveLeft = 1;
 	vector<vector<LPBULLET>>waveContainer;
 public:
@@ -53,4 +53,3 @@ public:
 	void RenderBullet();
 };
 typedef CScubaSoldier* LPSCUBA;
-

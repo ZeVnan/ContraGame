@@ -69,36 +69,48 @@ void Rifleman::WatchBill() {
 		ny = 0;
 		nx = 1;
 		angle = 0;
+		gunx = this->x + 12;
+		guny = this->y + 15;
 	}
 	if (checking_degree >= 165 && checking_degree <= 195) {
 		//180 +- 15
 		ny = 0;
 		nx = -1;
 		angle = 180;
+		gunx = this->x - 12;
+		guny = this->y + 15;
 	}
 	if (checking_degree >= 210 && checking_degree <= 240) {
 		//225 +- 15
 		ny = -1;
 		nx = -1;
 		angle = 225;
+		gunx = this->x - 15;
+		guny = this->y - 13;
 	}
 	if (checking_degree >= 120 && checking_degree <= 150) {
 		//135 +- 15
 		ny = 1;
 		nx = -1;
 		angle = 135;
+		gunx = this->x - 15;
+		guny = this->y + 30;
 	}
 	if (checking_degree >= 30 && checking_degree <= 60) {
 		//45 +- 15
 		ny = 1;
 		nx = 1;
 		angle = 45;
+		gunx = this->x + 15;
+		guny = this->y + 30;
 	}
 	if (checking_degree >= 300 && checking_degree <= 330) {
 		//315 +- 15
 		ny = -1;
 		nx = 1;
 		angle = 315;
+		gunx = this->x + 15;
+		guny = this->y - 13;
 	}
 	//DebugOutTitle(L"c_degree = %f", checking_degree);
 }
@@ -181,7 +193,7 @@ void Rifleman::SetState(int state) {
 	CGameObject::SetState(state);
 }
 LPBULLET Rifleman::ShootNormalBullet(float angle) {
-	LPBULLETN bulletN = new CBulletN(x, y, angle, false);
+	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, false);
 	return bulletN;
 }
 void Rifleman::AddBullet() {
