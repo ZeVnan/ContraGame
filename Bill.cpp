@@ -231,12 +231,12 @@ void CBill::Render(){
 				if (nx > 0) {
 					ani = BILL_ANI_LAYDOWN_RIGHT;
 					gunx = x + 15.0f;
-					guny = y - 10.0f;
+					guny = y ;
 				}
 				else {
 					ani = BILL_ANI_LAYDOWN_LEFT;
 					gunx = x - 15.0f;
-					guny = y - 10.0f;
+					guny = y;
 				}
 			}
 			else {
@@ -244,25 +244,25 @@ void CBill::Render(){
 					if (ny == 1) {
 						if (nx > 0) {
 							ani = BILL_ANI_SHOOT_UP_RIGHT;
-							gunx = x + 4.0f;
+							gunx = x + 25.0f;
 							guny = y + 30.0f;
 						}
 						else {
 							ani = BILL_ANI_SHOOT_UP_LEFT;
-							gunx = x - 4.0f;
+							gunx = x - 25.0f;
 							guny = y + 30.0f;
 						}
 					}
 					if (ny == 0) {
 						if (nx > 0) {
 							ani = BILL_ANI_NORMAL_RIGHT;
-							gunx = x + 10.0f;
-							guny = y + 4.5f;
+							gunx = x + 25.0f;
+							guny = y + 8.0f;
 						}
 						else {
 							ani = BILL_ANI_NORMAL_LEFT;
-							gunx = x - 10.0f;
-							guny = y + 4.5f;
+							gunx = x - 25.0f;
+							guny = y + 8.0f;
 						}
 
 					}
@@ -272,23 +272,23 @@ void CBill::Render(){
 						if (ny == 0) {
 							if (isShooting == true) {
 								ani = BILL_ANI_SHOOT_RIGHT;
-								gunx = x + 10.0f;
-								guny = y + 4.5f;
+								gunx = x + 25.0f;
+								guny = y + 8.0f;
 							}
 							else {
 								ani = BILL_ANI_RUN_RIGHT;
-								gunx = x + 10.0f;
-								guny = y + 4.5f;
+								gunx = x + 25.0f;
+								guny = y + 8.0f;
 							}
 						}
 						if (ny == 1) {
 							ani = BILL_ANI_SHOOT_UPRIGHT;
-							gunx = x + 10.0f;
-							guny = y + 17.0f;
+							gunx = x + 20.0f;
+							guny = y + 20.0f;
 						}
 						if (ny == -1) {
 							ani = BILL_ANI_SHOOT_DOWNRIGHT;
-							gunx = x + 10.0f;
+							gunx = x + 25.0f;
 							guny = y - 5.0f;
 						}
 					}
@@ -296,23 +296,23 @@ void CBill::Render(){
 						if (ny == 0) {
 							if (isShooting == true) {
 								ani = BILL_ANI_SHOOT_LEFT;
-								gunx = x - 10.0f;
-								guny = y + 4.5f;
+								gunx = x - 25.0f;
+								guny = y + 8.0f;
 							}
 							else {
 								ani = BILL_ANI_RUN_LEFT;
-								gunx = x - 10.0f;
-								guny = y + 4.5f;
+								gunx = x - 25.0f;
+								guny = y + 8.0f;
 							}
 						}
 						if (ny == 1) {
 							ani = BILL_ANI_SHOOT_UPLEFT;
-							gunx = x - 10.0f;
-							guny = y + 17.0f;
+							gunx = x - 20.0f;
+							guny = y + 20.0f;
 						}
 						if (ny == -1) {
 							ani = BILL_ANI_SHOOT_DOWNLEFT;
-							gunx = x - 10.0f;
+							gunx = x - 25.0f;
 							guny = y - 5.0f;
 						}
 					}
@@ -338,36 +338,36 @@ void CBill::Render(){
 						if (vx == 0) {
 							if (nx > 0) {
 								ani = BILL_ANI_SWIMMING_SHOOT_UP_RIGHT;
-								gunx = x;
+								gunx = x + 100.0f;
 								guny = y;
 							}
 							else {
 								ani = BILL_ANI_SWIMMING_SHOOT_UP_LEFT;
-								gunx = x;
+								gunx = x - 10.0f;
 								guny = y;
 							}
 						}
 						if (vx > 0) {
 							ani = BILL_ANI_SWIMMING_SHOOT_UPRIGHT;
-							gunx = x;
+							gunx = x + 10.0f;
 							guny = y;
 						}
 						if (vx < 0) {
 							ani = BILL_ANI_SWIMMING_SHOOT_UPLEFT;
-							gunx = x;
+							gunx = x - 10.0f;
 							guny = y;
 						}
 					}
 					else {
 						if (nx > 0) {
 							ani = BILL_ANI_SWIMMING_SHOOT_RIGHT;
-							gunx = x;
-							guny = y;
+							gunx = x + 15.0f;
+							guny = y + 50.0f;
 						}
 						else {
 							ani = BILL_ANI_SWIMMING_SHOOT_LEFT;
-							gunx = x;
-							guny = y;
+							gunx = x + 15.0f;
+							guny = y - 5.0f;
 						}
 					}
 				}
@@ -717,9 +717,9 @@ void CBill::CollisionWith(LPCOLLISIONEVENT e) {
 	else if (dynamic_cast<LPROCKFLY>(e->dest_obj)) {
 		CollisionWithRockFly(e);
 	}
-	else if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
+	/*else if (dynamic_cast<LPSOLDIER>(e->dest_obj)) {
 		CollisionWithSoldier(e);
-	}
+	}*/
 	else if (dynamic_cast<LPROCKFALL>(e->dest_obj)) {
 		CollisionWithRockFall(e);
 	}
@@ -1085,6 +1085,7 @@ vector<LPBULLET> CBill::ShootFlameBullet(float angle) {
 }
 vector<LPBULLET> CBill::ShootNormalBullet(float angle) {
 	LPBULLETN bulletN = new CBulletN(gunx, guny, angle, true);
+	DebugOutTitle(L"gunx = %f, guny = %f", gunx, guny);
 	vector<LPBULLET> temp;
 	temp.push_back(bulletN);
 	return temp;
